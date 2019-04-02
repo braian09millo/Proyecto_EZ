@@ -1,0 +1,658 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Modelo.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="cli_id" />
+          </Key>
+          <Property Name="cli_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cli_nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="cli_direccion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="cli_localidad" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="cli_telefono" Type="varchar" MaxLength="15" />
+          <Property Name="cli_celular" Type="varchar" MaxLength="15" />
+          <Property Name="cli_celular2" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="DETALLE_PEDIDO">
+          <Key>
+            <PropertyRef Name="det_id" />
+          </Key>
+          <Property Name="det_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="det_pedido" Type="int" Nullable="false" />
+          <Property Name="det_producto" Type="int" Nullable="false" />
+          <Property Name="det_cantidad" Type="int" Nullable="false" />
+          <Property Name="det_precio" Type="money" Nullable="false" />
+          <Property Name="det_monto" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MARCA">
+          <Key>
+            <PropertyRef Name="mar_id" />
+          </Key>
+          <Property Name="mar_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mar_nombre" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MODELO">
+          <Key>
+            <PropertyRef Name="mod_id" />
+          </Key>
+          <Property Name="mod_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mod_marca" Type="int" Nullable="false" />
+          <Property Name="mod_nombre" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PEDIDO">
+          <Key>
+            <PropertyRef Name="ped_id" />
+          </Key>
+          <Property Name="ped_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ped_cliente" Type="int" Nullable="false" />
+          <Property Name="ped_fecha" Type="datetime" Nullable="false" />
+          <Property Name="ped_monto" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRODUCTO">
+          <Key>
+            <PropertyRef Name="prod_id" />
+          </Key>
+          <Property Name="prod_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prod_marca" Type="int" Nullable="false" />
+          <Property Name="prod_modelo" Type="int" Nullable="false" />
+          <Property Name="prod_tamanio" Type="int" Nullable="false" />
+          <Property Name="prod_tipo" Type="int" Nullable="false" />
+          <Property Name="prod_precio_unitario" Type="smallmoney" Nullable="false" />
+          <Property Name="prod_precio_pack" Type="smallmoney" Nullable="false" />
+          <Property Name="prod_cant_pack" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REMITO">
+          <Key>
+            <PropertyRef Name="rem_numero" />
+          </Key>
+          <Property Name="rem_numero" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rem_cliente" Type="int" Nullable="false" />
+          <Property Name="rem_pedido" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TAMANIO">
+          <Key>
+            <PropertyRef Name="tam_id" />
+          </Key>
+          <Property Name="tam_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tam_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TIPO">
+          <Key>
+            <PropertyRef Name="tip_id" />
+          </Key>
+          <Property Name="tip_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tip_descr" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="usu_usuario" />
+          </Key>
+          <Property Name="usu_usuario" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="usu_password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="usu_nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="usu_apellido" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="usu_fecha_acceso" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Cliente_Pedido">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+          <End Role="PEDIDO" Type="Self.PEDIDO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="cli_id" />
+            </Principal>
+            <Dependent Role="PEDIDO">
+              <PropertyRef Name="ped_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_Remito">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+          <End Role="REMITO" Type="Self.REMITO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="cli_id" />
+            </Principal>
+            <Dependent Role="REMITO">
+              <PropertyRef Name="rem_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Marca_Modelo">
+          <End Role="MARCA" Type="Self.MARCA" Multiplicity="1" />
+          <End Role="MODELO" Type="Self.MODELO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARCA">
+              <PropertyRef Name="mar_id" />
+            </Principal>
+            <Dependent Role="MODELO">
+              <PropertyRef Name="mod_marca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Marca_Producto">
+          <End Role="MARCA" Type="Self.MARCA" Multiplicity="1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARCA">
+              <PropertyRef Name="mar_id" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="prod_marca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Modelo_Producto">
+          <End Role="MODELO" Type="Self.MODELO" Multiplicity="1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MODELO">
+              <PropertyRef Name="mod_id" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="prod_modelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Remito">
+          <End Role="PEDIDO" Type="Self.PEDIDO" Multiplicity="1" />
+          <End Role="REMITO" Type="Self.REMITO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PEDIDO">
+              <PropertyRef Name="ped_id" />
+            </Principal>
+            <Dependent Role="REMITO">
+              <PropertyRef Name="rem_pedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_DetallePedido">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
+          <End Role="DETALLE_PEDIDO" Type="Self.DETALLE_PEDIDO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="prod_id" />
+            </Principal>
+            <Dependent Role="DETALLE_PEDIDO">
+              <PropertyRef Name="det_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tamanio_Producto">
+          <End Role="TAMANIO" Type="Self.TAMANIO" Multiplicity="1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAMANIO">
+              <PropertyRef Name="tam_id" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="prod_tamanio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tipo_Producto">
+          <End Role="TIPO" Type="Self.TIPO" Multiplicity="1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO">
+              <PropertyRef Name="tip_id" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="prod_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModeloStoreContainer">
+          <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DETALLE_PEDIDO" EntityType="Self.DETALLE_PEDIDO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MARCA" EntityType="Self.MARCA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MODELO" EntityType="Self.MODELO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PEDIDO" EntityType="Self.PEDIDO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REMITO" EntityType="Self.REMITO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAMANIO" EntityType="Self.TAMANIO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPO" EntityType="Self.TIPO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cliente_Pedido" Association="Self.FK_Cliente_Pedido">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="PEDIDO" EntitySet="PEDIDO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_Remito" Association="Self.FK_Cliente_Remito">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="REMITO" EntitySet="REMITO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Marca_Modelo" Association="Self.FK_Marca_Modelo">
+            <End Role="MARCA" EntitySet="MARCA" />
+            <End Role="MODELO" EntitySet="MODELO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Marca_Producto" Association="Self.FK_Marca_Producto">
+            <End Role="MARCA" EntitySet="MARCA" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Modelo_Producto" Association="Self.FK_Modelo_Producto">
+            <End Role="MODELO" EntitySet="MODELO" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Remito" Association="Self.FK_Pedido_Remito">
+            <End Role="PEDIDO" EntitySet="PEDIDO" />
+            <End Role="REMITO" EntitySet="REMITO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_DetallePedido" Association="Self.FK_Producto_DetallePedido">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="DETALLE_PEDIDO" EntitySet="DETALLE_PEDIDO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tamanio_Producto" Association="Self.FK_Tamanio_Producto">
+            <End Role="TAMANIO" EntitySet="TAMANIO" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tipo_Producto" Association="Self.FK_Tipo_Producto">
+            <End Role="TIPO" EntitySet="TIPO" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Modelo" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="cli_id" />
+          </Key>
+          <Property Name="cli_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cli_nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cli_direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cli_localidad" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cli_telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="cli_celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="cli_celular2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PEDIDO" Relationship="Self.FK_Cliente_Pedido" FromRole="CLIENTE" ToRole="PEDIDO" />
+          <NavigationProperty Name="REMITO" Relationship="Self.FK_Cliente_Remito" FromRole="CLIENTE" ToRole="REMITO" />
+        </EntityType>
+        <EntityType Name="DETALLE_PEDIDO">
+          <Key>
+            <PropertyRef Name="det_id" />
+          </Key>
+          <Property Name="det_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="det_pedido" Type="Int32" Nullable="false" />
+          <Property Name="det_producto" Type="Int32" Nullable="false" />
+          <Property Name="det_cantidad" Type="Int32" Nullable="false" />
+          <Property Name="det_precio" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="det_monto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_Producto_DetallePedido" FromRole="DETALLE_PEDIDO" ToRole="PRODUCTO" />
+        </EntityType>
+        <EntityType Name="MARCA">
+          <Key>
+            <PropertyRef Name="mar_id" />
+          </Key>
+          <Property Name="mar_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mar_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="MODELO" Relationship="Self.FK_Marca_Modelo" FromRole="MARCA" ToRole="MODELO" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_Marca_Producto" FromRole="MARCA" ToRole="PRODUCTO" />
+        </EntityType>
+        <EntityType Name="MODELO">
+          <Key>
+            <PropertyRef Name="mod_id" />
+          </Key>
+          <Property Name="mod_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mod_marca" Type="Int32" Nullable="false" />
+          <Property Name="mod_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="MARCA" Relationship="Self.FK_Marca_Modelo" FromRole="MODELO" ToRole="MARCA" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_Modelo_Producto" FromRole="MODELO" ToRole="PRODUCTO" />
+        </EntityType>
+        <EntityType Name="PEDIDO">
+          <Key>
+            <PropertyRef Name="ped_id" />
+          </Key>
+          <Property Name="ped_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ped_cliente" Type="Int32" Nullable="false" />
+          <Property Name="ped_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ped_monto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="CLIENTE" Relationship="Self.FK_Cliente_Pedido" FromRole="PEDIDO" ToRole="CLIENTE" />
+          <NavigationProperty Name="REMITO" Relationship="Self.FK_Pedido_Remito" FromRole="PEDIDO" ToRole="REMITO" />
+        </EntityType>
+        <EntityType Name="PRODUCTO">
+          <Key>
+            <PropertyRef Name="prod_id" />
+          </Key>
+          <Property Name="prod_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prod_marca" Type="Int32" Nullable="false" />
+          <Property Name="prod_modelo" Type="Int32" Nullable="false" />
+          <Property Name="prod_tamanio" Type="Int32" Nullable="false" />
+          <Property Name="prod_tipo" Type="Int32" Nullable="false" />
+          <Property Name="prod_precio_unitario" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="prod_precio_pack" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="prod_cant_pack" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DETALLE_PEDIDO" Relationship="Self.FK_Producto_DetallePedido" FromRole="PRODUCTO" ToRole="DETALLE_PEDIDO" />
+          <NavigationProperty Name="MARCA" Relationship="Self.FK_Marca_Producto" FromRole="PRODUCTO" ToRole="MARCA" />
+          <NavigationProperty Name="MODELO" Relationship="Self.FK_Modelo_Producto" FromRole="PRODUCTO" ToRole="MODELO" />
+          <NavigationProperty Name="TAMANIO" Relationship="Self.FK_Tamanio_Producto" FromRole="PRODUCTO" ToRole="TAMANIO" />
+          <NavigationProperty Name="TIPO" Relationship="Self.FK_Tipo_Producto" FromRole="PRODUCTO" ToRole="TIPO" />
+        </EntityType>
+        <EntityType Name="REMITO">
+          <Key>
+            <PropertyRef Name="rem_numero" />
+          </Key>
+          <Property Name="rem_numero" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rem_cliente" Type="Int32" Nullable="false" />
+          <Property Name="rem_pedido" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CLIENTE" Relationship="Self.FK_Cliente_Remito" FromRole="REMITO" ToRole="CLIENTE" />
+          <NavigationProperty Name="PEDIDO" Relationship="Self.FK_Pedido_Remito" FromRole="REMITO" ToRole="PEDIDO" />
+        </EntityType>
+        <EntityType Name="TAMANIO">
+          <Key>
+            <PropertyRef Name="tam_id" />
+          </Key>
+          <Property Name="tam_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tam_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_Tamanio_Producto" FromRole="TAMANIO" ToRole="PRODUCTO" />
+        </EntityType>
+        <EntityType Name="TIPO">
+          <Key>
+            <PropertyRef Name="tip_id" />
+          </Key>
+          <Property Name="tip_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tip_descr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_Tipo_Producto" FromRole="TIPO" ToRole="PRODUCTO" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="usu_usuario" />
+          </Key>
+          <Property Name="usu_usuario" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="usu_password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="usu_nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="usu_apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="usu_fecha_acceso" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_Cliente_Pedido">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+          <End Role="PEDIDO" Type="Self.PEDIDO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="cli_id" />
+            </Principal>
+            <Dependent Role="PEDIDO">
+              <PropertyRef Name="ped_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_Remito">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+          <End Role="REMITO" Type="Self.REMITO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="cli_id" />
+            </Principal>
+            <Dependent Role="REMITO">
+              <PropertyRef Name="rem_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_DetallePedido">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
+          <End Role="DETALLE_PEDIDO" Type="Self.DETALLE_PEDIDO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="prod_id" />
+            </Principal>
+            <Dependent Role="DETALLE_PEDIDO">
+              <PropertyRef Name="det_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Marca_Modelo">
+          <End Role="MARCA" Type="Self.MARCA" Multiplicity="1" />
+          <End Role="MODELO" Type="Self.MODELO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARCA">
+              <PropertyRef Name="mar_id" />
+            </Principal>
+            <Dependent Role="MODELO">
+              <PropertyRef Name="mod_marca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Marca_Producto">
+          <End Role="MARCA" Type="Self.MARCA" Multiplicity="1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARCA">
+              <PropertyRef Name="mar_id" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="prod_marca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Modelo_Producto">
+          <End Role="MODELO" Type="Self.MODELO" Multiplicity="1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MODELO">
+              <PropertyRef Name="mod_id" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="prod_modelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Remito">
+          <End Role="PEDIDO" Type="Self.PEDIDO" Multiplicity="1" />
+          <End Role="REMITO" Type="Self.REMITO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PEDIDO">
+              <PropertyRef Name="ped_id" />
+            </Principal>
+            <Dependent Role="REMITO">
+              <PropertyRef Name="rem_pedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tamanio_Producto">
+          <End Role="TAMANIO" Type="Self.TAMANIO" Multiplicity="1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAMANIO">
+              <PropertyRef Name="tam_id" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="prod_tamanio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tipo_Producto">
+          <End Role="TIPO" Type="Self.TIPO" Multiplicity="1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO">
+              <PropertyRef Name="tip_id" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="prod_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BD_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" />
+          <EntitySet Name="DETALLE_PEDIDO" EntityType="Self.DETALLE_PEDIDO" />
+          <EntitySet Name="MARCA" EntityType="Self.MARCA" />
+          <EntitySet Name="MODELO" EntityType="Self.MODELO" />
+          <EntitySet Name="PEDIDO" EntityType="Self.PEDIDO" />
+          <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" />
+          <EntitySet Name="REMITO" EntityType="Self.REMITO" />
+          <EntitySet Name="TAMANIO" EntityType="Self.TAMANIO" />
+          <EntitySet Name="TIPO" EntityType="Self.TIPO" />
+          <EntitySet Name="USUARIO" EntityType="Self.USUARIO" />
+          <AssociationSet Name="FK_Cliente_Pedido" Association="Self.FK_Cliente_Pedido">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="PEDIDO" EntitySet="PEDIDO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_Remito" Association="Self.FK_Cliente_Remito">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="REMITO" EntitySet="REMITO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_DetallePedido" Association="Self.FK_Producto_DetallePedido">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="DETALLE_PEDIDO" EntitySet="DETALLE_PEDIDO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Marca_Modelo" Association="Self.FK_Marca_Modelo">
+            <End Role="MARCA" EntitySet="MARCA" />
+            <End Role="MODELO" EntitySet="MODELO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Marca_Producto" Association="Self.FK_Marca_Producto">
+            <End Role="MARCA" EntitySet="MARCA" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Modelo_Producto" Association="Self.FK_Modelo_Producto">
+            <End Role="MODELO" EntitySet="MODELO" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Remito" Association="Self.FK_Pedido_Remito">
+            <End Role="PEDIDO" EntitySet="PEDIDO" />
+            <End Role="REMITO" EntitySet="REMITO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tamanio_Producto" Association="Self.FK_Tamanio_Producto">
+            <End Role="TAMANIO" EntitySet="TAMANIO" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tipo_Producto" Association="Self.FK_Tipo_Producto">
+            <End Role="TIPO" EntitySet="TIPO" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModeloStoreContainer" CdmEntityContainer="BD_Entities">
+          <EntitySetMapping Name="CLIENTE">
+            <EntityTypeMapping TypeName="Modelo.CLIENTE">
+              <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="cli_id" ColumnName="cli_id" />
+                <ScalarProperty Name="cli_nombre" ColumnName="cli_nombre" />
+                <ScalarProperty Name="cli_direccion" ColumnName="cli_direccion" />
+                <ScalarProperty Name="cli_localidad" ColumnName="cli_localidad" />
+                <ScalarProperty Name="cli_telefono" ColumnName="cli_telefono" />
+                <ScalarProperty Name="cli_celular" ColumnName="cli_celular" />
+                <ScalarProperty Name="cli_celular2" ColumnName="cli_celular2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DETALLE_PEDIDO">
+            <EntityTypeMapping TypeName="Modelo.DETALLE_PEDIDO">
+              <MappingFragment StoreEntitySet="DETALLE_PEDIDO">
+                <ScalarProperty Name="det_id" ColumnName="det_id" />
+                <ScalarProperty Name="det_pedido" ColumnName="det_pedido" />
+                <ScalarProperty Name="det_producto" ColumnName="det_producto" />
+                <ScalarProperty Name="det_cantidad" ColumnName="det_cantidad" />
+                <ScalarProperty Name="det_precio" ColumnName="det_precio" />
+                <ScalarProperty Name="det_monto" ColumnName="det_monto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MARCA">
+            <EntityTypeMapping TypeName="Modelo.MARCA">
+              <MappingFragment StoreEntitySet="MARCA">
+                <ScalarProperty Name="mar_id" ColumnName="mar_id" />
+                <ScalarProperty Name="mar_nombre" ColumnName="mar_nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MODELO">
+            <EntityTypeMapping TypeName="Modelo.MODELO">
+              <MappingFragment StoreEntitySet="MODELO">
+                <ScalarProperty Name="mod_id" ColumnName="mod_id" />
+                <ScalarProperty Name="mod_marca" ColumnName="mod_marca" />
+                <ScalarProperty Name="mod_nombre" ColumnName="mod_nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PEDIDO">
+            <EntityTypeMapping TypeName="Modelo.PEDIDO">
+              <MappingFragment StoreEntitySet="PEDIDO">
+                <ScalarProperty Name="ped_id" ColumnName="ped_id" />
+                <ScalarProperty Name="ped_cliente" ColumnName="ped_cliente" />
+                <ScalarProperty Name="ped_fecha" ColumnName="ped_fecha" />
+                <ScalarProperty Name="ped_monto" ColumnName="ped_monto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTO">
+            <EntityTypeMapping TypeName="Modelo.PRODUCTO">
+              <MappingFragment StoreEntitySet="PRODUCTO">
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+                <ScalarProperty Name="prod_marca" ColumnName="prod_marca" />
+                <ScalarProperty Name="prod_modelo" ColumnName="prod_modelo" />
+                <ScalarProperty Name="prod_tamanio" ColumnName="prod_tamanio" />
+                <ScalarProperty Name="prod_tipo" ColumnName="prod_tipo" />
+                <ScalarProperty Name="prod_precio_unitario" ColumnName="prod_precio_unitario" />
+                <ScalarProperty Name="prod_precio_pack" ColumnName="prod_precio_pack" />
+                <ScalarProperty Name="prod_cant_pack" ColumnName="prod_cant_pack" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REMITO">
+            <EntityTypeMapping TypeName="Modelo.REMITO">
+              <MappingFragment StoreEntitySet="REMITO">
+                <ScalarProperty Name="rem_numero" ColumnName="rem_numero" />
+                <ScalarProperty Name="rem_cliente" ColumnName="rem_cliente" />
+                <ScalarProperty Name="rem_pedido" ColumnName="rem_pedido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAMANIO">
+            <EntityTypeMapping TypeName="Modelo.TAMANIO">
+              <MappingFragment StoreEntitySet="TAMANIO">
+                <ScalarProperty Name="tam_id" ColumnName="tam_id" />
+                <ScalarProperty Name="tam_descripcion" ColumnName="tam_descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPO">
+            <EntityTypeMapping TypeName="Modelo.TIPO">
+              <MappingFragment StoreEntitySet="TIPO">
+                <ScalarProperty Name="tip_id" ColumnName="tip_id" />
+                <ScalarProperty Name="tip_descr" ColumnName="tip_descr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USUARIO">
+            <EntityTypeMapping TypeName="Modelo.USUARIO">
+              <MappingFragment StoreEntitySet="USUARIO">
+                <ScalarProperty Name="usu_usuario" ColumnName="usu_usuario" />
+                <ScalarProperty Name="usu_password" ColumnName="usu_password" />
+                <ScalarProperty Name="usu_nombre" ColumnName="usu_nombre" />
+                <ScalarProperty Name="usu_apellido" ColumnName="usu_apellido" />
+                <ScalarProperty Name="usu_fecha_acceso" ColumnName="usu_fecha_acceso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

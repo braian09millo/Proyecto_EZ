@@ -1,0 +1,97 @@
+USE BD_EZ
+
+-- CREACION DE LAS TABLAS CON SUS RESPECTIVAS RELACIONES
+CREATE TABLE CLIENTE
+(
+	cli_id INT IDENTITY PRIMARY KEY,
+	cli_nombre VARCHAR(50) NOT NULL,
+	cli_direccion VARCHAR(100) NOT NULL,
+	cli_localidad VARCHAR(100) NOT NULL,
+	cli_telefono VARCHAR(15) NULL,
+	cli_celular VARCHAR(15) NULL,
+	cli_celular2 VARCHAR(15) NULL
+)
+
+CREATE TABLE USUARIO
+(
+	usu_usuario VARCHAR(10) PRIMARY KEY,
+	usu_password VARCHAR(100) NOT NULL,
+	usu_nombre VARCHAR(50) NOT NULL,
+	usu_apellido VARCHAR(50) NOT NULL,
+	usu_fecha_acceso DATETIME NULL
+)
+
+CREATE TABLE MARCA 
+(
+	mar_id INT IDENTITY PRIMARY KEY,
+	mar_nombre VARCHAR(100) NOT NULL
+)
+
+CREATE TABLE MODELO
+(
+	mod_id INT IDENTITY,
+	mod_marca INT NOT NULL,
+	mod_nombre VARCHAR(100) NOT NULL,
+	CONSTRAINT FK_Marca_Modelo FOREIGN KEY (mod_marca) REFERENCES MARCA(mar_id),
+	CONSTRAINT PK_Modelo PRIMARY KEY (mod_id)
+)
+
+CREATE TABLE TAMANIO 
+(
+	tam_id INT IDENTITY PRIMARY KEY, 
+	tam_descripcion VARCHAR(50) NOT NULL
+)
+
+CREATE TABLE TIPO
+(
+	tip_id INT IDENTITY PRIMARY KEY,
+	tip_descr VARCHAR(50) NOT NULL
+)
+
+CREATE TABLE PRODUCTO
+(
+	prod_id INT IDENTITY,
+	prod_marca INT NOT NULL,
+	prod_modelo INT NOT NULL,
+	prod_tamanio INT NOT NULL,
+	prod_tipo INT NOT NULL,
+	prod_precio_unitario SMALLMONEY NOT NULL,
+	prod_precio_pack SMALLMONEY NOT NULL,
+	prod_cant_pack INT NOT NULL,
+	CONSTRAINT FK_Marca_Producto FOREIGN KEY (prod_marca) REFERENCES MARCA(mar_id),
+	CONSTRAINT FK_Modelo_Producto FOREIGN KEY (prod_modelo) REFERENCES MODELO(mod_id),
+	CONSTRAINT FK_Tamanio_Producto FOREIGN KEY (prod_tamanio) REFERENCES TAMANIO(tam_id),
+	CONSTRAINT FK_Tipo_Producto FOREIGN KEY (prod_tipo) REFERENCES TIPO(tip_id),
+	CONSTRAINT PK_Producto PRIMARY KEY (prod_id)
+)
+
+CREATE TABLE PEDIDO
+(
+	ped_id INT IDENTITY PRIMARY KEY,
+	ped_cliente INT NOT NULL,
+	ped_fecha DATETIME NOT NULL,
+	ped_monto MONEY NOT NULL,
+	CONSTRAINT FK_Cliente_Pedido FOREIGN KEY (ped_cliente) REFERENCES CLIENTE(cli_id)
+)
+
+CREATE TABLE DETALLE_PEDIDO
+(
+	det_id INT IDENTITY PRIMARY KEY,
+	det_pedido INT NOT NULL,
+	det_producto INT NOT NULL,
+	det_cantidad INT NOT NULL,
+	det_precio MONEY NOT NULL,
+	det_monto MONEY NOT NULL,
+	CONSTRAINT FK_Producto_DetallePedido FOREIGN KEY (det_producto) REFERENCES PRODUCTO(prod_id)
+)
+
+CREATE TABLE REMITO
+(
+	rem_numero INT IDENTITY PRIMARY KEY,
+	rem_cliente INT NOT NULL,
+	rem_pedido INT NOT NULL,
+	CONSTRAINT FK_Cliente_Remito FOREIGN KEY (rem_cliente) REFERENCES CLIENTE(cli_id),
+	CONSTRAINT FK_Pedido_Remito FOREIGN KEY (rem_pedido) REFERENCES PEDIDO(ped_id)
+)
+
+GO
