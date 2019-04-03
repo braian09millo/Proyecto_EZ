@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    <title>@ViewBag.Title - EZ Distribuidora</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     @Styles.Render("~/Content/css")
@@ -15,7 +15,7 @@
     <div class="menu">
         <ul class="menu-bar">
             <li><a href=""><i class="fa fa-home"></i>&nbsp; @Html.ActionLink("Inicio", "Index", "Home")</a></li>
-            <li><a href=""><i class="fa fa-users"></i>&nbsp; @Html.ActionLink("Clientes", "About", "Home")</a></li>
+            <li><a href=""><i class="fa fa-users"></i>&nbsp; @Html.ActionLink("Clientes", "Index", "Cliente")</a></li>
             <li><a href=""><i class="fas fa-list-alt"></i>&nbsp; @Html.ActionLink("Productos", "About", "Home")</a></li>
             <li><a href=""><i class="fas fa-file-invoice-dollar"></i>&nbsp; @Html.ActionLink("Informes", "Contact", "Home")</a></li>
         </ul>
@@ -32,6 +32,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/app")
+    @Scripts.Render("~/bundles/sweetalert")
     @RenderSection("scripts", required: false)
 
 </body>

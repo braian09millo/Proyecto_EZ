@@ -1,0 +1,191 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="padding-top: 20px;">
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <p style="color: white;">Clientes</p>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <form>
+                            <div class="row">
+                                <div class="col-11">
+                                    <div class="input-icon">
+                                        <input type="text" class="input" id="txtNombre" placeholder="Nombre" />
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-11">
+                                    <div class="input-icon">
+                                        <input type="text" class="input" id="txtDireccion" placeholder="Dirección" />
+                                        <i class="fas fa-address-book"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-11">
+                                    <div class="input-icon">
+                                        <input type="text" class="input" id="txtLocalidad" placeholder="Localidad" />
+                                        <i class="fas fa-map-marked-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-11">
+                                    <div class="input-icon">
+                                        <input type="text" class="input" id="txtTelefono" placeholder="Teléfono" />
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-11">
+                                    <div class="input-icon">
+                                        <input type="text" class="input" id="txtCelular" placeholder="Celular" />
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-11">
+                                    <div class="input-icon">
+                                        <input type="text" class="input" id="txtCelular2" placeholder="Celular Alternativo" />
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-11">
+                                    <button class="btn-primary btn-block" id="btnAgregar">Agregar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="pull-right col-6">
+                                    <div class="input-icon">
+                                        <input type="search" class="input" placeholder="Buscar..."/>
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-rsp" style="padding-top: 2px;">
+                            <table id="ClienteTable" style="margin-top: 10px;" class="table table-hover table-condensed">
+                                <thead>
+                                    <tr>
+                                        <td>Nombre</td>
+                                        <td>Dirección</td>
+                                        <td>Localidad</td>
+                                        <td>Teléfono</td>
+                                        <td>Celular</td>
+                                        <td>Celular 2</td>
+                                        <td>Acciones</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Agustina</td>
+                                        <td>Iannello</td>
+                                        <td>35631935</td>
+                                        <td>3 de Febrero 2865</td>
+                                        <td>1159610989</td>
+                                        <td>1165173523</td>
+                                        <td>
+                                            <button class="btn-primary btn-xs">Editar</button>
+                                            <button class="btn-danger btn-xs">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Braian</td>
+                                        <td>Moretti</td>
+                                        <td>34828269</td>
+                                        <td>Monroe 1340</td>
+                                        <td>1165173523</td>
+                                        <td>1165173523</td>
+                                        <td>
+                                            <button class="btn-primary btn-xs">Editar</button>
+                                            <button class="btn-danger btn-xs">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Agustina</td>
+                                        <td>Iannello</td>
+                                        <td>35631935</td>
+                                        <td>3 de Febrero 2865</td>
+                                        <td>1159610989</td>
+                                        <td>1165173523</td>
+                                        <td>
+                                            <button class="btn-primary btn-xs">Editar</button>
+                                            <button class="btn-danger btn-xs">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Braian</td>
+                                        <td>Moretti</td>
+                                        <td>34828269</td>
+                                        <td>Monroe 1340</td>
+                                        <td>1165173523</td>
+                                        <td>1165173523</td>
+                                        <td>
+                                            <button class="btn-primary btn-xs">Editar</button>
+                                            <button class="btn-danger btn-xs">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Braian</td>
+                                        <td>Moretti</td>
+                                        <td>34828269</td>
+                                        <td>Monroe 1340</td>
+                                        <td>1165173523</td>
+                                        <td>1165173523</td>
+                                        <td>
+                                            <button class="btn-primary btn-xs">Editar</button>
+                                            <button class="btn-danger btn-xs">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Braian</td>
+                                        <td>Moretti</td>
+                                        <td>34828269</td>
+                                        <td>Monroe 1340</td>
+                                        <td>1165173523</td>
+                                        <td>1165173523</td>
+                                        <td>
+                                            <button class="btn-primary btn-xs">Editar</button>
+                                            <button class="btn-danger btn-xs">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Braian</td>
+                                        <td>Moretti</td>
+                                        <td>34828269</td>
+                                        <td>Monroe 1340</td>
+                                        <td>1165173523</td>
+                                        <td>1165173523</td>
+                                        <td>
+                                            <button class="btn-primary btn-xs">Editar</button>
+                                            <button class="btn-danger btn-xs">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

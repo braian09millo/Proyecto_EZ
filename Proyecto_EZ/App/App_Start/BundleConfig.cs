@@ -17,6 +17,12 @@ namespace App
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                         "~/Scripts/app.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/sweetalert").Include(
+                        "~/Scripts/sweetalert.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+                        "~/Scripts/datatables.min.js"));
+
             // Utilice la versión de desarrollo de Modernizr para desarrollar y obtener información. De este modo, estará
             // preparado para la producción y podrá utilizar la herramienta de compilación disponible en http://modernizr.com para seleccionar solo las pruebas que necesite.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -26,7 +32,9 @@ namespace App
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/style.css"));
+                      "~/Content/style.css",
+                      "~/Content/datatables.min.css")); 
+
         }
     }
 }
