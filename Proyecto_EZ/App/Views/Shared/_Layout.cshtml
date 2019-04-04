@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - EZ Distribuidora</title>
@@ -12,25 +12,33 @@
 </head>
 <body>
 
-    <div class="menu">
-        <ul class="menu-bar">
-            <li><a href=""><i class="fa fa-home"></i>&nbsp; @Html.ActionLink("Inicio", "Index", "Home")</a></li>
-            <li><a href=""><i class="fa fa-users"></i>&nbsp; @Html.ActionLink("Clientes", "Index", "Cliente")</a></li>
-            <li><a href=""><i class="fas fa-list-alt"></i>&nbsp; @Html.ActionLink("Productos", "About", "Home")</a></li>
-            <li><a href=""><i class="fas fa-file-invoice-dollar"></i>&nbsp; @Html.ActionLink("Informes", "Contact", "Home")</a></li>
-        </ul>
-        <div id="btn-collapse">
-            <button type="button" id="btn">
-                <span class="fa fa-bars"></span>
-            </button>
-        </div>
-    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href=""><i class="fas fa-home"></i>&nbsp; Inicio</a>
+            </div>
 
-    <div class="container">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="@Url.Action("Index","Cliente")"><i class="fas fa-users"></i>&nbsp; Clientes</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="container-fluid">
         @RenderBody()
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/boostrap")*@
     @Scripts.Render("~/bundles/app")
     @Scripts.Render("~/bundles/sweetalert")
     @RenderSection("scripts", required: false)

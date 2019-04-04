@@ -1,186 +1,196 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Clientes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div style="padding-top: 20px;">
+<div style="padding-top: 70px;">
     <div class="row">
-        <div class="col-12">
-            <div class="panel">
-                <div class="panel-heading">
-                    <p style="color: white;">Clientes</p>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <form>
-                            <div class="row">
-                                <div class="col-11">
-                                    <div class="input-icon">
-                                        <input type="text" class="input" id="txtNombre" placeholder="Nombre" />
-                                        <i class="fa fa-user"></i>
-                                    </div>
-                                </div>
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <span class="input-group-addon label-addon"><i class="fas fa-user"></i></span>
+                                <input type="text" class="form-control" id="txtNombre" placeholder="Nombre"/>
                             </div>
-                            <div class="row">
-                                <div class="col-11">
-                                    <div class="input-icon">
-                                        <input type="text" class="input" id="txtDireccion" placeholder="Dirección" />
-                                        <i class="fas fa-address-book"></i>
-                                    </div>
-                                </div>
+                            <div class="input-group">
+                                <span class="input-group-addon label-addon"><i class="fas fa-address-book"></i></span>
+                                <input type="text" class="form-control" id="txtDireccion" placeholder="Dirección" />
                             </div>
-                            <div class="row">
-                                <div class="col-11">
-                                    <div class="input-icon">
-                                        <input type="text" class="input" id="txtLocalidad" placeholder="Localidad" />
-                                        <i class="fas fa-map-marked-alt"></i>
-                                    </div>
-                                </div>
+                            <div class="input-group">
+                                <span class="input-group-addon label-addon"><i class="fas fa-map-marked-alt"></i></span>
+                                <input type="text" class="form-control" id="txtLocalidad" placeholder="Localidad" />
                             </div>
-                            <div class="row">
-                                <div class="col-11">
-                                    <div class="input-icon">
-                                        <input type="text" class="input" id="txtTelefono" placeholder="Teléfono" />
-                                        <i class="fas fa-phone"></i>
-                                    </div>
-                                </div>
+                            <div class="input-group">
+                                <span class="input-group-addon label-addon"><i class="fas fa-phone"></i></span>
+                                <input type="text" class="form-control" id="txtTelefono" placeholder="Teléfono" />
                             </div>
-                            <div class="row">
-                                <div class="col-11">
-                                    <div class="input-icon">
-                                        <input type="text" class="input" id="txtCelular" placeholder="Celular" />
-                                        <i class="fas fa-mobile-alt"></i>
-                                    </div>
-                                </div>
+                            <div class="input-group">
+                                <span class="input-group-addon label-addon"><i class="fas fa-mobile-alt"></i></span>
+                                <input type="text" class="form-control" id="txtCelular" placeholder="Celular" />
                             </div>
-                            <div class="row">
-                                <div class="col-11">
-                                    <div class="input-icon">
-                                        <input type="text" class="input" id="txtCelular2" placeholder="Celular Alternativo" />
-                                        <i class="fas fa-mobile-alt"></i>
-                                    </div>
-                                </div>
+                            <div class="input-group">
+                                <span class="input-group-addon label-addon"><i class="fas fa-mobile-alt"></i></span>
+                                <input type="text" class="form-control" id="txtCelular2" placeholder="Celular Alternativo" />
                             </div>
-                            <div class="row">
-                                <div class="col-11">
-                                    <button class="btn-primary btn-block" id="btnAgregar">Agregar</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-8">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="pull-right col-6">
-                                    <div class="input-icon">
-                                        <input type="search" class="input" placeholder="Buscar..."/>
-                                        <i class="fas fa-search"></i>
-                                    </div>
-                                </div>
+                            <button class="btn btn-block btn-success">Agregar</button>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <div class="table-responsive">
+                                <table id="tableClientes" class="table table-hover table-condensed">
+                                    <thead style="text-align: center;">
+                                        <tr>
+                                            <td>Nombre</td>
+                                            <td>Dirección</td>
+                                            <td>Localidad</td>
+                                            <td>Teléfono</td>
+                                            <td>Celular</td>
+                                            <td>Celular 2</td>
+                                            <td>Acciones</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="text-align: center;">
+                                        <tr>
+                                            <td>Braian</td>
+                                            <td>Moretti</td>
+                                            <td>34828269</td>
+                                            <td>Monroe 1340</td>
+                                            <td>1165173523</td>
+                                            <td>1165173523</td>
+                                            <td>
+                                                <button class="btn btn-xs btn-info">Editar</button>
+                                                <button class="btn btn-xs btn-danger">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Liliana</td>
+                                            <td>Djirikian</td>
+                                            <td>14003778</td>
+                                            <td>Monroe 1345</td>
+                                            <td>1167067202</td>
+                                            <td>1165173523</td>
+                                            <td>
+                                                <button class="btn btn-xs btn-info">Editar</button>
+                                                <button class="btn btn-xs btn-danger">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Agustina</td>
+                                            <td>Iannello</td>
+                                            <td>35631935</td>
+                                            <td>3 de Febrero 2865</td>
+                                            <td>1159610989</td>
+                                            <td>1165173523</td>
+                                            <td>
+                                                <button class="btn btn-xs btn-info">Editar</button>
+                                                <button class="btn btn-xs btn-danger">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Leandro</td>
+                                            <td>Moretti</td>
+                                            <td>40706186</td>
+                                            <td>Monroe 1340</td>
+                                            <td>1159429082</td>
+                                            <td>1165173523</td>
+                                            <td>
+                                                <button class="btn btn-xs btn-info">Editar</button>
+                                                <button class="btn btn-xs btn-danger">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Agustina</td>
+                                            <td>Iannello</td>
+                                            <td>35631935</td>
+                                            <td>3 de Febrero 2865</td>
+                                            <td>1159610989</td>
+                                            <td>1165173523</td>
+                                            <td>
+                                                <button class="btn btn-xs btn-info">Editar</button>
+                                                <button class="btn btn-xs btn-danger">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Agustina</td>
+                                            <td>Iannello</td>
+                                            <td>35631935</td>
+                                            <td>3 de Febrero 2865</td>
+                                            <td>1159610989</td>
+                                            <td>1165173523</td>
+                                            <td>
+                                                <button class="btn btn-xs btn-info">Editar</button>
+                                                <button class="btn btn-xs btn-danger">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Agustina</td>
+                                            <td>Iannello</td>
+                                            <td>35631935</td>
+                                            <td>3 de Febrero 2865</td>
+                                            <td>1159610989</td>
+                                            <td>1165173523</td>
+                                            <td>
+                                                <button class="btn btn-xs btn-info">Editar</button>
+                                                <button class="btn btn-xs btn-danger">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Agustina</td>
+                                            <td>Iannello</td>
+                                            <td>35631935</td>
+                                            <td>3 de Febrero 2865</td>
+                                            <td>1159610989</td>
+                                            <td>1165173523</td>
+                                            <td>
+                                                <button class="btn btn-xs btn-info">Editar</button>
+                                                <button class="btn btn-xs btn-danger">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Agustina</td>
+                                            <td>Iannello</td>
+                                            <td>35631935</td>
+                                            <td>3 de Febrero 2865</td>
+                                            <td>1159610989</td>
+                                            <td>1165173523</td>
+                                            <td>
+                                                <button class="btn btn-xs btn-info">Editar</button>
+                                                <button class="btn btn-xs btn-danger">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Agustina</td>
+                                            <td>Iannello</td>
+                                            <td>35631935</td>
+                                            <td>3 de Febrero 2865</td>
+                                            <td>1159610989</td>
+                                            <td>1165173523</td>
+                                            <td>
+                                                <button class="btn btn-xs btn-info">Editar</button>
+                                                <button class="btn btn-xs btn-danger">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Agustina</td>
+                                            <td>Iannello</td>
+                                            <td>35631935</td>
+                                            <td>3 de Febrero 2865</td>
+                                            <td>1159610989</td>
+                                            <td>1165173523</td>
+                                            <td>
+                                                <button class="btn btn-xs btn-info">Editar</button>
+                                                <button class="btn btn-xs btn-danger">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <div class="table-rsp" style="padding-top: 2px;">
-                            <table id="ClienteTable" style="margin-top: 10px;" class="table table-hover table-condensed">
-                                <thead>
-                                    <tr>
-                                        <td>Nombre</td>
-                                        <td>Dirección</td>
-                                        <td>Localidad</td>
-                                        <td>Teléfono</td>
-                                        <td>Celular</td>
-                                        <td>Celular 2</td>
-                                        <td>Acciones</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Agustina</td>
-                                        <td>Iannello</td>
-                                        <td>35631935</td>
-                                        <td>3 de Febrero 2865</td>
-                                        <td>1159610989</td>
-                                        <td>1165173523</td>
-                                        <td>
-                                            <button class="btn-primary btn-xs">Editar</button>
-                                            <button class="btn-danger btn-xs">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Braian</td>
-                                        <td>Moretti</td>
-                                        <td>34828269</td>
-                                        <td>Monroe 1340</td>
-                                        <td>1165173523</td>
-                                        <td>1165173523</td>
-                                        <td>
-                                            <button class="btn-primary btn-xs">Editar</button>
-                                            <button class="btn-danger btn-xs">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Agustina</td>
-                                        <td>Iannello</td>
-                                        <td>35631935</td>
-                                        <td>3 de Febrero 2865</td>
-                                        <td>1159610989</td>
-                                        <td>1165173523</td>
-                                        <td>
-                                            <button class="btn-primary btn-xs">Editar</button>
-                                            <button class="btn-danger btn-xs">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Braian</td>
-                                        <td>Moretti</td>
-                                        <td>34828269</td>
-                                        <td>Monroe 1340</td>
-                                        <td>1165173523</td>
-                                        <td>1165173523</td>
-                                        <td>
-                                            <button class="btn-primary btn-xs">Editar</button>
-                                            <button class="btn-danger btn-xs">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Braian</td>
-                                        <td>Moretti</td>
-                                        <td>34828269</td>
-                                        <td>Monroe 1340</td>
-                                        <td>1165173523</td>
-                                        <td>1165173523</td>
-                                        <td>
-                                            <button class="btn-primary btn-xs">Editar</button>
-                                            <button class="btn-danger btn-xs">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Braian</td>
-                                        <td>Moretti</td>
-                                        <td>34828269</td>
-                                        <td>Monroe 1340</td>
-                                        <td>1165173523</td>
-                                        <td>1165173523</td>
-                                        <td>
-                                            <button class="btn-primary btn-xs">Editar</button>
-                                            <button class="btn-danger btn-xs">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Braian</td>
-                                        <td>Moretti</td>
-                                        <td>34828269</td>
-                                        <td>Monroe 1340</td>
-                                        <td>1165173523</td>
-                                        <td>1165173523</td>
-                                        <td>
-                                            <button class="btn-primary btn-xs">Editar</button>
-                                            <button class="btn-danger btn-xs">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -188,4 +198,15 @@
     </div>
 </div>
 
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/datatables.min.css" rel="stylesheet" />
+<script src="~/Scripts/datatables.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#tableClientes').dataTable({
+            "pageLength": 5
+        });
+    });
+</script>
 
