@@ -1,6 +1,6 @@
 ﻿body {
-    background-color: #bfbdbd;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Nunito', sans-serif;
+    font-size: 22px;
 }
 
 .panel {
@@ -14,4 +14,19 @@
 .label-addon {
     min-width: 40px;
     text-align: center;
+}
+
+#tableClientes {
+    font-size: 16px;
+    text-align:center;
+}
+
+#tableClientes thead tr td {
+    font-weight: bolder; 
+    font-size: 20px;
+    border-bottom: 1px solid black;
+}
+
+#tableClientes tbody tr td {
+    border-bottom: 1px solid black;
 }
