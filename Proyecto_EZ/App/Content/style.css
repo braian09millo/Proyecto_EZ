@@ -1,6 +1,7 @@
 ﻿body {
     font-family: 'Nunito', sans-serif;
     font-size: 22px;
+    background-color:aliceblue;
 }
 
 .panel {
@@ -14,6 +15,8 @@
 .label-addon {
     min-width: 40px;
     text-align: center;
+    background-color: #2657bd;
+    color: white;
 }
 
 #tableClientes {
@@ -23,10 +26,19 @@
 
 #tableClientes thead tr td {
     font-weight: bolder; 
-    font-size: 20px;
+    font-size: 18px;
     border-bottom: 1px solid black;
 }
 
 #tableClientes tbody tr td {
     border-bottom: 1px solid black;
+    font-size: 14px;
+}
+
+.form-control {
+    border-radius: 2px;
+}
+
+.btn-primary {
+    background-color: #2657bd;
 }
