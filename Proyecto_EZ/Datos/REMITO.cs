@@ -18,7 +18,6 @@ namespace Datos
         public int rem_cliente { get; set; }
         public int rem_pedido { get; set; }
     
-        public virtual CLIENTE CLIENTE { get; set; }
         public virtual PEDIDO PEDIDO { get; set; }
     }
 }

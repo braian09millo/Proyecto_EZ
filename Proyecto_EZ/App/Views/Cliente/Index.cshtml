@@ -4,56 +4,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div style="padding-top: 70px;">
-    <h2 class="h2 text-center">Clientes</h2>
+<div style="padding-top: 50px;">
+    <h2 class="h2 text-center">CLIENTES</h2>
     <div class="row">
-        <div class="col-sm-2 col-xs-offset-0"></div>
-        <div class="col-sm-8 col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-sm-3 col-xs-offset-0"></div>
-                        <div class="col-sm-6 col-xs-12">
-                            <div class="input-group">
-                                <span class="input-group-addon label-addon"><i class="fas fa-user"></i></span>
-                                <input type="text" class="form-control" id="txtNombre" placeholder="Nombre" />
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon label-addon"><i class="fas fa-address-book"></i></span>
-                                <input type="text" class="form-control" id="txtDireccion" placeholder="Dirección" />
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon label-addon"><i class="fas fa-map-marked-alt"></i></span>
-                                <input type="text" class="form-control" id="txtLocalidad" placeholder="Localidad" />
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon label-addon"><i class="fas fa-phone"></i></span>
-                                <input type="text" class="form-control" id="txtTelefono" placeholder="Teléfono" />
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon label-addon"><i class="fas fa-mobile-alt"></i></span>
-                                <input type="text" class="form-control" id="txtCelular" placeholder="Celular" />
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon label-addon"><i class="fas fa-mobile-alt"></i></span>
-                                <input type="text" class="form-control" id="txtCelular2" placeholder="Celular Alternativo" />
-                            </div>
-                            <button class="btn btn-block btn-primary">Agregar</button>
-                        </div>
-                        <div class="col-sm-3 col-xs-offset-0"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-2 col-xs-offset-0"></div>
-    </div>
-    <div class="row">
-        <div class="col-sm-2 col-xs-offset-0"></div>
-        <div class="col-sm-8 col-xs-12">
+        <div class="col-sm-12 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table id="tableClientes" class="table table-hover table-condensed">
+                        <table id="tableClientes" class="table table-hover table-condensed table-bordered" style="width:100%">
                             <thead>
                                 <tr>
                                     <td>Nombre</td>
@@ -62,137 +20,188 @@
                                     <td>Teléfono</td>
                                     <td>Celular</td>
                                     <td>Celular 2</td>
-                                    <td>Acciones</td>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Braian</td>
-                                    <td>Monroe 1340</td>
-                                    <td>Moretti</td>
-                                    <td>34828269</td>
-                                    <td>1165173523</td>
-                                    <td>1165173523</td>
-                                    <td>
-                                        <button class="btn btn-xs btn-info">Editar</button>
-                                        <button class="btn btn-xs btn-danger">Eliminar</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Liliana</td>
-                                    <td>Djirikian</td>
-                                    <td>14003778</td>
-                                    <td>Monroe 1345</td>
-                                    <td>1167067202</td>
-                                    <td>1165173523</td>
-                                    <td>
-                                        <button class="btn btn-xs btn-info">Editar</button>
-                                        <button class="btn btn-xs btn-danger">Eliminar</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Agustina</td>
-                                    <td>Iannello</td>
-                                    <td>35631935</td>
-                                    <td>3 de Febrero 2865</td>
-                                    <td>1159610989</td>
-                                    <td>1165173523</td>
-                                    <td>
-                                        <button class="btn btn-xs btn-info">Editar</button>
-                                        <button class="btn btn-xs btn-danger">Eliminar</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Leandro</td>
-                                    <td>Moretti</td>
-                                    <td>40706186</td>
-                                    <td>Monroe 1340</td>
-                                    <td>1159429082</td>
-                                    <td>1165173523</td>
-                                    <td>
-                                        <button class="btn btn-xs btn-info">Editar</button>
-                                        <button class="btn btn-xs btn-danger">Eliminar</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Leandro</td>
-                                    <td>Moretti</td>
-                                    <td>40706186</td>
-                                    <td>Monroe 1340</td>
-                                    <td>1159429082</td>
-                                    <td>1165173523</td>
-                                    <td>
-                                        <button class="btn btn-xs btn-info">Editar</button>
-                                        <button class="btn btn-xs btn-danger">Eliminar</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Leandro</td>
-                                    <td>Moretti</td>
-                                    <td>40706186</td>
-                                    <td>Monroe 1340</td>
-                                    <td>1159429082</td>
-                                    <td>1165173523</td>
-                                    <td>
-                                        <button class="btn btn-xs btn-info">Editar</button>
-                                        <button class="btn btn-xs btn-danger">Eliminar</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Leandro</td>
-                                    <td>Moretti</td>
-                                    <td>40706186</td>
-                                    <td>Monroe 1340</td>
-                                    <td>1159429082</td>
-                                    <td>1165173523</td>
-                                    <td>
-                                        <button class="btn btn-xs btn-info">Editar</button>
-                                        <button class="btn btn-xs btn-danger">Eliminar</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Leandro</td>
-                                    <td>Moretti</td>
-                                    <td>40706186</td>
-                                    <td>Monroe 1340</td>
-                                    <td>1159429082</td>
-                                    <td>1165173523</td>
-                                    <td>
-                                        <button class="btn btn-xs btn-info">Editar</button>
-                                        <button class="btn btn-xs btn-danger">Eliminar</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Leandro</td>
-                                    <td>Moretti</td>
-                                    <td>40706186</td>
-                                    <td>Monroe 1340</td>
-                                    <td>1159429082</td>
-                                    <td>1165173523</td>
-                                    <td>
-                                        <button class="btn btn-xs btn-info">Editar</button>
-                                        <button class="btn btn-xs btn-danger">Eliminar</button>
-                                    </td>
-                                </tr>
-                            </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-2 col-xs-offset-0"></div>
+    </div>
+    <div class="row">
+        <div class="col-xs-offset-0"></div>
+        <div class="col-sm-12 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-4 col-xs-offset-0"></div>
+                        <div class="col-sm-4 col-xs-12">
+                            <form id="ClienteForm">
+                                <div class="input-group">
+                                    <span class="input-group-addon label-addon"><i class="fas fa-user"></i></span>
+                                    <input type="text" class="form-control" id="txtNombre" name="nombre" placeholder="Nombre"/>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon label-addon"><i class="fas fa-address-book"></i></span>
+                                    <input type="text" class="form-control" id="txtDireccion" name="direccion" placeholder="Dirección"/>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon label-addon"><i class="fas fa-map-marked-alt"></i></span>
+                                    <input type="text" class="form-control" id="txtLocalidad" name="localidad" placeholder="Localidad"/>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon label-addon"><i class="fas fa-phone"></i></span>
+                                    <input type="text" class="form-control" id="txtTelefono" name="telefono" placeholder="Teléfono"/>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon label-addon"><i class="fas fa-mobile-alt"></i></span>
+                                    <input type="text" class="form-control" id="txtCelular" name="celular" placeholder="Celular"/>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon label-addon"><i class="fas fa-mobile-alt"></i></span>
+                                    <input type="text" class="form-control" id="txtCelular2" name="celular2" placeholder="Celular Alternativo"/>
+                                </div>
+                                <button class="btn btn-block btn-primary" type="submit" id="btnAgregar">Agregar</button>
+                            </form>
+                        </div>
+                        <div class="col-sm-4 col-xs-offset-0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-offset-0"></div>
     </div>
 </div>
 
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/datatables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+<script src="~/Scripts/sweetalert.min.js"></script>
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/style.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="~/Scripts/bootstrap.min.js"></script>
-<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#tableClientes').dataTable();
+
+        //Cargamos la grilla al iniciar
+        CargarDatos();                    
+
+        function Limpiar() {
+            $("input[text]").val("");
+            $("#tableClientes").dataTable().fnDestroy();
+        }
+
+        function CargarDatos() {
+
+            $.ajax({
+                method: 'GET',
+                url: '/Cliente/GetClientes',
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    var tabla = $('#tableClientes').dataTable({
+                        data: response,
+                        columns: [
+                            { 'data': 'cli_nombre' },
+                            { 'data': 'cli_direccion' },
+                            { 'data': 'cli_localidad' },
+                            { 'data': 'cli_telefono' },
+                            { 'data': 'cli_celular' },
+                            { 'data': 'cli_celular2' }
+                        ]
+                    });
+
+                }, error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        //Habilitamos el botón cuando los campos requeridos esten llenos
+        function ValidarFormulario() {
+            var nombre = $('#txtNombre').val();
+            var direccion = $('#txtDireccion').val();
+            var localidad = $('#txtLocalidad').val();
+
+            if (nombre == "" || direccion == "" || localidad == "") 
+                return false;
+            else 
+                return true;
+        }
+
+        $('#btnAgregar').click(function (e) {
+
+            //Prevenimos que se realice un nuevo submit
+            e.preventDefault();
+
+            if (ValidarFormulario()) {
+
+                //Cargamos el objeto cliente
+                var dataToPost = {
+                    cli_nombre: $('#txtNombre').val(),
+                    cli_direccion: $('#txtDireccion').val(),
+                    cli_localidad: $('#txtLocalidad').val(),
+                    cli_telefono: $('#txtTelefono').val(),
+                    cli_celular: $('#txtCelular').val(),
+                    cli_celular2: $('#txtCelular2').val()
+                };
+
+                //Hacemos la llamada AJAX al controller CLIENTE
+                $.ajax({
+                    method: 'POST',
+                    data: JSON.stringify(dataToPost),
+                    url: '/Cliente/PostGuardarCliente',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response)
+                    {
+                        if (response == '') {
+
+                            Limpiar();
+                            swal({
+                                title: "Exito",
+                                text: "Cliente agregado correctamente",
+                                icon: "success",
+                                button: "Aceptar",
+                            });
+                            CargarDatos();
+                        }
+                        else
+                        {
+                            swal({
+                                title: "Error",
+                                text: "Fallo la carga de clientes",
+                                icon: "error",
+                                button: "Ok",
+                            });
+                        }
+                    },
+                    error: function (response)
+                    {
+                        swal({
+                            title: "Error",
+                            text: response,
+                            icon: "Error",
+                            button: "Ok",
+                        });
+                    }
+
+                });
+            }
+            else {
+                swal({
+                    title: "Error",
+                    text: "Los campos NOMBRE, DIRECCION y LOCALIDAD deben completarse",
+                    icon: "warning",
+                    button: "Aceptar",
+                });
+
+            }
+
+            
+
+
+        });
+
     });
 </script>
 

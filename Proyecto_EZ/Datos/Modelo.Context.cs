@@ -25,15 +25,15 @@ namespace Datos
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<CLIENTE> CLIENTE { get; set; }
         public virtual DbSet<DETALLE_PEDIDO> DETALLE_PEDIDO { get; set; }
         public virtual DbSet<MARCA> MARCA { get; set; }
         public virtual DbSet<MODELO> MODELO { get; set; }
-        public virtual DbSet<PEDIDO> PEDIDO { get; set; }
         public virtual DbSet<PRODUCTO> PRODUCTO { get; set; }
-        public virtual DbSet<REMITO> REMITO { get; set; }
         public virtual DbSet<TAMANIO> TAMANIO { get; set; }
         public virtual DbSet<TIPO> TIPO { get; set; }
         public virtual DbSet<USUARIO> USUARIO { get; set; }
+        public virtual DbSet<CLIENTE> CLIENTE { get; set; }
+        public virtual DbSet<PEDIDO> PEDIDO { get; set; }
+        public virtual DbSet<REMITO> REMITO { get; set; }
     }
 }

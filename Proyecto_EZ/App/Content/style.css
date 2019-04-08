@@ -1,11 +1,11 @@
 ﻿body {
     font-family: 'Nunito', sans-serif;
-    font-size: 22px;
-    background-color:aliceblue;
+    font-size: 16px;
+    background-color:rgb(248, 249, 250);
 }
 
 .panel {
-    box-shadow: 0 7px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
 }
 
 .input-group {
@@ -21,24 +21,53 @@
 
 #tableClientes {
     font-size: 16px;
-    text-align:center;
+    border-bottom: 1px solid #ddd;
 }
 
 #tableClientes thead tr td {
     font-weight: bolder; 
-    font-size: 18px;
-    border-bottom: 1px solid black;
+    font-size: 14px;
+    background-color: #333;
+    color: antiquewhite;
+    border-bottom: 0;
 }
 
 #tableClientes tbody tr td {
-    border-bottom: 1px solid black;
     font-size: 14px;
 }
 
+#tableClientes thead tr td,
+#tableClientes tbody tr td {
+    text-align: center;
+}
+
 .form-control {
-    border-radius: 2px;
+    border-radius: 4px;
+    cursor: auto;
 }
 
 .btn-primary {
     background-color: #2657bd;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    box-sizing: unset;
+    display: inline-block;
+    min-width: 0;
+    padding: 0;
+    margin-left: 0;
+    text-align: center;
+    text-decoration: none !important;
+    cursor: pointer;
+    color: #333 !important;
+    border: 0;
+    border-radius: 4px;
+}
+
+#tableClientes_next:hover {
+    border: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    border: 0;
 }

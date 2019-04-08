@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Modelo.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Modelo.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CLIENTE">
           <Key>
             <PropertyRef Name="cli_id" />
@@ -97,30 +97,6 @@
           <Property Name="usu_apellido" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="usu_fecha_acceso" Type="datetime" />
         </EntityType>
-        <Association Name="FK_Cliente_Pedido">
-          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
-          <End Role="PEDIDO" Type="Self.PEDIDO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CLIENTE">
-              <PropertyRef Name="cli_id" />
-            </Principal>
-            <Dependent Role="PEDIDO">
-              <PropertyRef Name="ped_cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Cliente_Remito">
-          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
-          <End Role="REMITO" Type="Self.REMITO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CLIENTE">
-              <PropertyRef Name="cli_id" />
-            </Principal>
-            <Dependent Role="REMITO">
-              <PropertyRef Name="rem_cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Marca_Modelo">
           <End Role="MARCA" Type="Self.MARCA" Multiplicity="1" />
           <End Role="MODELO" Type="Self.MODELO" Multiplicity="*" />
@@ -216,14 +192,6 @@
           <EntitySet Name="TAMANIO" EntityType="Self.TAMANIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO" EntityType="Self.TIPO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Cliente_Pedido" Association="Self.FK_Cliente_Pedido">
-            <End Role="CLIENTE" EntitySet="CLIENTE" />
-            <End Role="PEDIDO" EntitySet="PEDIDO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cliente_Remito" Association="Self.FK_Cliente_Remito">
-            <End Role="CLIENTE" EntitySet="CLIENTE" />
-            <End Role="REMITO" EntitySet="REMITO" />
-          </AssociationSet>
           <AssociationSet Name="FK_Marca_Modelo" Association="Self.FK_Marca_Modelo">
             <End Role="MARCA" EntitySet="MARCA" />
             <End Role="MODELO" EntitySet="MODELO" />
@@ -253,25 +221,10 @@
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Modelo" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="CLIENTE">
-          <Key>
-            <PropertyRef Name="cli_id" />
-          </Key>
-          <Property Name="cli_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="cli_nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cli_direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cli_localidad" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cli_telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="cli_celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="cli_celular2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PEDIDO" Relationship="Self.FK_Cliente_Pedido" FromRole="CLIENTE" ToRole="PEDIDO" />
-          <NavigationProperty Name="REMITO" Relationship="Self.FK_Cliente_Remito" FromRole="CLIENTE" ToRole="REMITO" />
-        </EntityType>
         <EntityType Name="DETALLE_PEDIDO">
           <Key>
             <PropertyRef Name="det_id" />
@@ -303,17 +256,6 @@
           <NavigationProperty Name="MARCA" Relationship="Self.FK_Marca_Modelo" FromRole="MODELO" ToRole="MARCA" />
           <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_Modelo_Producto" FromRole="MODELO" ToRole="PRODUCTO" />
         </EntityType>
-        <EntityType Name="PEDIDO">
-          <Key>
-            <PropertyRef Name="ped_id" />
-          </Key>
-          <Property Name="ped_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ped_cliente" Type="Int32" Nullable="false" />
-          <Property Name="ped_fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ped_monto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <NavigationProperty Name="CLIENTE" Relationship="Self.FK_Cliente_Pedido" FromRole="PEDIDO" ToRole="CLIENTE" />
-          <NavigationProperty Name="REMITO" Relationship="Self.FK_Pedido_Remito" FromRole="PEDIDO" ToRole="REMITO" />
-        </EntityType>
         <EntityType Name="PRODUCTO">
           <Key>
             <PropertyRef Name="prod_id" />
@@ -331,16 +273,6 @@
           <NavigationProperty Name="MODELO" Relationship="Self.FK_Modelo_Producto" FromRole="PRODUCTO" ToRole="MODELO" />
           <NavigationProperty Name="TAMANIO" Relationship="Self.FK_Tamanio_Producto" FromRole="PRODUCTO" ToRole="TAMANIO" />
           <NavigationProperty Name="TIPO" Relationship="Self.FK_Tipo_Producto" FromRole="PRODUCTO" ToRole="TIPO" />
-        </EntityType>
-        <EntityType Name="REMITO">
-          <Key>
-            <PropertyRef Name="rem_numero" />
-          </Key>
-          <Property Name="rem_numero" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="rem_cliente" Type="Int32" Nullable="false" />
-          <Property Name="rem_pedido" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CLIENTE" Relationship="Self.FK_Cliente_Remito" FromRole="REMITO" ToRole="CLIENTE" />
-          <NavigationProperty Name="PEDIDO" Relationship="Self.FK_Pedido_Remito" FromRole="REMITO" ToRole="PEDIDO" />
         </EntityType>
         <EntityType Name="TAMANIO">
           <Key>
@@ -368,30 +300,6 @@
           <Property Name="usu_apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="usu_fecha_acceso" Type="DateTime" Precision="3" />
         </EntityType>
-        <Association Name="FK_Cliente_Pedido">
-          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
-          <End Role="PEDIDO" Type="Self.PEDIDO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CLIENTE">
-              <PropertyRef Name="cli_id" />
-            </Principal>
-            <Dependent Role="PEDIDO">
-              <PropertyRef Name="ped_cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Cliente_Remito">
-          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
-          <End Role="REMITO" Type="Self.REMITO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CLIENTE">
-              <PropertyRef Name="cli_id" />
-            </Principal>
-            <Dependent Role="REMITO">
-              <PropertyRef Name="rem_cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Producto_DetallePedido">
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
           <End Role="DETALLE_PEDIDO" Type="Self.DETALLE_PEDIDO" Multiplicity="*" />
@@ -440,18 +348,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Pedido_Remito">
-          <End Role="PEDIDO" Type="Self.PEDIDO" Multiplicity="1" />
-          <End Role="REMITO" Type="Self.REMITO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PEDIDO">
-              <PropertyRef Name="ped_id" />
-            </Principal>
-            <Dependent Role="REMITO">
-              <PropertyRef Name="rem_pedido" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tamanio_Producto">
           <End Role="TAMANIO" Type="Self.TAMANIO" Multiplicity="1" />
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
@@ -477,24 +373,13 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="BD_Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" />
           <EntitySet Name="DETALLE_PEDIDO" EntityType="Self.DETALLE_PEDIDO" />
           <EntitySet Name="MARCA" EntityType="Self.MARCA" />
           <EntitySet Name="MODELO" EntityType="Self.MODELO" />
-          <EntitySet Name="PEDIDO" EntityType="Self.PEDIDO" />
           <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" />
-          <EntitySet Name="REMITO" EntityType="Self.REMITO" />
           <EntitySet Name="TAMANIO" EntityType="Self.TAMANIO" />
           <EntitySet Name="TIPO" EntityType="Self.TIPO" />
           <EntitySet Name="USUARIO" EntityType="Self.USUARIO" />
-          <AssociationSet Name="FK_Cliente_Pedido" Association="Self.FK_Cliente_Pedido">
-            <End Role="CLIENTE" EntitySet="CLIENTE" />
-            <End Role="PEDIDO" EntitySet="PEDIDO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cliente_Remito" Association="Self.FK_Cliente_Remito">
-            <End Role="CLIENTE" EntitySet="CLIENTE" />
-            <End Role="REMITO" EntitySet="REMITO" />
-          </AssociationSet>
           <AssociationSet Name="FK_Producto_DetallePedido" Association="Self.FK_Producto_DetallePedido">
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
             <End Role="DETALLE_PEDIDO" EntitySet="DETALLE_PEDIDO" />
@@ -511,10 +396,6 @@
             <End Role="MODELO" EntitySet="MODELO" />
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
           </AssociationSet>
-          <AssociationSet Name="FK_Pedido_Remito" Association="Self.FK_Pedido_Remito">
-            <End Role="PEDIDO" EntitySet="PEDIDO" />
-            <End Role="REMITO" EntitySet="REMITO" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tamanio_Producto" Association="Self.FK_Tamanio_Producto">
             <End Role="TAMANIO" EntitySet="TAMANIO" />
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
@@ -523,26 +404,63 @@
             <End Role="TIPO" EntitySet="TIPO" />
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
           </AssociationSet>
+          <EntitySet Name="CLIENTE" EntityType="Modelo.CLIENTE" />
+          <EntitySet Name="PEDIDO" EntityType="Modelo.PEDIDO" />
+          <EntitySet Name="REMITO" EntityType="Modelo.REMITO" />
+          <AssociationSet Name="FK_Pedido_Remito" Association="Modelo.FK_Pedido_Remito">
+            <End Role="PEDIDO" EntitySet="PEDIDO" />
+            <End Role="REMITO" EntitySet="REMITO" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="cli_id" />
+          </Key>
+          <Property Name="cli_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cli_nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cli_direccion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cli_localidad" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cli_telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="cli_celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="cli_celular2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PEDIDO">
+          <Key>
+            <PropertyRef Name="ped_id" />
+          </Key>
+          <Property Name="ped_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ped_cliente" Type="Int32" Nullable="false" />
+          <Property Name="ped_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ped_monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="REMITO" Relationship="Modelo.FK_Pedido_Remito" FromRole="PEDIDO" ToRole="REMITO" />
+        </EntityType>
+        <EntityType Name="REMITO">
+          <Key>
+            <PropertyRef Name="rem_numero" />
+          </Key>
+          <Property Name="rem_numero" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rem_cliente" Type="Int32" Nullable="false" />
+          <Property Name="rem_pedido" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PEDIDO" Relationship="Modelo.FK_Pedido_Remito" FromRole="REMITO" ToRole="PEDIDO" />
+        </EntityType>
+        <Association Name="FK_Pedido_Remito">
+          <End Type="Modelo.PEDIDO" Role="PEDIDO" Multiplicity="1" />
+          <End Type="Modelo.REMITO" Role="REMITO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PEDIDO">
+              <PropertyRef Name="ped_id" />
+            </Principal>
+            <Dependent Role="REMITO">
+              <PropertyRef Name="rem_pedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ModeloStoreContainer" CdmEntityContainer="BD_Entities">
-          <EntitySetMapping Name="CLIENTE">
-            <EntityTypeMapping TypeName="Modelo.CLIENTE">
-              <MappingFragment StoreEntitySet="CLIENTE">
-                <ScalarProperty Name="cli_id" ColumnName="cli_id" />
-                <ScalarProperty Name="cli_nombre" ColumnName="cli_nombre" />
-                <ScalarProperty Name="cli_direccion" ColumnName="cli_direccion" />
-                <ScalarProperty Name="cli_localidad" ColumnName="cli_localidad" />
-                <ScalarProperty Name="cli_telefono" ColumnName="cli_telefono" />
-                <ScalarProperty Name="cli_celular" ColumnName="cli_celular" />
-                <ScalarProperty Name="cli_celular2" ColumnName="cli_celular2" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DETALLE_PEDIDO">
             <EntityTypeMapping TypeName="Modelo.DETALLE_PEDIDO">
               <MappingFragment StoreEntitySet="DETALLE_PEDIDO">
@@ -572,16 +490,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PEDIDO">
-            <EntityTypeMapping TypeName="Modelo.PEDIDO">
-              <MappingFragment StoreEntitySet="PEDIDO">
-                <ScalarProperty Name="ped_id" ColumnName="ped_id" />
-                <ScalarProperty Name="ped_cliente" ColumnName="ped_cliente" />
-                <ScalarProperty Name="ped_fecha" ColumnName="ped_fecha" />
-                <ScalarProperty Name="ped_monto" ColumnName="ped_monto" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PRODUCTO">
             <EntityTypeMapping TypeName="Modelo.PRODUCTO">
               <MappingFragment StoreEntitySet="PRODUCTO">
@@ -593,15 +501,6 @@
                 <ScalarProperty Name="prod_precio_unitario" ColumnName="prod_precio_unitario" />
                 <ScalarProperty Name="prod_precio_pack" ColumnName="prod_precio_pack" />
                 <ScalarProperty Name="prod_cant_pack" ColumnName="prod_cant_pack" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="REMITO">
-            <EntityTypeMapping TypeName="Modelo.REMITO">
-              <MappingFragment StoreEntitySet="REMITO">
-                <ScalarProperty Name="rem_numero" ColumnName="rem_numero" />
-                <ScalarProperty Name="rem_cliente" ColumnName="rem_cliente" />
-                <ScalarProperty Name="rem_pedido" ColumnName="rem_pedido" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -629,6 +528,38 @@
                 <ScalarProperty Name="usu_nombre" ColumnName="usu_nombre" />
                 <ScalarProperty Name="usu_apellido" ColumnName="usu_apellido" />
                 <ScalarProperty Name="usu_fecha_acceso" ColumnName="usu_fecha_acceso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTE">
+            <EntityTypeMapping TypeName="Modelo.CLIENTE">
+              <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="cli_celular2" ColumnName="cli_celular2" />
+                <ScalarProperty Name="cli_celular" ColumnName="cli_celular" />
+                <ScalarProperty Name="cli_telefono" ColumnName="cli_telefono" />
+                <ScalarProperty Name="cli_localidad" ColumnName="cli_localidad" />
+                <ScalarProperty Name="cli_direccion" ColumnName="cli_direccion" />
+                <ScalarProperty Name="cli_nombre" ColumnName="cli_nombre" />
+                <ScalarProperty Name="cli_id" ColumnName="cli_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PEDIDO">
+            <EntityTypeMapping TypeName="Modelo.PEDIDO">
+              <MappingFragment StoreEntitySet="PEDIDO">
+                <ScalarProperty Name="ped_monto" ColumnName="ped_monto" />
+                <ScalarProperty Name="ped_fecha" ColumnName="ped_fecha" />
+                <ScalarProperty Name="ped_cliente" ColumnName="ped_cliente" />
+                <ScalarProperty Name="ped_id" ColumnName="ped_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REMITO">
+            <EntityTypeMapping TypeName="Modelo.REMITO">
+              <MappingFragment StoreEntitySet="REMITO">
+                <ScalarProperty Name="rem_pedido" ColumnName="rem_pedido" />
+                <ScalarProperty Name="rem_cliente" ColumnName="rem_cliente" />
+                <ScalarProperty Name="rem_numero" ColumnName="rem_numero" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

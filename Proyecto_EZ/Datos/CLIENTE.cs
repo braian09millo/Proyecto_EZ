@@ -14,13 +14,6 @@ namespace Datos
     
     public partial class CLIENTE
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CLIENTE()
-        {
-            this.PEDIDO = new HashSet<PEDIDO>();
-            this.REMITO = new HashSet<REMITO>();
-        }
-    
         public int cli_id { get; set; }
         public string cli_nombre { get; set; }
         public string cli_direccion { get; set; }
@@ -28,10 +21,5 @@ namespace Datos
         public string cli_telefono { get; set; }
         public string cli_celular { get; set; }
         public string cli_celular2 { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PEDIDO> PEDIDO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<REMITO> REMITO { get; set; }
     }
 }

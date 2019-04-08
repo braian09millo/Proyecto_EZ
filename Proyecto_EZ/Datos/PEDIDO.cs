@@ -25,7 +25,6 @@ namespace Datos
         public System.DateTime ped_fecha { get; set; }
         public decimal ped_monto { get; set; }
     
-        public virtual CLIENTE CLIENTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<REMITO> REMITO { get; set; }
     }
