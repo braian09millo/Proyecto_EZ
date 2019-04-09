@@ -7,8 +7,14 @@
 <div style="padding-top: 50px;">
     <h2 class="h2 text-center">CLIENTES</h2>
     <div class="row">
+        <div class="col-sm-12">
+            <button class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Nuevo Cliente</button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
         <div class="col-sm-12 col-xs-12">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-body">
                     <div class="table-responsive">
                         <table id="tableClientes" class="table table-hover table-condensed table-bordered" style="width:100%">
@@ -20,6 +26,7 @@
                                     <td>Teléfono</td>
                                     <td>Celular</td>
                                     <td>Celular 2</td>
+                                    <td>Acciones</td>
                                 </tr>
                             </thead>
                         </table>
@@ -28,52 +35,57 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-offset-0"></div>
-        <div class="col-sm-12 col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-sm-4 col-xs-offset-0"></div>
-                        <div class="col-sm-4 col-xs-12">
-                            <form id="ClienteForm">
-                                <div class="input-group">
-                                    <span class="input-group-addon label-addon"><i class="fas fa-user"></i></span>
-                                    <input type="text" class="form-control" id="txtNombre" name="nombre" placeholder="Nombre"/>
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon label-addon"><i class="fas fa-address-book"></i></span>
-                                    <input type="text" class="form-control" id="txtDireccion" name="direccion" placeholder="Dirección"/>
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon label-addon"><i class="fas fa-map-marked-alt"></i></span>
-                                    <input type="text" class="form-control" id="txtLocalidad" name="localidad" placeholder="Localidad"/>
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon label-addon"><i class="fas fa-phone"></i></span>
-                                    <input type="text" class="form-control" id="txtTelefono" name="telefono" placeholder="Teléfono"/>
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon label-addon"><i class="fas fa-mobile-alt"></i></span>
-                                    <input type="text" class="form-control" id="txtCelular" name="celular" placeholder="Celular"/>
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon label-addon"><i class="fas fa-mobile-alt"></i></span>
-                                    <input type="text" class="form-control" id="txtCelular2" name="celular2" placeholder="Celular Alternativo"/>
-                                </div>
-                                <button class="btn btn-block btn-primary" type="submit" id="btnAgregar">Agregar</button>
-                            </form>
+
+    <div class="modal fade" id="NuevoForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Agregar/Modificar Clientes</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="ClienteForm">
+                        <input type="hidden" id="txtId" name="id" />
+                        <div class="input-group">
+                            <span class="input-group-addon label-addon"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control" id="txtNombre" name="nombre" placeholder="Nombre" />
                         </div>
-                        <div class="col-sm-4 col-xs-offset-0"></div>
-                    </div>
+                        <div class="input-group">
+                            <span class="input-group-addon label-addon"><i class="fas fa-address-book"></i></span>
+                            <input type="text" class="form-control" id="txtDireccion" name="direccion" placeholder="Dirección" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon label-addon"><i class="fas fa-map-marked-alt"></i></span>
+                            <input type="text" class="form-control" id="txtLocalidad" name="localidad" placeholder="Localidad" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon label-addon"><i class="fas fa-phone"></i></span>
+                            <input type="text" class="form-control" id="txtTelefono" name="telefono" placeholder="Teléfono" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon label-addon"><i class="fas fa-mobile-alt"></i></span>
+                            <input type="text" class="form-control" id="txtCelular" name="celular" placeholder="Celular" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon label-addon"><i class="fas fa-mobile-alt"></i></span>
+                            <input type="text" class="form-control" id="txtCelular2" name="celular2" placeholder="Celular Alternativo" />
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 text-center">
+                                <button class="btn btn-primary" type="submit" id="btnAgregar"><i class="fas fa-check"></i>&nbsp;Guardar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp;Cancelar</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="col-xs-offset-0"></div>
     </div>
 </div>
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
 <script src="~/Scripts/datatables.min.js"></script>
 <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
 <script src="~/Scripts/sweetalert.min.js"></script>
@@ -85,12 +97,21 @@
     $(document).ready(function () {
 
         //Cargamos la grilla al iniciar
-        CargarDatos();                    
+        CargarDatos();
 
         function Limpiar() {
-            $("input[text]").val("");
             $("#tableClientes").dataTable().fnDestroy();
         }
+
+        $('#NuevoForm').on('hidden.bs.modal', function (e) {
+            $(this)
+              .find("input,textarea,select")
+                 .val('')
+                 .end()
+              .find("input[type=checkbox], input[type=radio]")
+                 .prop("checked", "")
+                 .end();
+        });
 
         function CargarDatos() {
 
@@ -99,22 +120,42 @@
                 url: '/Cliente/GetClientes',
                 contentType: 'application/json; charset=utf-8',
                 success: function (response) {
-                    var tabla = $('#tableClientes').dataTable({
+                    var tabla = $('#tableClientes').DataTable({
                         data: response,
+                        "info": false,
                         columns: [
                             { 'data': 'cli_nombre' },
                             { 'data': 'cli_direccion' },
                             { 'data': 'cli_localidad' },
                             { 'data': 'cli_telefono' },
                             { 'data': 'cli_celular' },
-                            { 'data': 'cli_celular2' }
+                            { 'data': 'cli_celular2' },
+                            { 'defaultContent': '<button class="btn btn-info btn-xs">Editar</button> <button class="btn btn-danger btn-xs">Eliminar</button>' }
                         ]
                     });
+
+                    editarCliente('#tableClientes tbody', tabla);
 
                 }, error: function (error) {
                     console.log(error);
                 }
             });
+        }
+
+        var editarCliente = function (tbody, table) {
+            $(tbody).on('click', 'button.btn-info.btn-xs', function () {
+                var data = table.row($(this).parents('tr')).data();
+
+                //$('#txtId').val(data.cli_id);
+                $('#txtNombre').val(data.cli_nombre);
+                $('#txtDireccion').val(data.cli_direccion);
+                $('#txtLocalidad').val(data.cli_localidad);
+                $('#txtTelefono').val(data.cli_telefono);
+                $('#txtCelular').val(data.cli_celular);
+                $('#txtCelular2').val(data.cli_celular2);
+
+                $('#NuevoForm').modal('show');
+            })
         }
 
         //Habilitamos el botón cuando los campos requeridos esten llenos
@@ -123,9 +164,9 @@
             var direccion = $('#txtDireccion').val();
             var localidad = $('#txtLocalidad').val();
 
-            if (nombre == "" || direccion == "" || localidad == "") 
+            if (nombre == "" || direccion == "" || localidad == "")
                 return false;
-            else 
+            else
                 return true;
         }
 
@@ -138,6 +179,7 @@
 
                 //Cargamos el objeto cliente
                 var dataToPost = {
+                    cli_id: $('#txtId').val(),
                     cli_nombre: $('#txtNombre').val(),
                     cli_direccion: $('#txtDireccion').val(),
                     cli_localidad: $('#txtLocalidad').val(),
@@ -152,21 +194,19 @@
                     data: JSON.stringify(dataToPost),
                     url: '/Cliente/PostGuardarCliente',
                     contentType: 'application/json; charset=utf-8',
-                    success: function (response)
-                    {
+                    success: function (response) {
                         if (response == '') {
-
-                            Limpiar();
+                            $('#NuevoForm').modal('hide');
                             swal({
                                 title: "Exito",
                                 text: "Cliente agregado correctamente",
                                 icon: "success",
                                 button: "Aceptar",
                             });
+                            Limpiar();
                             CargarDatos();
                         }
-                        else
-                        {
+                        else {
                             swal({
                                 title: "Error",
                                 text: "Fallo la carga de clientes",
@@ -175,8 +215,7 @@
                             });
                         }
                     },
-                    error: function (response)
-                    {
+                    error: function (response) {
                         swal({
                             title: "Error",
                             text: response,
@@ -197,7 +236,7 @@
 
             }
 
-            
+
 
 
         });
