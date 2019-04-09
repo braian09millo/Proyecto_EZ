@@ -105,7 +105,7 @@
 
         $('#NuevoForm').on('hidden.bs.modal', function (e) {
             $(this)
-              .find("input,textarea,select")
+              .find("input[type=text],textarea,select")
                  .val('')
                  .end()
               .find("input[type=checkbox], input[type=radio]")
@@ -143,10 +143,11 @@
         }
 
         var editarCliente = function (tbody, table) {
+            $(tbody).off('click', 'button.btn-info.btn-xs');
             $(tbody).on('click', 'button.btn-info.btn-xs', function () {
                 var data = table.row($(this).parents('tr')).data();
 
-                //$('#txtId').val(data.cli_id);
+                $('#txtId').val(data.cli_id);
                 $('#txtNombre').val(data.cli_nombre);
                 $('#txtDireccion').val(data.cli_direccion);
                 $('#txtLocalidad').val(data.cli_localidad);
