@@ -69,6 +69,31 @@ namespace Negocios.BusinessControllers
             return xoResultado;
         }
 
+        public void EliminarCliente(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            try
+            {
+                using (BD_Entities xoDB = new BD_Entities())
+                {
+                    var xoCliente = xoDB.CLIENTE.Find(xiId);
+
+                    if (xoCliente != null)
+                    {
+                        xoDB.CLIENTE.Remove(xoCliente);
+                        xoDB.SaveChanges();
+                    }
+                    else
+                        xsError = "El usuario no existe";
+                }
+            }
+            catch (Exception ex)
+            {
+                xsError = ex.Message;
+            }
+        }
+
         #endregion
     }
 }

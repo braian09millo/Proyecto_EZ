@@ -135,6 +135,7 @@
                     });
 
                     editarCliente('#tableClientes tbody', tabla);
+                    eliminarCliente('#tableClientes tbody', tabla);
 
                 }, error: function (error) {
                     console.log(error);
@@ -158,6 +159,59 @@
                 $('#NuevoForm').modal('show');
             })
         }
+
+        var eliminarCliente = function (tbody, table) {
+            $(tbody).off('click', 'button.btn-danger.btn-xs');
+            $(tbody).on('click', 'button.btn-danger.btn-xs', function () {
+
+                var data = table.row($(this).parents('tr')).data();
+
+                console.log(data);
+
+                var dataToPost = {
+                    xiId: data.cli_id
+                }
+                
+                swal({
+                    title: "Are you sure?",
+                    text: "You will not be able to recover this imaginary file!",
+                    icon: "warning",
+                    buttons: ['Cancelar','Confirmar'],
+                    dangerMode: true,
+                }).then(function (bElimina) {
+                    if (bElimina) {
+                        $.ajax({
+                            method: 'POST',
+                            url: '/Cliente/PostEliminarCliente',
+                            data: JSON.stringify(dataToPost),
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (response) {
+                                if (response == '') {
+                                    swal("El registro se eliminó correctamente", {
+                                        icon: "success",
+                                    });
+                                    Limpiar();
+                                    CargarDatos();
+                                }
+                                else {
+                                    swal(response, {
+                                        icon: "error",
+                                        buttons: "Aceptar"
+                                    });
+                                }
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        });
+                    }
+                })
+
+
+
+            });
+        }
+
 
         //Habilitamos el botón cuando los campos requeridos esten llenos
         function ValidarFormulario() {
@@ -236,10 +290,6 @@
                 });
 
             }
-
-
-
-
         });
 
     });

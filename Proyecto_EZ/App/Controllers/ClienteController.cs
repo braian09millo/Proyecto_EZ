@@ -36,5 +36,16 @@ namespace App.Controllers
 
             return Json(xsError);
         }
+
+        [HttpPost]
+        public ActionResult PostEliminarCliente(int xiId)
+        {
+            ClienteCtrl xoClienteCtrl = new Factory().GetCtrlCliente();
+            string xsError = "";
+
+            xoClienteCtrl.EliminarCliente(xiId, out xsError);
+
+            return Json(xsError);
+        }
     }
 }
