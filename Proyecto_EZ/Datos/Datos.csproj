@@ -51,13 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CLIENTE.cs">
+    <Compile Include="cliente.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="DETALLE_PEDIDO.cs">
+    <Compile Include="detalle_pedido.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="MARCA.cs">
+    <Compile Include="localidad.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="marca.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Modelo.Context.cs">
@@ -65,7 +68,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Modelo.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="MODELO.cs">
+    <Compile Include="modelo.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Modelo.Designer.cs">
@@ -78,23 +81,32 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="PEDIDO.cs">
+    <Compile Include="pedido.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="PRODUCTO.cs">
+    <Compile Include="precio.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="precio_detalle.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="producto.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="REMITO.cs">
+    <Compile Include="provincia.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="TAMANIO.cs">
+    <Compile Include="remito.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="TIPO.cs">
+    <Compile Include="tamanio.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="USUARIO.cs">
+    <Compile Include="tipo.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usuario.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
   </ItemGroup>

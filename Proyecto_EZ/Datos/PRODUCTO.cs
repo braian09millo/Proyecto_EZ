@@ -12,12 +12,13 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class PRODUCTO
+    public partial class producto
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PRODUCTO()
+        public producto()
         {
-            this.DETALLE_PEDIDO = new HashSet<DETALLE_PEDIDO>();
+            this.detalle_pedido = new HashSet<detalle_pedido>();
+            this.precio_detalle = new HashSet<precio_detalle>();
         }
     
         public int prod_id { get; set; }
@@ -25,15 +26,14 @@ namespace Datos
         public int prod_modelo { get; set; }
         public int prod_tamanio { get; set; }
         public int prod_tipo { get; set; }
-        public decimal prod_precio_unitario { get; set; }
-        public decimal prod_precio_pack { get; set; }
-        public int prod_cant_pack { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DETALLE_PEDIDO> DETALLE_PEDIDO { get; set; }
-        public virtual MARCA MARCA { get; set; }
-        public virtual MODELO MODELO { get; set; }
-        public virtual TAMANIO TAMANIO { get; set; }
-        public virtual TIPO TIPO { get; set; }
+        public virtual ICollection<detalle_pedido> detalle_pedido { get; set; }
+        public virtual marca marca { get; set; }
+        public virtual modelo modelo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<precio_detalle> precio_detalle { get; set; }
+        public virtual tamanio tamanio { get; set; }
+        public virtual tipo tipo { get; set; }
     }
 }

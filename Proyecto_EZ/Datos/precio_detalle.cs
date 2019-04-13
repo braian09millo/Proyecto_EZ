@@ -12,18 +12,15 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class tipo
+    public partial class precio_detalle
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tipo()
-        {
-            this.producto = new HashSet<producto>();
-        }
+        public int prd_campre { get; set; }
+        public int prd_produ { get; set; }
+        public decimal prd_precioC { get; set; }
+        public byte prd_porcen { get; set; }
+        public decimal prd_precioPV { get; set; }
     
-        public int tip_id { get; set; }
-        public string tip_descr { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<producto> producto { get; set; }
+        public virtual precio precio { get; set; }
+        public virtual producto producto { get; set; }
     }
 }

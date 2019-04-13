@@ -1,4 +1,5 @@
 ﻿using Datos;
+using Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace Negocios.BusinessControllers
 
         #region COMPORTAMIENTO
 
-        public void GuardarCliente(CLIENTE xoCliente, out string xsError)
+        public void GuardarCliente(cliente xoCliente, out string xsError)
         {
             xsError = "";
 
@@ -33,12 +34,12 @@ namespace Negocios.BusinessControllers
             {
                 using (BD_Entities xoDB = new BD_Entities())
                 {
-                    var cliente = xoDB.CLIENTE.Find(xoCliente.cli_id);
+                    var cliente = xoDB.cliente.Find(xoCliente.cli_id);
 
                     if (cliente != null)
                         xoDB.Entry(cliente).CurrentValues.SetValues(xoCliente);
                     else
-                        xoDB.CLIENTE.Add(xoCliente);
+                        xoDB.cliente.Add(xoCliente);
 
                     xoDB.SaveChanges();
                 }
@@ -49,16 +50,16 @@ namespace Negocios.BusinessControllers
             }
         }
 
-        public List<CLIENTE> ObtenerClientes(out string xsError)
+        public List<spGetClientes> ObtenerClientes(out string xsError)
         {
             xsError = "";
-            List<CLIENTE> xoResultado = null;
+            List<spGetClientes> xoResultado = null;
 
             try
             {
                 using (BD_Entities xoDB = new BD_Entities())
                 {
-                    xoResultado = xoDB.CLIENTE.ToList();
+                    xoResultado = xoDB.Database.SqlQuery<spGetClientes>("exec spGetClientes").ToList();
                 }
             }
             catch (Exception ex)
@@ -77,11 +78,11 @@ namespace Negocios.BusinessControllers
             {
                 using (BD_Entities xoDB = new BD_Entities())
                 {
-                    var xoCliente = xoDB.CLIENTE.Find(xiId);
+                    var xoCliente = xoDB.cliente.Find(xiId);
 
                     if (xoCliente != null)
                     {
-                        xoDB.CLIENTE.Remove(xoCliente);
+                        xoDB.cliente.Remove(xoCliente);
                         xoDB.SaveChanges();
                     }
                     else

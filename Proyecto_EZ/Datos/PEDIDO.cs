@@ -12,12 +12,12 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class PEDIDO
+    public partial class pedido
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PEDIDO()
+        public pedido()
         {
-            this.REMITO = new HashSet<REMITO>();
+            this.remito = new HashSet<remito>();
         }
     
         public int ped_id { get; set; }
@@ -26,6 +26,6 @@ namespace Datos
         public decimal ped_monto { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<REMITO> REMITO { get; set; }
+        public virtual ICollection<remito> remito { get; set; }
     }
 }

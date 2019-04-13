@@ -1,10 +1,6 @@
 ﻿using Datos;
 using Negocios;
 using Negocios.BusinessControllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace App.Controllers
@@ -27,7 +23,7 @@ namespace App.Controllers
         }
 
         [HttpPost]
-        public ActionResult PostGuardarCliente(CLIENTE xoCliente)
+        public ActionResult PostGuardarCliente(cliente xoCliente)
         {
             ClienteCtrl xoClienteCtrl = new Factory().GetCtrlCliente();
             string xsError = "";

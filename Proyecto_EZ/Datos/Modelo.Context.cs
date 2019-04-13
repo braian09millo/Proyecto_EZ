@@ -25,15 +25,19 @@ namespace Datos
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<DETALLE_PEDIDO> DETALLE_PEDIDO { get; set; }
-        public virtual DbSet<MARCA> MARCA { get; set; }
-        public virtual DbSet<MODELO> MODELO { get; set; }
-        public virtual DbSet<PRODUCTO> PRODUCTO { get; set; }
-        public virtual DbSet<TAMANIO> TAMANIO { get; set; }
-        public virtual DbSet<TIPO> TIPO { get; set; }
-        public virtual DbSet<USUARIO> USUARIO { get; set; }
-        public virtual DbSet<CLIENTE> CLIENTE { get; set; }
-        public virtual DbSet<PEDIDO> PEDIDO { get; set; }
-        public virtual DbSet<REMITO> REMITO { get; set; }
+        public virtual DbSet<cliente> cliente { get; set; }
+        public virtual DbSet<detalle_pedido> detalle_pedido { get; set; }
+        public virtual DbSet<localidad> localidad { get; set; }
+        public virtual DbSet<marca> marca { get; set; }
+        public virtual DbSet<modelo> modelo { get; set; }
+        public virtual DbSet<pedido> pedido { get; set; }
+        public virtual DbSet<precio> precio { get; set; }
+        public virtual DbSet<precio_detalle> precio_detalle { get; set; }
+        public virtual DbSet<producto> producto { get; set; }
+        public virtual DbSet<provincia> provincia { get; set; }
+        public virtual DbSet<remito> remito { get; set; }
+        public virtual DbSet<tamanio> tamanio { get; set; }
+        public virtual DbSet<tipo> tipo { get; set; }
+        public virtual DbSet<usuario> usuario { get; set; }
     }
 }

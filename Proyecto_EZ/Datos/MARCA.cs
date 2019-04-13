@@ -12,21 +12,21 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class MARCA
+    public partial class marca
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MARCA()
+        public marca()
         {
-            this.MODELO = new HashSet<MODELO>();
-            this.PRODUCTO = new HashSet<PRODUCTO>();
+            this.modelo = new HashSet<modelo>();
+            this.producto = new HashSet<producto>();
         }
     
         public int mar_id { get; set; }
         public string mar_nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MODELO> MODELO { get; set; }
+        public virtual ICollection<modelo> modelo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRODUCTO> PRODUCTO { get; set; }
+        public virtual ICollection<producto> producto { get; set; }
     }
 }

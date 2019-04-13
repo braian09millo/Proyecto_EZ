@@ -12,18 +12,19 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class tipo
+    public partial class localidad
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tipo()
+        public localidad()
         {
-            this.producto = new HashSet<producto>();
+            this.cliente = new HashSet<cliente>();
         }
     
-        public int tip_id { get; set; }
-        public string tip_descr { get; set; }
+        public int loc_id { get; set; }
+        public int loc_provincia { get; set; }
+        public string loc_descr { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<producto> producto { get; set; }
+        public virtual ICollection<cliente> cliente { get; set; }
     }
 }

@@ -12,18 +12,18 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class TAMANIO
+    public partial class tamanio
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TAMANIO()
+        public tamanio()
         {
-            this.PRODUCTO = new HashSet<PRODUCTO>();
+            this.producto = new HashSet<producto>();
         }
     
         public int tam_id { get; set; }
         public string tam_descripcion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRODUCTO> PRODUCTO { get; set; }
+        public virtual ICollection<producto> producto { get; set; }
     }
 }

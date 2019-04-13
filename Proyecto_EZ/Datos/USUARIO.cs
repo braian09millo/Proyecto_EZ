@@ -12,7 +12,7 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class USUARIO
+    public partial class usuario
     {
         public string usu_usuario { get; set; }
         public string usu_password { get; set; }

@@ -21,8 +21,9 @@
                             <thead>
                                 <tr>
                                     <td>Nombre</td>
-                                    <td>Dirección</td>
+                                    <td>Provincia</td>
                                     <td>Localidad</td>
+                                    <td>Dirección</td>
                                     <td>Teléfono</td>
                                     <td>Celular</td>
                                     <td>Celular 2</td>
@@ -56,6 +57,13 @@
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon label-addon"><i class="fas fa-map-marked-alt"></i></span>
+                            @*<input type="text" class="form-control" id="txtProvincia" name="localidad" placeholder="Localidad" />*@
+                            <select class="form-control">
+                                <option value="value">Valor1</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon label-addon"><i class="fas fa-map-marked-alt"></i></span>
                             <input type="text" class="form-control" id="txtLocalidad" name="localidad" placeholder="Localidad" />
                         </div>
                         <div class="input-group">
@@ -83,6 +91,7 @@
         </div>
     </div>
 </div>
+
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
@@ -125,8 +134,9 @@
                         "info": false,
                         columns: [
                             { 'data': 'cli_nombre' },
-                            { 'data': 'cli_direccion' },
+                            { 'data': 'cli_provincia' },
                             { 'data': 'cli_localidad' },
+                            { 'data': 'cli_direccion' },
                             { 'data': 'cli_telefono' },
                             { 'data': 'cli_celular' },
                             { 'data': 'cli_celular2' },
@@ -294,4 +304,5 @@
 
     });
 </script>
+
 

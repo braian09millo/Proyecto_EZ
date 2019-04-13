@@ -3,18 +3,36 @@ CREATE DATABASE BD_EZ
 USE BD_EZ
 
 -- CREACION DE LAS TABLAS CON SUS RESPECTIVAS RELACIONES
-CREATE TABLE CLIENTE
+
+CREATE TABLE provincia
+(
+	pro_id INT IDENTITY PRIMARY KEY,
+	pro_descr VARCHAR(50) NOT NULL
+)
+
+CREATE TABLE localidad
+(
+	loc_id INT IDENTITY PRIMARY KEY,
+	loc_provincia INT NOT NULL,
+	loc_descr VARCHAR(50) NOT NULL
+)
+
+CREATE TABLE cliente
 (
 	cli_id INT IDENTITY PRIMARY KEY,
 	cli_nombre VARCHAR(50) NOT NULL,
+	cli_provincia INT NOT NULL,
+	cli_localidad INT NOT NULL,
 	cli_direccion VARCHAR(100) NOT NULL,
-	cli_localidad VARCHAR(100) NOT NULL,
 	cli_telefono VARCHAR(15) NULL,
 	cli_celular VARCHAR(15) NULL,
-	cli_celular2 VARCHAR(15) NULL
+	cli_celular2 VARCHAR(15) NULL,
+	cli_delet CHAR(1) NULL,
+	CONSTRAINT FK_Provincia_Cliente FOREIGN KEY (cli_provincia) REFERENCES provincia(pro_id),
+	CONSTRAINT FK_Localidad_Cliente FOREIGN KEY (cli_localidad) REFERENCES localidad(loc_id)	
 )
 
-CREATE TABLE USUARIO
+CREATE TABLE usuario
 (
 	usu_usuario VARCHAR(10) PRIMARY KEY,
 	usu_password VARCHAR(100) NOT NULL,
@@ -23,13 +41,13 @@ CREATE TABLE USUARIO
 	usu_fecha_acceso DATETIME NULL
 )
 
-CREATE TABLE MARCA 
+CREATE TABLE marca 
 (
 	mar_id INT IDENTITY PRIMARY KEY,
 	mar_nombre VARCHAR(100) NOT NULL
 )
 
-CREATE TABLE MODELO
+CREATE TABLE modelo
 (
 	mod_id INT IDENTITY,
 	mod_marca INT NOT NULL,
@@ -38,19 +56,19 @@ CREATE TABLE MODELO
 	CONSTRAINT PK_Modelo PRIMARY KEY (mod_id)
 )
 
-CREATE TABLE TAMANIO 
+CREATE TABLE tamanio 
 (
 	tam_id INT IDENTITY PRIMARY KEY, 
 	tam_descripcion VARCHAR(50) NOT NULL
 )
 
-CREATE TABLE TIPO
+CREATE TABLE tipo
 (
 	tip_id INT IDENTITY PRIMARY KEY,
 	tip_descr VARCHAR(50) NOT NULL
 )
 
-CREATE TABLE PRODUCTO
+CREATE TABLE producto
 (
 	prod_id INT IDENTITY,
 	prod_marca INT NOT NULL,
@@ -64,7 +82,7 @@ CREATE TABLE PRODUCTO
 	CONSTRAINT PK_Producto PRIMARY KEY (prod_id)
 )
 
-CREATE TABLE PEDIDO
+CREATE TABLE pedido
 (
 	ped_id INT IDENTITY PRIMARY KEY,
 	ped_cliente INT NOT NULL,
@@ -72,7 +90,7 @@ CREATE TABLE PEDIDO
 	ped_monto MONEY NOT NULL,
 )
 
-CREATE TABLE DETALLE_PEDIDO
+CREATE TABLE detalle_pedido
 (
 	det_id INT IDENTITY PRIMARY KEY,
 	det_pedido INT NOT NULL,
@@ -83,7 +101,7 @@ CREATE TABLE DETALLE_PEDIDO
 	CONSTRAINT FK_Producto_DetallePedido FOREIGN KEY (det_producto) REFERENCES PRODUCTO(prod_id)
 )
 
-CREATE TABLE REMITO
+CREATE TABLE remito
 (
 	rem_numero INT IDENTITY PRIMARY KEY,
 	rem_cliente INT NOT NULL,
@@ -91,14 +109,23 @@ CREATE TABLE REMITO
 	CONSTRAINT FK_Pedido_Remito FOREIGN KEY (rem_pedido) REFERENCES PEDIDO(ped_id)
 )
 
-CREATE TABLE PRECIO
+CREATE TABLE precio
 (
-	pre_prod INT NOT NULL,
-	pre_puni SMALLMONEY NOT NULL,
-	pre_cantpack INT NULL,
-	pre_ppack SMALLMONEY NOT NULL,
-	CONSTRAINT FK_Producto_Precio FOREIGN KEY (pre_prod) REFERENCES PRODUCTO(prod_id),
-	CONSTRAINT PK_Precio PRIMARY KEY (pre_prod)
+	pre_ident INT IDENTITY PRIMARY KEY,
+	pre_fecha datetime NOT NULL,
+	pre_fechaHasta INT NULL
+)
+
+CREATE TABLE precio_detalle
+(
+	prd_campre INT NOT NULL, --Identity de tabla Precio
+	prd_produ INT NOT NULL, --Id del producto
+	prd_precioC SMALLMONEY NOT NULL,
+	prd_porcen TINYINT NOT NULL,
+	prd_precioPV SMALLMONEY NOT NULL, --Precio 
+	CONSTRAINT FK_Precio_Precio_Detalle FOREIGN KEY (prd_campre) REFERENCES PRECIO(pre_ident),
+	CONSTRAINT FK_Producto_Precio_Detalle FOREIGN KEY (prd_produ) REFERENCES PRODUCTO(prod_id),
+	CONSTRAINT PK_Precio_Detalle PRIMARY KEY (prd_campre,prd_produ)
 )
 
 GO
@@ -184,3 +211,7 @@ INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (3, 'Naranja')
 INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (3, 'Limón Dulce')
 INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (3, 'Frutilla-Limón')
 INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (3, 'Naranja-Mango')
+
+insert into provincia (pro_descr) Values ('BUENOS AIRES')
+insert into provincia (pro_descr) Values ('CABA')
+

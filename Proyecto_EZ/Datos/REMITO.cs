@@ -12,12 +12,12 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class REMITO
+    public partial class remito
     {
         public int rem_numero { get; set; }
         public int rem_cliente { get; set; }
         public int rem_pedido { get; set; }
     
-        public virtual PEDIDO PEDIDO { get; set; }
+        public virtual pedido pedido { get; set; }
     }
 }

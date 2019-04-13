@@ -12,7 +12,7 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class DETALLE_PEDIDO
+    public partial class detalle_pedido
     {
         public int det_id { get; set; }
         public int det_pedido { get; set; }
@@ -21,6 +21,6 @@ namespace Datos
         public decimal det_precio { get; set; }
         public decimal det_monto { get; set; }
     
-        public virtual PRODUCTO PRODUCTO { get; set; }
+        public virtual producto producto { get; set; }
     }
 }

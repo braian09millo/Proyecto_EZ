@@ -5,23 +5,31 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="5fda8a6d0cb54d41894dfecfd6022e54" Name="Diagram1">
-        <EntityTypeShape EntityType="Modelo.DETALLE_PEDIDO" Width="1.5" PointX="7.5" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Modelo.MARCA" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Modelo.MODELO" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Modelo.PRODUCTO" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="Modelo.TAMANIO" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Modelo.TIPO" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Modelo.USUARIO" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="Modelo.FK_Producto_DetallePedido" ManuallyRouted="false" />
-        <AssociationConnector Association="Modelo.FK_Marca_Modelo" ManuallyRouted="false" />
-        <AssociationConnector Association="Modelo.FK_Marca_Producto" ManuallyRouted="false" />
-        <AssociationConnector Association="Modelo.FK_Modelo_Producto" ManuallyRouted="false" />
-        <AssociationConnector Association="Modelo.FK_Tamanio_Producto" ManuallyRouted="false" />
-        <AssociationConnector Association="Modelo.FK_Tipo_Producto" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="Modelo.CLIENTE" Width="1.5" PointX="5.375" PointY="8.75" />
-        <EntityTypeShape EntityType="Modelo.PEDIDO" Width="1.5" PointX="5.375" PointY="5.875" />
-        <EntityTypeShape EntityType="Modelo.REMITO" Width="1.5" PointX="7.625" PointY="6" />
+        <EntityTypeShape EntityType="Modelo.cliente" Width="1.5" PointX="12" PointY="1.875" />
+        <EntityTypeShape EntityType="Modelo.detalle_pedido" Width="1.5" PointX="7.5" PointY="6.625" />
+        <EntityTypeShape EntityType="Modelo.localidad" Width="1.5" PointX="9.75" PointY="6.5" />
+        <EntityTypeShape EntityType="Modelo.marca" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="Modelo.modelo" Width="1.5" PointX="3" PointY="3.75" />
+        <EntityTypeShape EntityType="Modelo.pedido" Width="1.5" PointX="7.75" PointY="10.75" />
+        <EntityTypeShape EntityType="Modelo.precio" Width="1.5" PointX="5.25" PointY="8.875" />
+        <EntityTypeShape EntityType="Modelo.precio_detalle" Width="1.5" PointX="7.5" PointY="3.5" />
+        <EntityTypeShape EntityType="Modelo.producto" Width="1.5" PointX="5.25" PointY="3.125" />
+        <EntityTypeShape EntityType="Modelo.provincia" Width="1.5" PointX="9.75" PointY="2.625" />
+        <EntityTypeShape EntityType="Modelo.remito" Width="1.5" PointX="10" PointY="10.875" />
+        <EntityTypeShape EntityType="Modelo.tamanio" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="Modelo.tipo" Width="1.5" PointX="3" PointY="7.125" />
+        <EntityTypeShape EntityType="Modelo.usuario" Width="1.5" PointX="0.75" PointY="9.625" />
+        <AssociationConnector Association="Modelo.FK_Localidad_Cliente" />
+        <AssociationConnector Association="Modelo.FK_Provincia_Cliente" />
+        <AssociationConnector Association="Modelo.FK_Producto_DetallePedido" />
+        <AssociationConnector Association="Modelo.FK_Marca_Modelo" />
+        <AssociationConnector Association="Modelo.FK_Marca_Producto" />
+        <AssociationConnector Association="Modelo.FK_Modelo_Producto" />
         <AssociationConnector Association="Modelo.FK_Pedido_Remito" />
+        <AssociationConnector Association="Modelo.FK_Precio_Precio_Detalle" />
+        <AssociationConnector Association="Modelo.FK_Producto_Precio_Detalle" />
+        <AssociationConnector Association="Modelo.FK_Tamanio_Producto" />
+        <AssociationConnector Association="Modelo.FK_Tipo_Producto" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
