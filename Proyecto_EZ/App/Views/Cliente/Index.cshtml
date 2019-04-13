@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="NuevoForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="NuevoForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -57,14 +57,11 @@
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon label-addon"><i class="fas fa-map-marked-alt"></i></span>
-                            @*<input type="text" class="form-control" id="txtProvincia" name="localidad" placeholder="Localidad" />*@
-                            <select class="form-control">
-                                <option value="value">Valor1</option>
-                            </select>
+                            @Html.Partial("comboProvincias")
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon label-addon"><i class="fas fa-map-marked-alt"></i></span>
-                            <input type="text" class="form-control" id="txtLocalidad" name="localidad" placeholder="Localidad" />
+                            @Html.Partial("comboLocalidades")
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon label-addon"><i class="fas fa-phone"></i></span>
@@ -301,6 +298,55 @@
 
             }
         });
+
+        $("#cmbProvincias").on('change', function () {
+
+            var valor = $(this).val();
+            console.log(valor);
+
+            if (valor === null || valor === "" || valor === undefined) {
+
+                $("#cmbLocalidades").prop("disabled", true);
+            }
+            else
+            {
+                $("#cmbLocalidades").prop("disabled", false);
+                
+                $.ajax({
+
+                    method: 'GET',
+                    url: './Cliente/FiltrarLocalidades?&xiProvincia=' + valor,
+                    success: function (response) {
+
+                        console.log(response);
+
+                        if (response.data.error != "") {
+
+                            swal({
+                                title: "Error",
+                                text: response.error,
+                                icon: "warning",
+                                button: "Aceptar",
+                            });
+                        } else {
+
+                            $(response.data).each(function () {
+                                $("#cmbLocalidades")
+                                    .append($("<option></option>")
+                                    .val(this.loc_id)
+                                    .html(this.loc_descr));
+                            });
+
+                        }
+
+                    }
+
+                });
+
+
+            }
+
+        })
 
     });
 </script>

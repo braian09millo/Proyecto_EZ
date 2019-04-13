@@ -1,20 +1,29 @@
 ﻿using Datos;
 using Negocios;
 using Negocios.BusinessControllers;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace App.Controllers
 {
     public class ClienteController : Controller
     {
+        ClienteCtrl xoClienteCtrl = new Factory().GetCtrlCliente();
+
         public ActionResult Index()
         {
+            string xsError = "";
+
+            var xoResultado =  xoClienteCtrl.ObtenerProvincias(out xsError);
+            var lstProvincias = xoResultado.Select(x => new SelectListItem { Value = x.pro_id.ToString(), Text = x.pro_descr }).ToList();
+            ViewBag.ComboProvincias = lstProvincias;
+
             return View();
         }
 
-        public ActionResult GetClientes()
+        public JsonResult GetClientes()
         {
-            ClienteCtrl xoClienteCtrl = new Factory().GetCtrlCliente();
             string xsError = "";
 
             var xoResultado = xoClienteCtrl.ObtenerClientes(out xsError);
@@ -23,9 +32,8 @@ namespace App.Controllers
         }
 
         [HttpPost]
-        public ActionResult PostGuardarCliente(cliente xoCliente)
+        public JsonResult PostGuardarCliente(cliente xoCliente)
         {
-            ClienteCtrl xoClienteCtrl = new Factory().GetCtrlCliente();
             string xsError = "";
 
             xoClienteCtrl.GuardarCliente(xoCliente, out xsError);
@@ -34,14 +42,24 @@ namespace App.Controllers
         }
 
         [HttpPost]
-        public ActionResult PostEliminarCliente(int xiId)
+        public JsonResult PostEliminarCliente(int xiId)
         {
-            ClienteCtrl xoClienteCtrl = new Factory().GetCtrlCliente();
             string xsError = "";
 
             xoClienteCtrl.EliminarCliente(xiId, out xsError);
 
             return Json(xsError);
+        }
+
+        [HttpGet]
+        public JsonResult FiltrarLocalidades(int xiProvincia)
+        {
+            string xsError = "";
+
+            var xoResultado = xoClienteCtrl.FiltrarLocalidades(xiProvincia, out xsError);
+            var resultadoJS = new { data = xoResultado, error = xsError };
+
+            return Json(resultadoJS);
         }
     }
 }

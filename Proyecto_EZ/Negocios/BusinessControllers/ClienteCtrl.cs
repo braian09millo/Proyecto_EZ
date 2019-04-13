@@ -3,8 +3,6 @@ using Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Negocios.BusinessControllers
 {
@@ -93,6 +91,46 @@ namespace Negocios.BusinessControllers
             {
                 xsError = ex.Message;
             }
+        }
+
+        public List<provincia> ObtenerProvincias(out string xsError)
+        {
+            xsError = "";
+            List<provincia> loResultado = null;
+
+            try
+            {
+                using (BD_Entities xoDB = new BD_Entities())
+                {
+                    loResultado = xoDB.provincia.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                xsError = ex.Message;
+            }
+
+            return loResultado;
+        }
+
+        public List<localidad> FiltrarLocalidades(int xiProvincia, out string xsError)
+        {
+            xsError = "";
+            List<localidad> loResultado = null;
+
+            try
+            {
+                using (BD_Entities xoDB = new BD_Entities())
+                {
+                    loResultado = xoDB.localidad.Where(x => x.loc_provincia == xiProvincia).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                xsError = ex.Message;
+            }
+
+            return loResultado;
         }
 
         #endregion
