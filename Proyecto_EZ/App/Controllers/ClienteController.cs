@@ -51,14 +51,15 @@ namespace App.Controllers
             return Json(xsError);
         }
 
-        [HttpGet]
+        [HttpPost]
         public JsonResult FiltrarLocalidades(int xiProvincia)
         {
             string xsError = "";
+            var xoResultado = xoClienteCtrl.FiltrarLocalidades(xiProvincia, out xsError)
+                                           .Select(x => new { loc_id = x.loc_id, loc_descr = x.loc_descr })
+                                           .ToList();
 
-            var xoResultado = xoClienteCtrl.FiltrarLocalidades(xiProvincia, out xsError);
             var resultadoJS = new { data = xoResultado, error = xsError };
-
             return Json(resultadoJS);
         }
     }

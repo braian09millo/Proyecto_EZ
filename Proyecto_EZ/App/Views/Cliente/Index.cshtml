@@ -56,7 +56,7 @@
                             <input type="text" class="form-control" id="txtDireccion" name="direccion" placeholder="Dirección" />
                         </div>
                         <div class="input-group">
-                            <span class="input-group-addon label-addon"><i class="fas fa-map-marked-alt"></i></span>
+                            <span class="input-group-addon label-addon"><i class="fas fa-map-marker-alt"></i></span>
                             @Html.Partial("comboProvincias")
                         </div>
                         <div class="input-group">
@@ -302,25 +302,27 @@
         $("#cmbProvincias").on('change', function () {
 
             var valor = $(this).val();
-            console.log(valor);
 
             if (valor === null || valor === "" || valor === undefined) {
 
-                $("#cmbLocalidades").prop("disabled", true);
+                $("#cmbLocalidades").prop("disabled", true).val(null);               
             }
             else
             {
                 $("#cmbLocalidades").prop("disabled", false);
                 
-                $.ajax({
+                var dataToPost = {
+                    xiProvincia: valor
+                };
 
-                    method: 'GET',
-                    url: './Cliente/FiltrarLocalidades?&xiProvincia=' + valor,
+                $.ajax({
+                    method: 'POST',
+                    data: JSON.stringify(dataToPost),
+                    url: '/Cliente/FiltrarLocalidades',
+                    contentType: 'application/json; charset=utf-8',
                     success: function (response) {
 
-                        console.log(response);
-
-                        if (response.data.error != "") {
+                        if (response.error != "") {
 
                             swal({
                                 title: "Error",
@@ -329,7 +331,7 @@
                                 button: "Aceptar",
                             });
                         } else {
-
+                            $("#cmbLocalidades").empty().end();
                             $(response.data).each(function () {
                                 $("#cmbLocalidades")
                                     .append($("<option></option>")
@@ -339,6 +341,9 @@
 
                         }
 
+                    },
+                    error: function (error) {
+                        console.log(error);
                     }
 
                 });

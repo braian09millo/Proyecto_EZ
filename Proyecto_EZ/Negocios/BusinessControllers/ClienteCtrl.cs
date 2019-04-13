@@ -122,7 +122,9 @@ namespace Negocios.BusinessControllers
             {
                 using (BD_Entities xoDB = new BD_Entities())
                 {
-                    loResultado = xoDB.localidad.Where(x => x.loc_provincia == xiProvincia).ToList();
+                    loResultado = xoDB.localidad.Where(x => x.loc_provincia == xiProvincia)
+                                                .OrderBy(x => x.loc_descr)
+                                                .ToList();
                 }
             }
             catch (Exception ex)
