@@ -10,7 +10,9 @@ namespace Entidades
     {
         public int cli_id { get; set; }
         public string cli_nombre { get; set; }
+        public int cli_proid { get; set; }
         public string cli_provincia { get; set; }
+        public int cli_locid { get; set; }
         public string cli_localidad { get; set; }
         public string cli_direccion { get; set; }
         public string cli_telefono { get; set; }

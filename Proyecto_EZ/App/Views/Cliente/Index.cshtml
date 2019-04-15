@@ -110,6 +110,7 @@
         }
 
         $('#NuevoForm').on('hidden.bs.modal', function (e) {
+
             $(this)
               .find("input[type=text],textarea,select")
                  .val('')
@@ -117,6 +118,10 @@
               .find("input[type=checkbox], input[type=radio]")
                  .prop("checked", "")
                  .end();
+
+            $('#cmbLocalidades').val(0).prop('disabled', true);
+
+
         });
 
         function CargarDatos() {
@@ -125,7 +130,7 @@
                 method: 'GET',
                 url: '/Cliente/GetClientes',
                 contentType: 'application/json; charset=utf-8',
-                success: function (response) {
+                success: function (response) {                    
                     var tabla = $('#tableClientes').DataTable({
                         data: response,
                         "info": false,
@@ -144,27 +149,34 @@
                     editarCliente('#tableClientes tbody', tabla);
                     eliminarCliente('#tableClientes tbody', tabla);
 
-                }, error: function (error) {
+                },
+                error: function (error) {
                     console.log(error);
                 }
             });
         }
 
         var editarCliente = function (tbody, table) {
+
             $(tbody).off('click', 'button.btn-info.btn-xs');
             $(tbody).on('click', 'button.btn-info.btn-xs', function () {
+
                 var data = table.row($(this).parents('tr')).data();
 
                 $('#txtId').val(data.cli_id);
                 $('#txtNombre').val(data.cli_nombre);
+                $('#cmbProvincias').val(data.cli_proid);
+                FiltrarComboLocalidades(data.cli_proid);
+                $('#cmbLocalidades').prop('disabled', false);
                 $('#txtDireccion').val(data.cli_direccion);
-                $('#txtLocalidad').val(data.cli_localidad);
                 $('#txtTelefono').val(data.cli_telefono);
                 $('#txtCelular').val(data.cli_celular);
                 $('#txtCelular2').val(data.cli_celular2);
 
                 $('#NuevoForm').modal('show');
-            })
+
+            });
+
         }
 
         var eliminarCliente = function (tbody, table) {
@@ -172,16 +184,13 @@
             $(tbody).on('click', 'button.btn-danger.btn-xs', function () {
 
                 var data = table.row($(this).parents('tr')).data();
-
-                console.log(data);
-
                 var dataToPost = {
                     xiId: data.cli_id
                 }
                 
                 swal({
-                    title: "Are you sure?",
-                    text: "You will not be able to recover this imaginary file!",
+                    title: "Está seguro?",
+                    text: "No podrá recuperar el registro una vez eliminado",
                     icon: "warning",
                     buttons: ['Cancelar','Confirmar'],
                     dangerMode: true,
@@ -213,20 +222,18 @@
                         });
                     }
                 })
-
-
-
             });
         }
 
-
         //Habilitamos el botón cuando los campos requeridos esten llenos
         function ValidarFormulario() {
+
             var nombre = $('#txtNombre').val();
             var direccion = $('#txtDireccion').val();
-            var localidad = $('#txtLocalidad').val();
+            var provincia = $('#cmbProvincias').val();
+            var localidad = $('#cmbLocalidades').val();
 
-            if (nombre == "" || direccion == "" || localidad == "")
+            if (nombre == "" || direccion == "" || localidad == "" || provincia == "")
                 return false;
             else
                 return true;
@@ -243,8 +250,9 @@
                 var dataToPost = {
                     cli_id: $('#txtId').val(),
                     cli_nombre: $('#txtNombre').val(),
+                    cli_provincia: $('#cmbProvincias').val(),
+                    cli_localidad: $('#cmbLocalidades').val(),
                     cli_direccion: $('#txtDireccion').val(),
-                    cli_localidad: $('#txtLocalidad').val(),
                     cli_telefono: $('#txtTelefono').val(),
                     cli_celular: $('#txtCelular').val(),
                     cli_celular2: $('#txtCelular2').val()
@@ -259,12 +267,14 @@
                     success: function (response) {
                         if (response == '') {
                             $('#NuevoForm').modal('hide');
+
                             swal({
                                 title: "Exito",
                                 text: "Cliente agregado correctamente",
                                 icon: "success",
                                 button: "Aceptar",
                             });
+
                             Limpiar();
                             CargarDatos();
                         }
@@ -303,55 +313,49 @@
 
             var valor = $(this).val();
 
-            if (valor === null || valor === "" || valor === undefined) {
-
-                $("#cmbLocalidades").prop("disabled", true).val(null);               
-            }
+            if (valor === null || valor === "" || valor === undefined)
+                $("#cmbLocalidades").prop("disabled", true).val('');
             else
             {
                 $("#cmbLocalidades").prop("disabled", false);
-                
-                var dataToPost = {
-                    xiProvincia: valor
-                };
-
-                $.ajax({
-                    method: 'POST',
-                    data: JSON.stringify(dataToPost),
-                    url: '/Cliente/FiltrarLocalidades',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (response) {
-
-                        if (response.error != "") {
-
-                            swal({
-                                title: "Error",
-                                text: response.error,
-                                icon: "warning",
-                                button: "Aceptar",
-                            });
-                        } else {
-                            $("#cmbLocalidades").empty().end();
-                            $(response.data).each(function () {
-                                $("#cmbLocalidades")
-                                    .append($("<option></option>")
-                                    .val(this.loc_id)
-                                    .html(this.loc_descr));
-                            });
-
-                        }
-
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-
-                });
-
-
+                FiltrarComboLocalidades(valor);
             }
 
-        })
+        });
+
+        function FiltrarComboLocalidades(valorProvincia) {
+
+            $.ajax({
+                method: 'POST',
+                data: JSON.stringify({ xiProvincia: valorProvincia }),
+                url: '/Cliente/FiltrarLocalidades',
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+
+                    if (response.error != "") {
+
+                        swal({
+                            title: "Error",
+                            text: response.error,
+                            icon: "warning",
+                            button: "Aceptar",
+                        });
+                    } else {
+                        $("#cmbLocalidades").empty();
+                        $(response.data).each(function () {
+                            $("#cmbLocalidades")
+                                .append($("<option></option>")
+                                .val(this.loc_id)
+                                .html(this.loc_descr));
+                        });
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+
+        }
 
     });
 </script>

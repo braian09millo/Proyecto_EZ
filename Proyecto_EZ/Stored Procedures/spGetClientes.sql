@@ -10,7 +10,9 @@ WITH ENCRYPTION AS
 	SELECT 
 		cli_id,
 		cli_nombre,
+		pro_id as cli_proid,
 		pro_descr as cli_provincia,
+		loc_id as cli_locid,
 		loc_descr as cli_localidad,
 		cli_direccion,
 		cli_telefono,
