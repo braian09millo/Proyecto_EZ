@@ -61,7 +61,13 @@
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon label-addon"><i class="fas fa-map-marked-alt"></i></span>
-                            @Html.Partial("comboLocalidades")
+                            <select id="cmbLocalidades" class="form-control" disabled>
+                                <option value="">Elija una localidad</option>
+                                @foreach (var item in ViewBag.Localidades)
+                                {
+                                    <option data-info="@item.loc_provincia" value="@item.loc_id">@item.loc_descr</option>
+                                }
+                            </select>
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon label-addon"><i class="fas fa-phone"></i></span>
@@ -102,6 +108,9 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
+        //Obtenemos la lista de localidades para filtrarla
+        var optLocalidades = $('#cmbLocalidades option');
+
         //Cargamos la grilla al iniciar
         CargarDatos();
 
@@ -130,7 +139,7 @@
                 method: 'GET',
                 url: '/Cliente/GetClientes',
                 contentType: 'application/json; charset=utf-8',
-                success: function (response) {                    
+                success: function (response) {
                     var tabla = $('#tableClientes').DataTable({
                         data: response,
                         "info": false,
@@ -166,8 +175,7 @@
                 $('#txtId').val(data.cli_id);
                 $('#txtNombre').val(data.cli_nombre);
                 $('#cmbProvincias').val(data.cli_proid);
-                FiltrarComboLocalidades(data.cli_proid);
-                $('#cmbLocalidades').prop('disabled', false);
+                $('#cmbLocalidades').prop('disabled', false).val(data.cli_locid);
                 $('#txtDireccion').val(data.cli_direccion);
                 $('#txtTelefono').val(data.cli_telefono);
                 $('#txtCelular').val(data.cli_celular);
@@ -180,6 +188,7 @@
         }
 
         var eliminarCliente = function (tbody, table) {
+
             $(tbody).off('click', 'button.btn-danger.btn-xs');
             $(tbody).on('click', 'button.btn-danger.btn-xs', function () {
 
@@ -187,12 +196,12 @@
                 var dataToPost = {
                     xiId: data.cli_id
                 }
-                
+
                 swal({
-                    title: "Está seguro?",
+                    title: "¿Está seguro?",
                     text: "No podrá recuperar el registro una vez eliminado",
                     icon: "warning",
-                    buttons: ['Cancelar','Confirmar'],
+                    buttons: ['Cancelar', 'Confirmar'],
                     dangerMode: true,
                 }).then(function (bElimina) {
                     if (bElimina) {
@@ -315,12 +324,21 @@
 
             if (valor === null || valor === "" || valor === undefined)
                 $("#cmbLocalidades").prop("disabled", true).val('');
-            else
-            {
+            else {
                 $("#cmbLocalidades").prop("disabled", false);
-                FiltrarComboLocalidades(valor);
+                $("#cmbLocalidades").empty();
+                $(optLocalidades).each(function () {
+                    if ($(this).data("info") == valor) {
+                        console.log($(this).data("info") == valor);
+                        $("#cmbLocalidades")
+                            .append($("<option></option>")
+                            .val($(this).val())
+                            .html($(this).html()));
+                    }
+                });
+                $('#cmbLocalidades').append("<option value=''>Elija una localidad</option>");
             }
-
+            $()
         });
 
         function FiltrarComboLocalidades(valorProvincia) {

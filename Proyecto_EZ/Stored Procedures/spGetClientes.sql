@@ -21,6 +21,7 @@ WITH ENCRYPTION AS
 	FROM cliente
 	JOIN provincia ON cli_provincia = pro_id
 	JOIN localidad ON loc_id = cli_localidad
+	WHERE ISNULL(cli_delet,'N') <> 'S'
 
 	SET @@nRet = @@error
 	IF @@nRet <> 0 

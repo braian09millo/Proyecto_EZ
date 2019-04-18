@@ -210,7 +210,6 @@
     <Content Include="Views\Cliente\Index.cshtml" />
     <Content Include="Views\Producto\Index.cshtml" />
     <Content Include="Views\Cliente\comboProvincias.cshtml" />
-    <Content Include="Views\Cliente\comboLocalidades.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

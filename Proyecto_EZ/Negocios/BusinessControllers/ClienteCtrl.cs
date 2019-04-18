@@ -80,7 +80,7 @@ namespace Negocios.BusinessControllers
 
                     if (xoCliente != null)
                     {
-                        xoDB.cliente.Remove(xoCliente);
+                        xoCliente.cli_delet = "S";
                         xoDB.SaveChanges();
                     }
                     else
@@ -103,6 +103,26 @@ namespace Negocios.BusinessControllers
                 using (BD_Entities xoDB = new BD_Entities())
                 {
                     loResultado = xoDB.provincia.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                xsError = ex.Message;
+            }
+
+            return loResultado;
+        }
+
+        public List<localidad> ObtenerLocalidades(out string xsError)
+        {
+            xsError = "";
+            List<localidad> loResultado = null;
+
+            try
+            {
+                using (BD_Entities xoDB = new BD_Entities())
+                {
+                    loResultado = xoDB.localidad.ToList();
                 }
             }
             catch (Exception ex)

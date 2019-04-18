@@ -15,9 +15,11 @@ namespace App.Controllers
         {
             string xsError = "";
 
-            var xoResultado =  xoClienteCtrl.ObtenerProvincias(out xsError);
-            var lstProvincias = xoResultado.Select(x => new SelectListItem { Value = x.pro_id.ToString(), Text = x.pro_descr }).ToList();
+            var xoProvincias =  xoClienteCtrl.ObtenerProvincias(out xsError);
+            var lstProvincias = xoProvincias.Select(x => new SelectListItem() { Value = x.pro_id.ToString(), Text = x.pro_descr }).ToList();
             ViewBag.ComboProvincias = lstProvincias;
+
+            ViewBag.Localidades = xoClienteCtrl.ObtenerLocalidades(out xsError);
 
             return View();
         }
@@ -51,16 +53,5 @@ namespace App.Controllers
             return Json(xsError);
         }
 
-        [HttpPost]
-        public JsonResult FiltrarLocalidades(int xiProvincia)
-        {
-            string xsError = "";
-            var xoResultado = xoClienteCtrl.FiltrarLocalidades(xiProvincia, out xsError)
-                                           .Select(x => new { loc_id = x.loc_id, loc_descr = x.loc_descr })
-                                           .ToList();
-
-            var resultadoJS = new { data = xoResultado, error = xsError };
-            return Json(resultadoJS);
-        }
     }
 }
