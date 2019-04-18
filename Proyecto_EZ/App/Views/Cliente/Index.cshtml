@@ -80,30 +80,29 @@
                         <div class="input-group">
                             <span class="input-group-addon label-addon"><i class="fas fa-mobile-alt"></i></span>
                             <input type="text" class="form-control" id="txtCelular2" name="celular2" placeholder="Celular Alternativo" />
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-sm-12 text-center">
-                                <button class="btn btn-primary" type="submit" id="btnAgregar"><i class="fas fa-check"></i>&nbsp;Guardar</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp;Cancelar</button>
-                            </div>
-                        </div>
+                        </div>                        
                     </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button class="btn btn-primary" type="submit" id="btnAgregar"><i class="fas fa-check"></i>&nbsp;Guardar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp;Cancelar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+@section Scripts {
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
 <script src="~/Scripts/datatables.min.js"></script>
 <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
 <script src="~/Scripts/sweetalert.min.js"></script>
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
-<link href="~/Content/style.css" rel="stylesheet" />
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -347,7 +346,6 @@
                 });
                 $('#cmbLocalidades').append("<option value=''>Elija una localidad</option>");
             }
-            $()
         });
 
         function FiltrarComboLocalidades(valorProvincia) {
@@ -386,5 +384,12 @@
 
     });
 </script>
+}
 
+@section Styles {
+    
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
 
+}

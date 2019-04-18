@@ -78,7 +78,7 @@
           <Property Name="prd_campre" Type="int" Nullable="false" />
           <Property Name="prd_produ" Type="int" Nullable="false" />
           <Property Name="prd_precioC" Type="smallmoney" Nullable="false" />
-          <Property Name="prd_porcen" Type="tinyint" Nullable="false" />
+          <Property Name="prd_porcen" Type="decimal" Precision="18" Scale="0" />
           <Property Name="prd_precioPV" Type="smallmoney" Nullable="false" />
         </EntityType>
         <EntityType Name="producto">
@@ -470,7 +470,7 @@
           <Property Name="prd_campre" Type="Int32" Nullable="false" />
           <Property Name="prd_produ" Type="Int32" Nullable="false" />
           <Property Name="prd_precioC" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
-          <Property Name="prd_porcen" Type="Byte" Nullable="false" />
+          <Property Name="prd_porcen" Type="Byte" />
           <Property Name="prd_precioPV" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
           <NavigationProperty Name="precio" Relationship="Modelo.FK_Precio_Precio_Detalle" FromRole="precio_detalle" ToRole="precio" />
           <NavigationProperty Name="producto" Relationship="Modelo.FK_Producto_Precio_Detalle" FromRole="precio_detalle" ToRole="producto" />

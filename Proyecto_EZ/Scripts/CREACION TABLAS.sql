@@ -122,7 +122,7 @@ CREATE TABLE precio_detalle
 	prd_campre INT NOT NULL, --Identity de tabla Precio
 	prd_produ INT NOT NULL, --Id del producto
 	prd_precioC SMALLMONEY NOT NULL,
-	prd_porcen TINYINT NOT NULL,
+	prd_porcen DECIMAL NOT NULL,
 	prd_precioPV SMALLMONEY NOT NULL, --Precio 
 	CONSTRAINT FK_Precio_Precio_Detalle FOREIGN KEY (prd_campre) REFERENCES PRECIO(pre_ident),
 	CONSTRAINT FK_Producto_Precio_Detalle FOREIGN KEY (prd_produ) REFERENCES PRODUCTO(prod_id),

@@ -210,6 +210,9 @@
     <Content Include="Views\Cliente\Index.cshtml" />
     <Content Include="Views\Producto\Index.cshtml" />
     <Content Include="Views\Cliente\comboProvincias.cshtml" />
+    <Content Include="Views\Producto\comboMarcas.cshtml" />
+    <Content Include="Views\Producto\comboTamanios.cshtml" />
+    <Content Include="Views\Producto\comboTipos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
