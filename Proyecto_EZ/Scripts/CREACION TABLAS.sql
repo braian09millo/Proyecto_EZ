@@ -75,6 +75,7 @@ CREATE TABLE producto
 	prod_modelo INT NOT NULL,
 	prod_tamanio INT NOT NULL,
 	prod_tipo INT NOT NULL,
+	prod_pack INT NULL,
 	CONSTRAINT FK_Marca_Producto FOREIGN KEY (prod_marca) REFERENCES MARCA(mar_id),
 	CONSTRAINT FK_Modelo_Producto FOREIGN KEY (prod_modelo) REFERENCES MODELO(mod_id),
 	CONSTRAINT FK_Tamanio_Producto FOREIGN KEY (prod_tamanio) REFERENCES TAMANIO(tam_id),

@@ -90,6 +90,7 @@
           <Property Name="prod_modelo" Type="int" Nullable="false" />
           <Property Name="prod_tamanio" Type="int" Nullable="false" />
           <Property Name="prod_tipo" Type="int" Nullable="false" />
+          <Property Name="prod_pack" Type="int" />
         </EntityType>
         <EntityType Name="provincia">
           <Key>
@@ -335,7 +336,6 @@
           <EntitySet Name="pedido" EntityType="Modelo.pedido" />
           <EntitySet Name="precio" EntityType="Modelo.precio" />
           <EntitySet Name="precio_detalle" EntityType="Modelo.precio_detalle" />
-          <EntitySet Name="producto" EntityType="Modelo.producto" />
           <EntitySet Name="provincia" EntityType="Modelo.provincia" />
           <EntitySet Name="remito" EntityType="Modelo.remito" />
           <EntitySet Name="tamanio" EntityType="Modelo.tamanio" />
@@ -349,21 +349,9 @@
             <End Role="provincia" EntitySet="provincia" />
             <End Role="cliente" EntitySet="cliente" />
           </AssociationSet>
-          <AssociationSet Name="FK_Producto_DetallePedido" Association="Modelo.FK_Producto_DetallePedido">
-            <End Role="producto" EntitySet="producto" />
-            <End Role="detalle_pedido" EntitySet="detalle_pedido" />
-          </AssociationSet>
           <AssociationSet Name="FK_Marca_Modelo" Association="Modelo.FK_Marca_Modelo">
             <End Role="marca" EntitySet="marca" />
             <End Role="modelo" EntitySet="modelo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Marca_Producto" Association="Modelo.FK_Marca_Producto">
-            <End Role="marca" EntitySet="marca" />
-            <End Role="producto" EntitySet="producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Modelo_Producto" Association="Modelo.FK_Modelo_Producto">
-            <End Role="modelo" EntitySet="modelo" />
-            <End Role="producto" EntitySet="producto" />
           </AssociationSet>
           <AssociationSet Name="FK_Pedido_Remito" Association="Modelo.FK_Pedido_Remito">
             <End Role="pedido" EntitySet="pedido" />
@@ -372,6 +360,19 @@
           <AssociationSet Name="FK_Precio_Precio_Detalle" Association="Modelo.FK_Precio_Precio_Detalle">
             <End Role="precio" EntitySet="precio" />
             <End Role="precio_detalle" EntitySet="precio_detalle" />
+          </AssociationSet>
+          <EntitySet Name="producto" EntityType="Modelo.producto" />
+          <AssociationSet Name="FK_Producto_DetallePedido" Association="Modelo.FK_Producto_DetallePedido">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="detalle_pedido" EntitySet="detalle_pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Marca_Producto" Association="Modelo.FK_Marca_Producto">
+            <End Role="marca" EntitySet="marca" />
+            <End Role="producto" EntitySet="producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Modelo_Producto" Association="Modelo.FK_Modelo_Producto">
+            <End Role="modelo" EntitySet="modelo" />
+            <End Role="producto" EntitySet="producto" />
           </AssociationSet>
           <AssociationSet Name="FK_Producto_Precio_Detalle" Association="Modelo.FK_Producto_Precio_Detalle">
             <End Role="producto" EntitySet="producto" />
@@ -385,7 +386,7 @@
             <End Role="tipo" EntitySet="tipo" />
             <End Role="producto" EntitySet="producto" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="cliente">
           <Key>
             <PropertyRef Name="cli_id" />
@@ -474,22 +475,6 @@
           <NavigationProperty Name="precio" Relationship="Modelo.FK_Precio_Precio_Detalle" FromRole="precio_detalle" ToRole="precio" />
           <NavigationProperty Name="producto" Relationship="Modelo.FK_Producto_Precio_Detalle" FromRole="precio_detalle" ToRole="producto" />
         </EntityType>
-        <EntityType Name="producto">
-          <Key>
-            <PropertyRef Name="prod_id" />
-          </Key>
-          <Property Name="prod_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="prod_marca" Type="Int32" Nullable="false" />
-          <Property Name="prod_modelo" Type="Int32" Nullable="false" />
-          <Property Name="prod_tamanio" Type="Int32" Nullable="false" />
-          <Property Name="prod_tipo" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="detalle_pedido" Relationship="Modelo.FK_Producto_DetallePedido" FromRole="producto" ToRole="detalle_pedido" />
-          <NavigationProperty Name="marca" Relationship="Modelo.FK_Marca_Producto" FromRole="producto" ToRole="marca" />
-          <NavigationProperty Name="modelo" Relationship="Modelo.FK_Modelo_Producto" FromRole="producto" ToRole="modelo" />
-          <NavigationProperty Name="precio_detalle" Relationship="Modelo.FK_Producto_Precio_Detalle" FromRole="producto" ToRole="precio_detalle" />
-          <NavigationProperty Name="tamanio" Relationship="Modelo.FK_Tamanio_Producto" FromRole="producto" ToRole="tamanio" />
-          <NavigationProperty Name="tipo" Relationship="Modelo.FK_Tipo_Producto" FromRole="producto" ToRole="tipo" />
-        </EntityType>
         <EntityType Name="provincia">
           <Key>
             <PropertyRef Name="pro_id" />
@@ -557,18 +542,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Producto_DetallePedido">
-          <End Type="Modelo.producto" Role="producto" Multiplicity="1" />
-          <End Type="Modelo.detalle_pedido" Role="detalle_pedido" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="producto">
-              <PropertyRef Name="prod_id" />
-            </Principal>
-            <Dependent Role="detalle_pedido">
-              <PropertyRef Name="det_producto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Marca_Modelo">
           <End Type="Modelo.marca" Role="marca" Multiplicity="1" />
           <End Type="Modelo.modelo" Role="modelo" Multiplicity="*" />
@@ -578,30 +551,6 @@
             </Principal>
             <Dependent Role="modelo">
               <PropertyRef Name="mod_marca" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Marca_Producto">
-          <End Type="Modelo.marca" Role="marca" Multiplicity="1" />
-          <End Type="Modelo.producto" Role="producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="marca">
-              <PropertyRef Name="mar_id" />
-            </Principal>
-            <Dependent Role="producto">
-              <PropertyRef Name="prod_marca" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Modelo_Producto">
-          <End Type="Modelo.modelo" Role="modelo" Multiplicity="1" />
-          <End Type="Modelo.producto" Role="producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="modelo">
-              <PropertyRef Name="mod_id" />
-            </Principal>
-            <Dependent Role="producto">
-              <PropertyRef Name="prod_modelo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -626,6 +575,59 @@
             </Principal>
             <Dependent Role="precio_detalle">
               <PropertyRef Name="prd_campre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="producto">
+          <Key>
+            <PropertyRef Name="prod_id" />
+          </Key>
+          <Property Name="prod_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prod_marca" Type="Int32" Nullable="false" />
+          <Property Name="prod_modelo" Type="Int32" Nullable="false" />
+          <Property Name="prod_tamanio" Type="Int32" Nullable="false" />
+          <Property Name="prod_tipo" Type="Int32" Nullable="false" />
+          <Property Name="prod_pack" Type="Int32" />
+          <NavigationProperty Name="detalle_pedido" Relationship="Modelo.FK_Producto_DetallePedido" FromRole="producto" ToRole="detalle_pedido" />
+          <NavigationProperty Name="marca" Relationship="Modelo.FK_Marca_Producto" FromRole="producto" ToRole="marca" />
+          <NavigationProperty Name="modelo" Relationship="Modelo.FK_Modelo_Producto" FromRole="producto" ToRole="modelo" />
+          <NavigationProperty Name="precio_detalle" Relationship="Modelo.FK_Producto_Precio_Detalle" FromRole="producto" ToRole="precio_detalle" />
+          <NavigationProperty Name="tamanio" Relationship="Modelo.FK_Tamanio_Producto" FromRole="producto" ToRole="tamanio" />
+          <NavigationProperty Name="tipo" Relationship="Modelo.FK_Tipo_Producto" FromRole="producto" ToRole="tipo" />
+        </EntityType>
+        <Association Name="FK_Producto_DetallePedido">
+          <End Type="Modelo.producto" Role="producto" Multiplicity="1" />
+          <End Type="Modelo.detalle_pedido" Role="detalle_pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="prod_id" />
+            </Principal>
+            <Dependent Role="detalle_pedido">
+              <PropertyRef Name="det_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Marca_Producto">
+          <End Type="Modelo.marca" Role="marca" Multiplicity="1" />
+          <End Type="Modelo.producto" Role="producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="marca">
+              <PropertyRef Name="mar_id" />
+            </Principal>
+            <Dependent Role="producto">
+              <PropertyRef Name="prod_marca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Modelo_Producto">
+          <End Type="Modelo.modelo" Role="modelo" Multiplicity="1" />
+          <End Type="Modelo.producto" Role="producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modelo">
+              <PropertyRef Name="mod_id" />
+            </Principal>
+            <Dependent Role="producto">
+              <PropertyRef Name="prod_modelo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -665,7 +667,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -754,17 +756,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="producto">
-            <EntityTypeMapping TypeName="Modelo.producto">
-              <MappingFragment StoreEntitySet="producto">
-                <ScalarProperty Name="prod_tipo" ColumnName="prod_tipo" />
-                <ScalarProperty Name="prod_tamanio" ColumnName="prod_tamanio" />
-                <ScalarProperty Name="prod_modelo" ColumnName="prod_modelo" />
-                <ScalarProperty Name="prod_marca" ColumnName="prod_marca" />
-                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="provincia">
             <EntityTypeMapping TypeName="Modelo.provincia">
               <MappingFragment StoreEntitySet="provincia">
@@ -806,6 +797,18 @@
                 <ScalarProperty Name="usu_nombre" ColumnName="usu_nombre" />
                 <ScalarProperty Name="usu_password" ColumnName="usu_password" />
                 <ScalarProperty Name="usu_usuario" ColumnName="usu_usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="producto">
+            <EntityTypeMapping TypeName="Modelo.producto">
+              <MappingFragment StoreEntitySet="producto">
+                <ScalarProperty Name="prod_pack" ColumnName="prod_pack" />
+                <ScalarProperty Name="prod_tipo" ColumnName="prod_tipo" />
+                <ScalarProperty Name="prod_tamanio" ColumnName="prod_tamanio" />
+                <ScalarProperty Name="prod_modelo" ColumnName="prod_modelo" />
+                <ScalarProperty Name="prod_marca" ColumnName="prod_marca" />
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

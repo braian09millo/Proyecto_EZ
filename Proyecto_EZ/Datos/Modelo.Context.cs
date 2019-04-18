@@ -33,11 +33,11 @@ namespace Datos
         public virtual DbSet<pedido> pedido { get; set; }
         public virtual DbSet<precio> precio { get; set; }
         public virtual DbSet<precio_detalle> precio_detalle { get; set; }
-        public virtual DbSet<producto> producto { get; set; }
         public virtual DbSet<provincia> provincia { get; set; }
         public virtual DbSet<remito> remito { get; set; }
         public virtual DbSet<tamanio> tamanio { get; set; }
         public virtual DbSet<tipo> tipo { get; set; }
         public virtual DbSet<usuario> usuario { get; set; }
+        public virtual DbSet<producto> producto { get; set; }
     }
 }

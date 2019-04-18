@@ -4,5 +4,387 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div style="padding-top: 50px;">
+    <h2 class="h2 text-center">PRODUCTOS</h2>
+    <div class="row">
+        <div class="col-sm-12">
+            <button class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-cart-plus"></i>&nbsp;&nbsp;Nuevo Producto</button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="tableProductos" class="table table-hover table-condensed table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <td>Marca</td>
+                                    <td>Modelo</td>
+                                    <td>Tamaño</td>
+                                    <td>Tipo</td>
+                                    <td>Cantidad X Pack</td>
+                                    <td>Precio</td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="NuevoForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Agregar/Modificar Productos</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="ClienteForm">
+                        <input type="hidden" id="txtId" name="id" />
+                        <div class="input-group">
+                            <span class="input-group-addon label-addon"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control" id="txtNombre" name="nombre" placeholder="Nombre" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon label-addon"><i class="fas fa-address-book"></i></span>
+                            <input type="text" class="form-control" id="txtDireccion" name="direccion" placeholder="Dirección" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon label-addon"><i class="fas fa-map-marker-alt"></i></span>
+                            @Html.Partial("comboProvincias")
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon label-addon"><i class="fas fa-map-marked-alt"></i></span>
+                            <select id="cmbLocalidades" class="form-control" disabled>
+                                <option value="">Elija una localidad</option>
+                                @foreach (var item in ViewBag.Localidades)
+                                {
+                                    <option data-info="@item.loc_provincia" value="@item.loc_id">@item.loc_descr</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon label-addon"><i class="fas fa-phone"></i></span>
+                            <input type="text" class="form-control" id="txtTelefono" name="telefono" placeholder="Teléfono" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon label-addon"><i class="fas fa-mobile-alt"></i></span>
+                            <input type="text" class="form-control" id="txtCelular" name="celular" placeholder="Celular" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon label-addon"><i class="fas fa-mobile-alt"></i></span>
+                            <input type="text" class="form-control" id="txtCelular2" name="celular2" placeholder="Celular Alternativo" />
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 text-center">
+                                <button class="btn btn-primary" type="submit" id="btnAgregar"><i class="fas fa-check"></i>&nbsp;Guardar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp;Cancelar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/datatables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+<script src="~/Scripts/sweetalert.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //Obtenemos la lista de localidades para filtrarla
+        var optLocalidades = $('#cmbLocalidades option');
+
+        //Cargamos la grilla al iniciar
+        CargarDatos();
+
+        function Limpiar() {
+            $("#tableClientes").dataTable().fnDestroy();
+        }
+
+        $('#NuevoForm').on('hidden.bs.modal', function (e) {
+
+            $(this)
+              .find("input[type=text],textarea,select")
+                 .val('')
+                 .end()
+              .find("input[type=checkbox], input[type=radio]")
+                 .prop("checked", "")
+                 .end();
+
+            $('#cmbLocalidades').val(0).prop('disabled', true);
+
+
+        });
+
+        function CargarDatos() {
+
+            $.ajax({
+                method: 'GET',
+                url: '/Cliente/GetClientes',
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    var tabla = $('#tableClientes').DataTable({
+                        data: response,
+                        "info": false,
+                        columns: [
+                            { 'data': 'cli_nombre' },
+                            { 'data': 'cli_provincia' },
+                            { 'data': 'cli_localidad' },
+                            { 'data': 'cli_direccion' },
+                            { 'data': 'cli_telefono' },
+                            { 'data': 'cli_celular' },
+                            { 'data': 'cli_celular2' },
+                            { 'defaultContent': '<button class="btn btn-info btn-xs">Editar</button> <button class="btn btn-danger btn-xs">Eliminar</button>' }
+                        ],
+                        aoColumnDefs: [
+                            { "aTargets": [4], "bSortable": false },
+                            { "aTargets": [5], "bSortable": false },
+                            { "aTargets": [6], "bSortable": false },
+                            { "aTargets": [7], "bSortable": false },
+                        ],
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                        }
+                    });
+
+                    editarCliente('#tableClientes tbody', tabla);
+                    eliminarCliente('#tableClientes tbody', tabla);
+
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        var editarCliente = function (tbody, table) {
+
+            $(tbody).off('click', 'button.btn-info.btn-xs');
+            $(tbody).on('click', 'button.btn-info.btn-xs', function () {
+
+                var data = table.row($(this).parents('tr')).data();
+
+                $('#txtId').val(data.cli_id);
+                $('#txtNombre').val(data.cli_nombre);
+                $('#cmbProvincias').val(data.cli_proid);
+                $('#cmbLocalidades').prop('disabled', false).val(data.cli_locid);
+                $('#txtDireccion').val(data.cli_direccion);
+                $('#txtTelefono').val(data.cli_telefono);
+                $('#txtCelular').val(data.cli_celular);
+                $('#txtCelular2').val(data.cli_celular2);
+
+                $('#NuevoForm').modal('show');
+
+            });
+
+        }
+
+        var eliminarCliente = function (tbody, table) {
+
+            $(tbody).off('click', 'button.btn-danger.btn-xs');
+            $(tbody).on('click', 'button.btn-danger.btn-xs', function () {
+
+                var data = table.row($(this).parents('tr')).data();
+                var dataToPost = {
+                    xiId: data.cli_id
+                }
+
+                swal({
+                    title: "¿Está seguro?",
+                    text: "No podrá recuperar el registro una vez eliminado",
+                    icon: "warning",
+                    buttons: ['Cancelar', 'Confirmar'],
+                    dangerMode: true,
+                }).then(function (bElimina) {
+                    if (bElimina) {
+                        $.ajax({
+                            method: 'POST',
+                            url: '/Cliente/PostEliminarCliente',
+                            data: JSON.stringify(dataToPost),
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (response) {
+                                if (response == '') {
+                                    swal("El registro se eliminó correctamente", {
+                                        icon: "success",
+                                    });
+                                    Limpiar();
+                                    CargarDatos();
+                                }
+                                else {
+                                    swal(response, {
+                                        icon: "error",
+                                        buttons: "Aceptar"
+                                    });
+                                }
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        });
+                    }
+                })
+            });
+        }
+
+        //Habilitamos el botón cuando los campos requeridos esten llenos
+        function ValidarFormulario() {
+
+            var nombre = $('#txtNombre').val();
+            var direccion = $('#txtDireccion').val();
+            var provincia = $('#cmbProvincias').val();
+            var localidad = $('#cmbLocalidades').val();
+
+            if (nombre == "" || direccion == "" || localidad == "" || provincia == "")
+                return false;
+            else
+                return true;
+        }
+
+        $('#btnAgregar').click(function (e) {
+
+            //Prevenimos que se realice un nuevo submit
+            e.preventDefault();
+
+            if (ValidarFormulario()) {
+
+                //Cargamos el objeto cliente
+                var dataToPost = {
+                    cli_id: $('#txtId').val(),
+                    cli_nombre: $('#txtNombre').val(),
+                    cli_provincia: $('#cmbProvincias').val(),
+                    cli_localidad: $('#cmbLocalidades').val(),
+                    cli_direccion: $('#txtDireccion').val(),
+                    cli_telefono: $('#txtTelefono').val(),
+                    cli_celular: $('#txtCelular').val(),
+                    cli_celular2: $('#txtCelular2').val()
+                };
+
+                //Hacemos la llamada AJAX al controller CLIENTE
+                $.ajax({
+                    method: 'POST',
+                    data: JSON.stringify(dataToPost),
+                    url: '/Cliente/PostGuardarCliente',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response) {
+                        if (response == '') {
+                            $('#NuevoForm').modal('hide');
+
+                            swal({
+                                title: "Exito",
+                                text: "Cliente agregado correctamente",
+                                icon: "success",
+                                button: "Aceptar",
+                            });
+
+                            Limpiar();
+                            CargarDatos();
+                        }
+                        else {
+                            swal({
+                                title: "Error",
+                                text: "Fallo la carga de clientes",
+                                icon: "error",
+                                button: "Ok",
+                            });
+                        }
+                    },
+                    error: function (response) {
+                        swal({
+                            title: "Error",
+                            text: response,
+                            icon: "Error",
+                            button: "Ok",
+                        });
+                    }
+
+                });
+            }
+            else {
+                swal({
+                    title: "Error",
+                    text: "Los campos NOMBRE, DIRECCION y LOCALIDAD deben completarse",
+                    icon: "warning",
+                    button: "Aceptar",
+                });
+
+            }
+        });
+
+        $("#cmbProvincias").on('change', function () {
+
+            var valor = $(this).val();
+
+            if (valor === null || valor === "" || valor === undefined)
+                $("#cmbLocalidades").prop("disabled", true).val('');
+            else {
+                $("#cmbLocalidades").prop("disabled", false);
+                $("#cmbLocalidades").empty();
+                $(optLocalidades).each(function () {
+                    if ($(this).data("info") == valor) {
+                        console.log($(this).data("info") == valor);
+                        $("#cmbLocalidades")
+                            .append($("<option></option>")
+                            .val($(this).val())
+                            .html($(this).html()));
+                    }
+                });
+                $('#cmbLocalidades').append("<option value=''>Elija una localidad</option>");
+            }
+            $()
+        });
+
+        function FiltrarComboLocalidades(valorProvincia) {
+
+            $.ajax({
+                method: 'POST',
+                data: JSON.stringify({ xiProvincia: valorProvincia }),
+                url: '/Cliente/FiltrarLocalidades',
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+
+                    if (response.error != "") {
+
+                        swal({
+                            title: "Error",
+                            text: response.error,
+                            icon: "warning",
+                            button: "Aceptar",
+                        });
+                    } else {
+                        $("#cmbLocalidades").empty();
+                        $(response.data).each(function () {
+                            $("#cmbLocalidades")
+                                .append($("<option></option>")
+                                .val(this.loc_id)
+                                .html(this.loc_descr));
+                        });
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+
+        }
+
+    });
+</script>
+
+
+
 

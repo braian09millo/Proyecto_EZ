@@ -26,6 +26,7 @@ namespace Datos
         public int prod_modelo { get; set; }
         public int prod_tamanio { get; set; }
         public int prod_tipo { get; set; }
+        public Nullable<int> prod_pack { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<detalle_pedido> detalle_pedido { get; set; }

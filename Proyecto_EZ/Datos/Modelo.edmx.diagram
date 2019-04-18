@@ -13,7 +13,6 @@
         <EntityTypeShape EntityType="Modelo.pedido" Width="1.5" PointX="7.75" PointY="10.75" />
         <EntityTypeShape EntityType="Modelo.precio" Width="1.5" PointX="5.25" PointY="8.875" />
         <EntityTypeShape EntityType="Modelo.precio_detalle" Width="1.5" PointX="7.5" PointY="3.5" />
-        <EntityTypeShape EntityType="Modelo.producto" Width="1.5" PointX="5.25" PointY="3.125" />
         <EntityTypeShape EntityType="Modelo.provincia" Width="1.5" PointX="9.75" PointY="2.625" />
         <EntityTypeShape EntityType="Modelo.remito" Width="1.5" PointX="10" PointY="10.875" />
         <EntityTypeShape EntityType="Modelo.tamanio" Width="1.5" PointX="3" PointY="0.75" />
@@ -21,16 +20,17 @@
         <EntityTypeShape EntityType="Modelo.usuario" Width="1.5" PointX="0.75" PointY="9.625" />
         <AssociationConnector Association="Modelo.FK_Localidad_Cliente" />
         <AssociationConnector Association="Modelo.FK_Provincia_Cliente" />
-        <AssociationConnector Association="Modelo.FK_Producto_DetallePedido" />
         <AssociationConnector Association="Modelo.FK_Marca_Modelo" />
-        <AssociationConnector Association="Modelo.FK_Marca_Producto" />
-        <AssociationConnector Association="Modelo.FK_Modelo_Producto" />
         <AssociationConnector Association="Modelo.FK_Pedido_Remito" />
         <AssociationConnector Association="Modelo.FK_Precio_Precio_Detalle" />
+        <EntityTypeShape EntityType="Modelo.producto" Width="1.5" PointX="5.25" PointY="3.125" />
+        <AssociationConnector Association="Modelo.FK_Producto_DetallePedido" />
+        <AssociationConnector Association="Modelo.FK_Marca_Producto" />
+        <AssociationConnector Association="Modelo.FK_Modelo_Producto" />
         <AssociationConnector Association="Modelo.FK_Producto_Precio_Detalle" />
         <AssociationConnector Association="Modelo.FK_Tamanio_Producto" />
         <AssociationConnector Association="Modelo.FK_Tipo_Producto" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -152,7 +152,16 @@
                             { 'data': 'cli_celular' },
                             { 'data': 'cli_celular2' },
                             { 'defaultContent': '<button class="btn btn-info btn-xs">Editar</button> <button class="btn btn-danger btn-xs">Eliminar</button>' }
-                        ]
+                        ],
+                        aoColumnDefs: [
+                            { "aTargets": [4], "bSortable": false },
+                            { "aTargets": [5], "bSortable": false },
+                            { "aTargets": [6], "bSortable": false },
+                            { "aTargets": [7], "bSortable": false },
+                        ],
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                        }
                     });
 
                     editarCliente('#tableClientes tbody', tabla);
