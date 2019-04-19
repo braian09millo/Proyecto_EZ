@@ -47,7 +47,7 @@
 
 #tableClientes tbody tr td,
 #tableProductos tbody tr td,
-#EditorTable thead tr td {
+#EditorTable tbody tr td {
     font-size: 14px;
 }
 

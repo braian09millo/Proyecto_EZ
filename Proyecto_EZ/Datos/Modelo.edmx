@@ -5,6 +5,21 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Modelo.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AuxPrecios">
+          <Key>
+            <PropertyRef Name="Marca" />
+            <PropertyRef Name="Tamanio" />
+          </Key>
+          <Property Name="Id" Type="int" />
+          <Property Name="Marca" Type="int" Nullable="false" />
+          <Property Name="Modelo" Type="int" />
+          <Property Name="Tamanio" Type="int" Nullable="false" />
+          <Property Name="Tipo" Type="int" />
+          <Property Name="CantidadPack" Type="int" Nullable="false" />
+          <Property Name="Costo" Type="smallmoney" Nullable="false" />
+          <Property Name="Porcentaje" Type="smallmoney" Nullable="false" />
+          <Property Name="PrecioVenta" Type="smallmoney" Nullable="false" />
+        </EntityType>
         <EntityType Name="cliente">
           <Key>
             <PropertyRef Name="cli_id" />
@@ -265,6 +280,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ModeloStoreContainer">
+          <EntitySet Name="AuxPrecios" EntityType="Self.AuxPrecios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cliente" EntityType="Self.cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="detalle_pedido" EntityType="Self.detalle_pedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="localidad" EntityType="Self.localidad" Schema="dbo" store:Type="Tables" />
@@ -387,6 +403,7 @@
             <End Role="producto" EntitySet="producto" />
             <End Role="precio_detalle" EntitySet="precio_detalle" />
           </AssociationSet>
+          <EntitySet Name="AuxPrecios" EntityType="Modelo.AuxPrecios" />
           </EntityContainer>
         <EntityType Name="cliente">
           <Key>
@@ -669,6 +686,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AuxPrecios">
+          <Key>
+            <PropertyRef Name="Marca" />
+            <PropertyRef Name="Tamanio" />
+          </Key>
+          <Property Name="Id" Type="Int32" />
+          <Property Name="Marca" Type="Int32" Nullable="false" />
+          <Property Name="Modelo" Type="Int32" />
+          <Property Name="Tamanio" Type="Int32" Nullable="false" />
+          <Property Name="Tipo" Type="Int32" />
+          <Property Name="CantidadPack" Type="Int32" Nullable="false" />
+          <Property Name="Costo" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="Porcentaje" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="PrecioVenta" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -812,6 +844,21 @@
                 <ScalarProperty Name="prd_precioC" ColumnName="prd_precioC" />
                 <ScalarProperty Name="prd_produ" ColumnName="prd_produ" />
                 <ScalarProperty Name="prd_campre" ColumnName="prd_campre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuxPrecios">
+            <EntityTypeMapping TypeName="Modelo.AuxPrecios">
+              <MappingFragment StoreEntitySet="AuxPrecios">
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+                <ScalarProperty Name="CantidadPack" ColumnName="CantidadPack" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Tamanio" ColumnName="Tamanio" />
+                <ScalarProperty Name="Modelo" ColumnName="Modelo" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

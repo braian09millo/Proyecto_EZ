@@ -119,54 +119,28 @@ namespace Negocios.BusinessControllers
                     using (var xoTransaccion = xoDB.Database.BeginTransaction())
                     {
                         var producto = xoDB.producto.Find(xoProducto.Id);
-                        var retValue = 0;
 
-                        if (producto != null)
+                        var retVal = new SqlParameter("@RetVal", SqlDbType.Int);
+                        retVal.Direction = ParameterDirection.ReturnValue;
+
+                        xoDB.Database.ExecuteSqlCommand("exec spAgregarProducto @Marca, @Modelo, @Tamanio, @Tipo, @Cantidad, @Costo, @Porcentaje, @PrecioVenta",
+                                   new SqlParameter("@Marca", xoProducto.Marca),
+                                   new SqlParameter("@Modelo", xoProducto.Modelo),
+                                   new SqlParameter("@Tamanio", xoProducto.Tamanio),
+                                   new SqlParameter("@Tipo", xoProducto.Tipo),
+                                   new SqlParameter("@Cantidad", xoProducto.CantidadPack),
+                                   new SqlParameter("@Costo", xoProducto.Costo),
+                                   new SqlParameter("@Porcentaje", xoProducto.Porcentaje),
+                                   new SqlParameter("@PrecioVenta", xoProducto.PrecioVenta),
+                                   retVal);
+
+                        if ((int)retVal.Value != 0)
                         {
-                            retValue = xoDB.Database.ExecuteSqlCommand("exec spActualizarProducto @idProducto, @Marca, @Modelo, @Tamanio, @Tipo, @Cantidad, @Costo, @Porcentaje, @PrecioVenta",
-                                           new SqlParameter("@idProducto", xoProducto.Id),
-                                           new SqlParameter("@Marca", xoProducto.Marca),
-                                           new SqlParameter("@Modelo", xoProducto.Modelo),
-                                           new SqlParameter("@Tamanio", xoProducto.Tamanio),
-                                           new SqlParameter("@Tipo", xoProducto.Tipo),
-                                           new SqlParameter("@Cantidad", xoProducto.CantidadPack),
-                                           new SqlParameter("@Costo", xoProducto.Costo),
-                                           new SqlParameter("@Porcentaje", xoProducto.Porcentaje),
-                                           new SqlParameter("@PrecioVenta", xoProducto.PrecioVenta));
-
-                            if (retValue != 0)
-                            {
-                                xsError = "Error al modificar el producto";
-                                xoTransaccion.Rollback();
-                            }
-                            else
-                                xoTransaccion.Commit();
-
+                            xsError = "Error al agregar el producto";
+                            xoTransaccion.Rollback();
                         }
                         else
-                        {
-                            var retVal = new SqlParameter("@RetVal", SqlDbType.Int);
-                            retVal.Direction = ParameterDirection.ReturnValue;
-
-                            xoDB.Database.ExecuteSqlCommand("exec spAgregarProducto @Marca, @Modelo, @Tamanio, @Tipo, @Cantidad, @Costo, @Porcentaje, @PrecioVenta",
-                                       new SqlParameter("@Marca", xoProducto.Marca),
-                                       new SqlParameter("@Modelo", xoProducto.Modelo),
-                                       new SqlParameter("@Tamanio", xoProducto.Tamanio),
-                                       new SqlParameter("@Tipo", xoProducto.Tipo),
-                                       new SqlParameter("@Cantidad", xoProducto.CantidadPack),
-                                       new SqlParameter("@Costo", xoProducto.Costo),
-                                       new SqlParameter("@Porcentaje", xoProducto.Porcentaje),
-                                       new SqlParameter("@PrecioVenta", xoProducto.PrecioVenta),
-                                       retVal);
-
-                            if ((int)retVal.Value != 0)
-                            {
-                                xsError = "Error al agregar el producto";
-                                xoTransaccion.Rollback();
-                            }
-                            else
-                                xoTransaccion.Commit();
-                        }
+                            xoTransaccion.Commit();
                     }
                 }
             }
@@ -219,6 +193,61 @@ namespace Negocios.BusinessControllers
                 {
                     xsError = ex.Message;
                 }
+            }
+        }
+
+        public void ActualizarPrecios(List<ProductoForm> xoProductos, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                using (var xoTransaccion = xoDB.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        //Agregamos todos los productos levantados
+                        foreach (var item in xoProductos)
+                        {
+                            var xoNuevo = new AuxPrecios()
+                            {
+                                Id = item.Id,
+                                Marca = item.Marca,
+                                Modelo = item.Modelo,
+                                Tamanio = item.Tamanio,
+                                Tipo = item.Tipo,
+                                CantidadPack = item.CantidadPack,
+                                Costo = item.Costo,
+                                Porcentaje = item.Porcentaje,
+                                PrecioVenta = item.PrecioVenta
+                            };
+
+                            xoDB.AuxPrecios.Add(xoNuevo);
+                        }
+
+                        //Actualizamos los precios por SP
+                        var retVal = new SqlParameter("@RetVal", SqlDbType.Int);
+                        retVal.Direction = ParameterDirection.ReturnValue;
+
+                        xoDB.Database.ExecuteSqlCommand("exec spActualizarPrecios");
+
+                        if ((int)retVal.Value != 0)
+                        {
+                            xsError = "Error al querer modificar los precios";
+                            xoTransaccion.Rollback();
+                        }
+                        else
+                        {
+                            xoTransaccion.Commit();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        xsError = ex.Message;
+                        xoTransaccion.Rollback();
+                    }
+                }
+
             }
         }
 

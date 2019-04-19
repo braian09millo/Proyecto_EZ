@@ -30,6 +30,7 @@
         <EntityTypeShape EntityType="Modelo.precio_detalle" Width="1.5" PointX="7.5" PointY="2.75" />
         <AssociationConnector Association="Modelo.FK_Precio_Precio_Detalle" />
         <AssociationConnector Association="Modelo.FK_Producto_Precio_Detalle" />
+        <EntityTypeShape EntityType="Modelo.AuxPrecios" Width="1.5" PointX="3.375" PointY="11.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

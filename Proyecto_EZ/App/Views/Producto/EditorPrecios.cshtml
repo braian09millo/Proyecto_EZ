@@ -10,6 +10,7 @@
     <div class="row">
         <div class="col-sm-12">
             <a href="@Url.Action("Index", "Producto")" class="btn btn-default"><i class="fas fa-arrow-left"></i>&nbsp;&nbsp;Volver a Productos</a>
+            <button id="btnGuardar" class="btn btn-default"><i class="fas fa-save"></i>&nbsp;&nbsp; Guardar Cambios</button>
         </div>
     </div>
     <br />
@@ -32,12 +33,11 @@
                                 @foreach (var item in ViewBag.Productos)
                                 {
                                     <tr>
-                                        <td style="vertical-align: central;">@item.Marca</td>
-                                        <td>@item.Tamanio</td>
-                                        <td>
-                                            <input style="text-align: right;" type="text" class="form-control input-sm" value="@Math.Round(item.Porcentaje, 2)" /></td>
+                                        <td data-info="@item.IdMarca">@item.Marca</td>
+                                        <td data-info="@item.IdTamanio">@item.Tamanio</td>
+                                        <td><input style="text-align: right;" type="text" class="form-control input-sm" value="@Math.Round(item.Porcentaje, 2)" /></td>
                                         <td><input style="text-align: right;" type="text" class="form-control input-sm" value="@Math.Round(item.Costo, 2)" /></td>
-                                        <td><input style="text-align: right;" type="text" class="form-control input-sm" value="@Math.Round(item.PrecioVenta, 2)" /></td>
+                                        <td><input style="text-align: right;" type="text" class="form-control input-sm" value="@Math.Round(item.PrecioVenta, 2)" readonly /></td>
                                     </tr>
                                 }
                             </tbody>
@@ -61,7 +61,62 @@
 
         $(document).ready(function () {
 
+            $('#btnGuardar').click(function () {
+                
+                var productos = [];
 
+                $('#EditorTable tbody tr').each(function () {
+
+                    var nuevo = {
+                        IdMarca: ($(this).find("td:eq(0)").data("info")),
+                        IdTamanio: ($(this).find("td:eq(1)").data("info")),
+                        Porcentaje: ($(this).find("td:eq(2)").find("input[type='text']").val()),
+                        Costo: ($(this).find("td:eq(3)").find("input[type='text']").val()),
+                        PrecioVenta: ($(this).find("td:eq(4)").find("input[type='text']").val())
+                    }
+
+                    productos.push(nuevo);
+                  
+                });
+
+                console.log(productos);
+
+                //$.ajax({
+
+                //    method: 'POST',
+                //    data: JSON.stringify(productos),
+                //    url: '/Producto/PostActualizarProducto',
+                //    contentType: 'application/json; charset=utf-8',
+                //    success: function (response) {
+
+                //        if (response == '') {
+                //            swal({
+                //                title: "Exito!",
+                //                text: "Precios actualizados correctamente",
+                //                icon: "success",
+                //                button: "Aceptar",
+                //            });
+                //        }
+                //        else {
+                //            swal({
+                //                title: "Error",
+                //                text: response,
+                //                icon: "error",
+                //                button: "Aceptar",
+                //            });
+                //        }
+
+                //    },
+                //    error: function (response) {
+                //        swal({
+                //            title: "Error",
+                //            text: response,
+                //            icon: "error",
+                //            button: "Aceptar",
+                //        });
+                //    }
+                //});
+            });
 
         });
 

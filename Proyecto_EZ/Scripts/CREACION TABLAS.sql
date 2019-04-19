@@ -130,6 +130,23 @@ CREATE TABLE precio_detalle
 	CONSTRAINT PK_Precio_Detalle PRIMARY KEY (prd_campre,prd_produ)
 )
 
+-- Aca se van a volcar los datos de los precios nuevos
+-- Para después join contra la tabla de precios
+CREATE TABLE AuxPrecios 
+(
+	Id INT NULL,
+	Marca INT NOT NULL,
+	Modelo INT NULL,
+	Tamanio INT NOT NULL,
+	Tipo INT NULL,
+	CantidadPack INT NOT NULL,
+	Costo SMALLMONEY NOT NULL,
+	Porcentaje SMALLMONEY NOT NULL,
+	PrecioVenta SMALLMONEY NOT NULL,
+
+	CONSTRAINT PK_AuxPrecios PRIMARY KEY (Marca,Tamanio)
+)
+
 GO
 
 --Inicializacion de tablas
