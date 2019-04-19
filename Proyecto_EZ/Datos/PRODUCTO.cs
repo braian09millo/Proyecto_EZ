@@ -32,9 +32,9 @@ namespace Datos
         public virtual ICollection<detalle_pedido> detalle_pedido { get; set; }
         public virtual marca marca { get; set; }
         public virtual modelo modelo { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<precio_detalle> precio_detalle { get; set; }
         public virtual tamanio tamanio { get; set; }
         public virtual tipo tipo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<precio_detalle> precio_detalle { get; set; }
     }
 }

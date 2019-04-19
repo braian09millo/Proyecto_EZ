@@ -10,7 +10,7 @@ CREATE PROCEDURE spAgregarProducto
 	@Tipo INT = NULL,
 	@Cantidad INT = NULL,
 	@Costo SMALLMONEY = NULL,
-	@Porcentaje DECIMAL = NULL,
+	@Porcentaje SMALLMONEY = NULL,
 	@PrecioVenta SMALLMONEY = NULL
 )														
 WITH ENCRYPTION AS

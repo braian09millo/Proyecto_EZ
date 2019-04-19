@@ -25,9 +25,11 @@
                                     <td>Tamaño</td>
                                     <td>Tipo</td>
                                     <td>Cant. X Pack</td>
-                                    <td>P. Unitario</td>
-                                    <td>Costo</td>
-                                    <td>Precio</td>
+                                    <td>P. Unitario ($)</td>
+                                    <td>Costo ($)</td>
+                                    <td>Porcentaje (%)</td>
+                                    <td>Precio ($)</td>
+                                    <td>Acciones</td>
                                 </tr>
                             </thead>
                         </table>
@@ -143,6 +145,9 @@
 
         $(document).ready(function () {
 
+            //Cargamos la grilla en el LOAD
+            CargarDatos();
+
             //Obtenemos la lista de localidades para filtrarla
             var optModelos = $('#cmbModelos option');
 
@@ -173,7 +178,7 @@
                 if (valorCosto == 'NaN' || valorCosto == NaN) {
                     $('#txtPV').val(0);
                 } else {
-                    $('#txtPV').val(valorPV);
+                    $('#txtPV').val(Math.round(valorPV * 100) / 100);
                 }
 
             });
@@ -187,7 +192,7 @@
                 if (valorPorc == 'NaN' || valorPorc == NaN) {
                     $('#txtPV').val(0);
                 } else {
-                    $('#txtPV').val(valorPV);
+                    $('#txtPV').val(Math.round(valorPV * 100) / 100);
                 }
 
 
@@ -203,14 +208,6 @@
                 var costo = $('#txtCosto').val();
                 var cantPack = $('#txtCantPack').val();
                 var porc = $('#txtPorcentaje').val();
-
-                console.log(marca);
-                console.log(modelo);
-                console.log(tamanio);
-                console.log(tipo);
-                console.log(costo);
-                console.log(cantPack);
-                console.log(porc);
 
                 if (marca == "" || modelo == "" ||
                     tamanio == "" || tipo == "" ||
@@ -234,9 +231,9 @@
                     Tamanio: $('#cmbTamanios').val(),
                     Tipo: $('#cmbTipos').val(),
                     CantidadPack: $('#txtCantPack').val(),
-                    Costo: $('txtCosto').val(),
-                    Porcentaje: $('txtPorcentaje').val(),
-                    PrecioVenta: $('txtPV').val()
+                    Costo: $('#txtCosto').val(),
+                    Porcentaje: $('#txtPorcentaje').val(),
+                    PrecioVenta: $('#txtPV').val()
                 }
 
                 //Si la validación es correcta, hacemos la llamada AJAX
@@ -261,7 +258,7 @@
                                 });
 
                                 Limpiar();
-                                //CargarDatos();
+                                CargarDatos();
                             }
                             else {
                                 swal({
@@ -319,6 +316,137 @@
                     }
                 }
             });
+
+            function CargarDatos() {
+                $.ajax({
+                    method: 'GET',
+                    url: '/Producto/GetProductos',
+                    success: function (response) {
+                        console.log(response);
+                        if (response.error == "") {
+                            var tabla = $('#tableProductos').DataTable({
+                                data: response.data,
+                                "info": false,
+                                columns: [
+                                    { 'data': 'Marca' },
+                                    { 'data': 'Modelo' },
+                                    { 'data': 'Tamanio' },
+                                    { 'data': 'Tipo' },
+                                    { 'data': 'CantidadPack' },
+                                    { 'data': 'PrecioUnitario' },
+                                    { 'data': 'Costo' },
+                                    { 'data': 'Porcentaje' },
+                                    { 'data': 'PrecioVenta' },
+                                    { 'defaultContent': '<button class="btn btn-info btn-xs">Editar</button> <button class="btn btn-danger btn-xs">Eliminar</button>' }
+                                ],
+                                aoColumnDefs: [
+                                    { "aTargets": [4], "width": "10%", "bSortable": false },
+                                    { "aTargets": [5], "bSortable": false },
+                                    { "aTargets": [6], "bSortable": false },
+                                    { "aTargets": [7], "bSortable": false },
+                                    { "aTargets": [8], "bSortable": false },
+                                    { "aTargets": [9], "bSortable": false }
+                                ],
+                                "language": {
+                                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                                }
+                            });
+
+                            editarCliente('#tableProductos tbody', tabla);
+                            eliminarCliente('#tableProductos tbody', tabla);
+                        }
+                        else {
+                            swal({
+                                title: "Error",
+                                text: response.error,
+                                icon: "error",
+                                button: "Aceptar",
+                            });
+                        }
+                    },
+                    error: function (response) {
+                        swal({
+                            title: "Error",
+                            text: response,
+                            icon: "error",
+                            button: "Aceptar",
+                        });
+                    }
+                });
+            }
+
+
+            var editarCliente = function (tbody, table) {
+
+                $(tbody).off('click', 'button.btn-info.btn-xs');
+                $(tbody).on('click', 'button.btn-info.btn-xs', function () {
+
+                    var data = table.row($(this).parents('tr')).data();
+
+                    $('#txtId').val(data.IdProducto);
+                    $('#cmbMarcas').val(data.IdMarca);
+                    $('#cmbModelos').val(data.IdModelo);
+                    $('#cmbTamanios').val(data.IdTamanio);
+                    $('#cmbTipos').val(data.IdTipo);
+                    $('#txtCantPack').val(data.CantidadPack);
+                    $('#txtPorcentaje').val(data.Porcentaje);
+                    $('#txtCosto').val(data.Costo);
+                    $('#txtPV').val(data.PrecioVenta);
+
+                    $('#NuevoForm').modal('show');
+
+                });
+
+            }
+
+            var eliminarCliente = function (tbody, table) {
+
+                $(tbody).off('click', 'button.btn-danger.btn-xs');
+                $(tbody).on('click', 'button.btn-danger.btn-xs', function () {
+
+                    var data = table.row($(this).parents('tr')).data();
+                    var dataToPost = {
+                        xiId: data.IdProducto
+                    }
+
+                    swal({
+                        title: "¿Está seguro?",
+                        text: "No podrá recuperar el registro una vez eliminado",
+                        icon: "warning",
+                        buttons: ['Cancelar', 'Confirmar'],
+                        dangerMode: true,
+                    }).then(function (bElimina) {
+                        if (bElimina) {
+                            //$.ajax({
+                            //    method: 'POST',
+                            //    url: '/Cliente/PostEliminarProducto',
+                            //    data: JSON.stringify(dataToPost),
+                            //    contentType: 'application/json; charset=utf-8',
+                            //    success: function (response) {
+                            //        if (response == '') {
+                            //            swal("El registro se eliminó correctamente", {
+                            //                icon: "success",
+                            //            });
+                            //            Limpiar();
+                            //            CargarDatos();
+                            //        }
+                            //        else {
+                            //            swal(response, {
+                            //                icon: "error",
+                            //                buttons: "Aceptar"
+                            //            });
+                            //        }
+                            //    },
+                            //    error: function (error) {
+                            //        console.log(error);
+                            //    }
+                            //});
+                        }
+                    })
+                });
+            }
+
+
         });
 
     </script>

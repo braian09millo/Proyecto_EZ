@@ -38,6 +38,21 @@ namespace App.Controllers
             return View();
         }
 
+        public JsonResult GetProductos()
+        {
+            string xsError = "";
+
+            var lstProductos = xoProductoCtrl.ObtenerProductos(out xsError);
+
+            var xoResultado = new
+            {
+                data = lstProductos,
+                error = xsError
+            };
+
+            return Json(xoResultado, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult PostGuardarProducto(ProductoForm xoProducto)
         {

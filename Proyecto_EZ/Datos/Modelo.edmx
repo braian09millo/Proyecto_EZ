@@ -78,7 +78,7 @@
           <Property Name="prd_campre" Type="int" Nullable="false" />
           <Property Name="prd_produ" Type="int" Nullable="false" />
           <Property Name="prd_precioC" Type="smallmoney" Nullable="false" />
-          <Property Name="prd_porcen" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="prd_porcen" Type="smallmoney" />
           <Property Name="prd_precioPV" Type="smallmoney" Nullable="false" />
         </EntityType>
         <EntityType Name="producto">
@@ -335,7 +335,6 @@
           <EntitySet Name="modelo" EntityType="Modelo.modelo" />
           <EntitySet Name="pedido" EntityType="Modelo.pedido" />
           <EntitySet Name="precio" EntityType="Modelo.precio" />
-          <EntitySet Name="precio_detalle" EntityType="Modelo.precio_detalle" />
           <EntitySet Name="provincia" EntityType="Modelo.provincia" />
           <EntitySet Name="remito" EntityType="Modelo.remito" />
           <EntitySet Name="tamanio" EntityType="Modelo.tamanio" />
@@ -357,10 +356,6 @@
             <End Role="pedido" EntitySet="pedido" />
             <End Role="remito" EntitySet="remito" />
           </AssociationSet>
-          <AssociationSet Name="FK_Precio_Precio_Detalle" Association="Modelo.FK_Precio_Precio_Detalle">
-            <End Role="precio" EntitySet="precio" />
-            <End Role="precio_detalle" EntitySet="precio_detalle" />
-          </AssociationSet>
           <EntitySet Name="producto" EntityType="Modelo.producto" />
           <AssociationSet Name="FK_Producto_DetallePedido" Association="Modelo.FK_Producto_DetallePedido">
             <End Role="producto" EntitySet="producto" />
@@ -374,10 +369,6 @@
             <End Role="modelo" EntitySet="modelo" />
             <End Role="producto" EntitySet="producto" />
           </AssociationSet>
-          <AssociationSet Name="FK_Producto_Precio_Detalle" Association="Modelo.FK_Producto_Precio_Detalle">
-            <End Role="producto" EntitySet="producto" />
-            <End Role="precio_detalle" EntitySet="precio_detalle" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tamanio_Producto" Association="Modelo.FK_Tamanio_Producto">
             <End Role="tamanio" EntitySet="tamanio" />
             <End Role="producto" EntitySet="producto" />
@@ -385,6 +376,15 @@
           <AssociationSet Name="FK_Tipo_Producto" Association="Modelo.FK_Tipo_Producto">
             <End Role="tipo" EntitySet="tipo" />
             <End Role="producto" EntitySet="producto" />
+          </AssociationSet>
+          <EntitySet Name="precio_detalle" EntityType="Modelo.precio_detalle" />
+          <AssociationSet Name="FK_Precio_Precio_Detalle" Association="Modelo.FK_Precio_Precio_Detalle">
+            <End Role="precio" EntitySet="precio" />
+            <End Role="precio_detalle" EntitySet="precio_detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Precio_Detalle" Association="Modelo.FK_Producto_Precio_Detalle">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="precio_detalle" EntitySet="precio_detalle" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="cliente">
@@ -461,19 +461,6 @@
           <Property Name="pre_fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="pre_fechaHasta" Type="Int32" />
           <NavigationProperty Name="precio_detalle" Relationship="Modelo.FK_Precio_Precio_Detalle" FromRole="precio" ToRole="precio_detalle" />
-        </EntityType>
-        <EntityType Name="precio_detalle">
-          <Key>
-            <PropertyRef Name="prd_campre" />
-            <PropertyRef Name="prd_produ" />
-          </Key>
-          <Property Name="prd_campre" Type="Int32" Nullable="false" />
-          <Property Name="prd_produ" Type="Int32" Nullable="false" />
-          <Property Name="prd_precioC" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
-          <Property Name="prd_porcen" Type="Byte" />
-          <Property Name="prd_precioPV" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
-          <NavigationProperty Name="precio" Relationship="Modelo.FK_Precio_Precio_Detalle" FromRole="precio_detalle" ToRole="precio" />
-          <NavigationProperty Name="producto" Relationship="Modelo.FK_Producto_Precio_Detalle" FromRole="precio_detalle" ToRole="producto" />
         </EntityType>
         <EntityType Name="provincia">
           <Key>
@@ -566,18 +553,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Precio_Precio_Detalle">
-          <End Type="Modelo.precio" Role="precio" Multiplicity="1" />
-          <End Type="Modelo.precio_detalle" Role="precio_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="precio">
-              <PropertyRef Name="pre_ident" />
-            </Principal>
-            <Dependent Role="precio_detalle">
-              <PropertyRef Name="prd_campre" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="producto">
           <Key>
             <PropertyRef Name="prod_id" />
@@ -591,9 +566,9 @@
           <NavigationProperty Name="detalle_pedido" Relationship="Modelo.FK_Producto_DetallePedido" FromRole="producto" ToRole="detalle_pedido" />
           <NavigationProperty Name="marca" Relationship="Modelo.FK_Marca_Producto" FromRole="producto" ToRole="marca" />
           <NavigationProperty Name="modelo" Relationship="Modelo.FK_Modelo_Producto" FromRole="producto" ToRole="modelo" />
-          <NavigationProperty Name="precio_detalle" Relationship="Modelo.FK_Producto_Precio_Detalle" FromRole="producto" ToRole="precio_detalle" />
           <NavigationProperty Name="tamanio" Relationship="Modelo.FK_Tamanio_Producto" FromRole="producto" ToRole="tamanio" />
           <NavigationProperty Name="tipo" Relationship="Modelo.FK_Tipo_Producto" FromRole="producto" ToRole="tipo" />
+          <NavigationProperty Name="precio_detalle" Relationship="Modelo.FK_Producto_Precio_Detalle" FromRole="producto" ToRole="precio_detalle" />
         </EntityType>
         <Association Name="FK_Producto_DetallePedido">
           <End Type="Modelo.producto" Role="producto" Multiplicity="1" />
@@ -631,18 +606,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Producto_Precio_Detalle">
-          <End Type="Modelo.producto" Role="producto" Multiplicity="1" />
-          <End Type="Modelo.precio_detalle" Role="precio_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="producto">
-              <PropertyRef Name="prod_id" />
-            </Principal>
-            <Dependent Role="precio_detalle">
-              <PropertyRef Name="prd_produ" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tamanio_Producto">
           <End Type="Modelo.tamanio" Role="tamanio" Multiplicity="1" />
           <End Type="Modelo.producto" Role="producto" Multiplicity="*" />
@@ -664,6 +627,43 @@
             </Principal>
             <Dependent Role="producto">
               <PropertyRef Name="prod_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="precio_detalle">
+          <Key>
+            <PropertyRef Name="prd_campre" />
+            <PropertyRef Name="prd_produ" />
+          </Key>
+          <Property Name="prd_campre" Type="Int32" Nullable="false" />
+          <Property Name="prd_produ" Type="Int32" Nullable="false" />
+          <Property Name="prd_precioC" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="prd_porcen" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="prd_precioPV" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <NavigationProperty Name="precio" Relationship="Modelo.FK_Precio_Precio_Detalle" FromRole="precio_detalle" ToRole="precio" />
+          <NavigationProperty Name="producto" Relationship="Modelo.FK_Producto_Precio_Detalle" FromRole="precio_detalle" ToRole="producto" />
+        </EntityType>
+        <Association Name="FK_Precio_Precio_Detalle">
+          <End Type="Modelo.precio" Role="precio" Multiplicity="1" />
+          <End Type="Modelo.precio_detalle" Role="precio_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="precio">
+              <PropertyRef Name="pre_ident" />
+            </Principal>
+            <Dependent Role="precio_detalle">
+              <PropertyRef Name="prd_campre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Precio_Detalle">
+          <End Type="Modelo.producto" Role="producto" Multiplicity="1" />
+          <End Type="Modelo.precio_detalle" Role="precio_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="prod_id" />
+            </Principal>
+            <Dependent Role="precio_detalle">
+              <PropertyRef Name="prd_produ" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -745,17 +745,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="precio_detalle">
-            <EntityTypeMapping TypeName="Modelo.precio_detalle">
-              <MappingFragment StoreEntitySet="precio_detalle">
-                <ScalarProperty Name="prd_precioPV" ColumnName="prd_precioPV" />
-                <ScalarProperty Name="prd_porcen" ColumnName="prd_porcen" />
-                <ScalarProperty Name="prd_precioC" ColumnName="prd_precioC" />
-                <ScalarProperty Name="prd_produ" ColumnName="prd_produ" />
-                <ScalarProperty Name="prd_campre" ColumnName="prd_campre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="provincia">
             <EntityTypeMapping TypeName="Modelo.provincia">
               <MappingFragment StoreEntitySet="provincia">
@@ -809,6 +798,17 @@
                 <ScalarProperty Name="prod_modelo" ColumnName="prod_modelo" />
                 <ScalarProperty Name="prod_marca" ColumnName="prod_marca" />
                 <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="precio_detalle">
+            <EntityTypeMapping TypeName="Modelo.precio_detalle">
+              <MappingFragment StoreEntitySet="precio_detalle">
+                <ScalarProperty Name="prd_precioPV" ColumnName="prd_precioPV" />
+                <ScalarProperty Name="prd_porcen" ColumnName="prd_porcen" />
+                <ScalarProperty Name="prd_precioC" ColumnName="prd_precioC" />
+                <ScalarProperty Name="prd_produ" ColumnName="prd_produ" />
+                <ScalarProperty Name="prd_campre" ColumnName="prd_campre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

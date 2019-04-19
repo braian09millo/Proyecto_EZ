@@ -17,7 +17,7 @@ namespace Datos
         public int prd_campre { get; set; }
         public int prd_produ { get; set; }
         public decimal prd_precioC { get; set; }
-        public Nullable<byte> prd_porcen { get; set; }
+        public Nullable<decimal> prd_porcen { get; set; }
         public decimal prd_precioPV { get; set; }
     
         public virtual precio precio { get; set; }
