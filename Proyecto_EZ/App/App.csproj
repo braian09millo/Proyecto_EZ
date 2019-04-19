@@ -213,6 +213,7 @@
     <Content Include="Views\Producto\comboMarcas.cshtml" />
     <Content Include="Views\Producto\comboTamanios.cshtml" />
     <Content Include="Views\Producto\comboTipos.cshtml" />
+    <Content Include="Views\Producto\EditorPrecios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

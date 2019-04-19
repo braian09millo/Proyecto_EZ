@@ -41,9 +41,7 @@ namespace App.Controllers
         public JsonResult GetProductos()
         {
             string xsError = "";
-
             var lstProductos = xoProductoCtrl.ObtenerProductos(out xsError);
-
             var xoResultado = new
             {
                 data = lstProductos,
@@ -54,13 +52,38 @@ namespace App.Controllers
         }
 
         [HttpPost]
+        public JsonResult PostEliminarProducto(int xiId)
+        {
+            string xsError = "";
+            xoProductoCtrl.EliminarProducto(xiId, out xsError);
+            return Json(xsError);
+        }
+
+        [HttpPost]
         public JsonResult PostGuardarProducto(ProductoForm xoProducto)
         {
             string xsError = "";
-
             xoProductoCtrl.GuardarProducto(xoProducto, out xsError);
-
             return Json(xsError);
+        }
+
+        public ActionResult EditorPrecios()
+        {
+            string xsError = "";
+            ViewBag.Productos = xoProductoCtrl.ObtenerProductos(out xsError)
+                                              .Select(x => new spGetProductos {
+                                                  IdMarca = x.IdMarca,
+                                                  Marca = x.Marca,
+                                                  IdTamanio = x.IdTamanio,
+                                                  Tamanio = x.Tamanio,
+                                                  Costo = x.Costo,
+                                                  Porcentaje = x.Porcentaje,
+                                                  PrecioVenta = x.PrecioVenta
+                                              })
+                                              .Distinct()
+                                              .ToList();
+
+            return View();
         }
     }
 }

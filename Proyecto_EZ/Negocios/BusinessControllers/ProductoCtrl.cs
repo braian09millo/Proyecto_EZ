@@ -196,6 +196,32 @@ namespace Negocios.BusinessControllers
             return loResultado;
         }
 
+        public void EliminarProducto(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoProducto = xoDB.producto.Find(xiId);
+                    if (xoProducto != null)
+                    {
+                        xoProducto.prod_delet = "S";
+                        xoDB.SaveChanges();
+                    }
+                    else
+                    {
+                        xsError = "El producto no existe";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
         #endregion
 
     }

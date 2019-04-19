@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "EditorPrecios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div style="padding-top: 50px;">
+    <h2 class="h2 text-center">EDITAR PRECIOS</h2>
+    <div class="row">
+        <div class="col-sm-12">
+            <a href="@Url.Action("Index", "Producto")" class="btn btn-default"><i class="fas fa-arrow-left"></i>&nbsp;&nbsp;Volver a Productos</a>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="EditorTable" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <td>Marca</td>
+                                    <td>Tamaño</td>
+                                    <td>Porcentaje</td>
+                                    <td>Costo</td>
+                                    <td>Precio Venta</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.Productos)
+                                {
+                                    <tr>
+                                        <td style="vertical-align: central;">@item.Marca</td>
+                                        <td>@item.Tamanio</td>
+                                        <td>
+                                            <input style="text-align: right;" type="text" class="form-control input-sm" value="@Math.Round(item.Porcentaje, 2)" /></td>
+                                        <td><input style="text-align: right;" type="text" class="form-control input-sm" value="@Math.Round(item.Costo, 2)" /></td>
+                                        <td><input style="text-align: right;" type="text" class="form-control input-sm" value="@Math.Round(item.PrecioVenta, 2)" /></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/datatables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/sweetalert.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+
+
+        });
+
+    </script>
+
+}
+
+@section Styles {
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+
+}
+
+
+
+

@@ -91,6 +91,7 @@
           <Property Name="prod_tamanio" Type="int" Nullable="false" />
           <Property Name="prod_tipo" Type="int" Nullable="false" />
           <Property Name="prod_pack" Type="int" />
+          <Property Name="prod_delet" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="provincia">
           <Key>
@@ -569,6 +570,7 @@
           <NavigationProperty Name="tamanio" Relationship="Modelo.FK_Tamanio_Producto" FromRole="producto" ToRole="tamanio" />
           <NavigationProperty Name="tipo" Relationship="Modelo.FK_Tipo_Producto" FromRole="producto" ToRole="tipo" />
           <NavigationProperty Name="precio_detalle" Relationship="Modelo.FK_Producto_Precio_Detalle" FromRole="producto" ToRole="precio_detalle" />
+          <Property Name="prod_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <Association Name="FK_Producto_DetallePedido">
           <End Type="Modelo.producto" Role="producto" Multiplicity="1" />
@@ -792,6 +794,7 @@
           <EntitySetMapping Name="producto">
             <EntityTypeMapping TypeName="Modelo.producto">
               <MappingFragment StoreEntitySet="producto">
+                <ScalarProperty Name="prod_delet" ColumnName="prod_delet" />
                 <ScalarProperty Name="prod_pack" ColumnName="prod_pack" />
                 <ScalarProperty Name="prod_tipo" ColumnName="prod_tipo" />
                 <ScalarProperty Name="prod_tamanio" ColumnName="prod_tamanio" />

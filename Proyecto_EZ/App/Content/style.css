@@ -30,13 +30,14 @@
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
 }
 
-#tableClientes, #tableProductos {
+#tableClientes, #tableProductos, #EditorTable {
     font-size: 16px;
     border-bottom: 1px solid #ddd;
 }
 
 #tableClientes thead tr td,
-#tableProductos thead tr td {
+#tableProductos thead tr td,
+#EditorTable thead tr td {
     font-weight: bolder; 
     font-size: 14px;
     background-color: #333;
@@ -45,14 +46,17 @@
 }
 
 #tableClientes tbody tr td,
-#tableProductos tbody tr td {
+#tableProductos tbody tr td,
+#EditorTable thead tr td {
     font-size: 14px;
 }
 
 #tableClientes thead tr td,
 #tableProductos thead tr td,
+#EditorTable thead tr td,
 #tableClientes tbody tr td,
-#tableProductos tbody tr td  {
+#tableProductos tbody tr td,
+#EditorTable tbody tr td  {
     text-align: center;
 }
 

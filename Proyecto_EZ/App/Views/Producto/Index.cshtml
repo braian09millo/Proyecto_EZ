@@ -9,6 +9,7 @@
     <div class="row">
         <div class="col-sm-12">
             <button class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-cart-plus"></i>&nbsp;&nbsp;Nuevo Producto</button>
+            <a href="@Url.Action("EditorPrecios", "Producto")" class="btn btn-default" ><i class="fas fa-edit"></i>&nbsp;&nbsp;Editar Precios</a>
         </div>
     </div>
     <br />
@@ -337,7 +338,7 @@
                                     { 'data': 'Costo' },
                                     { 'data': 'Porcentaje' },
                                     { 'data': 'PrecioVenta' },
-                                    { 'defaultContent': '<button class="btn btn-info btn-xs">Editar</button> <button class="btn btn-danger btn-xs">Eliminar</button>' }
+                                    { 'defaultContent': '<button class="btn btn-danger btn-xs">Eliminar</button>' }
                                 ],
                                 aoColumnDefs: [
                                     { "aTargets": [4], "width": "10%", "bSortable": false },
@@ -352,7 +353,6 @@
                                 }
                             });
 
-                            editarCliente('#tableProductos tbody', tabla);
                             eliminarCliente('#tableProductos tbody', tabla);
                         }
                         else {
@@ -375,30 +375,6 @@
                 });
             }
 
-
-            var editarCliente = function (tbody, table) {
-
-                $(tbody).off('click', 'button.btn-info.btn-xs');
-                $(tbody).on('click', 'button.btn-info.btn-xs', function () {
-
-                    var data = table.row($(this).parents('tr')).data();
-
-                    $('#txtId').val(data.IdProducto);
-                    $('#cmbMarcas').val(data.IdMarca);
-                    $('#cmbModelos').val(data.IdModelo);
-                    $('#cmbTamanios').val(data.IdTamanio);
-                    $('#cmbTipos').val(data.IdTipo);
-                    $('#txtCantPack').val(data.CantidadPack);
-                    $('#txtPorcentaje').val(data.Porcentaje);
-                    $('#txtCosto').val(data.Costo);
-                    $('#txtPV').val(data.PrecioVenta);
-
-                    $('#NuevoForm').modal('show');
-
-                });
-
-            }
-
             var eliminarCliente = function (tbody, table) {
 
                 $(tbody).off('click', 'button.btn-danger.btn-xs');
@@ -417,30 +393,30 @@
                         dangerMode: true,
                     }).then(function (bElimina) {
                         if (bElimina) {
-                            //$.ajax({
-                            //    method: 'POST',
-                            //    url: '/Cliente/PostEliminarProducto',
-                            //    data: JSON.stringify(dataToPost),
-                            //    contentType: 'application/json; charset=utf-8',
-                            //    success: function (response) {
-                            //        if (response == '') {
-                            //            swal("El registro se eliminó correctamente", {
-                            //                icon: "success",
-                            //            });
-                            //            Limpiar();
-                            //            CargarDatos();
-                            //        }
-                            //        else {
-                            //            swal(response, {
-                            //                icon: "error",
-                            //                buttons: "Aceptar"
-                            //            });
-                            //        }
-                            //    },
-                            //    error: function (error) {
-                            //        console.log(error);
-                            //    }
-                            //});
+                            $.ajax({
+                                method: 'POST',
+                                url: '/Producto/PostEliminarProducto',
+                                data: JSON.stringify(dataToPost),
+                                contentType: 'application/json; charset=utf-8',
+                                success: function (response) {
+                                    if (response == '') {
+                                        swal("El registro se eliminó correctamente", {
+                                            icon: "success",
+                                        });
+                                        Limpiar();
+                                        CargarDatos();
+                                    }
+                                    else {
+                                        swal(response, {
+                                            icon: "error",
+                                            buttons: "Aceptar"
+                                        });
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
                         }
                     })
                 });
