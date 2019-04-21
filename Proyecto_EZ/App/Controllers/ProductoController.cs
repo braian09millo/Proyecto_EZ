@@ -70,18 +70,7 @@ namespace App.Controllers
         public ActionResult EditorPrecios()
         {
             string xsError = "";
-            ViewBag.Productos = xoProductoCtrl.ObtenerProductos(out xsError)
-                                              .Select(x => new spGetProductos {
-                                                  IdMarca = x.IdMarca,
-                                                  Marca = x.Marca,
-                                                  IdTamanio = x.IdTamanio,
-                                                  Tamanio = x.Tamanio,
-                                                  Costo = x.Costo,
-                                                  Porcentaje = x.Porcentaje,
-                                                  PrecioVenta = x.PrecioVenta
-                                              })
-                                              .Distinct()
-                                              .ToList();
+            ViewBag.Productos = xoProductoCtrl.ObtenerProductosEdicion(out xsError);
 
             return View();
         }

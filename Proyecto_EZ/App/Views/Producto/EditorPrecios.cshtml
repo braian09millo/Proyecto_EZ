@@ -35,9 +35,9 @@
                                     <tr>
                                         <td data-info="@item.IdMarca">@item.Marca</td>
                                         <td data-info="@item.IdTamanio">@item.Tamanio</td>
-                                        <td><input style="text-align: right;" type="text" class="form-control input-sm" value="@Math.Round(item.Porcentaje, 2)" /></td>
-                                        <td><input style="text-align: right;" type="text" class="form-control input-sm" value="@Math.Round(item.Costo, 2)" /></td>
-                                        <td><input style="text-align: right;" type="text" class="form-control input-sm" value="@Math.Round(item.PrecioVenta, 2)" readonly /></td>
+                                        <td><input style="text-align: right;" type="text" name="porc" class="form-control input-sm" value="@Math.Round(item.Porcentaje, 2)" /></td>
+                                        <td><input style="text-align: right;" type="text" name="costo" class="form-control input-sm" value="@Math.Round(item.Costo, 2)" /></td>
+                                        <td><input style="text-align: right;" type="text" name="pv" class="form-control input-sm" value="@Math.Round(item.PrecioVenta, 2)" readonly /></td>
                                     </tr>
                                 }
                             </tbody>
@@ -60,6 +60,25 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+
+            $('#EditorTable tbody tr').click(function () {
+                
+                ($(this).find("td:eq(2)").find("input[type='text']")).keyup(function () {
+
+                    console.log($(this).val());
+
+                    var valorPorc = parseFloat($(this).val());
+                    var valorCosto = parseFloat($(this).parent().parent().find("td:eq(3)").find("input[type='text']").val());
+                    var valorPV = valorCosto + (valorCosto * (valorPorc / 100));
+                    $(this).parent()
+                           .parent()
+                           .find("td:eq(4)")
+                           .find("input[type='text']")
+                           .val(Math.round(valorPV * 100) / 100);
+
+                });
+
+            });
 
             $('#btnGuardar').click(function () {
                 

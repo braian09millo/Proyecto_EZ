@@ -251,6 +251,28 @@ namespace Negocios.BusinessControllers
             }
         }
 
+        public List<spGetProductosEdicion> ObtenerProductosEdicion(out string xsError)
+        {
+            xsError = "";
+
+            xsError = "";
+            List<spGetProductosEdicion> loResultado = null;
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    loResultado = xoDB.Database.SqlQuery<spGetProductosEdicion>("exec spGetProductosEdicion").ToList();
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+
+            return loResultado;
+        }
+
         #endregion
 
     }
