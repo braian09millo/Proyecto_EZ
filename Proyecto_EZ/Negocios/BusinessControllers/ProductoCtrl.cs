@@ -221,6 +221,7 @@ namespace Negocios.BusinessControllers
                             xoDB.AuxPrecios.Add(xoNuevo);
                         }
 
+                        //Guardamos los precios nuevos en la auxiliar
                         xoDB.SaveChanges();
 
                         //Actualizamos los precios por SP

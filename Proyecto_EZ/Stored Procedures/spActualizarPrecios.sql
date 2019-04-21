@@ -19,7 +19,7 @@ WITH ENCRYPTION AS
 	SET @@identPrecio = SCOPE_IDENTITY()
 
 	--Obtenemos todos los productos para la nueva tarifa
-	SELECT 
+	SELECT DISTINCT
 		@@identPrecio AS IdentPrecio,
 		prod_id AS IdProducto,
 		Costo AS Costo,
