@@ -114,8 +114,8 @@ CREATE TABLE remito
 CREATE TABLE precio
 (
 	pre_ident INT IDENTITY PRIMARY KEY,
-	pre_fecha datetime NOT NULL,
-	pre_fechaHasta INT NULL
+	pre_fecha DATETIME NOT NULL,
+	pre_fechaHasta DATETIME NULL
 )
 
 CREATE TABLE precio_detalle
@@ -134,12 +134,8 @@ CREATE TABLE precio_detalle
 -- Para después join contra la tabla de precios
 CREATE TABLE AuxPrecios 
 (
-	Id INT NULL,
 	Marca INT NOT NULL,
-	Modelo INT NULL,
 	Tamanio INT NOT NULL,
-	Tipo INT NULL,
-	CantidadPack INT NOT NULL,
 	Costo SMALLMONEY NOT NULL,
 	Porcentaje SMALLMONEY NOT NULL,
 	PrecioVenta SMALLMONEY NOT NULL,

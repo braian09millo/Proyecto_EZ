@@ -14,12 +14,8 @@ namespace Datos
     
     public partial class AuxPrecios
     {
-        public Nullable<int> Id { get; set; }
         public int Marca { get; set; }
-        public Nullable<int> Modelo { get; set; }
         public int Tamanio { get; set; }
-        public Nullable<int> Tipo { get; set; }
-        public int CantidadPack { get; set; }
         public decimal Costo { get; set; }
         public decimal Porcentaje { get; set; }
         public decimal PrecioVenta { get; set; }

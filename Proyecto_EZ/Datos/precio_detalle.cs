@@ -20,7 +20,7 @@ namespace Datos
         public Nullable<decimal> prd_porcen { get; set; }
         public decimal prd_precioPV { get; set; }
     
-        public virtual precio precio { get; set; }
         public virtual producto producto { get; set; }
+        public virtual precio precio { get; set; }
     }
 }

@@ -196,7 +196,7 @@ namespace Negocios.BusinessControllers
             }
         }
 
-        public void ActualizarPrecios(List<ProductoForm> xoProductos, out string xsError)
+        public void ActualizarPrecios(List<PrecioEdicion> xoPrecios, out string xsError)
         {
             xsError = "";
 
@@ -207,16 +207,12 @@ namespace Negocios.BusinessControllers
                     try
                     {
                         //Agregamos todos los productos levantados
-                        foreach (var item in xoProductos)
+                        foreach (var item in xoPrecios)
                         {
                             var xoNuevo = new AuxPrecios()
                             {
-                                Id = item.Id,
-                                Marca = item.Marca,
-                                Modelo = item.Modelo,
-                                Tamanio = item.Tamanio,
-                                Tipo = item.Tipo,
-                                CantidadPack = item.CantidadPack,
+                                Marca = item.IdMarca,
+                                Tamanio = item.IdTamanio,
                                 Costo = item.Costo,
                                 Porcentaje = item.Porcentaje,
                                 PrecioVenta = item.PrecioVenta
@@ -225,11 +221,13 @@ namespace Negocios.BusinessControllers
                             xoDB.AuxPrecios.Add(xoNuevo);
                         }
 
+                        xoDB.SaveChanges();
+
                         //Actualizamos los precios por SP
                         var retVal = new SqlParameter("@RetVal", SqlDbType.Int);
                         retVal.Direction = ParameterDirection.ReturnValue;
 
-                        xoDB.Database.ExecuteSqlCommand("exec spActualizarPrecios");
+                        xoDB.Database.ExecuteSqlCommand("exec spActualizarPrecios", retVal);
 
                         if ((int)retVal.Value != 0)
                         {
@@ -238,7 +236,19 @@ namespace Negocios.BusinessControllers
                         }
                         else
                         {
-                            xoTransaccion.Commit();
+                            //Limpiamos la tabla para usarla vacía la próxima vez
+                            xoDB.Database.ExecuteSqlCommand("DELETE FROM AuxPrecios", retVal);
+
+                            if ((int)retVal.Value != 0)
+                            {
+                                xsError = "Error al querer modificar los precios";
+                                xoTransaccion.Rollback();
+                            }
+                            else
+                            {
+                                xoTransaccion.Commit();
+                            }
+
                         }
                     }
                     catch (Exception ex)
@@ -253,8 +263,6 @@ namespace Negocios.BusinessControllers
 
         public List<spGetProductosEdicion> ObtenerProductosEdicion(out string xsError)
         {
-            xsError = "";
-
             xsError = "";
             List<spGetProductosEdicion> loResultado = null;
 

@@ -22,7 +22,7 @@ namespace Datos
     
         public int pre_ident { get; set; }
         public System.DateTime pre_fecha { get; set; }
-        public Nullable<int> pre_fechaHasta { get; set; }
+        public Nullable<System.DateTime> pre_fechaHasta { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<precio_detalle> precio_detalle { get; set; }

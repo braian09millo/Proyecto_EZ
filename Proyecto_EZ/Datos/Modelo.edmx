@@ -10,12 +10,8 @@
             <PropertyRef Name="Marca" />
             <PropertyRef Name="Tamanio" />
           </Key>
-          <Property Name="Id" Type="int" />
           <Property Name="Marca" Type="int" Nullable="false" />
-          <Property Name="Modelo" Type="int" />
           <Property Name="Tamanio" Type="int" Nullable="false" />
-          <Property Name="Tipo" Type="int" />
-          <Property Name="CantidadPack" Type="int" Nullable="false" />
           <Property Name="Costo" Type="smallmoney" Nullable="false" />
           <Property Name="Porcentaje" Type="smallmoney" Nullable="false" />
           <Property Name="PrecioVenta" Type="smallmoney" Nullable="false" />
@@ -83,7 +79,7 @@
           </Key>
           <Property Name="pre_ident" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="pre_fecha" Type="datetime" Nullable="false" />
-          <Property Name="pre_fechaHasta" Type="int" />
+          <Property Name="pre_fechaHasta" Type="datetime" />
         </EntityType>
         <EntityType Name="precio_detalle">
           <Key>
@@ -351,7 +347,6 @@
           <EntitySet Name="marca" EntityType="Modelo.marca" />
           <EntitySet Name="modelo" EntityType="Modelo.modelo" />
           <EntitySet Name="pedido" EntityType="Modelo.pedido" />
-          <EntitySet Name="precio" EntityType="Modelo.precio" />
           <EntitySet Name="provincia" EntityType="Modelo.provincia" />
           <EntitySet Name="remito" EntityType="Modelo.remito" />
           <EntitySet Name="tamanio" EntityType="Modelo.tamanio" />
@@ -395,12 +390,13 @@
             <End Role="producto" EntitySet="producto" />
           </AssociationSet>
           <EntitySet Name="precio_detalle" EntityType="Modelo.precio_detalle" />
-          <AssociationSet Name="FK_Precio_Precio_Detalle" Association="Modelo.FK_Precio_Precio_Detalle">
-            <End Role="precio" EntitySet="precio" />
-            <End Role="precio_detalle" EntitySet="precio_detalle" />
-          </AssociationSet>
           <AssociationSet Name="FK_Producto_Precio_Detalle" Association="Modelo.FK_Producto_Precio_Detalle">
             <End Role="producto" EntitySet="producto" />
+            <End Role="precio_detalle" EntitySet="precio_detalle" />
+          </AssociationSet>
+          <EntitySet Name="precio" EntityType="Modelo.precio" />
+          <AssociationSet Name="FK_Precio_Precio_Detalle" Association="Modelo.FK_Precio_Precio_Detalle">
+            <End Role="precio" EntitySet="precio" />
             <End Role="precio_detalle" EntitySet="precio_detalle" />
           </AssociationSet>
           <EntitySet Name="AuxPrecios" EntityType="Modelo.AuxPrecios" />
@@ -470,15 +466,6 @@
           <Property Name="ped_fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ped_monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="remito" Relationship="Modelo.FK_Pedido_Remito" FromRole="pedido" ToRole="remito" />
-        </EntityType>
-        <EntityType Name="precio">
-          <Key>
-            <PropertyRef Name="pre_ident" />
-          </Key>
-          <Property Name="pre_ident" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="pre_fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="pre_fechaHasta" Type="Int32" />
-          <NavigationProperty Name="precio_detalle" Relationship="Modelo.FK_Precio_Precio_Detalle" FromRole="precio" ToRole="precio_detalle" />
         </EntityType>
         <EntityType Name="provincia">
           <Key>
@@ -659,8 +646,29 @@
           <Property Name="prd_precioC" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
           <Property Name="prd_porcen" Type="Decimal" Precision="10" Scale="4" />
           <Property Name="prd_precioPV" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
-          <NavigationProperty Name="precio" Relationship="Modelo.FK_Precio_Precio_Detalle" FromRole="precio_detalle" ToRole="precio" />
           <NavigationProperty Name="producto" Relationship="Modelo.FK_Producto_Precio_Detalle" FromRole="precio_detalle" ToRole="producto" />
+          <NavigationProperty Name="precio" Relationship="Modelo.FK_Precio_Precio_Detalle" FromRole="precio_detalle" ToRole="precio" />
+        </EntityType>
+        <Association Name="FK_Producto_Precio_Detalle">
+          <End Type="Modelo.producto" Role="producto" Multiplicity="1" />
+          <End Type="Modelo.precio_detalle" Role="precio_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="prod_id" />
+            </Principal>
+            <Dependent Role="precio_detalle">
+              <PropertyRef Name="prd_produ" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="precio">
+          <Key>
+            <PropertyRef Name="pre_ident" />
+          </Key>
+          <Property Name="pre_ident" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pre_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="pre_fechaHasta" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="precio_detalle" Relationship="Modelo.FK_Precio_Precio_Detalle" FromRole="precio" ToRole="precio_detalle" />
         </EntityType>
         <Association Name="FK_Precio_Precio_Detalle">
           <End Type="Modelo.precio" Role="precio" Multiplicity="1" />
@@ -674,29 +682,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Producto_Precio_Detalle">
-          <End Type="Modelo.producto" Role="producto" Multiplicity="1" />
-          <End Type="Modelo.precio_detalle" Role="precio_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="producto">
-              <PropertyRef Name="prod_id" />
-            </Principal>
-            <Dependent Role="precio_detalle">
-              <PropertyRef Name="prd_produ" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="AuxPrecios">
           <Key>
             <PropertyRef Name="Marca" />
             <PropertyRef Name="Tamanio" />
           </Key>
-          <Property Name="Id" Type="Int32" />
           <Property Name="Marca" Type="Int32" Nullable="false" />
-          <Property Name="Modelo" Type="Int32" />
           <Property Name="Tamanio" Type="Int32" Nullable="false" />
-          <Property Name="Tipo" Type="Int32" />
-          <Property Name="CantidadPack" Type="Int32" Nullable="false" />
           <Property Name="Costo" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
           <Property Name="Porcentaje" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
           <Property Name="PrecioVenta" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
@@ -770,15 +762,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="precio">
-            <EntityTypeMapping TypeName="Modelo.precio">
-              <MappingFragment StoreEntitySet="precio">
-                <ScalarProperty Name="pre_fechaHasta" ColumnName="pre_fechaHasta" />
-                <ScalarProperty Name="pre_fecha" ColumnName="pre_fecha" />
-                <ScalarProperty Name="pre_ident" ColumnName="pre_ident" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="provincia">
             <EntityTypeMapping TypeName="Modelo.provincia">
               <MappingFragment StoreEntitySet="provincia">
@@ -847,18 +830,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="precio">
+            <EntityTypeMapping TypeName="Modelo.precio">
+              <MappingFragment StoreEntitySet="precio">
+                <ScalarProperty Name="pre_fechaHasta" ColumnName="pre_fechaHasta" />
+                <ScalarProperty Name="pre_fecha" ColumnName="pre_fecha" />
+                <ScalarProperty Name="pre_ident" ColumnName="pre_ident" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AuxPrecios">
             <EntityTypeMapping TypeName="Modelo.AuxPrecios">
               <MappingFragment StoreEntitySet="AuxPrecios">
                 <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
                 <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
                 <ScalarProperty Name="Costo" ColumnName="Costo" />
-                <ScalarProperty Name="CantidadPack" ColumnName="CantidadPack" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
                 <ScalarProperty Name="Tamanio" ColumnName="Tamanio" />
-                <ScalarProperty Name="Modelo" ColumnName="Modelo" />
                 <ScalarProperty Name="Marca" ColumnName="Marca" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

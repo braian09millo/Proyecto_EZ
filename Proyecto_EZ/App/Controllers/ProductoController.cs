@@ -74,5 +74,13 @@ namespace App.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        public JsonResult PostActualizarPrecios(List<PrecioEdicion> xoPrecios)
+        {
+            string xsError = "";
+            xoProductoCtrl.ActualizarPrecios(xoPrecios, out xsError);
+            return Json(xsError);
+        }
     }
 }
