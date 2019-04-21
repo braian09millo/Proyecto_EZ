@@ -18,5 +18,10 @@ namespace Negocios
         {
             return ProductoCtrl.GetInstancia();
         }
+
+        public PedidoCtrl GetCtrlPedido()
+        {
+            return PedidoCtrl.GetInstancia();
+        }
     }
 }
