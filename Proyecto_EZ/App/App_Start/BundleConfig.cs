@@ -36,7 +36,8 @@ namespace App
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/datatables.min.css",
-                      "~/Content/dataTables.bootstrap.min.css", 
+                      "~/Content/dataTables.bootstrap.min.css",
+                      "~/Content/all.min.css",
                       "~/Content/style.css"));
 
         }

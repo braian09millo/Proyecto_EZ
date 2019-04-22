@@ -24,7 +24,6 @@ namespace Negocios.BusinessControllers
 
         #region COMPORTAMIENTO
 
-
         #endregion
     }
 }

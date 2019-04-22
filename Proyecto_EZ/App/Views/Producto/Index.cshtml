@@ -353,7 +353,7 @@
                                 }
                             });
 
-                            eliminarCliente('#tableProductos tbody', tabla);
+                            eliminarProducto('#tableProductos tbody', tabla);
                         }
                         else {
                             swal({
@@ -375,7 +375,7 @@
                 });
             }
 
-            var eliminarCliente = function (tbody, table) {
+            var eliminarProducto = function (tbody, table) {
 
                 $(tbody).off('click', 'button.btn-danger.btn-xs');
                 $(tbody).on('click', 'button.btn-danger.btn-xs', function () {
