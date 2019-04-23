@@ -30,6 +30,17 @@ namespace App.Controllers
             return View();
         }
 
+        public JsonResult GetPedidos()
+        {
+            string xsError = "";
+            var lstPedidos = xoPedidoCtrl.ObtenerPedidos(out xsError);
+            var resultadoJS = new {
+                data = lstPedidos,
+                error = xsError
+            };
+            return Json(resultadoJS, JsonRequestBehavior.AllowGet);        
+        }
+
         public JsonResult AgregarPedido(int xiCliente, decimal xdTotal, List<Pedido> xoProductos)
         {
             string xsError = "";

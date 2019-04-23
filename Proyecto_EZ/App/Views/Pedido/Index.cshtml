@@ -22,7 +22,7 @@
                                 <tr>
                                     <td>ID Pedido</td>
                                     <td>Cliente</td>
-                                    <td>Fecha</td>
+                                    <td data-format="DD/MM/YYYY">Fecha</td>
                                     <td>Monto</td>
                                     <td>Acciones</td>
                                 </tr>
@@ -108,6 +108,9 @@
 
         $(document).ready(function () {
 
+            //Cargamos los pedidos en el LOAD
+            CargarPedidos();
+
             //Función para volver a crear la tabla
             function Limpiar() {
                 $("#tablePedidos").dataTable().fnDestroy();
@@ -126,7 +129,6 @@
 
                 $('#formPedidos').remove('#item:not(first-child)');
             });
-
 
             //Habilitamos el botón cuando los campos requeridos esten llenos
             function ValidarFormulario() {
@@ -178,7 +180,6 @@
                 });
 
             });
-
 
             $('#btnItem').click(function () {
 
@@ -256,6 +257,7 @@
                                             icon: "success",
                                             button: "Aceptar",
                                         });
+                                        ('#NuevoForm').modal('hide');
                                     }
                                     else {
                                         swal({
@@ -279,6 +281,71 @@
                     }
                 });
             });
+
+            function CargarPedidos() {
+
+                $.ajax({
+                    method: 'GET',
+                    url: '/Pedido/GetPedidos',
+                    success: function (response) {
+                        console.log(response);
+                        if (response.error == "") {
+                            var tabla = $('#tablePedidos').DataTable({
+                                data: response.data,
+                                "info": false,
+                                columns: [
+                                    { 'data': 'IdPedido' },
+                                    { 'data': 'Cliente' },
+                                    { 'data': 'Fecha' },
+                                    { 'data': 'Monto' },
+                                    { 'defaultContent': '<button class="btn btn-warning btn-xs">Imprimir</button> <button class="btn btn-info btn-xs">Ver Detalle</button> <button class="btn btn-danger btn-xs">Eliminar</button>' }
+                                ],
+                                aoColumnDefs: [
+                                    { "aTargets": [4], "bSortable": false }
+                                ],
+                                "language": {
+                                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                                }
+                            });
+
+                            imprimir('#tablePedidos tbody', tabla);
+                            verDetalle('#tablePedidos tbody', tabla);
+                            eliminarPedido('#tablePedidos tbody', tabla);
+                        }
+                        else {
+                            swal({
+                                title: "Error",
+                                text: response.error,
+                                icon: "error",
+                                button: "Aceptar",
+                            });
+                        }
+                    },
+                    error: function (response) {
+                        swal({
+                            title: "Error",
+                            text: response,
+                            icon: "error",
+                            button: "Aceptar",
+                        });
+                    }
+
+                });
+
+            }
+
+            function imprimir(tbody, tabla) {
+
+            }
+
+            function verDetalle(tbody, tabla) {
+
+            }
+
+            function eliminarPedido(tbody, tabla) {
+
+            }
+
 
         });
 

@@ -72,6 +72,26 @@ namespace Negocios.BusinessControllers
             }
         }
 
+        public List<spGetPedidos> ObtenerPedidos(out string xsError)
+        {
+            xsError = "";
+            List<spGetPedidos> xoPedidos = null;
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    xoPedidos = xoDB.Database.SqlQuery<spGetPedidos>("exec spGetPedidos").ToList();
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+
+            return xoPedidos;
+        }
+
         #endregion
     }
 }
