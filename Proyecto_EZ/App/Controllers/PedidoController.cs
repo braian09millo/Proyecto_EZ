@@ -1,4 +1,5 @@
-﻿using Negocios;
+﻿using Entidades;
+using Negocios;
 using Negocios.BusinessControllers;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,13 @@ namespace App.Controllers
             ViewBag.Productos = xoProductoCtrl.ObtenerProductos(out xsError);           
 
             return View();
+        }
+
+        public JsonResult AgregarPedido(int xiCliente, decimal xdTotal, List<Pedido> xoProductos)
+        {
+            string xsError = "";
+            xoPedidoCtrl.AgregarPedido(xiCliente, xdTotal, xoProductos, out xsError);
+            return Json(xsError);
         }
     }
 }

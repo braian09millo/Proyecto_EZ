@@ -123,6 +123,8 @@
                   .find("input[type=checkbox], input[type=radio]")
                      .prop("checked", "")
                      .end();
+
+                $('#formPedidos').remove('#item:not(first-child)');
             });
 
 
@@ -197,6 +199,8 @@
                 var Total = 0;
                 var CantidadProductos = 0;
                 var CantidadPacks = 0;
+                var Productos = [];
+                var ClienteElegido = $('#cmbClientes').val();
 
                 //Prevenimos que se realice un nuevo submit
                 e.preventDefault();
@@ -209,7 +213,26 @@
                     Total = parseFloat(Total) + parseFloat(monto);
                     CantidadProductos = parseInt(CantidadProductos) + 1;
                     CantidadPacks = parseInt(CantidadPacks) + parseInt(packs);
+                    var id = $(this).find('.col-sm-3').find('select').children('option:selected').data("info");
+                    var precio = $(this).find('.col-sm-2.precio').find('input[type="text"]').val();
+
+                    var item = {
+
+                        IdProducto: id,
+                        Cantidad: packs,
+                        Precio: precio,
+                        Monto: monto
+                    };
+
+                    Productos.push(item);
                 });
+
+                var dataToPost = {
+
+                    xiCliente: ClienteElegido,
+                    xdTotal: Total,
+                    xoProductos: Productos
+                }
 
                 swal({
                     title: "¿Desea finalizar el pedido?",
@@ -219,7 +242,40 @@
                     dangerMode: false,
                 }).then(function (bConfirma) {
                     if (bConfirma) {
+                        if (Productos.length > 0) {
+                            $.ajax({
+                                method: 'POST',
+                                data: dataToPost,
+                                url: '/Pedido/AgregarPedido',
+                                success: function (response) {
 
+                                    if (response == "") {
+                                        swal({
+                                            title: "Exito!",
+                                            text: "Pedido generado correctamente",
+                                            icon: "success",
+                                            button: "Aceptar",
+                                        });
+                                    }
+                                    else {
+                                        swal({
+                                            title: "Error",
+                                            text: response,
+                                            icon: "error",
+                                            button: "Aceptar",
+                                        });
+                                    }
+                                },
+                                error: function (response) {
+                                    swal({
+                                        title: "Error",
+                                        text: response,
+                                        icon: "error",
+                                        button: "Aceptar",
+                                    });
+                                }
+                            });
+                        }
                     }
                 });
             });
