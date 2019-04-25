@@ -45,48 +45,62 @@
                     <h4 class="modal-title" id="myModalLabel">Agregar/Modificar Clientes</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="ClienteForm">
-                        <input type="hidden" id="txtId" name="id" />
-                        <div class="input-group">
-                            <span class="input-group-addon label-addon"><i class="fas fa-user"></i></span>
-                            <input type="text" class="form-control" id="txtNombre" name="nombre" placeholder="Nombre" />
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8">
+                            <form id="ClienteForm" class="form-horizontal">
+                                <input type="hidden" id="txtId" name="id" />
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="txtNombre" name="nombre" placeholder="Nombre" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="txtDireccion" name="direccion" placeholder="Dirección" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        @Html.Partial("comboProvincias")
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <select id="cmbLocalidades" class="form-control" disabled>
+                                            <option value="">Elija una localidad</option>
+                                            @foreach (var item in ViewBag.Localidades)
+                                            {
+                                                <option data-info="@item.loc_provincia" value="@item.loc_id">@item.loc_descr</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="txtTelefono" name="telefono" placeholder="Teléfono" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="txtCelular" name="celular" placeholder="Celular" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="txtCelular2" name="celular2" placeholder="Celular Alternativo" />
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="col-sm-2"></div>
                         </div>
-                        <div class="input-group">
-                            <span class="input-group-addon label-addon"><i class="fas fa-address-book"></i></span>
-                            <input type="text" class="form-control" id="txtDireccion" name="direccion" placeholder="Dirección" />
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon label-addon"><i class="fas fa-map-marker-alt"></i></span>
-                            @Html.Partial("comboProvincias")
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon label-addon"><i class="fas fa-map-marked-alt"></i></span>
-                            <select id="cmbLocalidades" class="form-control" disabled>
-                                <option value="">Elija una localidad</option>
-                                @foreach (var item in ViewBag.Localidades)
-                                {
-                                    <option data-info="@item.loc_provincia" value="@item.loc_id">@item.loc_descr</option>
-                                }
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon label-addon"><i class="fas fa-phone"></i></span>
-                            <input type="text" class="form-control" id="txtTelefono" name="telefono" placeholder="Teléfono" />
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon label-addon"><i class="fas fa-mobile-alt"></i></span>
-                            <input type="text" class="form-control" id="txtCelular" name="celular" placeholder="Celular" />
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon label-addon"><i class="fas fa-mobile-alt"></i></span>
-                            <input type="text" class="form-control" id="txtCelular2" name="celular2" placeholder="Celular Alternativo" />
-                        </div>                        
-                    </form>
+                    </div>
+ 
                 </div>
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-sm-12">
-                            <button class="btn btn-primary" type="submit" id="btnAgregar"><i class="fas fa-check"></i>&nbsp;Guardar</button>
+                            <button class="btn btn-primary" type="submit" id="btnAgregar"><i class="fas fa-save"></i>&nbsp;Guardar</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp;Cancelar</button>
                         </div>
                     </div>
@@ -150,7 +164,7 @@
                             { 'data': 'cli_telefono' },
                             { 'data': 'cli_celular' },
                             { 'data': 'cli_celular2' },
-                            { 'defaultContent': '<button class="btn btn-info btn-xs">Editar</button> <button class="btn btn-danger btn-xs">Eliminar</button>' }
+                            { 'defaultContent': '<button class="btn btn-info btn-xs" title="Editar"><i class="fas fa-pencil-alt"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>' }
                         ],
                         aoColumnDefs: [
                             { "aTargets": [4], "bSortable": false },

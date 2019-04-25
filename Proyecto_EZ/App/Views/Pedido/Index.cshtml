@@ -22,7 +22,7 @@
                                 <tr>
                                     <td>ID Pedido</td>
                                     <td>Cliente</td>
-                                    <td data-format="DD/MM/YYYY">Fecha</td>
+                                    <td>Fecha</td>
                                     <td>Monto</td>
                                     <td>Acciones</td>
                                 </tr>
@@ -103,6 +103,8 @@
     <script src="~/Scripts/datatables.min.js"></script>
     <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/sweetalert.min.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/datetime.js"></script>
 
     <script type="text/javascript">
 
@@ -257,14 +259,16 @@
                                             icon: "success",
                                             button: "Aceptar",
                                         });
-                                        ('#NuevoForm').modal('hide');
+
+                                        $('#NuevoForm').modal('hide');
+                                        CargarPedidos();
                                     }
                                     else {
                                         swal({
                                             title: "Error",
                                             text: response,
                                             icon: "error",
-                                            button: "Aceptar",
+                                            button: "Aceptar"
                                         });
                                     }
                                 },
@@ -273,7 +277,7 @@
                                         title: "Error",
                                         text: response,
                                         icon: "error",
-                                        button: "Aceptar",
+                                        button: "Aceptar"
                                     });
                                 }
                             });
@@ -284,53 +288,46 @@
 
             function CargarPedidos() {
 
-                $.ajax({
-                    method: 'GET',
-                    url: '/Pedido/GetPedidos',
-                    success: function (response) {
-                        console.log(response);
-                        if (response.error == "") {
-                            var tabla = $('#tablePedidos').DataTable({
-                                data: response.data,
-                                "info": false,
-                                columns: [
-                                    { 'data': 'IdPedido' },
-                                    { 'data': 'Cliente' },
-                                    { 'data': 'Fecha' },
-                                    { 'data': 'Monto' },
-                                    { 'defaultContent': '<button class="btn btn-warning btn-xs">Imprimir</button> <button class="btn btn-info btn-xs">Ver Detalle</button> <button class="btn btn-danger btn-xs">Eliminar</button>' }
-                                ],
-                                aoColumnDefs: [
-                                    { "aTargets": [4], "bSortable": false }
-                                ],
-                                "language": {
-                                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-                                }
-                            });
-
-                            imprimir('#tablePedidos tbody', tabla);
-                            verDetalle('#tablePedidos tbody', tabla);
-                            eliminarPedido('#tablePedidos tbody', tabla);
+                var tabla = $('#tablePedidos').DataTable({
+                    "info": false,
+                    "ajax": '/Pedido/GetPedidos',
+                    aoColumnDefs: [
+                        { targets: [0], "bSortable": true, "bVisible": false },
+                        { targets: [1], "bSortable": true },
+                        { targets: [2], "bSortable": true },
+                        { targets: [3], "bSortable": true },
+                        {
+                            "targets": 4,
+                            "data": null,
+                            "bSortable": false,
+                            "width" : "20%",
+                            "defaultContent": '<button class="btn btn-warning btn-xs" title="Imprimir"><i class="glyphicon glyphicon-print"></i></button> <button class="btn btn-info btn-xs" title="Ver detalle"><i class="fas fa-list-ul"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>'
                         }
-                        else {
+                    ],
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                    },
+                    initComplete: function (settings, json) {
+
+                        if (json.error != "")
+                        {
                             swal({
                                 title: "Error",
-                                text: response.error,
+                                text: json.error,
                                 icon: "error",
-                                button: "Aceptar",
+                                button: "Aceptar"
                             });
                         }
-                    },
-                    error: function (response) {
-                        swal({
-                            title: "Error",
-                            text: response,
-                            icon: "error",
-                            button: "Aceptar",
-                        });
+                        else
+                        {
+                            data: json.data;
+                        }
                     }
-
                 });
+
+                imprimir('#tablePedidos tbody', tabla);
+                verDetalle('#tablePedidos tbody', tabla);
+                eliminarPedido('#tablePedidos tbody', tabla);
 
             }
 

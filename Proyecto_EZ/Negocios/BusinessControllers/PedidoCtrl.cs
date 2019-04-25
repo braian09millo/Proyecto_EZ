@@ -72,16 +72,21 @@ namespace Negocios.BusinessControllers
             }
         }
 
-        public List<spGetPedidos> ObtenerPedidos(out string xsError)
+        public object ObtenerPedidos(out string xsError)
         {
             xsError = "";
-            List<spGetPedidos> xoPedidos = null;
+            object xoPedidos = null;
 
             using (BD_Entities xoDB = new BD_Entities())
             {
                 try
                 {
-                    xoPedidos = xoDB.Database.SqlQuery<spGetPedidos>("exec spGetPedidos").ToList();
+                    var xoResultado = xoDB.Database.SqlQuery<spGetPedidos>("exec spGetPedidos").ToList();
+                    xoPedidos = xoResultado.Select(x => new [] {
+                        x.IdPedido.ToString(),
+                        x.Cliente,
+                        x.Fecha.ToString("dd-MM-yyyy"),
+                        "$ " + string.Format("{0:0.##}", x.Monto)}).ToList();
                 }
                 catch (Exception ex)
                 {

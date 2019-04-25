@@ -90,6 +90,9 @@ CREATE TABLE pedido
 	ped_cliente INT NOT NULL,
 	ped_fecha DATETIME NOT NULL,
 	ped_monto MONEY NOT NULL,
+	ped_resto MONEY NOT NULL,
+	ped_estadoPago CHAR(2) NOT NULL, /* P: Pago el total, NP: No pago, PP: Pago parcial */
+	ped_estadoEntrega CHAR(2) NOT NULL /* E: Entregado, NE: No entregado */
 )
 
 CREATE TABLE detalle_pedido

@@ -36,7 +36,7 @@ body {
 }
 
 #tableClientes, #tableProductos, #EditorTable, #tablePedidos {
-    font-size: 16px;
+    font-size: 14px;
     border-bottom: 1px solid #ddd;
 }
 
@@ -87,3 +87,12 @@ body {
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
     border: 0;
 }
+
+.form-group > label::after {
+    content: ":";
+}
+
+.form-horizontal > .control-label.col-sm-2{
+    text-align:left;
+}
+

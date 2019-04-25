@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-sm-12">
             <button class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-cart-plus"></i>&nbsp;&nbsp;Nuevo Producto</button>
-            <a href="@Url.Action("EditorPrecios", "Producto")" class="btn btn-default" ><i class="fas fa-edit"></i>&nbsp;&nbsp;Editar Precios</a>
+            <a href="@Url.Action("EditorPrecios", "Producto")" class="btn btn-default"><i class="fas fa-edit"></i>&nbsp;&nbsp;Editar Precios</a>
         </div>
     </div>
     <br />
@@ -45,23 +45,21 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Agregar/Modificar Productos</h4>
+                    <h4 class="modal-title" id="myModalLabel">Agregar Productos</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-2"></div>
-                        <div class="col-sm-10">
+                        <div class="col-sm-8">
                             <form id="ProductoForm" class="form-horizontal">
                                 <input type="hidden" id="txtId" name="id" />
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2">Marca</label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-12">
                                         @Html.Partial("comboMarcas")
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2">Modelo</label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-12">
                                         <select class="form-control" id="cmbModelos">
                                             <option value="">Elija un modelo</option>
                                             @foreach (var item in ViewBag.ComboModelos)
@@ -72,26 +70,22 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2">Tamaño</label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-12">
                                         @Html.Partial("comboTamanios")
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2">Tipo</label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-12">
                                         @Html.Partial("comboTipos")
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2">Pack</label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-12">
                                         <input type="text" id="txtCantPack" class="form-control" placeholder="Cantidad por pack" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2">Porc.</label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-12">
                                         <div class="input-group">
                                             <input type="text" id="txtPorcentaje" class="form-control" placeholder="Porcentaje por venta" style="text-align:right;" />
                                             <span class="input-group-addon">%</span>
@@ -99,32 +93,30 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2">Costo</label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-12">
                                         <div class="input-group">
                                             <span class="input-group-addon">$</span>
-                                            <input type="text" id="txtCosto" class="form-control" placeholder="Costo" style="text-align:right;"/>
+                                            <input type="text" id="txtCosto" class="form-control" placeholder="Costo" style="text-align:right;" />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2">PV</label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-12">
                                         <div class="input-group">
                                             <span class="input-group-addon">$</span>
                                             <input type="text" readonly id="txtPV" class="form-control" placeholder="Precio de Venta" style="text-align:right;" />
                                         </div>
                                     </div>
-                                </div>                                   
+                                </div>
                             </form>
                         </div>
-                        <div class="col-sm-1"></div>
+                        <div class="col-sm-2"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-sm-12">
-                            <button class="btn btn-primary" type="submit" id="btnAgregar"><i class="fas fa-check"></i>&nbsp;Guardar</button>
+                            <button class="btn btn-primary" type="submit" id="btnAgregar"><i class="fas fa-save"></i>&nbsp;Guardar</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp;Cancelar</button>
                         </div>
                     </div>
@@ -141,6 +133,7 @@
     <script src="~/Scripts/datatables.min.js"></script>
     <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/sweetalert.min.js"></script>
+    <script src="~/Scripts/currency.js"></script>
 
     <script type="text/javascript">
 
@@ -169,12 +162,12 @@
                      .end();
             });
 
-            //Funcion para modificar el valor PV 
+            //Funcion para modificar el valor PV
             $('#txtPorcentaje').keyup(function () {
 
                 var valorPorc = parseFloat($(this).val());
                 var valorCosto = parseFloat($('#txtCosto').val());
-                var valorPV = valorCosto + (valorCosto * (valorPorc / 100));
+                var valorPV = (valorCosto / (1 - (valorPorc / 100)));
 
                 if (valorCosto == 'NaN' || valorCosto == NaN) {
                     $('#txtPV').val(0);
@@ -188,7 +181,7 @@
 
                 var valorCosto = parseFloat($(this).val());
                 var valorPorc = parseFloat($('#txtPorcentaje').val());
-                var valorPV = valorCosto + (valorCosto * (valorPorc / 100));
+                var valorPV = (valorCosto / (1 - (valorPorc / 100)));
 
                 if (valorPorc == 'NaN' || valorPorc == NaN) {
                     $('#txtPV').val(0);
@@ -246,9 +239,9 @@
                         url: '/Producto/PostGuardarProducto',
                         contentType: 'application/json; charset=utf-8',
                         success: function (response) {
-                            
+
                             if (response == '') {
-                                
+
                                 $('#NuevoForm').modal('hide');
 
                                 swal({
@@ -277,7 +270,7 @@
                                 icon: "Error",
                                 button: "Ok",
                             });
-                        }                        
+                        }
                     });
                 }
                 else {
@@ -338,14 +331,14 @@
                                     { 'data': 'Costo' },
                                     { 'data': 'Porcentaje' },
                                     { 'data': 'PrecioVenta' },
-                                    { 'defaultContent': '<button class="btn btn-danger btn-xs">Eliminar</button>' }
+                                    { 'defaultContent': '<button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>' }
                                 ],
                                 aoColumnDefs: [
                                     { "aTargets": [4], "width": "10%", "bSortable": false },
-                                    { "aTargets": [5], "bSortable": false },
-                                    { "aTargets": [6], "bSortable": false },
-                                    { "aTargets": [7], "bSortable": false },
-                                    { "aTargets": [8], "bSortable": false },
+                                    { "aTargets": [5], "bSortable": false, type: 'currency' },
+                                    { "aTargets": [6], "bSortable": false, type: 'currency' },
+                                    { "aTargets": [7], "bSortable": false, type: 'currency' },
+                                    { "aTargets": [8], "bSortable": false, type: 'currency' },
                                     { "aTargets": [9], "bSortable": false }
                                 ],
                                 "language": {
