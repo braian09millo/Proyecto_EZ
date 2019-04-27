@@ -8,7 +8,7 @@
     <h2 class="h2 text-center">PRODUCTOS</h2>
     <div class="row">
         <div class="col-sm-12">
-            <button class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-cart-plus"></i>&nbsp;&nbsp;Nuevo Producto</button>
+            <button class="btn btn-default" id="btnNuevo" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-cart-plus"></i>&nbsp;&nbsp;Nuevo Producto</button>
             <a href="@Url.Action("EditorPrecios", "Producto")" class="btn btn-default"><i class="fas fa-edit"></i>&nbsp;&nbsp;Editar Precios</a>
         </div>
     </div>
@@ -212,6 +212,11 @@
                     return true;
             }
 
+            $('#btnNuevo').click(function () {
+                $('#txtPorcentaje').prop('readonly', false);
+                $('#txtCosto').prop('readonly', false);
+            });
+
             $('#btnAgregar').click(function (e) {
 
                 //Prevenimos que se realice un nuevo submit
@@ -331,7 +336,7 @@
                                     { 'data': 'Costo' },
                                     { 'data': 'Porcentaje' },
                                     { 'data': 'PrecioVenta' },
-                                    { 'defaultContent': '<button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>' }
+                                    { 'defaultContent': '<button class="btn btn-success btn-xs" disabled title="Habilitar"><i class="fas fa-check"></i></button> <button class="btn btn-info btn-xs" title="Editar"><i class="fas fa-pencil-alt"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>' }
                                 ],
                                 aoColumnDefs: [
                                     { "aTargets": [4], "width": "10%", "bSortable": false },
@@ -341,11 +346,20 @@
                                     { "aTargets": [8], "bSortable": false, type: 'currency' },
                                     { "aTargets": [9], "bSortable": false }
                                 ],
+                                "createdRow": function (row, data, dataIndex) {
+                                    if (data.prod_delet == "S") {
+                                        $(row).css('background-color', '#B8DBD9');
+                                        $(row).find("td:eq(9)").find('.btn-danger').prop('disabled', true);
+                                        $(row).find("td:eq(9)").find('.btn-success').prop('disabled', false);
+                                    }
+                                },
                                 "language": {
                                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
                                 }
                             });
 
+                            habilitarProducto('#tableProductos tbody', tabla);
+                            editarProducto('#tableProductos tbody', tabla);
                             eliminarProducto('#tableProductos tbody', tabla);
                         }
                         else {
@@ -368,6 +382,79 @@
                 });
             }
 
+
+            var habilitarProducto = function (tbody, tabla) {
+
+                $(tbody).off('click', 'button.btn-success.btn-xs');
+                $(tbody).on('click', 'button.btn-success.btn-xs', function () {
+
+                    var data = tabla.row($(this).parents('tr')).data();
+
+                    var dataToPost = {
+                        xiId: data.IdProducto
+                    }
+
+                    swal({
+                        title: "¿Está seguro que desea habilitar el producto?",
+                        text: "",
+                        icon: "warning",
+                        buttons: ['Cancelar', 'Confirmar'],
+                        dangerMode: true,
+                    }).then(function (bHabilita) {
+                        if (bHabilita) {
+                            $.ajax({
+                                method: 'POST',
+                                url: '/Producto/PostHabilitarProducto',
+                                data: JSON.stringify(dataToPost),
+                                contentType: 'application/json; charset=utf-8',
+                                success: function (response) {
+                                    if (response == '') {
+                                        swal("El producto se habilitó correctamente", {
+                                            icon: "success",
+                                        });
+                                        Limpiar();
+                                        CargarDatos();
+                                    }
+                                    else {
+                                        swal(response, {
+                                            icon: "error",
+                                            buttons: "Aceptar"
+                                        });
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                        }
+                    })
+                });
+
+            }
+
+            var editarProducto = function (tbody, tabla) {
+
+                $(tbody).off('click', 'button.btn-info.btn-xs');
+                $(tbody).on('click', 'button.btn-info.btn-xs', function () {
+
+                    var data = tabla.row($(this).parents('tr')).data();
+
+                    $('#txtId').val(data.IdProducto);
+                    $('#cmbMarcas').val(data.IdMarca);
+                    $('#cmbModelos').val(data.IdModelo);
+                    $('#cmbTamanios').val(data.IdTamanio);
+                    $('#cmbTipos').val(data.IdTipo);
+                    $('#txtCantPack').val(data.CantidadPack);
+                    $('#txtPorcentaje').val(data.Porcentaje).prop('readonly', true);
+                    $('#txtCosto').val(data.Costo).prop('readonly', true);
+                    $('#txtPV').val(data.PrecioVenta);
+
+                    $('#NuevoForm').modal('show');
+
+                });
+
+            }
+
             var eliminarProducto = function (tbody, table) {
 
                 $(tbody).off('click', 'button.btn-danger.btn-xs');
@@ -379,8 +466,8 @@
                     }
 
                     swal({
-                        title: "¿Está seguro?",
-                        text: "No podrá recuperar el registro una vez eliminado",
+                        title: "¿Está seguro que desea eliminar el producto?",
+                        text: "",
                         icon: "warning",
                         buttons: ['Cancelar', 'Confirmar'],
                         dangerMode: true,

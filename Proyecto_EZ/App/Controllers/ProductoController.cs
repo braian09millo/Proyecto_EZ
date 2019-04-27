@@ -60,6 +60,14 @@ namespace App.Controllers
         }
 
         [HttpPost]
+        public JsonResult PostHabilitarProducto(int xiId)
+        {
+            string xsError = "";
+            xoProductoCtrl.HabilitarProducto(xiId, out xsError);
+            return Json(xsError);
+        }
+
+        [HttpPost]
         public JsonResult PostGuardarProducto(ProductoForm xoProducto)
         {
             string xsError = "";

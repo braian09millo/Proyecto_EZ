@@ -66,16 +66,16 @@ CREATE TABLE modelo
 	CONSTRAINT PK_Modelo PRIMARY KEY (mod_id)
 )
 
-CREATE TABLE tamanio 
-(
-	tam_id INT IDENTITY PRIMARY KEY, 
-	tam_descripcion VARCHAR(50) NOT NULL
-)
-
 CREATE TABLE tipo
 (
 	tip_id INT IDENTITY PRIMARY KEY,
 	tip_descr VARCHAR(50) NOT NULL
+)
+
+CREATE TABLE tamanio 
+(
+	tam_id INT IDENTITY PRIMARY KEY, 
+	tam_descripcion VARCHAR(50) NOT NULL
 )
 
 CREATE TABLE producto

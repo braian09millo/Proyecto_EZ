@@ -22,5 +22,6 @@ namespace Entidades
         public decimal PrecioVenta { get; set; }
         public decimal Porcentaje { get; set; }
         public decimal PrecioUnitario { get; set; }
+        public string prod_delet { get; set; }
     }
 }

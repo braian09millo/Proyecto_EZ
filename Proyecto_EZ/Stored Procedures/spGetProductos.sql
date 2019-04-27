@@ -21,7 +21,8 @@ WITH ENCRYPTION AS
 		prd_precioC AS Costo,
 		prd_precioPV AS PrecioVenta,
 		prd_porcen AS Porcentaje,
-		ROUND((prd_precioPV/prod_pack), 2) AS PrecioUnitario
+		ROUND((prd_precioPV/prod_pack), 2) AS PrecioUnitario,
+		ISNULL(prod_delet,'N') AS prod_delet
 	FROM producto
 	JOIN marca ON prod_marca = mar_id
 	JOIN modelo ON prod_modelo = mod_id
@@ -30,8 +31,7 @@ WITH ENCRYPTION AS
 	JOIN precio_detalle ON prd_produ = prod_id
 	JOIN precio ON pre_ident = prd_campre
 	WHERE 
-		pre_fechaHasta IS NULL AND
-		ISNULL(prod_delet,'N') <> 'S'
+		pre_fechaHasta IS NULL
 
 	SET @@nRet = @@error
 	IF @@nRet <> 0 
