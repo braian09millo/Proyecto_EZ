@@ -8,7 +8,7 @@
     <h2 class="h2 text-center">CLIENTES</h2>
     <div class="row">
         <div class="col-sm-12">
-            <button class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Nuevo Cliente</button>
+            <button id="btnNuevo" class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Nuevo Cliente</button>
         </div>
     </div>
     <br />
@@ -26,7 +26,6 @@
                                     <td>Dirección</td>
                                     <td>Teléfono</td>
                                     <td>Celular</td>
-                                    <td>Celular 2</td>
                                     <td>Acciones</td>
                                 </tr>
                             </thead>
@@ -74,6 +73,11 @@
                                                 <option data-info="@item.loc_provincia" value="@item.loc_id">@item.loc_descr</option>
                                             }
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input type="email" class="form-control" id="txtMail" name="telefono" placeholder="Email" />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -155,6 +159,7 @@
                 success: function (response) {
                     var tabla = $('#tableClientes').DataTable({
                         data: response,
+                        select: true,
                         "info": false,
                         columns: [
                             { 'data': 'cli_nombre' },
@@ -163,15 +168,20 @@
                             { 'data': 'cli_direccion' },
                             { 'data': 'cli_telefono' },
                             { 'data': 'cli_celular' },
-                            { 'data': 'cli_celular2' },
-                            { 'defaultContent': '<button class="btn btn-info btn-xs" title="Editar"><i class="fas fa-pencil-alt"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>' }
+                            { 'defaultContent': '<button class="btn btn-success btn-xs" disabled title="Habilitar"><i class="fas fa-user-check"></i></button> <button class="btn btn-info btn-xs" title="Editar"><i class="fas fa-user-edit"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-user-minus"></i></button>' }
                         ],
                         aoColumnDefs: [
                             { "aTargets": [4], "bSortable": false },
                             { "aTargets": [5], "bSortable": false },
                             { "aTargets": [6], "bSortable": false },
-                            { "aTargets": [7], "bSortable": false },
                         ],
+                        "createdRow": function (row, data, dataIndex) {
+                            if (data.cli_delet == "S") {
+                                $(row).css('background-color', '#B8DBD9');
+                                $(row).find("td:eq(6)").find('.btn-danger').prop('disabled', true);
+                                $(row).find("td:eq(6)").find('.btn-success').prop('disabled', false);
+                            }
+                        },
                         "language": {
                             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
                         }
@@ -179,12 +189,63 @@
 
                     editarCliente('#tableClientes tbody', tabla);
                     eliminarCliente('#tableClientes tbody', tabla);
+                    habilitarCliente('#tableClientes tbody', tabla);
 
                 },
                 error: function (error) {
                     console.log(error);
                 }
             });
+        }
+
+        var habilitarCliente = function (tbody, tabla) {
+
+
+            $(tbody).off('click', 'button.btn-success.btn-xs');
+            $(tbody).on('click', 'button.btn-success.btn-xs', function () {
+
+                var data = tabla.row($(this).parents('tr')).data();
+                
+                var dataToPost = {
+                    xiId: data.cli_id
+                }
+
+                swal({
+                    title: "¿Está seguro que desea habilitar el cliente?",
+                    text: "",
+                    icon: "warning",
+                    buttons: ['Cancelar', 'Confirmar'],
+                    dangerMode: true,
+                }).then(function (bHabilita) {
+                    if (bHabilita) {
+                        $.ajax({
+                            method: 'POST',
+                            url: '/Cliente/PostHabilitarCliente',
+                            data: JSON.stringify(dataToPost),
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (response) {
+                                if (response == '') {
+                                    swal("El cliente se habilitó correctamente", {
+                                        icon: "success",
+                                    });
+                                    Limpiar();
+                                    CargarDatos();
+                                }
+                                else {
+                                    swal(response, {
+                                        icon: "error",
+                                        buttons: "Aceptar"
+                                    });
+                                }
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        });
+                    }
+                })
+            });
+
         }
 
         var editarCliente = function (tbody, table) {
@@ -199,6 +260,7 @@
                 $('#cmbProvincias').val(data.cli_proid);
                 $('#cmbLocalidades').prop('disabled', false).val(data.cli_locid);
                 $('#txtDireccion').val(data.cli_direccion);
+                $('#txtMail').val(data.cli_mail);
                 $('#txtTelefono').val(data.cli_telefono);
                 $('#txtCelular').val(data.cli_celular);
                 $('#txtCelular2').val(data.cli_celular2);
@@ -220,8 +282,8 @@
                 }
 
                 swal({
-                    title: "¿Está seguro?",
-                    text: "No podrá recuperar el registro una vez eliminado",
+                    title: "¿Está seguro que desea deshabilitar el siguiente cliente?",
+                    text: "",
                     icon: "warning",
                     buttons: ['Cancelar', 'Confirmar'],
                     dangerMode: true,
@@ -284,9 +346,11 @@
                     cli_provincia: $('#cmbProvincias').val(),
                     cli_localidad: $('#cmbLocalidades').val(),
                     cli_direccion: $('#txtDireccion').val(),
+                    cli_mail: $('#txtMail').val(),
                     cli_telefono: $('#txtTelefono').val(),
                     cli_celular: $('#txtCelular').val(),
-                    cli_celular2: $('#txtCelular2').val()
+                    cli_celular2: $('#txtCelular2').val(),
+                    cli_delet: $('#chkHabilitar').is(':checked') ? 'S' : 'N'
                 };
 
                 //Hacemos la llamada AJAX al controller CLIENTE
@@ -361,40 +425,6 @@
                 $('#cmbLocalidades').append("<option value=''>Elija una localidad</option>");
             }
         });
-
-        function FiltrarComboLocalidades(valorProvincia) {
-
-            $.ajax({
-                method: 'POST',
-                data: JSON.stringify({ xiProvincia: valorProvincia }),
-                url: '/Cliente/FiltrarLocalidades',
-                contentType: 'application/json; charset=utf-8',
-                success: function (response) {
-
-                    if (response.error != "") {
-
-                        swal({
-                            title: "Error",
-                            text: response.error,
-                            icon: "warning",
-                            button: "Aceptar",
-                        });
-                    } else {
-                        $("#cmbLocalidades").empty();
-                        $(response.data).each(function () {
-                            $("#cmbLocalidades")
-                                .append($("<option></option>")
-                                .val(this.loc_id)
-                                .html(this.loc_descr));
-                        });
-                    }
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-
-        }
 
     });
 </script>

@@ -27,18 +27,28 @@ CREATE TABLE cliente
 	cli_telefono VARCHAR(15) NULL,
 	cli_celular VARCHAR(15) NULL,
 	cli_celular2 VARCHAR(15) NULL,
+	cli_coordenadas VARCHAR(150) NULL,
+	cli_mail VARCHAR(50) NULL,
 	cli_delet CHAR(1) NULL,
 	CONSTRAINT FK_Provincia_Cliente FOREIGN KEY (cli_provincia) REFERENCES provincia(pro_id),
 	CONSTRAINT FK_Localidad_Cliente FOREIGN KEY (cli_localidad) REFERENCES localidad(loc_id)	
+)
+
+CREATE TABLE grupo
+(
+	gru_id TINYINT IDENTITY PRIMARY KEY,
+	gru_descr VARCHAR(20) NOT NULL
 )
 
 CREATE TABLE usuario
 (
 	usu_usuario VARCHAR(10) PRIMARY KEY,
 	usu_password VARCHAR(100) NOT NULL,
+	usu_grupo TINYINT NOT NULL,
 	usu_nombre VARCHAR(50) NOT NULL,
 	usu_apellido VARCHAR(50) NOT NULL,
-	usu_fecha_acceso DATETIME NULL
+	usu_fecha_acceso DATETIME NULL,
+	CONSTRAINT FK_Grupo_Usuario FOREIGN KEY (usu_grupo) REFERENCES GRUPO(gru_id),
 )
 
 CREATE TABLE marca 
@@ -91,8 +101,8 @@ CREATE TABLE pedido
 	ped_fecha DATETIME NOT NULL,
 	ped_monto MONEY NOT NULL,
 	ped_resto MONEY NOT NULL,
-	ped_estadoPago CHAR(2) NOT NULL, /* P: Pago el total, NP: No pago, PP: Pago parcial */
-	ped_estadoEntrega CHAR(2) NOT NULL /* E: Entregado, NE: No entregado */
+	ped_estado CHAR(2) NOT NULL, /* C: cargado, E: entregado, F: facturado, PP: pago parcial */
+	CONSTRAINT FK_Cliente_Pedido FOREIGN KEY (ped_cliente) REFERENCES CLIENTE(cli_id)
 )
 
 CREATE TABLE detalle_pedido
@@ -103,7 +113,8 @@ CREATE TABLE detalle_pedido
 	det_cantidad INT NOT NULL,
 	det_precio MONEY NOT NULL,
 	det_monto MONEY NOT NULL,
-	CONSTRAINT FK_Producto_DetallePedido FOREIGN KEY (det_producto) REFERENCES PRODUCTO(prod_id)
+	CONSTRAINT FK_Producto_DetallePedido FOREIGN KEY (det_producto) REFERENCES PRODUCTO(prod_id),
+	CONSTRAINT FK_Pedido_DetallePedido FOREIGN KEY (det_pedido) REFERENCES PEDIDO(ped_id)
 )
 
 CREATE TABLE remito
@@ -111,7 +122,8 @@ CREATE TABLE remito
 	rem_numero INT IDENTITY PRIMARY KEY,
 	rem_cliente INT NOT NULL,
 	rem_pedido INT NOT NULL,
-	CONSTRAINT FK_Pedido_Remito FOREIGN KEY (rem_pedido) REFERENCES PEDIDO(ped_id)
+	CONSTRAINT FK_Pedido_Remito FOREIGN KEY (rem_pedido) REFERENCES PEDIDO(ped_id),
+	CONSTRAINT FK_Cliente_Remito FOREIGN KEY (rem_cliente) REFERENCES CLIENTE(cli_id)
 )
 
 CREATE TABLE precio

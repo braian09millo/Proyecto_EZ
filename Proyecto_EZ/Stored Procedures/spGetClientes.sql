@@ -15,13 +15,14 @@ WITH ENCRYPTION AS
 		loc_id as cli_locid,
 		loc_descr as cli_localidad,
 		cli_direccion,
+		cli_mail,
 		cli_telefono,
 		cli_celular,
-		cli_celular2
+		cli_celular2,
+		ISNULL(cli_delet,'N') cli_delet
 	FROM cliente
 	JOIN provincia ON cli_provincia = pro_id
 	JOIN localidad ON loc_id = cli_localidad
-	WHERE ISNULL(cli_delet,'N') <> 'S'
 
 	SET @@nRet = @@error
 	IF @@nRet <> 0 

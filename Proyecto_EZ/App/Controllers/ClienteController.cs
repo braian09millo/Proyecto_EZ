@@ -53,5 +53,15 @@ namespace App.Controllers
             return Json(xsError);
         }
 
+        [HttpPost]
+        public JsonResult PostHabilitarCliente(int xiId)
+        {
+            string xsError = "";
+
+            xoClienteCtrl.HabilitarCliente(xiId, out xsError);
+
+            return Json(xsError);
+        }
+
     }
 }

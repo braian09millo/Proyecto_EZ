@@ -21,6 +21,7 @@ namespace Datos
         public decimal det_precio { get; set; }
         public decimal det_monto { get; set; }
     
+        public virtual pedido pedido { get; set; }
         public virtual producto producto { get; set; }
     }
 }

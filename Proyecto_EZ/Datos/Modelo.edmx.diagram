@@ -5,23 +5,14 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="5fda8a6d0cb54d41894dfecfd6022e54" Name="Diagram1">
-        <EntityTypeShape EntityType="Modelo.cliente" Width="1.5" PointX="12" PointY="1.875" />
-        <EntityTypeShape EntityType="Modelo.detalle_pedido" Width="1.5" PointX="7.5" PointY="6.625" />
         <EntityTypeShape EntityType="Modelo.localidad" Width="1.5" PointX="9.75" PointY="6.5" />
         <EntityTypeShape EntityType="Modelo.marca" Width="1.5" PointX="0.75" PointY="3.875" />
         <EntityTypeShape EntityType="Modelo.modelo" Width="1.5" PointX="3" PointY="3.75" />
-        <EntityTypeShape EntityType="Modelo.pedido" Width="1.5" PointX="7.75" PointY="10.75" />
         <EntityTypeShape EntityType="Modelo.provincia" Width="1.5" PointX="9.75" PointY="2.625" />
-        <EntityTypeShape EntityType="Modelo.remito" Width="1.5" PointX="10" PointY="10.875" />
         <EntityTypeShape EntityType="Modelo.tamanio" Width="1.5" PointX="3" PointY="0.75" />
         <EntityTypeShape EntityType="Modelo.tipo" Width="1.5" PointX="3" PointY="7.125" />
-        <EntityTypeShape EntityType="Modelo.usuario" Width="1.5" PointX="0.75" PointY="9.625" />
-        <AssociationConnector Association="Modelo.FK_Localidad_Cliente" />
-        <AssociationConnector Association="Modelo.FK_Provincia_Cliente" />
         <AssociationConnector Association="Modelo.FK_Marca_Modelo" />
-        <AssociationConnector Association="Modelo.FK_Pedido_Remito" />
         <EntityTypeShape EntityType="Modelo.producto" Width="1.5" PointX="5.25" PointY="3.125" />
-        <AssociationConnector Association="Modelo.FK_Producto_DetallePedido" />
         <AssociationConnector Association="Modelo.FK_Marca_Producto" />
         <AssociationConnector Association="Modelo.FK_Modelo_Producto" />
         <AssociationConnector Association="Modelo.FK_Tamanio_Producto" />
@@ -31,6 +22,20 @@
         <EntityTypeShape EntityType="Modelo.precio" Width="1.5" PointX="0.75" PointY="12.875" />
         <AssociationConnector Association="Modelo.FK_Precio_Precio_Detalle" />
         <EntityTypeShape EntityType="Modelo.AuxPrecios" Width="1.5" PointX="3.375" PointY="9.75" />
+        <EntityTypeShape EntityType="Modelo.cliente" Width="1.5" PointX="12" PointY="3.5" />
+        <EntityTypeShape EntityType="Modelo.detalle_pedido" Width="1.5" PointX="16.5" PointY="3.75" />
+        <EntityTypeShape EntityType="Modelo.grupo" Width="1.5" PointX="5.375" PointY="10.375" />
+        <EntityTypeShape EntityType="Modelo.pedido" Width="1.5" PointX="14.25" PointY="4.125" />
+        <EntityTypeShape EntityType="Modelo.remito" Width="1.5" PointX="16.5" PointY="7.5" />
+        <EntityTypeShape EntityType="Modelo.usuario" Width="1.5" PointX="7.625" PointY="10" />
+        <AssociationConnector Association="Modelo.FK_Cliente_Pedido" />
+        <AssociationConnector Association="Modelo.FK_Cliente_Remito" />
+        <AssociationConnector Association="Modelo.FK_Localidad_Cliente" />
+        <AssociationConnector Association="Modelo.FK_Provincia_Cliente" />
+        <AssociationConnector Association="Modelo.FK_Pedido_DetallePedido" />
+        <AssociationConnector Association="Modelo.FK_Producto_DetallePedido" />
+        <AssociationConnector Association="Modelo.FK_Grupo_Usuario" />
+        <AssociationConnector Association="Modelo.FK_Pedido_Remito" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

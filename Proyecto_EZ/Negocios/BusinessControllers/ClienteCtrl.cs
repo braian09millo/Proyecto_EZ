@@ -93,6 +93,31 @@ namespace Negocios.BusinessControllers
             }
         }
 
+        public void HabilitarCliente(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            try
+            {
+                using (BD_Entities xoDB = new BD_Entities())
+                {
+                    var xoCliente = xoDB.cliente.Find(xiId);
+
+                    if (xoCliente != null)
+                    {
+                        xoCliente.cli_delet = "N";
+                        xoDB.SaveChanges();
+                    }
+                    else
+                        xsError = "El usuario no existe";
+                }
+            }
+            catch (Exception ex)
+            {
+                xsError = ex.Message;
+            }
+        }
+
         public List<provincia> ObtenerProvincias(out string xsError)
         {
             xsError = "";

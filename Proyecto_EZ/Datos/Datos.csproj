@@ -60,6 +60,9 @@
     <Compile Include="detalle_pedido.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="grupo.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="localidad.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

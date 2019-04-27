@@ -16,8 +16,11 @@ namespace Datos
     {
         public string usu_usuario { get; set; }
         public string usu_password { get; set; }
+        public byte usu_grupo { get; set; }
         public string usu_nombre { get; set; }
         public string usu_apellido { get; set; }
         public Nullable<System.DateTime> usu_fecha_acceso { get; set; }
+    
+        public virtual grupo grupo { get; set; }
     }
 }

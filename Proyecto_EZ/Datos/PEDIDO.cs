@@ -17,6 +17,7 @@ namespace Datos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public pedido()
         {
+            this.detalle_pedido = new HashSet<detalle_pedido>();
             this.remito = new HashSet<remito>();
         }
     
@@ -24,7 +25,12 @@ namespace Datos
         public int ped_cliente { get; set; }
         public System.DateTime ped_fecha { get; set; }
         public decimal ped_monto { get; set; }
+        public decimal ped_resto { get; set; }
+        public string ped_estado { get; set; }
     
+        public virtual cliente cliente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<detalle_pedido> detalle_pedido { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<remito> remito { get; set; }
     }

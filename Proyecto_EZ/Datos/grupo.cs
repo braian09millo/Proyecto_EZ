@@ -12,13 +12,18 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class remito
+    public partial class grupo
     {
-        public int rem_numero { get; set; }
-        public int rem_cliente { get; set; }
-        public int rem_pedido { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public grupo()
+        {
+            this.usuario = new HashSet<usuario>();
+        }
     
-        public virtual cliente cliente { get; set; }
-        public virtual pedido pedido { get; set; }
+        public byte gru_id { get; set; }
+        public string gru_descr { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<usuario> usuario { get; set; }
     }
 }
