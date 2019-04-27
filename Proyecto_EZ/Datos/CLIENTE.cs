@@ -33,11 +33,11 @@ namespace Datos
         public string cli_mail { get; set; }
         public string cli_delet { get; set; }
     
+        public virtual localidad localidad { get; set; }
+        public virtual provincia provincia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<pedido> pedido { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<remito> remito { get; set; }
-        public virtual localidad localidad { get; set; }
-        public virtual provincia provincia { get; set; }
     }
 }

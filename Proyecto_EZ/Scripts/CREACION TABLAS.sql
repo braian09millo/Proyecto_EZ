@@ -102,7 +102,9 @@ CREATE TABLE pedido
 	ped_monto MONEY NOT NULL,
 	ped_resto MONEY NOT NULL,
 	ped_estado CHAR(2) NOT NULL, /* C: cargado, E: entregado, F: facturado, PP: pago parcial */
-	CONSTRAINT FK_Cliente_Pedido FOREIGN KEY (ped_cliente) REFERENCES CLIENTE(cli_id)
+	ped_repartidor VARCHAR(10) NULL,
+	CONSTRAINT FK_Cliente_Pedido FOREIGN KEY (ped_cliente) REFERENCES CLIENTE(cli_id),
+	CONSTRAINT FK_Usuario_Pedido FOREIGN KEY (ped_repartidor) REFERENCES USUARIO(usu_usuario)
 )
 
 CREATE TABLE detalle_pedido
@@ -242,6 +244,8 @@ INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (3, 'Limón Dulce')
 INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (3, 'Frutilla-Limón')
 INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (3, 'Naranja-Mango')
 
-insert into provincia (pro_descr) Values ('BUENOS AIRES')
-insert into provincia (pro_descr) Values ('CABA')
+INSERT INTO provincia (pro_descr) VALUES ('BUENOS AIRES')
+INSERT INTO provincia (pro_descr) VALUES ('CABA')
 
+INSERT INTO grupo (gru_descr) VALUES ('Administrador')
+INSERT INTO grupo (gru_descr) VALUES ('Repartidor')

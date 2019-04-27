@@ -27,11 +27,13 @@ namespace Datos
         public decimal ped_monto { get; set; }
         public decimal ped_resto { get; set; }
         public string ped_estado { get; set; }
+        public string ped_repartidor { get; set; }
     
         public virtual cliente cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<detalle_pedido> detalle_pedido { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<remito> remito { get; set; }
+        public virtual usuario usuario { get; set; }
     }
 }

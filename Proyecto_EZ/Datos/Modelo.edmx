@@ -83,6 +83,7 @@
           <Property Name="ped_monto" Type="money" Nullable="false" />
           <Property Name="ped_resto" Type="money" Nullable="false" />
           <Property Name="ped_estado" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="ped_repartidor" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="precio">
           <Key>
@@ -335,6 +336,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Usuario_Pedido">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="pedido" Type="Self.pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="usu_usuario" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="ped_repartidor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ModeloStoreContainer">
           <EntitySet Name="AuxPrecios" EntityType="Self.AuxPrecios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cliente" EntityType="Self.cliente" Schema="dbo" store:Type="Tables" />
@@ -412,6 +425,10 @@
             <End Role="tipo" EntitySet="tipo" />
             <End Role="producto" EntitySet="producto" />
           </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Pedido" Association="Self.FK_Usuario_Pedido">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -457,19 +474,8 @@
           </AssociationSet>
           <EntitySet Name="AuxPrecios" EntityType="Modelo.AuxPrecios" />
           <EntitySet Name="cliente" EntityType="Modelo.cliente" />
-          <EntitySet Name="detalle_pedido" EntityType="Modelo.detalle_pedido" />
           <EntitySet Name="grupo" EntityType="Modelo.grupo" />
-          <EntitySet Name="pedido" EntityType="Modelo.pedido" />
-          <EntitySet Name="remito" EntityType="Modelo.remito" />
           <EntitySet Name="usuario" EntityType="Modelo.usuario" />
-          <AssociationSet Name="FK_Cliente_Pedido" Association="Modelo.FK_Cliente_Pedido">
-            <End Role="cliente" EntitySet="cliente" />
-            <End Role="pedido" EntitySet="pedido" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cliente_Remito" Association="Modelo.FK_Cliente_Remito">
-            <End Role="cliente" EntitySet="cliente" />
-            <End Role="remito" EntitySet="remito" />
-          </AssociationSet>
           <AssociationSet Name="FK_Localidad_Cliente" Association="Modelo.FK_Localidad_Cliente">
             <End Role="localidad" EntitySet="localidad" />
             <End Role="cliente" EntitySet="cliente" />
@@ -477,6 +483,21 @@
           <AssociationSet Name="FK_Provincia_Cliente" Association="Modelo.FK_Provincia_Cliente">
             <End Role="provincia" EntitySet="provincia" />
             <End Role="cliente" EntitySet="cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Usuario" Association="Modelo.FK_Grupo_Usuario">
+            <End Role="grupo" EntitySet="grupo" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <EntitySet Name="detalle_pedido" EntityType="Modelo.detalle_pedido" />
+          <EntitySet Name="pedido" EntityType="Modelo.pedido" />
+          <EntitySet Name="remito" EntityType="Modelo.remito" />
+          <AssociationSet Name="FK_Cliente_Pedido" Association="Modelo.FK_Cliente_Pedido">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_Remito" Association="Modelo.FK_Cliente_Remito">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="remito" EntitySet="remito" />
           </AssociationSet>
           <AssociationSet Name="FK_Pedido_DetallePedido" Association="Modelo.FK_Pedido_DetallePedido">
             <End Role="pedido" EntitySet="pedido" />
@@ -486,13 +507,13 @@
             <End Role="producto" EntitySet="producto" />
             <End Role="detalle_pedido" EntitySet="detalle_pedido" />
           </AssociationSet>
-          <AssociationSet Name="FK_Grupo_Usuario" Association="Modelo.FK_Grupo_Usuario">
-            <End Role="grupo" EntitySet="grupo" />
-            <End Role="usuario" EntitySet="usuario" />
-          </AssociationSet>
           <AssociationSet Name="FK_Pedido_Remito" Association="Modelo.FK_Pedido_Remito">
             <End Role="pedido" EntitySet="pedido" />
             <End Role="remito" EntitySet="remito" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Pedido" Association="Modelo.FK_Usuario_Pedido">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="pedido" EntitySet="pedido" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="localidad">
@@ -697,11 +718,68 @@
           <Property Name="cli_coordenadas" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="cli_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="cli_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="pedido" Relationship="Modelo.FK_Cliente_Pedido" FromRole="cliente" ToRole="pedido" />
-          <NavigationProperty Name="remito" Relationship="Modelo.FK_Cliente_Remito" FromRole="cliente" ToRole="remito" />
           <NavigationProperty Name="localidad" Relationship="Modelo.FK_Localidad_Cliente" FromRole="cliente" ToRole="localidad" />
           <NavigationProperty Name="provincia" Relationship="Modelo.FK_Provincia_Cliente" FromRole="cliente" ToRole="provincia" />
+          <NavigationProperty Name="pedido" Relationship="Modelo.FK_Cliente_Pedido" FromRole="cliente" ToRole="pedido" />
+          <NavigationProperty Name="remito" Relationship="Modelo.FK_Cliente_Remito" FromRole="cliente" ToRole="remito" />
         </EntityType>
+        <EntityType Name="grupo">
+          <Key>
+            <PropertyRef Name="gru_id" />
+          </Key>
+          <Property Name="gru_id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="gru_descr" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="usuario" Relationship="Modelo.FK_Grupo_Usuario" FromRole="grupo" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="usu_usuario" />
+          </Key>
+          <Property Name="usu_usuario" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="usu_password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="usu_grupo" Type="Byte" Nullable="false" />
+          <Property Name="usu_nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="usu_apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="usu_fecha_acceso" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="grupo" Relationship="Modelo.FK_Grupo_Usuario" FromRole="usuario" ToRole="grupo" />
+          <NavigationProperty Name="pedido" Relationship="Modelo.FK_Usuario_Pedido" FromRole="usuario" ToRole="pedido" />
+        </EntityType>
+        <Association Name="FK_Localidad_Cliente">
+          <End Type="Modelo.localidad" Role="localidad" Multiplicity="1" />
+          <End Type="Modelo.cliente" Role="cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="localidad">
+              <PropertyRef Name="loc_id" />
+            </Principal>
+            <Dependent Role="cliente">
+              <PropertyRef Name="cli_localidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Provincia_Cliente">
+          <End Type="Modelo.provincia" Role="provincia" Multiplicity="1" />
+          <End Type="Modelo.cliente" Role="cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="provincia">
+              <PropertyRef Name="pro_id" />
+            </Principal>
+            <Dependent Role="cliente">
+              <PropertyRef Name="cli_provincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grupo_Usuario">
+          <End Type="Modelo.grupo" Role="grupo" Multiplicity="1" />
+          <End Type="Modelo.usuario" Role="usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="grupo">
+              <PropertyRef Name="gru_id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="usu_grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="detalle_pedido">
           <Key>
             <PropertyRef Name="det_id" />
@@ -715,14 +793,6 @@
           <NavigationProperty Name="pedido" Relationship="Modelo.FK_Pedido_DetallePedido" FromRole="detalle_pedido" ToRole="pedido" />
           <NavigationProperty Name="producto" Relationship="Modelo.FK_Producto_DetallePedido" FromRole="detalle_pedido" ToRole="producto" />
         </EntityType>
-        <EntityType Name="grupo">
-          <Key>
-            <PropertyRef Name="gru_id" />
-          </Key>
-          <Property Name="gru_id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="gru_descr" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="usuario" Relationship="Modelo.FK_Grupo_Usuario" FromRole="grupo" ToRole="usuario" />
-        </EntityType>
         <EntityType Name="pedido">
           <Key>
             <PropertyRef Name="ped_id" />
@@ -733,9 +803,11 @@
           <Property Name="ped_monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="ped_resto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="ped_estado" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ped_repartidor" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="cliente" Relationship="Modelo.FK_Cliente_Pedido" FromRole="pedido" ToRole="cliente" />
           <NavigationProperty Name="detalle_pedido" Relationship="Modelo.FK_Pedido_DetallePedido" FromRole="pedido" ToRole="detalle_pedido" />
           <NavigationProperty Name="remito" Relationship="Modelo.FK_Pedido_Remito" FromRole="pedido" ToRole="remito" />
+          <NavigationProperty Name="usuario" Relationship="Modelo.FK_Usuario_Pedido" FromRole="pedido" ToRole="usuario" />
         </EntityType>
         <EntityType Name="remito">
           <Key>
@@ -746,18 +818,6 @@
           <Property Name="rem_pedido" Type="Int32" Nullable="false" />
           <NavigationProperty Name="cliente" Relationship="Modelo.FK_Cliente_Remito" FromRole="remito" ToRole="cliente" />
           <NavigationProperty Name="pedido" Relationship="Modelo.FK_Pedido_Remito" FromRole="remito" ToRole="pedido" />
-        </EntityType>
-        <EntityType Name="usuario">
-          <Key>
-            <PropertyRef Name="usu_usuario" />
-          </Key>
-          <Property Name="usu_usuario" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="usu_password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="usu_grupo" Type="Byte" Nullable="false" />
-          <Property Name="usu_nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="usu_apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="usu_fecha_acceso" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="grupo" Relationship="Modelo.FK_Grupo_Usuario" FromRole="usuario" ToRole="grupo" />
         </EntityType>
         <Association Name="FK_Cliente_Pedido">
           <End Type="Modelo.cliente" Role="cliente" Multiplicity="1" />
@@ -780,30 +840,6 @@
             </Principal>
             <Dependent Role="remito">
               <PropertyRef Name="rem_cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Localidad_Cliente">
-          <End Type="Modelo.localidad" Role="localidad" Multiplicity="1" />
-          <End Type="Modelo.cliente" Role="cliente" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="localidad">
-              <PropertyRef Name="loc_id" />
-            </Principal>
-            <Dependent Role="cliente">
-              <PropertyRef Name="cli_localidad" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Provincia_Cliente">
-          <End Type="Modelo.provincia" Role="provincia" Multiplicity="1" />
-          <End Type="Modelo.cliente" Role="cliente" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="provincia">
-              <PropertyRef Name="pro_id" />
-            </Principal>
-            <Dependent Role="cliente">
-              <PropertyRef Name="cli_provincia" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -831,18 +867,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Grupo_Usuario">
-          <End Type="Modelo.grupo" Role="grupo" Multiplicity="1" />
-          <End Type="Modelo.usuario" Role="usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="grupo">
-              <PropertyRef Name="gru_id" />
-            </Principal>
-            <Dependent Role="usuario">
-              <PropertyRef Name="usu_grupo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Pedido_Remito">
           <End Type="Modelo.pedido" Role="pedido" Multiplicity="1" />
           <End Type="Modelo.remito" Role="remito" Multiplicity="*" />
@@ -852,6 +876,18 @@
             </Principal>
             <Dependent Role="remito">
               <PropertyRef Name="rem_pedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Pedido">
+          <End Type="Modelo.usuario" Role="usuario" Multiplicity="0..1" />
+          <End Type="Modelo.pedido" Role="pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="usu_usuario" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="ped_repartidor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -972,6 +1008,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="grupo">
+            <EntityTypeMapping TypeName="Modelo.grupo">
+              <MappingFragment StoreEntitySet="grupo">
+                <ScalarProperty Name="gru_descr" ColumnName="gru_descr" />
+                <ScalarProperty Name="gru_id" ColumnName="gru_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="Modelo.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="usu_fecha_acceso" ColumnName="usu_fecha_acceso" />
+                <ScalarProperty Name="usu_apellido" ColumnName="usu_apellido" />
+                <ScalarProperty Name="usu_nombre" ColumnName="usu_nombre" />
+                <ScalarProperty Name="usu_grupo" ColumnName="usu_grupo" />
+                <ScalarProperty Name="usu_password" ColumnName="usu_password" />
+                <ScalarProperty Name="usu_usuario" ColumnName="usu_usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="detalle_pedido">
             <EntityTypeMapping TypeName="Modelo.detalle_pedido">
               <MappingFragment StoreEntitySet="detalle_pedido">
@@ -984,17 +1040,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="grupo">
-            <EntityTypeMapping TypeName="Modelo.grupo">
-              <MappingFragment StoreEntitySet="grupo">
-                <ScalarProperty Name="gru_descr" ColumnName="gru_descr" />
-                <ScalarProperty Name="gru_id" ColumnName="gru_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="pedido">
             <EntityTypeMapping TypeName="Modelo.pedido">
               <MappingFragment StoreEntitySet="pedido">
+                <ScalarProperty Name="ped_repartidor" ColumnName="ped_repartidor" />
                 <ScalarProperty Name="ped_estado" ColumnName="ped_estado" />
                 <ScalarProperty Name="ped_resto" ColumnName="ped_resto" />
                 <ScalarProperty Name="ped_monto" ColumnName="ped_monto" />
@@ -1010,18 +1059,6 @@
                 <ScalarProperty Name="rem_pedido" ColumnName="rem_pedido" />
                 <ScalarProperty Name="rem_cliente" ColumnName="rem_cliente" />
                 <ScalarProperty Name="rem_numero" ColumnName="rem_numero" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="usuario">
-            <EntityTypeMapping TypeName="Modelo.usuario">
-              <MappingFragment StoreEntitySet="usuario">
-                <ScalarProperty Name="usu_fecha_acceso" ColumnName="usu_fecha_acceso" />
-                <ScalarProperty Name="usu_apellido" ColumnName="usu_apellido" />
-                <ScalarProperty Name="usu_nombre" ColumnName="usu_nombre" />
-                <ScalarProperty Name="usu_grupo" ColumnName="usu_grupo" />
-                <ScalarProperty Name="usu_password" ColumnName="usu_password" />
-                <ScalarProperty Name="usu_usuario" ColumnName="usu_usuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

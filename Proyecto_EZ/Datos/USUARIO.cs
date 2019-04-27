@@ -14,6 +14,12 @@ namespace Datos
     
     public partial class usuario
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public usuario()
+        {
+            this.pedido = new HashSet<pedido>();
+        }
+    
         public string usu_usuario { get; set; }
         public string usu_password { get; set; }
         public byte usu_grupo { get; set; }
@@ -22,5 +28,7 @@ namespace Datos
         public Nullable<System.DateTime> usu_fecha_acceso { get; set; }
     
         public virtual grupo grupo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<pedido> pedido { get; set; }
     }
 }

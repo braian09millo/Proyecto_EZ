@@ -6,6 +6,39 @@
 
 <div style="padding-top: 50px;">
     <h2 class="h2 text-center">PEDIDOS</h2>
+    <br />
+    <div class="row">
+        <form class="form-horizontal">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Fecha</label>
+                    <div class="col-sm-10">
+                        <input type="date" id="txtFecha" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Estado</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="cmbEstados">
+                            <option value="">Elija un estado</option>
+                            <option value="C">Cargado</option>
+                            <option value="E">Entregado</option>
+                            <option value="F">Pago total</option>
+                            <option value="PP">Pago parcial</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Repartidor</label>
+                    <div class="col-sm-10">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4"></div>
+        </form>
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <button class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-list-alt"></i>&nbsp;&nbsp;Nuevo Pedido</button>
@@ -23,7 +56,9 @@
                                     <td>ID Pedido</td>
                                     <td>Cliente</td>
                                     <td>Fecha</td>
+                                    <td>Estado</td>
                                     <td>Monto</td>
+                                    <td>Facturado</td>
                                     <td>Acciones</td>
                                 </tr>
                             </thead>
