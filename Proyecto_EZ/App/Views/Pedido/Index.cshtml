@@ -12,14 +12,20 @@
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label class="control-label col-sm-2">Fecha</label>
-                    <div class="col-sm-10">
-                        <input type="date" id="txtFecha" class="form-control"/>
+                    <label class="control-label col-sm-3">Fecha</label>
+                    <div class="col-sm-9">
+                        <input id="txtFecha" type="text" class="form-control" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2">Estado</label>
-                    <div class="col-sm-10">
+                    <label class="control-label col-sm-3">Clientes</label>
+                    <div class="col-sm-9">
+                        @Html.Partial("comboClientes")
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Estado</label>
+                    <div class="col-sm-9">
                         <select class="form-control" id="cmbEstados">
                             <option value="">Elija un estado</option>
                             <option value="C">Cargado</option>
@@ -30,9 +36,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2">Repartidor</label>
-                    <div class="col-sm-10">
-
+                    <label class="control-label col-sm-3">Repartidor</label>
+                    <div class="col-sm-9">
+                        @Html.Partial("comboUsuarios")
                     </div>
                 </div>
             </div>
@@ -59,6 +65,7 @@
                                     <td>Estado</td>
                                     <td>Monto</td>
                                     <td>Facturado</td>
+                                    <td>Repartidor</td>
                                     <td>Acciones</td>
                                 </tr>
                             </thead>
@@ -78,14 +85,52 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <form class="form-horizontal">
-                            <div class="col-sm-2 col-xs-0"></div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-2">Cliente</label>
-                                <div class="col-sm-4">
-                                    @Html.Partial("comboClientes")
+                        <form class="form-horizontal" id="formNuevoPedido">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3">Cliente</label>
+                                    <div class="col-sm-9">
+                                        <select id="cmbClientesPedido" class="form-control">
+                                            <option value="">Elija un cliente</option>
+                                            @foreach (var item in ViewBag.ClientesPedido)
+                                            {
+                                                <option value="@item.cli_id">@item.cli_nombre</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3">Repartidor</label>
+                                    <div class="col-sm-9">
+                                        <select id="cmbUsuariosPedido" class="form-control">
+                                            <option value="">Elija un repartidor</option>
+                                            @foreach (var item in ViewBag.UsuariosPedido)
+                                            {
+                                                <option value="@item.usu_usuario">@item.usu_nombre</option>
+                                            }
+                                        </select></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3">Facturado</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" style="text-align: right;" id="txtFacturado" class="form-control" value="0.00" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3">Estado</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" id="cmbEstados" disabled>
+                                            <option value="">Elija un estado</option>
+                                            <option selected value="C">Cargado</option>
+                                            <option value="E">Entregado</option>
+                                            <option value="F">Pago total</option>
+                                            <option value="PP">Pago parcial</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-sm-3"></div>
                         </form>
                     </div>
                     <h4>Listado de Productos</h4>
@@ -138,8 +183,7 @@
     <script src="~/Scripts/datatables.min.js"></script>
     <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/sweetalert.min.js"></script>
-    <script src="~/Scripts/moment.js"></script>
-    <script src="~/Scripts/datetime.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
 
     <script type="text/javascript">
 
@@ -147,6 +191,8 @@
 
             //Cargamos los pedidos en el LOAD
             CargarPedidos();
+
+            $('#txtFecha').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
 
             //Función para volver a crear la tabla
             function Limpiar() {
@@ -226,19 +272,29 @@
                                 '<input type="text" class="form-control" placeholder="Cantidad" />' +
                                 '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly /></div>' +
                                 '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly /></div>' +
+                                '<div class="col-sm-1"><button type="button" class="btn btn-default btn-block borrarItem"><i class="fas fa-minus"></i></button></div>' +
                                 '</div>';
 
                 $('#formPedidos').append(nuevoItem);
 
             });
 
+            $('#formPedidos').on('click', '.borrarItem', function (e) {
+                console.log('entro');
+                e.preventDefault();
+                console.log($(this).parent().parent());
+                $(this).parent().parent().remove();
+            });
+
             $('#btnGenerarPedido').click(function (e) {
 
                 var Total = 0;
+                var Facturado = parseFloat($('#txtFacturado').val());
                 var CantidadProductos = 0;
                 var CantidadPacks = 0;
                 var Productos = [];
-                var ClienteElegido = $('#cmbClientes').val();
+                var ClienteElegido = $('#cmbClientesPedido').val();
+                var Repartidor = $('#cmbUsuariosPedido').val();
 
                 //Prevenimos que se realice un nuevo submit
                 e.preventDefault();
@@ -268,7 +324,9 @@
                 var dataToPost = {
 
                     xiCliente: ClienteElegido,
+                    xsUsuario: Repartidor,
                     xdTotal: Total,
+                    xdFacturado: Facturado,
                     xoProductos: Productos
                 }
 
@@ -331,11 +389,14 @@
                         { targets: [1], "bSortable": true },
                         { targets: [2], "bSortable": true },
                         { targets: [3], "bSortable": true },
+                        { targets: [4], "bSortable": true },
+                        { targets: [5], "bSortable": true },
+                        { targets: [6], "bSortable": true },
                         {
-                            "targets": 4,
+                            "targets": 7,
                             "data": null,
                             "bSortable": false,
-                            "width" : "20%",
+                            "width": "20%",
                             "defaultContent": '<button class="btn btn-warning btn-xs" title="Imprimir"><i class="glyphicon glyphicon-print"></i></button> <button class="btn btn-info btn-xs" title="Ver detalle"><i class="fas fa-list-ul"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>'
                         }
                     ],
@@ -344,8 +405,7 @@
                     },
                     initComplete: function (settings, json) {
 
-                        if (json.error != "")
-                        {
+                        if (json.error != "") {
                             swal({
                                 title: "Error",
                                 text: json.error,
@@ -353,8 +413,7 @@
                                 button: "Aceptar"
                             });
                         }
-                        else
-                        {
+                        else {
                             data: json.data;
                         }
                     }
@@ -390,6 +449,7 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 
 }
 

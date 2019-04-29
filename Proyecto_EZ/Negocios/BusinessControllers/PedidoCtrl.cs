@@ -2,6 +2,8 @@
 using Entidades;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +28,7 @@ namespace Negocios.BusinessControllers
 
         #region COMPORTAMIENTO
             
-        public void AgregarPedido(int xiCliente, decimal xdTotal, List<Pedido> xoProductos, out string xsError)
+        public void AgregarPedido(int xiCliente, string xsUsuario, decimal xdTotal, decimal xdFacturado, List<Pedido> xoProductos, out string xsError)
         {
             xsError = "";
 
@@ -39,7 +41,10 @@ namespace Negocios.BusinessControllers
                     {
                         ped_cliente = xiCliente,
                         ped_fecha = DateTime.Now,
-                        ped_monto = Math.Round(xdTotal, 2)
+                        ped_monto = Math.Round(xdTotal, 2),
+                        ped_resto = Math.Round(xdFacturado, 2),
+                        ped_estado = "C",
+                        ped_repartidor = xsUsuario
                     };
 
                     xoDB.pedido.Add(xoCabeceraPedido);
@@ -72,7 +77,7 @@ namespace Negocios.BusinessControllers
             }
         }
 
-        public object ObtenerPedidos(out string xsError)
+        public object ObtenerPedidos(DateTime? xdFecha, int? xiCliente, string xsEstado, string xsUsuario, out string xsError)
         {
             xsError = "";
             object xoPedidos = null;
@@ -81,7 +86,11 @@ namespace Negocios.BusinessControllers
             {
                 try
                 {
-                    var xoResultado = xoDB.Database.SqlQuery<spGetPedidos>("exec spGetPedidos").ToList();
+                    var xoResultado = xoDB.Database.SqlQuery<spGetPedidos>("exec spGetPedidos @Fecha, @Cliente, @Estado, @Usuario",
+                                        new SqlParameter("@Fecha", xdFecha == null ? SqlDateTime.Null : (DateTime)xdFecha),
+                                        new SqlParameter("@Cliente", xiCliente == null ? SqlInt32.Null : (int)xiCliente),
+                                        new SqlParameter("@Estado", xsEstado == null ? SqlString.Null : xsEstado),
+                                        new SqlParameter("@Usuario", xsUsuario == null ? SqlString.Null : xsUsuario)).ToList();
                     xoPedidos = xoResultado.Select(x => new [] {
                         x.IdPedido.ToString(),
                         x.Cliente,

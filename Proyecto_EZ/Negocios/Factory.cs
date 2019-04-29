@@ -23,5 +23,10 @@ namespace Negocios
         {
             return PedidoCtrl.GetInstancia();
         }
+
+        public UsuarioCtrl GetCtrlUsuario()
+        {
+            return UsuarioCtrl.GetInstancia();
+        }
     }
 }
