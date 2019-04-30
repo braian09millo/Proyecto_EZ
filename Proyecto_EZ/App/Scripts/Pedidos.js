@@ -2,11 +2,40 @@
 $(document).ready(function () {
 
     //Cargamos los pedidos en el LOAD
+    CargarFechas();
     CargarPedidos();
 
+    $('#btnBuscar').click(function (e) {
+        e.preventDefault();
+        Limpiar();
+        CargarPedidos();
+    });
+
     //Cargarmos los datepickers
-    $('#txtFechaDesde').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
-    $('#txtFechaHasta').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
+    function CargarFechas() {
+
+        var today = new Date();
+        var anio = today.getFullYear();
+        var mes = today.getMonth();
+        var mesSig = today.getMonth() + 1;
+        var dia = today.getDate();
+
+        if (mes < 10) 
+            mes = '0' + mes;
+        
+        if (mesSig < 10) 
+            mesSig = '0' + mesSig;
+        
+        if (dia < 10) 
+            dia = '0' + dia;
+        
+        var fechaDesde = anio + '-' + mes + '-' + dia;
+        var fechaHasta = anio + '-' + mesSig + '-' + dia;
+
+        document.getElementById("txtFechaDesde").value = fechaDesde;
+        document.getElementById("txtFechaHasta").value = fechaHasta;
+    }
+
 
     //Función para volver a crear la tabla
     function Limpiar() {
@@ -33,6 +62,16 @@ $(document).ready(function () {
              .end();
 
         LimpiarFormulario();
+    });
+
+    //Funcion para limpiar el modal al cerrarse
+    $('#NuevoForm').on('shown.bs.modal', function (e) {
+        
+        $('#txtFacturado').val(0.00);
+        $('#cmbEstados').val('C');
+        $('#cmbClientesPedido').val('');
+        $('#cmbUsuariosPedido').val('');
+
     });
 
     //Habilitamos el botón cuando los campos requeridos esten llenos
@@ -86,24 +125,9 @@ $(document).ready(function () {
 
     });
 
-    $('#btnItem').click(function () {
-
-        var nuevoItem = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
-                        '<select class="form-control"> <option value="">Elija un producto</option>@foreach (var item in ViewBag.Productos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@item.Modelo - @item.Tamanio</option>}</select></div>' +
-                        '<div class="col-sm-2 cantidad">' +
-                        '<input type="text" class="form-control" placeholder="Packs" />' +
-                        '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly /></div>' +
-                        '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly /></div>' +
-                        '<div class="col-sm-1"><button type="button" class="btn btn-default btn-block borrarItem"><i class="fas fa-minus"></i></button></div>' +
-                        '</div>';
-
-        $('#formPedidos').append(nuevoItem);
-
-    });
-
     $('#formPedidos').on('click', '.borrarItem', function (e) {
         e.preventDefault();
-        $(this).parent().parent().remove();
+        $(this).parent().parent().parent().remove();
     });
 
     $('#btnGenerarPedido').click(function (e) {
@@ -174,6 +198,7 @@ $(document).ready(function () {
                                 });
 
                                 $('#NuevoForm').modal('hide');
+                                Limpiar();
                                 CargarPedidos();
                             }
                             else {
@@ -201,9 +226,18 @@ $(document).ready(function () {
 
     function CargarPedidos() {
 
+        var xsFechaDesde = $('#txtFechaDesde').val();        
+        var xsFechaHasta = $('#txtFechaHasta').val();
+        var xiCliente = $('#cmbClientes').val();
+        var xsEstado = $('#cmbEstados').val();
+        var xsUsuario = $('#cmbUsuarios').val();
+
+        var url = '/Pedido/GetPedidos?xsFechaDesde=' + xsFechaDesde + '&xsFechaHasta=' + xsFechaHasta +
+                  '&xiCliente=' + xiCliente + '&xsEstado=' + xsEstado + '&xsUsuario=' + xsUsuario
+
         var tabla = $('#tablePedidos').DataTable({
             "info": false,
-            "ajax": '/Pedido/GetPedidos',
+            "ajax": url,
             aoColumnDefs: [
                 { targets: [0], "bSortable": true, "bVisible": false },
                 { targets: [1], "bSortable": true },
@@ -217,9 +251,20 @@ $(document).ready(function () {
                     "data": null,
                     "bSortable": false,
                     "width": "20%",
-                    "defaultContent": '<button class="btn btn-warning btn-xs" title="Imprimir"><i class="glyphicon glyphicon-print"></i></button> <button class="btn btn-info btn-xs" title="Ver detalle"><i class="fas fa-list-ul"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>'
+                    "defaultContent": '<button class="btn btn-info btn-xs" title="Editar"><i class="glyphicon glyphicon-pencil"></i></button> <button class="btn btn-primary btn-xs" title="Ver detalle"><i class="fas fa-list-ul"></i></button> <button class="btn btn-warning btn-xs" title="Imprimir"><i class="glyphicon glyphicon-print"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>'
                 }
             ],
+            "createdRow": function (row, data, dataIndex) {
+                if (data[3] == "CARGADO") {
+                    $(row).find("td:eq(2)").css('background-color','slategrey').css('color','white').css('font-weight','bold');
+                } else if (data[3] == "ENTREGADO") {
+                    $(row).find("td:eq(2)").css('background-color', '#337ab7').css('color', 'white').css('font-weight', 'bold');
+                } else if(data[3] == "FACTURADO") {
+                    $(row).find("td:eq(2)").css('background-color', '#4cae4c').css('color', 'white').css('font-weight', 'bold');
+                } else if(data[3] == "PAGO PARCIAL") {
+                    $(row).find("td:eq(2)").css('background-color', '#d43f3a').css('color', 'white').css('font-weight', 'bold');
+                }
+            },
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
             },

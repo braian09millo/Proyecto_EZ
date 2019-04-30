@@ -30,7 +30,7 @@ body {
     border: 0;
 }
 
-.btn-default, .btn-primary {
+.btn-default, .btn-primary, .btn-success, .btn-danger, .btn-info, .btn-warning {
     border: 0;
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
 }
@@ -80,6 +80,8 @@ body {
     text-decoration: none !important;
     cursor: pointer;
     color: #333 !important;
+    background-color: #ccc;
+    border-color: #ccc;
     border: 0;
     border-radius: 4px;
 }
@@ -96,7 +98,3 @@ body {
     text-align:left;
 }
 
-.deshabilitado {
-    color: white;
-    background-color: #ccc;
-}

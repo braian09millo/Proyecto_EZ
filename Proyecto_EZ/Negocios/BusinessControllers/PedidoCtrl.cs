@@ -40,7 +40,7 @@ namespace Negocios.BusinessControllers
                     var xoCabeceraPedido = new pedido()
                     {
                         ped_cliente = xiCliente,
-                        ped_fecha = DateTime.Now,
+                        ped_fecha = DateTime.Today,
                         ped_monto = Math.Round(xdTotal, 2),
                         ped_resto = Math.Round(xdFacturado, 2),
                         ped_estado = "C",
@@ -97,7 +97,10 @@ namespace Negocios.BusinessControllers
                         x.IdPedido.ToString(),
                         x.Cliente,
                         x.Fecha.ToString("dd-MM-yyyy"),
-                        "$ " + string.Format("{0:0.##}", x.Monto)}).ToList();
+                        x.Estado,
+                        "$ " + string.Format("{0:0.##}", x.Monto),
+                        "$ " + string.Format("{0:0.##}", x.Facturado),
+                        x.Repartidor}).ToList();
                 }
                 catch (Exception ex)
                 {

@@ -43,7 +43,7 @@
                         { 'data': 'cli_direccion' },
                         { 'data': 'cli_telefono' },
                         { 'data': 'cli_celular' },
-                        { 'defaultContent': '<button class="btn btn-success btn-xs" disabled title="Habilitar"><i class="fas fa-user-check"></i></button> <button class="btn btn-info btn-xs" title="Editar"><i class="fas fa-user-edit"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-user-minus"></i></button>' }
+                        { 'defaultContent': '<button class="btn btn-primary btn-xs" title="Ver pedidos"><i class="fas fa-list-alt"></i></button> <button class="btn btn-success btn-xs" disabled title="Habilitar"><i class="fas fa-user-check"></i></button> <button class="btn btn-info btn-xs" title="Editar"><i class="fas fa-user-edit"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-user-minus"></i></button>' }
                     ],
                     aoColumnDefs: [
                         { "aTargets": [4], "bSortable": false },

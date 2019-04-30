@@ -38,18 +38,20 @@ namespace App.Controllers
             return View();
         }
 
-        public JsonResult GetPedidos(string xsFechaDesde, string xsFechaHasta, string xsCliente, string xsEstado, string xsUsuario)
+        public JsonResult GetPedidos(string xsFechaDesde, string xsFechaHasta, int? xiCliente, string xsEstado, string xsUsuario)
         {
             string xsError = "";
             DateTime? xdFechaDesde = null;
             DateTime? xdFechaHasta = null;
-            int? xiCliente = null;
+            int? xiNroCliente = null;
 
             if (xsFechaDesde != null) xdFechaDesde = Convert.ToDateTime(xsFechaDesde);
             if (xsFechaHasta != null) xdFechaHasta = Convert.ToDateTime(xsFechaHasta);
-            if (xsCliente != null) xiCliente = int.Parse(xsCliente);            
+            if (xiCliente != null) xiNroCliente = (int)xiCliente;
+            if (xsEstado == "") xsEstado = null;
+            if (xsUsuario == "") xsUsuario = null;        
 
-            var lstPedidos = xoPedidoCtrl.ObtenerPedidos(xdFechaDesde, xdFechaHasta, xiCliente, xsEstado, xsUsuario, out xsError);
+            var lstPedidos = xoPedidoCtrl.ObtenerPedidos(xdFechaDesde, xdFechaHasta, xiNroCliente, xsEstado, xsUsuario, out xsError);
             var resultadoJS = new {
                 data = lstPedidos,
                 error = xsError

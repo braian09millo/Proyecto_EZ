@@ -18,13 +18,18 @@ WITH ENCRYPTION AS
 		ped_id AS IdPedido,
 		cli_nombre AS Cliente,
 		ped_fecha AS Fecha,
-		ped_estado AS Estado,
+		CASE ped_estado 
+			WHEN 'C' THEN 'CARGADO'
+			WHEN 'E' THEN 'ENTREGADO'
+			WHEN 'F' THEN 'FACTURADO'
+			WHEN 'PP' THEN 'PAGO PARCIAL' 
+		END AS Estado,
 		ped_monto AS Monto,
 		ped_resto AS Facturado,
 		ISNULL(usu_nombre, '') AS Repartidor
 	FROM pedido
-	JOIN cliente ON cli_id = ped_cliente
-	JOIN usuario ON usu_usuario = ped_repartidor
+	LEFT JOIN cliente ON cli_id = ped_cliente
+	LEFT JOIN usuario ON usu_usuario = ped_repartidor
 	WHERE 
 		(ped_fecha BETWEEN @FechaDesde AND @FechaHasta) AND
 		(ped_cliente = @Cliente OR @Cliente IS NULL) AND
