@@ -77,7 +77,7 @@ namespace Negocios.BusinessControllers
             }
         }
 
-        public object ObtenerPedidos(DateTime? xdFecha, int? xiCliente, string xsEstado, string xsUsuario, out string xsError)
+        public object ObtenerPedidos(DateTime? xdFechaDesde, DateTime? xdFechaHasta, int? xiCliente, string xsEstado, string xsUsuario, out string xsError)
         {
             xsError = "";
             object xoPedidos = null;
@@ -86,11 +86,13 @@ namespace Negocios.BusinessControllers
             {
                 try
                 {
-                    var xoResultado = xoDB.Database.SqlQuery<spGetPedidos>("exec spGetPedidos @Fecha, @Cliente, @Estado, @Usuario",
-                                        new SqlParameter("@Fecha", xdFecha == null ? SqlDateTime.Null : (DateTime)xdFecha),
+                    var xoResultado = xoDB.Database.SqlQuery<spGetPedidos>("exec spGetPedidos @FechaDesde, @FechaHasta, @Cliente, @Estado, @Usuario",
+                                        new SqlParameter("@FechaDesde", xdFechaDesde == null ? SqlDateTime.Null : (DateTime)xdFechaDesde),
+                                        new SqlParameter("@FechaHasta", xdFechaHasta == null ? SqlDateTime.Null : (DateTime)xdFechaHasta),
                                         new SqlParameter("@Cliente", xiCliente == null ? SqlInt32.Null : (int)xiCliente),
                                         new SqlParameter("@Estado", xsEstado == null ? SqlString.Null : xsEstado),
                                         new SqlParameter("@Usuario", xsUsuario == null ? SqlString.Null : xsUsuario)).ToList();
+
                     xoPedidos = xoResultado.Select(x => new [] {
                         x.IdPedido.ToString(),
                         x.Cliente,

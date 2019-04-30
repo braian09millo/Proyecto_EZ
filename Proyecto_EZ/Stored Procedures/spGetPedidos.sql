@@ -4,7 +4,8 @@ GO
 
 CREATE PROCEDURE spGetPedidos	
 (
-	@Fecha DATETIME = NULL,
+	@FechaDesde DATETIME = NULL,
+	@FechaHasta DATETIME = NULL,
 	@Cliente INT = NULL,
 	@Estado CHAR(2) = NULL,
 	@Usuario VARCHAR(10) = NULL
@@ -25,7 +26,7 @@ WITH ENCRYPTION AS
 	JOIN cliente ON cli_id = ped_cliente
 	JOIN usuario ON usu_usuario = ped_repartidor
 	WHERE 
-		(ped_fecha = @Fecha OR @Fecha IS NULL) AND
+		(ped_fecha BETWEEN @FechaDesde AND @FechaHasta) AND
 		(ped_cliente = @Cliente OR @Cliente IS NULL) AND
 		(ped_estado = @Estado OR @Estado IS NULL) AND
 		(ped_repartidor = @Usuario OR @Usuario IS NULL)
