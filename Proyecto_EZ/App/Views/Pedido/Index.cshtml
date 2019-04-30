@@ -199,6 +199,14 @@
                 $("#tablePedidos").dataTable().fnDestroy();
             }
 
+            function LimpiarFormulario() {
+
+                var items = $('#formPedidos').children();
+                for (var i = 1; i < items.length; i++) {
+                    items[i].remove();
+                }
+            }
+
             //Funcion para limpiar el modal al cerrarse
             $('#NuevoForm').on('hidden.bs.modal', function (e) {
 
@@ -210,7 +218,7 @@
                      .prop("checked", "")
                      .end();
 
-                $('#formPedidos').remove('#item:not(first-child)');
+                LimpiarFormulario();
             });
 
             //Habilitamos el botón cuando los campos requeridos esten llenos
@@ -269,7 +277,7 @@
                 var nuevoItem = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
                                 '<select class="form-control"> <option value="">Elija un producto</option>@foreach (var item in ViewBag.Productos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@item.Modelo - @item.Tamanio</option>}</select></div>' +
                                 '<div class="col-sm-2 cantidad">' +
-                                '<input type="text" class="form-control" placeholder="Cantidad" />' +
+                                '<input type="text" class="form-control" placeholder="Packs" />' +
                                 '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly /></div>' +
                                 '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly /></div>' +
                                 '<div class="col-sm-1"><button type="button" class="btn btn-default btn-block borrarItem"><i class="fas fa-minus"></i></button></div>' +
@@ -280,9 +288,7 @@
             });
 
             $('#formPedidos').on('click', '.borrarItem', function (e) {
-                console.log('entro');
                 e.preventDefault();
-                console.log($(this).parent().parent());
                 $(this).parent().parent().remove();
             });
 
