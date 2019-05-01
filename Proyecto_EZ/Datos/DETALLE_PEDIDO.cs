@@ -14,7 +14,6 @@ namespace Datos
     
     public partial class detalle_pedido
     {
-        public int det_id { get; set; }
         public int det_pedido { get; set; }
         public int det_producto { get; set; }
         public int det_cantidad { get; set; }

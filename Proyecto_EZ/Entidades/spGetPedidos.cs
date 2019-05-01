@@ -15,5 +15,6 @@ namespace Entidades
         public decimal Monto { get; set; }
         public decimal Facturado { get; set; }
         public string Repartidor { get; set; }
+        public List<spGetPedidoDetalle> PedidoDetalle { get; set; }
     }
 }

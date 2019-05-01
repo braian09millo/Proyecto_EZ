@@ -66,5 +66,19 @@ namespace App.Controllers
             xoPedidoCtrl.AgregarPedido(xiCliente, xsUsuario, xdTotal, xdFacturado, xoProductos, out xsError);
             return Json(xsError);
         }
+
+        [HttpPost]
+        public JsonResult GetDetallePedido(int xiIdPedido)
+        {
+            string xsError = "";
+            var lstResultado = xoPedidoCtrl.ObtenerDetallePedido(xiIdPedido, out xsError);
+            var resuladoJS = new
+            {
+                data = lstResultado,
+                error = xsError
+            };
+
+            return Json(resuladoJS);
+        }
     }
 }

@@ -149,7 +149,7 @@
                         <div class="row">
                             <div id="item">
                                 <div class="col-sm-3">
-                                    <select class="form-control">
+                                    <select class="form-control" id="cmbProductos">
                                         <option value="">Elija un producto</option>
                                         @foreach (var item in ViewBag.Productos)
                                         {
@@ -157,13 +157,13 @@
                                         }
                                     </select>
                                 </div>
-                                <div class="col-sm-2 cantidad">
+                                <div class="col-sm-2 cantidad" id="txtCantidad">
                                     <input type="text" class="form-control" placeholder="Packs" />
                                 </div>
-                                <div class="col-sm-2 precio">
+                                <div class="col-sm-2 precio" id="txtPrecio">
                                     <input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly />
                                 </div>
-                                <div class="col-sm-2 monto">
+                                <div class="col-sm-2 monto" id="txtMonto">
                                     <input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly />
                                 </div>
                                 <div class="col-sm-1">
@@ -211,6 +211,69 @@
             $('#formPedidos').append(nuevoItem);
 
         });
+
+        function editarPedido(tbody, tabla) {
+
+            var pedidos;
+
+            $(tbody).off('click', 'button.btn-info.btn-xs');
+            $(tbody).on('click', 'button.btn-info.btn-xs', function () {
+
+                var data = tabla.row($(this).parents('tr')).data();
+
+                @*var primerItem = pedidos[0];
+
+                //Cargamos el primer item
+                $('#cmbProductos').val(primerItem.IdProducto);
+                $('#txtCantidad').val(primerItem.Cantidad);
+                $('#txtPrecio').val(primerItem.Precio);
+                $('#txtMonto').val(primerItem.Monto);
+
+                //Cargamos el resto de los items
+                for (var i = 1; i < pedidos.length; i++)
+                {
+                    var nuevoItem = pedidos[i];
+                    var nuevoElemento = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
+                                        '<select class="form-control"> <option value="">Elija un producto</option>@foreach (var item in ViewBag.Productos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@item.Modelo - @item.Tamanio</option>}</select></div>' +
+                                        '<div class="col-sm-2 cantidad">' +
+                                        '<input type="text" class="form-control" placeholder="Packs" value="'+ nuevoItem.Cantidad +'"/>' +
+                                        '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly value="'+ nuevoItem.Precio +'"/></div>' +
+                                        '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly value="'+ nuevoItem.Monto +'"/></div>' +
+                                        '<div class="col-sm-1"><button type="button" class="btn btn-danger btn-block borrarItem"><i class="fas fa-minus"></i></button></div>' +
+                                        '</div>';
+
+                    $('#formPedidos').append(nuevoElemento);
+                }
+
+                $('#NuevoForm').modal('show');*@
+
+            });
+
+            function obtenerDetallePedido(idPedido, lista) {
+
+                $.ajax({
+                    method: 'POST',
+                    data: { xiIdPedido: idPedido },
+                    url:'/Pedido/GetDetallePedido',
+                    success: function (response) {
+                        if (response.error != "")
+                        {
+                            swal({
+                                title: "Error",
+                                text: response.error,
+                                icon: "error",
+                                button: "Aceptar"
+                            });
+                        }
+                        else
+                        {
+                            lista = response.data;
+                        }
+                    }
+                });
+            }
+
+        }
     </script>
 
 }

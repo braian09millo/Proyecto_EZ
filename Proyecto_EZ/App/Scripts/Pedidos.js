@@ -20,15 +20,15 @@ $(document).ready(function () {
         var mesSig = today.getMonth() + 1;
         var dia = today.getDate();
 
-        if (mes < 10) 
+        if (mes < 10)
             mes = '0' + mes;
-        
-        if (mesSig < 10) 
+
+        if (mesSig < 10)
             mesSig = '0' + mesSig;
-        
-        if (dia < 10) 
+
+        if (dia < 10)
             dia = '0' + dia;
-        
+
         var fechaDesde = anio + '-' + mes + '-' + dia;
         var fechaHasta = anio + '-' + mesSig + '-' + dia;
 
@@ -66,7 +66,7 @@ $(document).ready(function () {
 
     //Funcion para limpiar el modal al cerrarse
     $('#NuevoForm').on('shown.bs.modal', function (e) {
-        
+
         $('#txtFacturado').val(0.00);
         $('#cmbEstados').val('C');
         $('#cmbClientesPedido').val('');
@@ -226,7 +226,7 @@ $(document).ready(function () {
 
     function CargarPedidos() {
 
-        var xsFechaDesde = $('#txtFechaDesde').val();        
+        var xsFechaDesde = $('#txtFechaDesde').val();
         var xsFechaHasta = $('#txtFechaHasta').val();
         var xiCliente = $('#cmbClientes').val();
         var xsEstado = $('#cmbEstados').val();
@@ -256,12 +256,12 @@ $(document).ready(function () {
             ],
             "createdRow": function (row, data, dataIndex) {
                 if (data[3] == "CARGADO") {
-                    $(row).find("td:eq(2)").css('background-color','slategrey').css('color','white').css('font-weight','bold');
+                    $(row).find("td:eq(2)").css('background-color', 'slategrey').css('color', 'white').css('font-weight', 'bold');
                 } else if (data[3] == "ENTREGADO") {
                     $(row).find("td:eq(2)").css('background-color', '#337ab7').css('color', 'white').css('font-weight', 'bold');
-                } else if(data[3] == "FACTURADO") {
+                } else if (data[3] == "FACTURADO") {
                     $(row).find("td:eq(2)").css('background-color', '#4cae4c').css('color', 'white').css('font-weight', 'bold');
-                } else if(data[3] == "PAGO PARCIAL") {
+                } else if (data[3] == "PAGO PARCIAL") {
                     $(row).find("td:eq(2)").css('background-color', '#d43f3a').css('color', 'white').css('font-weight', 'bold');
                 }
             },
@@ -284,6 +284,7 @@ $(document).ready(function () {
             }
         });
 
+        editarPedido('#tablePedidos tbody', tabla);
         imprimir('#tablePedidos tbody', tabla);
         verDetalle('#tablePedidos tbody', tabla);
         eliminarPedido('#tablePedidos tbody', tabla);

@@ -1,5 +1,6 @@
 ﻿using Datos;
 using Entidades;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -93,6 +94,11 @@ namespace Negocios.BusinessControllers
                                         new SqlParameter("@Estado", xsEstado == null ? SqlString.Null : xsEstado),
                                         new SqlParameter("@Usuario", xsUsuario == null ? SqlString.Null : xsUsuario)).ToList();
 
+                    foreach (var item in xoResultado)
+                    {
+                        item.PedidoDetalle = ObtenerDetallePedido(item.IdPedido, out xsError);
+                    }
+
                     xoPedidos = xoResultado.Select(x => new [] {
                         x.IdPedido.ToString(),
                         x.Cliente,
@@ -100,7 +106,8 @@ namespace Negocios.BusinessControllers
                         x.Estado,
                         "$ " + string.Format("{0:0.##}", x.Monto),
                         "$ " + string.Format("{0:0.##}", x.Facturado),
-                        x.Repartidor}).ToList();
+                        x.Repartidor,
+                        JsonConvert.SerializeObject(x.PedidoDetalle)}).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -109,6 +116,27 @@ namespace Negocios.BusinessControllers
             }
 
             return xoPedidos;
+        }
+
+        public List<spGetPedidoDetalle> ObtenerDetallePedido(int xiPedido, out string xsError)
+        {
+            xsError = "";
+            var lstDetlle = new List<spGetPedidoDetalle>();
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    lstDetlle = xoDB.Database.SqlQuery<spGetPedidoDetalle>("exec spGetPedidoDetalle @Pedido",
+                                              new SqlParameter("@Pedido", xiPedido)).ToList();
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+
+            return lstDetlle;
         }
 
         #endregion

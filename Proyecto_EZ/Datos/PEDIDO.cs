@@ -17,8 +17,8 @@ namespace Datos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public pedido()
         {
-            this.detalle_pedido = new HashSet<detalle_pedido>();
             this.remito = new HashSet<remito>();
+            this.detalle_pedido = new HashSet<detalle_pedido>();
         }
     
         public int ped_id { get; set; }
@@ -31,9 +31,9 @@ namespace Datos
     
         public virtual cliente cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<detalle_pedido> detalle_pedido { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<remito> remito { get; set; }
         public virtual usuario usuario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<detalle_pedido> detalle_pedido { get; set; }
     }
 }

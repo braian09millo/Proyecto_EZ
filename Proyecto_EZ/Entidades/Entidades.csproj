@@ -45,6 +45,7 @@
     <Compile Include="ProductoForm.cs" />
     <Compile Include="spGetClientes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="spGetPedidoDetalle.cs" />
     <Compile Include="spGetPedidos.cs" />
     <Compile Include="spGetProductos.cs" />
     <Compile Include="spGetProductosEdicion.cs" />

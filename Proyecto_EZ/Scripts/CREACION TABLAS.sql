@@ -109,14 +109,15 @@ CREATE TABLE pedido
 
 CREATE TABLE detalle_pedido
 (
-	det_id INT IDENTITY PRIMARY KEY,
 	det_pedido INT NOT NULL,
 	det_producto INT NOT NULL,
 	det_cantidad INT NOT NULL,
 	det_precio MONEY NOT NULL,
 	det_monto MONEY NOT NULL,
 	CONSTRAINT FK_Producto_DetallePedido FOREIGN KEY (det_producto) REFERENCES PRODUCTO(prod_id),
-	CONSTRAINT FK_Pedido_DetallePedido FOREIGN KEY (det_pedido) REFERENCES PEDIDO(ped_id)
+	CONSTRAINT FK_Pedido_DetallePedido FOREIGN KEY (det_pedido) REFERENCES PEDIDO(ped_id),
+	CONSTRAINT PK_Pedido_Detalle PRIMARY KEY (det_pedido,det_producto)
+
 )
 
 CREATE TABLE remito

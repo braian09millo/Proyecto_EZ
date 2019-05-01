@@ -30,9 +30,23 @@ body {
     border: 0;
 }
 
-.btn-default, .btn-primary, .btn-success, .btn-danger, .btn-info, .btn-warning {
+.btn-default, 
+.btn-primary, 
+.btn-success, 
+.btn-danger, 
+.btn-info, 
+.btn-warning {
     border: 0;
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-default.btn-xs, 
+.btn-primary.btn-xs, 
+.btn-success.btn-xs, 
+.btn-danger.btn-xs, 
+.btn-info.btn-xs, 
+.btn-warning.btn-xs {
+    box-shadow: none;
 }
 
 #tableClientes, #tableProductos, #EditorTable, #tablePedidos {
