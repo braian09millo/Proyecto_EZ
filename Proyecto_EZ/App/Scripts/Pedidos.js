@@ -48,6 +48,11 @@ $(document).ready(function () {
         for (var i = 1; i < items.length; i++) {
             items[i].remove();
         }
+
+        $('#txtFacturado').val(0.00);
+        $('#cmbEstadosPedido').val('');
+        $('#cmbClientesPedido').val('');
+        $('#cmbUsuariosPedido').val('');
     }
 
     //Funcion para limpiar el modal al cerrarse
@@ -62,16 +67,6 @@ $(document).ready(function () {
              .end();
 
         LimpiarFormulario();
-    });
-
-    //Funcion para limpiar el modal al cerrarse
-    $('#NuevoForm').on('shown.bs.modal', function (e) {
-
-        $('#txtFacturado').val(0.00);
-        $('#cmbEstados').val('C').prop('disabled', true);
-        $('#cmbClientesPedido').val('');
-        $('#cmbUsuariosPedido').val('');
-
     });
 
     //Habilitamos el botón cuando los campos requeridos esten llenos

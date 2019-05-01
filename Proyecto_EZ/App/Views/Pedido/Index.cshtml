@@ -94,7 +94,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <form class="form-horizontal" id="formNuevoPedido">
+                        <div class="form-horizontal" id="formNuevoPedido">
                             <div class="col-sm-3"></div>
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -130,9 +130,9 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">Estado</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control" id="cmbEstadosPedido" disabled>
+                                        <select class="form-control" id="cmbEstadosPedido">
                                             <option value="">Elija un estado</option>
-                                            <option selected value="C">Cargado</option>
+                                            <option value="C">Cargado</option>
                                             <option value="E">Entregado</option>
                                             <option value="F">Pago total</option>
                                             <option value="PP">Pago parcial</option>
@@ -141,7 +141,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-3"></div>
-                        </form>
+                        </div>
                     </div>
                     <h4>Listado de Productos</h4>
                     <hr />
@@ -214,18 +214,24 @@
 
         function editarPedido(tbody, tabla) {
 
+            var pedido;
+
             $(tbody).off('click', 'button.btn-info.btn-xs');
-            $(tbody).on('click', 'button.btn-info.btn-xs', function () {
+            $(tbody).on('click', 'button.btn-info.btn-xs', function (e) {
+
+                e.preventDefault();
 
                 var data = tabla.row($(this).parents('tr')).data();
-
-                var items = JSON.parse(data[7]);
+                var items = JSON.parse(data[9]);
                 var primerItem = items[0];
 
-                //Cargamos los datos especificos del pedido
+                console.log(data);
 
-                $('#txtFacturado').val(data[5]);
-                $('#cmbEstadosPedido').val(data[4]).prop('disabled', false);
+                //Cargamos los datos especificos del pedido
+                $('#cmbClientesPedido').val(parseInt(data[8]));
+                $('#cmbUsuariosPedido').val(data[6]);
+                $('#txtFacturado').val(parseFloat(data[5].substring(1,data[5].length)));
+                $('#cmbEstadosPedido').val(data[7].trim());
 
                 //Cargamos el primer item
                 $('#cmbProductos').val(primerItem.IdProducto);
@@ -251,33 +257,7 @@
                 }
 
                 $('#NuevoForm').modal('show');
-
             });
-
-            function obtenerDetallePedido(idPedido, lista) {
-
-                $.ajax({
-                    method: 'POST',
-                    data: { xiIdPedido: idPedido },
-                    url:'/Pedido/GetDetallePedido',
-                    success: function (response) {
-                        if (response.error != "")
-                        {
-                            swal({
-                                title: "Error",
-                                text: response.error,
-                                icon: "error",
-                                button: "Aceptar"
-                            });
-                        }
-                        else
-                        {
-                            lista = response.data;
-                        }
-                    }
-                });
-            }
-
         }
     </script>
 

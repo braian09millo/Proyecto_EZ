@@ -103,10 +103,12 @@ namespace Negocios.BusinessControllers
                         x.IdPedido.ToString(),
                         x.Cliente,
                         x.Fecha.ToString("dd-MM-yyyy"),
-                        x.Estado,
+                        x.EstadoDescripcion,
                         "$ " + string.Format("{0:0.##}", x.Monto),
                         "$ " + string.Format("{0:0.##}", x.Facturado),
                         x.Repartidor,
+                        x.Estado,
+                        x.IdCliente.ToString(),
                         JsonConvert.SerializeObject(x.PedidoDetalle)}).ToList();
                 }
                 catch (Exception ex)
