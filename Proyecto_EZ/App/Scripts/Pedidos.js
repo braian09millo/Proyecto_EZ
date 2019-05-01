@@ -68,7 +68,7 @@ $(document).ready(function () {
     $('#NuevoForm').on('shown.bs.modal', function (e) {
 
         $('#txtFacturado').val(0.00);
-        $('#cmbEstados').val('C');
+        $('#cmbEstados').val('C').prop('disabled', true);
         $('#cmbClientesPedido').val('');
         $('#cmbUsuariosPedido').val('');
 
@@ -257,11 +257,15 @@ $(document).ready(function () {
             "createdRow": function (row, data, dataIndex) {
                 if (data[3] == "CARGADO") {
                     $(row).find("td:eq(2)").css('background-color', 'slategrey').css('color', 'white').css('font-weight', 'bold');
+                    $(row).find("td:eq(2)").find(".btn-info.btn-xs").prop('disabled', false);
                 } else if (data[3] == "ENTREGADO") {
+                    $(row).find("td:eq(2)").find(".btn-info.btn-xs").prop('disabled', true);
                     $(row).find("td:eq(2)").css('background-color', '#337ab7').css('color', 'white').css('font-weight', 'bold');
                 } else if (data[3] == "FACTURADO") {
+                    $(row).find("td:eq(2)").find(".btn-info.btn-xs").prop('disabled', true);
                     $(row).find("td:eq(2)").css('background-color', '#4cae4c').css('color', 'white').css('font-weight', 'bold');
                 } else if (data[3] == "PAGO PARCIAL") {
+                    $(row).find("td:eq(2)").find(".btn-info.btn-xs").prop('disabled', true);
                     $(row).find("td:eq(2)").css('background-color', '#d43f3a').css('color', 'white').css('font-weight', 'bold');
                 }
             },

@@ -130,7 +130,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">Estado</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control" id="cmbEstados" disabled>
+                                        <select class="form-control" id="cmbEstadosPedido" disabled>
                                             <option value="">Elija un estado</option>
                                             <option selected value="C">Cargado</option>
                                             <option value="E">Entregado</option>
@@ -157,14 +157,14 @@
                                         }
                                     </select>
                                 </div>
-                                <div class="col-sm-2 cantidad" id="txtCantidad">
-                                    <input type="text" class="form-control" placeholder="Packs" />
+                                <div class="col-sm-2 cantidad">
+                                    <input type="text" id="txtCantidad" class="form-control" placeholder="Packs" />
                                 </div>
-                                <div class="col-sm-2 precio" id="txtPrecio">
-                                    <input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly />
+                                <div class="col-sm-2 precio">
+                                    <input type="text" id="txtPrecio" style="text-align: right;" class="form-control" placeholder="Precio" readonly />
                                 </div>
-                                <div class="col-sm-2 monto" id="txtMonto">
-                                    <input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly />
+                                <div class="col-sm-2 monto">
+                                    <input type="text" id="txtMonto" style="text-align: right;" class="form-control" placeholder="Monto" readonly />
                                 </div>
                                 <div class="col-sm-1">
                                     <button type="button" id="btnItem" class="btn btn-default btn-block"><i class="fas fa-plus"></i></button>
@@ -214,14 +214,18 @@
 
         function editarPedido(tbody, tabla) {
 
-            var pedidos;
-
             $(tbody).off('click', 'button.btn-info.btn-xs');
             $(tbody).on('click', 'button.btn-info.btn-xs', function () {
 
                 var data = tabla.row($(this).parents('tr')).data();
 
-                @*var primerItem = pedidos[0];
+                var items = JSON.parse(data[7]);
+                var primerItem = items[0];
+
+                //Cargamos los datos especificos del pedido
+
+                $('#txtFacturado').val(data[5]);
+                $('#cmbEstadosPedido').val(data[4]).prop('disabled', false);
 
                 //Cargamos el primer item
                 $('#cmbProductos').val(primerItem.IdProducto);
@@ -230,11 +234,11 @@
                 $('#txtMonto').val(primerItem.Monto);
 
                 //Cargamos el resto de los items
-                for (var i = 1; i < pedidos.length; i++)
+                for (var i = 1; i < items.length; i++)
                 {
-                    var nuevoItem = pedidos[i];
+                    var nuevoItem = items[i];
                     var nuevoElemento = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
-                                        '<select class="form-control"> <option value="">Elija un producto</option>@foreach (var item in ViewBag.Productos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@item.Modelo - @item.Tamanio</option>}</select></div>' +
+                                        '<select id="item'+ i +'" class="form-control"> <option value="">Elija un producto</option>@foreach (var item in ViewBag.Productos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@item.Modelo - @item.Tamanio</option>}</select></div>' +
                                         '<div class="col-sm-2 cantidad">' +
                                         '<input type="text" class="form-control" placeholder="Packs" value="'+ nuevoItem.Cantidad +'"/>' +
                                         '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly value="'+ nuevoItem.Precio +'"/></div>' +
@@ -243,9 +247,10 @@
                                         '</div>';
 
                     $('#formPedidos').append(nuevoElemento);
+                    $('#item'+i).val(nuevoItem.IdProducto);
                 }
 
-                $('#NuevoForm').modal('show');*@
+                $('#NuevoForm').modal('show');
 
             });
 
