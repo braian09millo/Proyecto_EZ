@@ -15,8 +15,12 @@ WITH ENCRYPTION AS
 		det_producto AS IdProducto,
 		det_cantidad AS Cantidad,
 		det_precio AS Precio,
-		det_monto AS Monto
+		det_monto AS Monto,
+		mod_nombre + ' - ' + tam_descripcion AS ProductoDescripcion
 	FROM detalle_pedido
+	JOIN producto ON det_producto = prod_id
+	JOIN modelo ON prod_modelo = mod_id
+	JOIN tamanio ON prod_tamanio = tam_id
 	WHERE 
 		(det_pedido = @Pedido)
 	

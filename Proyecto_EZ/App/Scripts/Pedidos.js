@@ -253,17 +253,13 @@ $(document).ready(function () {
                 }
             ],
             "createdRow": function (row, data, dataIndex) {
-                if (data[3] == "CARGADO") {
-                    $(row).find("td:eq(2)").css('background-color', 'slategrey').css('color', 'white').css('font-weight', 'bold');
-                    $(row).find("td:eq(2)").find(".btn-info.btn-xs").prop('disabled', false);
-                } else if (data[3] == "ENTREGADO") {
-                    $(row).find("td:eq(2)").find(".btn-info.btn-xs").prop('disabled', true);
+                if (data[7].trim() == "C") {
+                    $(row).find("td:eq(2)").css('background-color', 'slategrey').css('color', 'white').css('font-weight', 'bold');                    
+                } else if (data[7].trim() == "E") {
                     $(row).find("td:eq(2)").css('background-color', '#337ab7').css('color', 'white').css('font-weight', 'bold');
-                } else if (data[3] == "FACTURADO") {
-                    $(row).find("td:eq(2)").find(".btn-info.btn-xs").prop('disabled', true);
+                } else if (data[7].trim() == "F") {
                     $(row).find("td:eq(2)").css('background-color', '#4cae4c').css('color', 'white').css('font-weight', 'bold');
-                } else if (data[3] == "PAGO PARCIAL") {
-                    $(row).find("td:eq(2)").find(".btn-info.btn-xs").prop('disabled', true);
+                } else if (data[7].trim() == "PP") {
                     $(row).find("td:eq(2)").css('background-color', '#d43f3a').css('color', 'white').css('font-weight', 'bold');
                 }
             },
@@ -299,6 +295,29 @@ $(document).ready(function () {
 
     function verDetalle(tbody, tabla) {
 
+        $(tbody).off('click', 'button.btn-primary.btn-xs');
+        $(tbody).on('click', 'button.btn-primary.btn-xs', function (e) {
+
+            $('#BodyDetalle > tr').remove();
+
+            var data = tabla.row($(this).parents('tr')).data();
+            var items = JSON.parse(data[9]);
+
+            for (var i = 0; i < items.length; i++) {
+
+                var fila = '<tr style="text-align: center;">' +
+                           '<td>' + items[i].ProductoDescripcion + '</td>' +
+                           '<td>' + items[i].Cantidad + '</td>' +
+                           '<td>' + '$' + items[i].Precio + '</td>' +
+                           '<td>' + '$' + items[i].Monto + '</td>' +
+                           '</tr>';
+
+                $('#BodyDetalle').append(fila);
+            }
+
+            $('#detalleModal').modal('show');
+
+        });
     }
 
     function eliminarPedido(tbody, tabla) {

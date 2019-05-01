@@ -145,13 +145,13 @@ namespace Negocios.BusinessControllers
         public List<spGetPedidoDetalle> ObtenerDetallePedido(int xiPedido, out string xsError)
         {
             xsError = "";
-            var lstDetlle = new List<spGetPedidoDetalle>();
+            var lstDetalle = new List<spGetPedidoDetalle>();
 
             using (BD_Entities xoDB = new BD_Entities())
             {
                 try
                 {
-                    lstDetlle = xoDB.Database.SqlQuery<spGetPedidoDetalle>("exec spGetPedidoDetalle @Pedido",
+                    lstDetalle = xoDB.Database.SqlQuery<spGetPedidoDetalle>("exec spGetPedidoDetalle @Pedido",
                                               new SqlParameter("@Pedido", xiPedido)).ToList();
                 }
                 catch (Exception ex)
@@ -160,7 +160,7 @@ namespace Negocios.BusinessControllers
                 }
             }
 
-            return lstDetlle;
+            return lstDetalle;
         }
 
         #endregion
