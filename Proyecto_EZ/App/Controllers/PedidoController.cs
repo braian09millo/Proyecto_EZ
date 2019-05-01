@@ -59,11 +59,11 @@ namespace App.Controllers
             return Json(resultadoJS, JsonRequestBehavior.AllowGet);        
         }
 
-        public JsonResult AgregarPedido(int xiCliente, string xsUsuario, decimal xdTotal, decimal xdFacturado, List<Pedido> xoProductos)
+        public JsonResult GuardarPedido(int xiPedido, string xsEstado, int xiCliente, string xsUsuario, decimal xdTotal, decimal xdFacturado, List<Pedido> xoProductos)
         {
             string xsError = "";
             if (xsUsuario == "") xsUsuario = null;
-            xoPedidoCtrl.AgregarPedido(xiCliente, xsUsuario, xdTotal, xdFacturado, xoProductos, out xsError);
+            xoPedidoCtrl.GuardarPedido(xiPedido, xsEstado, xiCliente, xsUsuario, xdTotal, xdFacturado, xoProductos, out xsError);
             return Json(xsError);
         }
 

@@ -29,37 +29,59 @@ namespace Negocios.BusinessControllers
 
         #region COMPORTAMIENTO
             
-        public void AgregarPedido(int xiCliente, string xsUsuario, decimal xdTotal, decimal xdFacturado, List<Pedido> xoProductos, out string xsError)
+        public void GuardarPedido(int xiPedido, string xsEstado, int xiCliente, string xsUsuario, decimal xdTotal, decimal xdFacturado, List<Pedido> xoProductos, out string xsError)
         {
             xsError = "";
+            int xiIdPedido = 0;
 
             using (BD_Entities xoDB = new BD_Entities())
             {
                 try
                 {
-                    //Primero guardamos la cabecera del pedido
-                    var xoCabeceraPedido = new pedido()
+                    var xoPedido = xoDB.pedido.Find(xiPedido);
+
+                    if (xoPedido != null)
                     {
-                        ped_cliente = xiCliente,
-                        ped_fecha = DateTime.Today,
-                        ped_monto = Math.Round(xdTotal, 2),
-                        ped_resto = Math.Round(xdFacturado, 2),
-                        ped_estado = "C",
-                        ped_repartidor = xsUsuario
-                    };
+                        //Actualizamos el pedido
+                        xoPedido.ped_cliente = xiCliente;
+                        xoPedido.ped_monto = Math.Round(xdTotal, 2);
+                        xoPedido.ped_resto = Math.Round(xdFacturado, 2);
+                        xoPedido.ped_estado = xsEstado;
+                        xoPedido.ped_repartidor = xsUsuario;
 
-                    xoDB.pedido.Add(xoCabeceraPedido);
-                    xoDB.SaveChanges();
+                        //Borramos todos los items del pedido
+                        var items = xoDB.detalle_pedido.Where(x => x.det_pedido == xiPedido).ToList();
+                        xoDB.detalle_pedido.RemoveRange(items);
 
-                    //Obtenemos el identity de la cabecera
-                    int xiIdPedido = xoCabeceraPedido.ped_id;
+                        xoDB.SaveChanges();
+                    }
+                    else
+                    {
+                        //Primero guardamos la cabecera del pedido
+                        var xoCabeceraPedido = new pedido()
+                        {
+                            ped_cliente = xiCliente,
+                            ped_fecha = DateTime.Today,
+                            ped_monto = Math.Round(xdTotal, 2),
+                            ped_resto = Math.Round(xdFacturado, 2),
+                            ped_estado = "C",
+                            ped_repartidor = xsUsuario
+                        };
+
+                        xoDB.pedido.Add(xoCabeceraPedido);
+                        xoDB.SaveChanges();
+
+                        //Obtenemos el identity de la cabecera
+                        xiIdPedido = xoCabeceraPedido.ped_id;
+
+                    }
 
                     //Para cada producto guardamos el detalle
                     foreach (var item in xoProductos)
                     {
                         var xoPedidoDetalle = new detalle_pedido()
                         {
-                            det_pedido = xiIdPedido,
+                            det_pedido = xoPedido != null ? xiPedido : xiIdPedido,
                             det_producto = item.IdProducto,
                             det_cantidad = item.Cantidad,
                             det_precio = item.Precio,

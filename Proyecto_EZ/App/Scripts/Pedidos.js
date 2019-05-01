@@ -49,6 +49,7 @@ $(document).ready(function () {
             items[i].remove();
         }
 
+        $('#txtId').val(0);
         $('#txtFacturado').val(0.00);
         $('#cmbEstadosPedido').val('');
         $('#cmbClientesPedido').val('');
@@ -128,10 +129,12 @@ $(document).ready(function () {
     $('#btnGenerarPedido').click(function (e) {
 
         var Total = 0;
+        var IdPedido = $('#txtId').val();
         var Facturado = parseFloat($('#txtFacturado').val());
         var CantidadProductos = 0;
         var CantidadPacks = 0;
         var Productos = [];
+        var Estado = $('#cmbEstadosPedido').val().trim();
         var ClienteElegido = $('#cmbClientesPedido').val();
         var Repartidor = $('#cmbUsuariosPedido').val();
 
@@ -150,7 +153,6 @@ $(document).ready(function () {
             var precio = $(this).find('.col-sm-2.precio').find('input[type="text"]').val();
 
             var item = {
-
                 IdProducto: id,
                 Cantidad: packs,
                 Precio: precio,
@@ -161,7 +163,8 @@ $(document).ready(function () {
         });
 
         var dataToPost = {
-
+            xiPedido: IdPedido,
+            xsEstado: Estado,
             xiCliente: ClienteElegido,
             xsUsuario: Repartidor,
             xdTotal: Total,
@@ -181,7 +184,7 @@ $(document).ready(function () {
                     $.ajax({
                         method: 'POST',
                         data: dataToPost,
-                        url: '/Pedido/AgregarPedido',
+                        url: '/Pedido/GuardarPedido',
                         success: function (response) {
 
                             if (response == "") {
