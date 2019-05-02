@@ -81,10 +81,10 @@ $(document).ready(function () {
         var cantPack = $('#txtCantPack').val();
         var porc = $('#txtPorcentaje').val();
 
-        if (marca == "" || modelo == "" ||
-            tamanio == "" || tipo == "" ||
-            costo == "" || cantPack == "" ||
-            porc == "")
+        if (marca === "" || modelo === "" ||
+            tamanio === "" || tipo === "" ||
+            costo === "" || cantPack === "" ||
+            porc === "")
             return false;
         else
             return true;
@@ -100,7 +100,7 @@ $(document).ready(function () {
                 var precio = $(this).children("option:selected").data('precio');
                 var txtPrecio = $(this).parent().parent().find('.precio').find('input[type="text"]');
 
-                if ($(this).children("option:selected").val() == '') {
+                if ($(this).children("option:selected").val() === '') {
                     $(txtPrecio).val('');
                 } else {
                     $(txtPrecio).val(Math.round(precio * 100) / 100);
@@ -187,7 +187,7 @@ $(document).ready(function () {
                         url: '/Pedido/GuardarPedido',
                         success: function (response) {
 
-                            if (response == "") {
+                            if (response === "") {
                                 swal({
                                     title: "Exito!",
                                     text: "Pedido generado correctamente",
@@ -253,13 +253,13 @@ $(document).ready(function () {
                 }
             ],
             "createdRow": function (row, data, dataIndex) {
-                if (data[7].trim() == "C") {
+                if (data[7].trim() === "C") {
                     $(row).find("td:eq(2)").css('background-color', 'slategrey').css('color', 'white').css('font-weight', 'bold');                    
-                } else if (data[7].trim() == "E") {
+                } else if (data[7].trim() === "E") {
                     $(row).find("td:eq(2)").css('background-color', '#337ab7').css('color', 'white').css('font-weight', 'bold');
-                } else if (data[7].trim() == "F") {
+                } else if (data[7].trim() === "F") {
                     $(row).find("td:eq(2)").css('background-color', '#4cae4c').css('color', 'white').css('font-weight', 'bold');
-                } else if (data[7].trim() == "PP") {
+                } else if (data[7].trim() === "PP") {
                     $(row).find("td:eq(2)").css('background-color', '#d43f3a').css('color', 'white').css('font-weight', 'bold');
                 }
             },
@@ -268,7 +268,7 @@ $(document).ready(function () {
             },
             initComplete: function (settings, json) {
 
-                if (json.error != "") {
+                if (json.error !== "") {
                     swal({
                         title: "Error",
                         text: json.error,
@@ -290,6 +290,17 @@ $(document).ready(function () {
     }
 
     function imprimir(tbody, tabla) {
+
+        $(tbody).off('click', 'button.btn-warning.btn-xs');
+        $(tbody).on('click', 'button.btn-warning.btn-xs', function (e) {
+
+            var data = tabla.row($(this).parents('tr')).data();
+            var id = parseInt(data[0]);
+
+            var url = '/Reporte/GetInformeRemito?xiPedido=' + id;
+            window.open(url);
+
+        });
 
     }
 

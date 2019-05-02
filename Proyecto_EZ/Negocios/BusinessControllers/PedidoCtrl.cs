@@ -164,5 +164,29 @@ namespace Negocios.BusinessControllers
         }
 
         #endregion
+
+        #region INFORMES
+
+        public List<spRptRemito> ObtenerPedidosRpt(int xiPedido)
+        {
+            var xoResultado = new List<spRptRemito>();
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    xoResultado = xoDB.Database.SqlQuery<spRptRemito>("exec spGetRptPedido @Pedido",
+                                               new SqlParameter("@Pedido", xiPedido)).ToList();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return xoResultado;
+        }
+
+        #endregion
     }
 }

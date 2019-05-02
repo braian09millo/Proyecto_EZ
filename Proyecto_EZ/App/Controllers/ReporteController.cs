@@ -1,5 +1,7 @@
 ﻿using App.Models;
 using Entidades;
+using Negocios;
+using Negocios.BusinessControllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +12,19 @@ namespace App.Controllers
 {
     public class ReporteController : Controller
     {
+        PedidoCtrl xoCtrlPedido = new Factory().GetCtrlPedido();
+
         [HttpGet]
         public FileResult GetInformeRemito(int xiPedido)
         {
-            var _nombre = "RptRecaudacion.rdlc";
-            var _nombreDs = "RecaudacionDS";
+            var _nombre = "rptRemito.rdlc";
+            var _nombreDs = "RemitoDS";
             var _path = HttpContext.Server.MapPath("~/Reportes/" + _nombre);
-            var _lista = new List<spGetPedidos>();
+            var _lista = xoCtrlPedido.ObtenerPedidosRpt(xiPedido);
 
-            Reporting.GenerarInforme(_lista, _path, _nombre, _nombreDs, "XLS");
+            var bytes = Reporting.GenerarInforme(_lista, _path, _nombre, _nombreDs, "PDF");
 
-            return File(_path, "application/pdf");
+            return File(bytes, "application/pdf");
         }
     }
 }

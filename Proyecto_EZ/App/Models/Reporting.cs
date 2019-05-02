@@ -10,10 +10,11 @@ namespace App.Models
 {
     public static class Reporting
     {
-        public static void GenerarInforme<T>(this List<T> lista, string sPath, string sNombreInforme, string sNombreDS, string sFormato)
+        public static byte[] GenerarInforme<T>(this List<T> lista, string sPath, string sNombreInforme, string sNombreDS, string sFormato)
         {
-            byte[] bytes;
-            var _rv = new ReportViewer();
+            string xsError = "";
+            byte[] bytes = null;
+            var _rv = new LocalReport();
 
             try
             {
@@ -29,27 +30,23 @@ namespace App.Models
                     string encoding;
                     string filenameExtension;
 
-                    _rv.LocalReport.EnableExternalImages = true;
-                    _rv.LocalReport.LoadReportDefinition(stream);
+                    _rv.EnableExternalImages = true;
+                    _rv.LoadReportDefinition(stream);
 
-                    _rv.LocalReport.DataSources.Clear();
-                    _rv.LocalReport.DataSources.Add(new ReportDataSource(sNombreDS, lista));
-                    _rv.LocalReport.Refresh();
+                    _rv.DataSources.Clear();
+                    _rv.DataSources.Add(new ReportDataSource(sNombreDS, lista));
+                    _rv.Refresh();
 
-                    bytes = _rv.LocalReport.Render(sFormato, null, out mimeType, out encoding,
-                                                          out filenameExtension, out streamids,
-                                                          out warnings);
-
-                    using (FileStream fs = File.OpenWrite(sPath))
-                    {
-                        fs.Write(bytes, 0, bytes.Length);
-                    }
+                    bytes = _rv.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
                 }
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                xsError = ex.Message;
             }
+
+            return bytes;
         }
     }
 }
