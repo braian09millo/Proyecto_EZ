@@ -24,7 +24,7 @@ namespace App.Controllers
 
             var bytes = Reporting.GenerarInforme(_lista, _path, _nombre, _nombreDs, "PDF");
 
-            return File(bytes, "application/pdf");
+            return File(bytes, "application/pdf", "Remito_N°" + xiPedido.ToString() + ".pdf");
         }
     }
 }

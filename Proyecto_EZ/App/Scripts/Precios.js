@@ -12,7 +12,7 @@ $(document).ready(function () {
                    .parent()
                    .find("td:eq(4)")
                    .find("input[type='text']")
-                   .val(Math.round(valorPV * 100) / 100);
+                   .val(Math.round(valorPV));
 
         });
 
@@ -25,7 +25,7 @@ $(document).ready(function () {
                    .parent()
                    .find("td:eq(4)")
                    .find("input[type='text']")
-                   .val(Math.round(valorPV * 100) / 100);
+                   .val(Math.round(valorPV));
 
         });
 

@@ -51,9 +51,6 @@ $(document).ready(function () {
 
         $('#txtId').val(0);
         $('#txtFacturado').val(0.00);
-        $('#cmbEstadosPedido').val('');
-        $('#cmbClientesPedido').val('');
-        $('#cmbUsuariosPedido').val('');
     }
 
     //Funcion para limpiar el modal al cerrarse
@@ -103,7 +100,7 @@ $(document).ready(function () {
                 if ($(this).children("option:selected").val() === '') {
                     $(txtPrecio).val('');
                 } else {
-                    $(txtPrecio).val(Math.round(precio * 100) / 100);
+                    $(txtPrecio).val(Math.round(precio));
                 }
             });
 
@@ -113,7 +110,7 @@ $(document).ready(function () {
                 var txtPrecio = $(this).parent().parent().find('.precio').find('input[type="text"]');
                 var txtMonto = $(this).parent().parent().find('.col-sm-2.monto').find('input[type="text"]');
                 var total = $(this).val() * $(txtPrecio).val();
-                $(txtMonto).val(Math.round(total * 100) / 100);
+                $(txtMonto).val(Math.round(total));
 
             });
 
@@ -127,6 +124,8 @@ $(document).ready(function () {
     });
 
     $('#btnGenerarPedido').click(function (e) {
+
+        console.log($('#txtId').val());
 
         var Total = 0;
         var IdPedido = $('#txtId').val();
@@ -174,7 +173,7 @@ $(document).ready(function () {
 
         swal({
             title: "¿Desea finalizar el pedido?",
-            text: "Cliente: " + $('#cmbClientes').children('option:selected').html() + ", Cantidad de Productos: " + CantidadProductos + ", Packs: " + CantidadPacks + ", Total: $ " + (Math.round(Total * 100) / 100),
+            text: "Cliente: " + $('#cmbClientesPedido').children('option:selected').html() + ", Cantidad de Productos: " + CantidadProductos + ", Packs: " + CantidadPacks + ", Total: $ " + (Math.round(Total * 100) / 100),
             icon: "warning",
             buttons: ['Cancelar', 'Confirmar'],
             dangerMode: false,
@@ -184,15 +183,15 @@ $(document).ready(function () {
                     $.ajax({
                         method: 'POST',
                         data: dataToPost,
-                        url: '/Pedido/GuardarPedido',
+                        url: './Pedido/GuardarPedido',
                         success: function (response) {
 
-                            if (response === "") {
+                            if (response == "") {
                                 swal({
                                     title: "Exito!",
                                     text: "Pedido generado correctamente",
                                     icon: "success",
-                                    button: "Aceptar",
+                                    button: "Aceptar"
                                 });
 
                                 $('#NuevoForm').modal('hide');
@@ -211,10 +210,11 @@ $(document).ready(function () {
                         error: function (response) {
                             swal({
                                 title: "Error",
-                                text: response,
+                                text: "Error",
                                 icon: "error",
                                 button: "Aceptar"
                             });
+                            console.log(response);
                         }
                     });
                 }

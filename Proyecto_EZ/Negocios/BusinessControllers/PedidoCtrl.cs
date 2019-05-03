@@ -44,8 +44,8 @@ namespace Negocios.BusinessControllers
                     {
                         //Actualizamos el pedido
                         xoPedido.ped_cliente = xiCliente;
-                        xoPedido.ped_monto = Math.Round(xdTotal, 2);
-                        xoPedido.ped_resto = Math.Round(xdFacturado, 2);
+                        xoPedido.ped_monto = Math.Round(xdTotal);
+                        xoPedido.ped_resto = Math.Round(xdFacturado);
                         xoPedido.ped_estado = xsEstado;
                         xoPedido.ped_repartidor = xsUsuario;
 
@@ -62,8 +62,8 @@ namespace Negocios.BusinessControllers
                         {
                             ped_cliente = xiCliente,
                             ped_fecha = DateTime.Today,
-                            ped_monto = Math.Round(xdTotal, 2),
-                            ped_resto = Math.Round(xdFacturado, 2),
+                            ped_monto = Math.Round(xdTotal),
+                            ped_resto = Math.Round(xdFacturado),
                             ped_estado = "C",
                             ped_repartidor = xsUsuario
                         };
@@ -126,8 +126,8 @@ namespace Negocios.BusinessControllers
                         x.Cliente,
                         x.Fecha.ToString("dd-MM-yyyy"),
                         x.EstadoDescripcion,
-                        "$ " + string.Format("{0:0.##}", x.Monto),
-                        "$ " + string.Format("{0:0.##}", x.Facturado),
+                        string.Format("{0:0.##}", x.Monto),
+                        string.Format("{0:0.##}", x.Facturado),
                         x.Repartidor,
                         x.Estado,
                         x.IdCliente.ToString(),

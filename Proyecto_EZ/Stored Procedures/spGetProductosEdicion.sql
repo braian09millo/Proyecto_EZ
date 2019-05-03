@@ -15,7 +15,7 @@ WITH ENCRYPTION AS
 		prd_precioC AS Costo,
 		prd_precioPV AS PrecioVenta,
 		prd_porcen AS Porcentaje,
-		ROUND((prd_precioPV/prod_pack), 2) AS PrecioUnitario
+		ROUND((prd_precioPV/prod_pack),0) AS PrecioUnitario
 	FROM producto
 	JOIN marca ON prod_marca = mar_id
 	JOIN modelo ON prod_modelo = mod_id

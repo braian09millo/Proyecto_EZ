@@ -14,7 +14,7 @@ namespace App.Models
         {
             string xsError = "";
             byte[] bytes = null;
-            var _rv = new LocalReport();
+            var _rv = new ReportViewer();
 
             try
             {
@@ -30,14 +30,14 @@ namespace App.Models
                     string encoding;
                     string filenameExtension;
 
-                    _rv.EnableExternalImages = true;
-                    _rv.LoadReportDefinition(stream);
+                    _rv.LocalReport.EnableExternalImages = true;
+                    _rv.LocalReport.LoadReportDefinition(stream);
 
-                    _rv.DataSources.Clear();
-                    _rv.DataSources.Add(new ReportDataSource(sNombreDS, lista));
-                    _rv.Refresh();
+                    _rv.LocalReport.DataSources.Clear();
+                    _rv.LocalReport.DataSources.Add(new ReportDataSource(sNombreDS, lista));
+                    _rv.LocalReport.Refresh();
 
-                    bytes = _rv.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+                    bytes = _rv.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
                 }
 
             }

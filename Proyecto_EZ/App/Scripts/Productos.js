@@ -34,7 +34,7 @@ $(document).ready(function () {
         if (valorCosto == 'NaN' || valorCosto == NaN) {
             $('#txtPV').val(0);
         } else {
-            $('#txtPV').val(Math.round(valorPV * 100) / 100);
+            $('#txtPV').val(Math.round(valorPV));
         }
 
     });
@@ -48,7 +48,7 @@ $(document).ready(function () {
         if (valorPorc == 'NaN' || valorPorc == NaN) {
             $('#txtPV').val(0);
         } else {
-            $('#txtPV').val(Math.round(valorPV * 100) / 100);
+            $('#txtPV').val(Math.round(valorPV));
         }
 
 
