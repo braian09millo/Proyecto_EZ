@@ -22,7 +22,7 @@ namespace App.Controllers
 
             //Cargamos el combo de clientes
             var xoClientes = xoClienteCtrl.ObtenerClientes(out xsError);
-            var lstClientes = xoClientes.OrderBy(x => x.cli_nombre).Select(x => new SelectListItem { Value = x.cli_id.ToString(), Text = x.cli_nombre }).ToList();
+            var lstClientes = xoClientes.OrderBy(x => x.cli_nombre).Select(x => new SelectListItem { Value = x.cli_id.ToString(), Text = x.cli_nombre + " - " + x.cli_direccion }).ToList();
             ViewBag.Clientes = lstClientes;
             ViewBag.ClientesPedido = xoClientes.OrderBy(x => x.cli_nombre).ToList();
 
@@ -59,11 +59,11 @@ namespace App.Controllers
             return Json(resultadoJS, JsonRequestBehavior.AllowGet);        
         }
 
-        public JsonResult GuardarPedido(int xiPedido, string xsEstado, int xiCliente, string xsUsuario, decimal xdTotal, decimal xdFacturado, List<Pedido> xoProductos)
+        public JsonResult GuardarPedido(int xiPedido, DateTime xdFechaEntrega, string xsEstado, int xiCliente, string xsUsuario, decimal xdTotal, decimal xdFacturado, List<Pedido> xoProductos)
         {
             string xsError = "";
             if (xsUsuario == "") xsUsuario = null;
-            xoPedidoCtrl.GuardarPedido(xiPedido, xsEstado, xiCliente, xsUsuario, xdTotal, xdFacturado, xoProductos, out xsError);
+            xoPedidoCtrl.GuardarPedido(xiPedido, xdFechaEntrega, xsEstado, xiCliente, xsUsuario, xdTotal, xdFacturado, xoProductos, out xsError);
             return Json(xsError);
         }
 

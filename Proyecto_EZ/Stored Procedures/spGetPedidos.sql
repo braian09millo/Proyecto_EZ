@@ -17,6 +17,7 @@ WITH ENCRYPTION AS
 	SELECT 
 		ped_id AS IdPedido,
 		cli_nombre AS Cliente,
+		cli_direccion AS ClienteDireccion,
 		ped_fecha AS Fecha,
 		CASE ped_estado 
 			WHEN 'C' THEN 'CARGADO'

@@ -29,7 +29,7 @@ namespace Negocios.BusinessControllers
 
         #region COMPORTAMIENTO
             
-        public void GuardarPedido(int xiPedido, string xsEstado, int xiCliente, string xsUsuario, decimal xdTotal, decimal xdFacturado, List<Pedido> xoProductos, out string xsError)
+        public void GuardarPedido(int xiPedido, DateTime xdFechaEntrega, string xsEstado, int xiCliente, string xsUsuario, decimal xdTotal, decimal xdFacturado, List<Pedido> xoProductos, out string xsError)
         {
             xsError = "";
             int xiIdPedido = 0;
@@ -61,7 +61,7 @@ namespace Negocios.BusinessControllers
                         var xoCabeceraPedido = new pedido()
                         {
                             ped_cliente = xiCliente,
-                            ped_fecha = DateTime.Today,
+                            ped_fecha = xdFechaEntrega,
                             ped_monto = Math.Round(xdTotal),
                             ped_resto = Math.Round(xdFacturado),
                             ped_estado = "C",
@@ -123,7 +123,7 @@ namespace Negocios.BusinessControllers
 
                     xoPedidos = xoResultado.Select(x => new [] {
                         x.IdPedido.ToString(),
-                        x.Cliente,
+                        x.Cliente + " - " + x.ClienteDireccion,
                         x.Fecha.ToString("dd-MM-yyyy"),
                         x.EstadoDescripcion,
                         string.Format("{0:0.##}", x.Monto),

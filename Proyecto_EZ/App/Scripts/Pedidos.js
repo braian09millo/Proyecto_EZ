@@ -96,11 +96,15 @@ $(document).ready(function () {
 
                 var precio = $(this).children("option:selected").data('precio');
                 var txtPrecio = $(this).parent().parent().find('.precio').find('input[type="text"]');
+                var txtMonto = $(this).parent().parent().find('.monto').find('input[type="text"]');
+                var txtCantidad = $(this).parent().parent().find('.cantidad').find('input[type="text"]');
 
                 if ($(this).children("option:selected").val() === '') {
                     $(txtPrecio).val('');
+                    $(txtMonto).val('');
                 } else {
                     $(txtPrecio).val(Math.round(precio));
+                    $(txtMonto).val(Math.round(precio * $(txtCantidad).val()));
                 }
             });
 
@@ -123,10 +127,63 @@ $(document).ready(function () {
         $(this).parent().parent().parent().remove();
     });
 
+    function ValidarDatos(array, objError) {
+
+        var lista1 = array;
+
+        for (var i = 0; i < lista1.length; i++) {
+
+            if (i < lista1.length - 1) {
+
+                for (var j = i + 1; j < lista1.length; j++) {
+
+                    if (lista1[i].IdProducto == lista1[j].IdProducto) {
+                        objError.bHayError = true;
+                        objError.msj = "No pueden existir dos item con el mismo producto";
+                    }
+                }
+            }
+        }
+
+        for (var i = 0; i < lista1.length; i++) {
+
+            if (lista1[i].IdProducto == '' || lista1[i].IdProducto == undefined || lista1[i].IdProducto == null)
+            {
+                objError.bHayError = true;
+                objError.msj = "Debe indicar el producto de cada item";
+            }
+        }
+
+        for (var i = 0; i < lista1.length; i++) {
+
+            if (lista1[i].Cantidad == "" || lista1[i].Cantidad == undefined || lista1[i].Cantidad == null)
+            {
+                objError.bHayError = true;
+                objError.msj = "Debe indicar la cantidad de packs de cada item";
+            }
+        }
+
+        if ($('#cmbClientesPedido').val() == '' || $('#cmbClientesPedido').val() == undefined || $('#cmbClientesPedido').val() == null)
+        {
+            objError.bHayError = true;
+            objError.msj = "Debe elegir un cliente";
+        }
+
+        if ($('#cmbEstadosPedido').val() == '' || $('#cmbEstadosPedido').val() == undefined || $('#cmbEstadosPedido').val() == null) {
+            objError.bHayError = true;
+            objError.msj = "Debe elegir un estado";
+        }
+
+        return objError.bHayError;
+    }
+
     $('#btnGenerarPedido').click(function (e) {
 
-        console.log($('#txtId').val());
-
+        var objError =
+        {
+            bHayError: false,
+            msj: ""
+        };
         var Total = 0;
         var IdPedido = $('#txtId').val();
         var Facturado = parseFloat($('#txtFacturado').val());
@@ -136,6 +193,7 @@ $(document).ready(function () {
         var Estado = $('#cmbEstadosPedido').val().trim();
         var ClienteElegido = $('#cmbClientesPedido').val();
         var Repartidor = $('#cmbUsuariosPedido').val();
+        var FechaEntrega = $('#txtFechaEntrega').val();
 
         //Prevenimos que se realice un nuevo submit
         e.preventDefault();
@@ -161,44 +219,56 @@ $(document).ready(function () {
             Productos.push(item);
         });
 
-        var dataToPost = {
-            xiPedido: IdPedido,
-            xsEstado: Estado,
-            xiCliente: ClienteElegido,
-            xsUsuario: Repartidor,
-            xdTotal: Total,
-            xdFacturado: Facturado,
-            xoProductos: Productos
-        }
+        if (!ValidarDatos(Productos, objError)) {
 
-        swal({
-            title: "¿Desea finalizar el pedido?",
-            text: "Cliente: " + $('#cmbClientesPedido').children('option:selected').html() + ", Cantidad de Productos: " + CantidadProductos + ", Packs: " + CantidadPacks + ", Total: $ " + (Math.round(Total * 100) / 100),
-            icon: "warning",
-            buttons: ['Cancelar', 'Confirmar'],
-            dangerMode: false,
-        }).then(function (bConfirma) {
-            if (bConfirma) {
-                if (Productos.length > 0) {
-                    $.ajax({
-                        method: 'POST',
-                        data: dataToPost,
-                        url: './Pedido/GuardarPedido',
-                        success: function (response) {
+            var dataToPost = {
+                xiPedido: IdPedido,
+                xdFechaEntrega: FechaEntrega,
+                xsEstado: Estado,
+                xiCliente: ClienteElegido,
+                xsUsuario: Repartidor,
+                xdTotal: Total,
+                xdFacturado: Facturado,
+                xoProductos: Productos
+            }
 
-                            if (response == "") {
-                                swal({
-                                    title: "Exito!",
-                                    text: "Pedido generado correctamente",
-                                    icon: "success",
-                                    button: "Aceptar"
-                                });
+            swal({
+                title: "¿Desea finalizar el pedido?",
+                text: "Cliente: " + $('#cmbClientesPedido').children('option:selected').html() + ", Cantidad de Productos: " + CantidadProductos + ", Packs: " + CantidadPacks + ", Total: $ " + (Math.round(Total * 100) / 100),
+                icon: "warning",
+                buttons: ['Cancelar', 'Confirmar'],
+                dangerMode: false,
+            }).then(function (bConfirma) {
+                if (bConfirma) {
+                    if (Productos.length > 0) {
+                        $.ajax({
+                            method: 'POST',
+                            data: dataToPost,
+                            url: './Pedido/GuardarPedido',
+                            success: function (response) {
 
-                                $('#NuevoForm').modal('hide');
-                                Limpiar();
-                                CargarPedidos();
-                            }
-                            else {
+                                if (response == "") {
+                                    swal({
+                                        title: "Exito!",
+                                        text: "Pedido generado correctamente",
+                                        icon: "success",
+                                        button: "Aceptar"
+                                    });
+
+                                    $('#NuevoForm').modal('hide');
+                                    Limpiar();
+                                    CargarPedidos();
+                                }
+                                else {
+                                    swal({
+                                        title: "Error",
+                                        text: response,
+                                        icon: "error",
+                                        button: "Aceptar"
+                                    });
+                                }
+                            },
+                            error: function (response) {
                                 swal({
                                     title: "Error",
                                     text: response,
@@ -206,20 +276,19 @@ $(document).ready(function () {
                                     button: "Aceptar"
                                 });
                             }
-                        },
-                        error: function (response) {
-                            swal({
-                                title: "Error",
-                                text: "Error",
-                                icon: "error",
-                                button: "Aceptar"
-                            });
-                            console.log(response);
-                        }
-                    });
+                        });
+                    }
                 }
-            }
-        });
+            });
+        }
+        else {
+            swal({
+                title: "Atención",
+                text: objError.msj,
+                icon: "warning",
+                button: "Aceptar"
+            });
+        }
     });
 
     function CargarPedidos() {
@@ -254,7 +323,7 @@ $(document).ready(function () {
             ],
             "createdRow": function (row, data, dataIndex) {
                 if (data[7].trim() === "C") {
-                    $(row).find("td:eq(2)").css('background-color', 'slategrey').css('color', 'white').css('font-weight', 'bold');                    
+                    $(row).find("td:eq(2)").css('background-color', 'slategrey').css('color', 'white').css('font-weight', 'bold');
                 } else if (data[7].trim() === "E") {
                     $(row).find("td:eq(2)").css('background-color', '#337ab7').css('color', 'white').css('font-weight', 'bold');
                 } else if (data[7].trim() === "F") {
