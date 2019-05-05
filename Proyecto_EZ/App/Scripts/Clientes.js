@@ -62,6 +62,7 @@
                     }
                 });
 
+                verPedidos('#tableClientes tbody', tabla);
                 editarCliente('#tableClientes tbody', tabla);
                 eliminarCliente('#tableClientes tbody', tabla);
                 habilitarCliente('#tableClientes tbody', tabla);
@@ -71,6 +72,19 @@
                 console.log(error);
             }
         });
+    }
+
+    var verPedidos = function (tbody, tabla) {
+
+        $(tbody).off('click', 'button.btn-primary.btn-xs');
+        $(tbody).on('click', 'button.btn-primary.btn-xs', function () {
+
+            var data = tabla.row($(this).parents('tr')).data();
+            var url = '/Pedido/PedidosCliente?xiId=' + data.cli_id;
+            window.open(url);
+            
+        });
+
     }
 
     var habilitarCliente = function (tbody, tabla) {

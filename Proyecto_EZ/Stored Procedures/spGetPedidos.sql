@@ -2,7 +2,7 @@ IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('spGetPedidos') and sys
 	DROP PROCEDURE spGetPedidos
 GO
 
-CREATE PROCEDURE spGetPedidos	
+CREATE PROCEDURE spGetPedidos
 (
 	@FechaDesde DATETIME = NULL,
 	@FechaHasta DATETIME = NULL,
@@ -34,7 +34,7 @@ WITH ENCRYPTION AS
 	LEFT JOIN cliente ON cli_id = ped_cliente
 	LEFT JOIN usuario ON usu_usuario = ped_repartidor
 	WHERE 
-		(ped_fecha BETWEEN @FechaDesde AND @FechaHasta) AND
+		((ped_fecha BETWEEN @FechaDesde AND @FechaHasta) OR (@FechaDesde IS NULL AND @FechaHasta IS NULL)) AND
 		(ped_cliente = @Cliente OR @Cliente IS NULL) AND
 		(ped_estado = @Estado OR @Estado IS NULL) AND
 		(ped_repartidor = @Usuario OR @Usuario IS NULL)

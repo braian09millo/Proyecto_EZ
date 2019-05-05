@@ -38,6 +38,28 @@ namespace App.Controllers
             return View();
         }
 
+        public ActionResult PedidosCliente(int xiId)
+        {
+            string xsError = "";
+
+            //Cargamos el combo de clientes
+            var xoClientes = xoClienteCtrl.ObtenerClientes(out xsError);
+            var lstClientes = xoClientes.OrderBy(x => x.cli_nombre).Select(x => new SelectListItem { Value = x.cli_id.ToString(), Text = x.cli_nombre + " - " + x.cli_direccion, Selected = x.cli_id == xiId }).ToList();
+            ViewBag.Clientes = lstClientes;
+            ViewBag.ClientesPedido = xoClientes.OrderBy(x => x.cli_nombre).ToList();
+
+            //Cargamos el combo de usuarios
+            var xoUsuarios = xoUsuarioCtrl.ObtenerUsuarios(out xsError);
+            var lstUsuarios = xoUsuarios.Select(x => new SelectListItem { Value = x.usu_usuario, Text = x.usu_nombre }).ToList();
+            ViewBag.Usuarios = lstUsuarios;
+            ViewBag.UsuariosPedido = xoUsuarios.OrderBy(x => x.usu_nombre).ToList();
+
+            //Cargamos el combo de productos
+            ViewBag.Productos = xoProductoCtrl.ObtenerProductos(out xsError);
+
+            return View("Index");
+        }
+
         public JsonResult GetPedidos(string xsFechaDesde, string xsFechaHasta, int? xiCliente, string xsEstado, string xsUsuario)
         {
             string xsError = "";
