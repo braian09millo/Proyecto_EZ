@@ -81,7 +81,7 @@
 
             var data = tabla.row($(this).parents('tr')).data();
             var url = '/Pedido/PedidosCliente?xiId=' + data.cli_id;
-            window.open(url);
+            location.href = url;
             
         });
 
@@ -146,7 +146,7 @@
 
             $('#txtId').val(data.cli_id);
             $('#txtNombre').val(data.cli_nombre);
-            $('#cmbProvincias').val(data.cli_proid);
+            $('#cmbProvincias').val(data.cli_proid).trigger('change');
             $('#cmbLocalidades').prop('disabled', false).val(data.cli_locid);
             $('#txtDireccion').val(data.cli_direccion);
             $('#txtMail').val(data.cli_mail);

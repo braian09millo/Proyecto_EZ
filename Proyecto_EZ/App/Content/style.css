@@ -3,6 +3,15 @@
   src: url(../Fonts/Roboto-Regular.ttf);
 }
 
+@font-face {
+  font-family: hFont;
+  src: url(../Fonts/Raleway-Regular.ttf);
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: hFont !important;
+}
+
 body {
     font-family: myFirstFont;
     font-size: 16px;
