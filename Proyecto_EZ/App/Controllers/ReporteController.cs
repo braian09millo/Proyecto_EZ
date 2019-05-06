@@ -26,11 +26,5 @@ namespace App.Controllers
 
             return File(bytes, "application/pdf", "Remito_N°" + xiPedido.ToString() + ".pdf");
         }
-
-        [HttpGet]
-        public FileResult GetInformeTotalesPorCliente()
-        {
-
-        }
     }
 }

@@ -9,7 +9,7 @@ namespace App.Controllers
     public class InformeController : Controller
     {
         // GET: Informe
-        public ActionResult Index()
+        public ActionResult FacturacionCliente()
         {
             return View();
         }

@@ -286,10 +286,10 @@
     <Content Include="Views\Pedido\comboClientes.cshtml" />
     <Content Include="Views\Pedido\comboUsuarios.cshtml" />
     <Content Include="Views\Pedido\modalVerDetalle.cshtml" />
+    <Content Include="Views\Informe\FacturacionCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Informe\" />
     <Folder Include="Views\Reporte\" />
     <Folder Include="Views\Usuario\" />
   </ItemGroup>

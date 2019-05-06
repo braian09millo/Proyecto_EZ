@@ -11,7 +11,7 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
         
         <div class="container-fluid">
             <div class="navbar-header">
@@ -30,9 +30,9 @@
                     <li><a href="@Url.Action("Index","Producto")"><i class="fas fa-barcode"></i>&nbsp; Productos</a></li>
                     <li><a href="@Url.Action("Index","Pedido")"><i class="fas fa-clipboard-list"></i>&nbsp; Pedidos</a></li>
                     <li class="dropdown">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Informes <span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-file-invoice"></i>&nbsp; Informes <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="@Url.Action("TotalesPorCliente","Informe")">Totales por Cliente</a></li>           
+                            <li><a href="@Url.Action("FacturacionCliente","Informe")"><i class="fas fa-dollar-sign"></i>&nbsp; Facturación por Cliente</a></li>           
                         </ul>
                     </li>
                 </ul>
@@ -44,10 +44,12 @@
         @RenderBody()
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/datatables")
-    @Scripts.Render("~/bundles/sweetalert")
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/datatables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/sweetalert.min.js"></script>
     @RenderSection("scripts", required: false)
 
 </body>
