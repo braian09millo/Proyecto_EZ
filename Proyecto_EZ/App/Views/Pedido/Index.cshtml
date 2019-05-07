@@ -70,7 +70,7 @@
                                 <tr>
                                     <td>ID Pedido</td>
                                     <td>Cliente</td>
-                                    <td>Fecha</td>
+                                    <td>Fecha Entrega</td>
                                     <td>Estado</td>
                                     <td>Monto</td>
                                     <td>Facturado</td>
@@ -105,7 +105,9 @@
                                             <option value="">Elija un cliente</option>
                                             @foreach (var item in ViewBag.ClientesPedido)
                                             {
-                                                <option value="@item.cli_id">@item.cli_nombre - @item.cli_direccion</option>
+                                                <option value="@item.cli_id">
+                                                    @item.cli_nombre - @item.cli_direccion
+                                                </option>
                                             }
                                         </select>
                                     </div>
@@ -160,7 +162,17 @@
                                         <option value="">Elija un producto</option>
                                         @foreach (var item in ViewBag.Productos)
                                         {
-                                            <option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@item.Modelo - @item.Tamanio</option>
+                                            <option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">
+                                                @if (item.Modelo.Equals("No Aplica"))
+                                                {
+                                                    @(item.Marca + " - " + item.Tamanio)
+                                                }
+                                                else
+                                                {
+                                                    @(item.Modelo + " - " + item.Tamanio)
+                                                        
+                                                }
+                                            </option>
                                         }
                                     </select>
                                 </div>
@@ -202,7 +214,7 @@
         $('#btnItem').click(function () {
 
             var nuevoItem = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
-                            '<select class="form-control"> <option value="">Elija un producto</option>@foreach (var item in ViewBag.Productos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@item.Modelo - @item.Tamanio</option>}</select></div>' +
+                            '<select class="form-control"> <option value="">Elija un producto</option>@foreach (var item in ViewBag.Productos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")) { @(item.Marca + " - " + item.Tamanio) } else { @(item.Modelo + " - " + item.Tamanio) }</option>}</select></div>' +
                             '<div class="col-sm-2 cantidad">' +
                             '<input type="text" class="form-control" placeholder="Packs" />' +
                             '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly /></div>' +
@@ -261,20 +273,19 @@
                 $('#txtMonto').val(primerItem.Monto);
 
                 //Cargamos el resto de los items
-                for (var i = 1; i < items.length; i++)
-                {
+                for (var i = 1; i < items.length; i++) {
                     var nuevoItem = items[i];
                     var nuevoElemento = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
-                                        '<select id="item'+ i +'" class="form-control"> <option value="">Elija un producto</option>@foreach (var item in ViewBag.Productos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@item.Modelo - @item.Tamanio</option>}</select></div>' +
+                                        '<select id="item' + i + '" class="form-control"> <option value="">Elija un producto</option>@foreach (var item in ViewBag.Productos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@item.Modelo - @item.Tamanio</option>}</select></div>' +
                                         '<div class="col-sm-2 cantidad">' +
-                                        '<input type="text" class="form-control" placeholder="Packs" value="'+ nuevoItem.Cantidad +'"/>' +
-                                        '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly value="'+ nuevoItem.Precio +'"/></div>' +
-                                        '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly value="'+ nuevoItem.Monto +'"/></div>' +
+                                        '<input type="text" class="form-control" placeholder="Packs" value="' + nuevoItem.Cantidad + '"/>' +
+                                        '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly value="' + nuevoItem.Precio + '"/></div>' +
+                                        '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly value="' + nuevoItem.Monto + '"/></div>' +
                                         '<div class="col-sm-1"><button type="button" class="btn btn-danger btn-block borrarItem"><i class="fas fa-minus"></i></button></div>' +
                                         '</div>';
 
                     $('#formPedidos').append(nuevoElemento);
-                    $('#item'+i).val(nuevoItem.IdProducto);
+                    $('#item' + i).val(nuevoItem.IdProducto);
                 }
 
                 $('#NuevoForm').modal('show');

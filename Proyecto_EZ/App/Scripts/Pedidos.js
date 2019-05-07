@@ -262,7 +262,7 @@ $(document).ready(function () {
                         $.ajax({
                             method: 'POST',
                             data: dataToPost,
-                            url: './Pedido/GuardarPedido',
+                            url: '/Pedido/GuardarPedido',
                             success: function (response) {
 
                                 if (response == "") {

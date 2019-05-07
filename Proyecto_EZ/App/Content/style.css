@@ -136,7 +136,7 @@ body {
   color: #ecf0f1;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #ecf0f1;
+  color: #ffffff;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
@@ -152,7 +152,7 @@ body {
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
   color: #1d1d1e;
-  background-color: #f4edeb;
+  background-color: #fff;
 }
 .navbar-default .navbar-toggle {
   border-color: #f4edeb;
@@ -162,8 +162,9 @@ body {
   background-color: #f4edeb;
 }
 .navbar-default .navbar-toggle .icon-bar {
-  background-color: #ecf0f1;
+  background-color: #1d1d1e;
 }
+
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
   border-color: #ecf0f1;
