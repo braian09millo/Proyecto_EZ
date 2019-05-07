@@ -67,6 +67,19 @@ $(document).ready(function () {
         LimpiarFormulario();
     });
 
+    $('#btnNuevoPedido').click(function (e) {
+        
+        var clienteSeleccionado = $('#cmbClientes').val();
+
+        if (clienteSeleccionado != '' &&
+            clienteSeleccionado != undefined &&
+            clienteSeleccionado != null)
+            $('#cmbClientesPedido').val(clienteSeleccionado);
+        else 
+            $('#cmbClientesPedido').val('');
+
+    });
+
     //Habilitamos el botón cuando los campos requeridos esten llenos
     function ValidarFormulario() {
 
