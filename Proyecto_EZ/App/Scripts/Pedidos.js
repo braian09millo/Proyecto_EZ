@@ -174,6 +174,11 @@ $(document).ready(function () {
             objError.msj = "Debe elegir un estado";
         }
 
+        if ($('#txtFechaEntrega').val() == '' || $('#txtFechaEntrega').val() == undefined || $('#txtFechaEntrega').val() == null) {
+            objError.bHayError = true;
+            objError.msj = "Debe elegir una fecha de entrega";
+        }
+
         return objError.bHayError;
     }
 
