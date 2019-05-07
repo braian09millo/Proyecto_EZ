@@ -12,7 +12,7 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class detalle_pedido
+    public partial class pedido_detalle
     {
         public int det_pedido { get; set; }
         public int det_producto { get; set; }

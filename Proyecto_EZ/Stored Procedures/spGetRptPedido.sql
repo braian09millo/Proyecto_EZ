@@ -20,7 +20,7 @@ WITH ENCRYPTION AS
 		det_precio AS Precio,
 		det_monto AS Monto
 	FROM pedido
-	JOIN detalle_pedido ON det_pedido = ped_id
+	JOIN pedido_detalle ON det_pedido = ped_id
 	JOIN producto ON det_producto = prod_id
 	JOIN modelo ON prod_modelo = mod_id
 	JOIN tamanio ON prod_tamanio = tam_id

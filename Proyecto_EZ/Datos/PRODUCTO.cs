@@ -18,7 +18,7 @@ namespace Datos
         public producto()
         {
             this.precio_detalle = new HashSet<precio_detalle>();
-            this.detalle_pedido = new HashSet<detalle_pedido>();
+            this.pedido_detalle = new HashSet<pedido_detalle>();
         }
     
         public int prod_id { get; set; }
@@ -36,6 +36,6 @@ namespace Datos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<precio_detalle> precio_detalle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<detalle_pedido> detalle_pedido { get; set; }
+        public virtual ICollection<pedido_detalle> pedido_detalle { get; set; }
     }
 }

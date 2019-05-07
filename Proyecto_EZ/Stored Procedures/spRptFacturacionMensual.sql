@@ -17,7 +17,7 @@ SELECT convert(varchar, getdate(), 111) as Dia,
 		max(ped_monto)-isnull(max(ped_resto),0) Facturado,
 		isnull(max(usu_nombre),'-') Repartidor
 	FROM Pedido
-	JOIN detalle_pedido on det_pedido = ped_id
+	JOIN pedido_detalle on det_pedido = ped_id
 	JOIN producto on prod_id = det_producto
 	JOIN precio on ped_fecha between pre_fecha and pre_fechaHasta
 	JOIN precio_detalle on pre_ident = prd_campre and prd_produ = prod_id 

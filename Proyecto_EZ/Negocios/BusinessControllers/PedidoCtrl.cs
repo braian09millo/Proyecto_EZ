@@ -50,8 +50,8 @@ namespace Negocios.BusinessControllers
                         xoPedido.ped_repartidor = xsUsuario;
 
                         //Borramos todos los items del pedido
-                        var items = xoDB.detalle_pedido.Where(x => x.det_pedido == xiPedido).ToList();
-                        xoDB.detalle_pedido.RemoveRange(items);
+                        var items = xoDB.pedido_detalle.Where(x => x.det_pedido == xiPedido).ToList();
+                        xoDB.pedido_detalle.RemoveRange(items);
 
                         xoDB.SaveChanges();
                     }
@@ -79,7 +79,7 @@ namespace Negocios.BusinessControllers
                     //Para cada producto guardamos el detalle
                     foreach (var item in xoProductos)
                     {
-                        var xoPedidoDetalle = new detalle_pedido()
+                        var xoPedidoDetalle = new pedido_detalle()
                         {
                             det_pedido = xoPedido != null ? xiPedido : xiIdPedido,
                             det_producto = item.IdProducto,
@@ -88,7 +88,7 @@ namespace Negocios.BusinessControllers
                             det_monto = item.Monto
                         };
 
-                        xoDB.detalle_pedido.Add(xoPedidoDetalle);
+                        xoDB.pedido_detalle.Add(xoPedidoDetalle);
                     }
 
                     xoDB.SaveChanges();

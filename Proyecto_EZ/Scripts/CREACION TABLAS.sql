@@ -107,7 +107,7 @@ CREATE TABLE pedido
 	CONSTRAINT FK_Usuario_Pedido FOREIGN KEY (ped_repartidor) REFERENCES USUARIO(usu_usuario)
 )
 
-CREATE TABLE detalle_pedido
+CREATE TABLE pedido_detalle
 (
 	det_pedido INT NOT NULL,
 	det_producto INT NOT NULL,
@@ -176,7 +176,7 @@ INSERT INTO TAMANIO (tam_descripcion) VALUES ('Lata X 354 cm3')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('Lata X 473 cm3')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 500 cm3')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 600 cm3')
-INSERT INTO TAMANIO (tam_descripcion) VALUES ('Sport X 750 cm3')
+--INSERT INTO TAMANIO (tam_descripcion) VALUES ('Sport X 750 cm3')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 1 lt')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 1,5 lts')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 1,75 lts')
@@ -194,8 +194,9 @@ INSERT INTO MARCA (mar_nombre) VALUES ('Línea Coca-Cola') -- 1
 INSERT INTO MARCA (mar_nombre) VALUES ('Línea Pepsi') -- 2
 INSERT INTO MARCA (mar_nombre) VALUES ('Levite') -- 3
 INSERT INTO MARCA (mar_nombre) VALUES ('Villavicencio')-- 4
-INSERT INTO MARCA (mar_nombre) VALUES ('Villavicencio c/gas')
-INSERT INTO MARCA (mar_nombre) VALUES ('Villavicencio s/gas') 
+--INSERT INTO MARCA (mar_nombre) VALUES ('Villavicencio c/gas') modelo
+--INSERT INTO MARCA (mar_nombre) VALUES ('Villavicencio s/gas') modelo
+--INSERT INTO MARCA (mar_nombre) VALUES ('Villavicencio sport') modelo
 INSERT INTO MARCA (mar_nombre) VALUES ('Baggio') -- 4
 INSERT INTO MARCA (mar_nombre) VALUES ('Quilmes') -- 5
 INSERT INTO MARCA (mar_nombre) VALUES ('Brahma') -- 6
@@ -244,6 +245,24 @@ INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (3, 'Naranja')
 INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (3, 'Limón Dulce')
 INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (3, 'Frutilla-Limón')
 INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (3, 'Naranja-Mango')
+
+INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (7, 'Naranja')
+INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (7, 'Manzana')
+INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (7, 'Multifruta')
+
+INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (15, 'Cool Blue')
+INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (15, 'Frutas Tropicales')
+INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (15, 'Manzana')
+
+INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (4, 'Villavicencio c/gas')
+INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (4, 'Villavicencio s/gas')
+INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (4, 'Villavicencio Sport')
+
+INSERT INTO modelo (mod_marca, mod_nombre)
+SELECT mar_id, 'No Aplica' 
+FROM marca
+LEFT JOIN modelo ON mar_id = mod_marca
+WHERE mod_id IS NULL
 
 INSERT INTO provincia (pro_descr) VALUES ('BUENOS AIRES')
 INSERT INTO provincia (pro_descr) VALUES ('CABA')

@@ -40,6 +40,6 @@ namespace Datos
         public virtual DbSet<usuario> usuario { get; set; }
         public virtual DbSet<pedido> pedido { get; set; }
         public virtual DbSet<remito> remito { get; set; }
-        public virtual DbSet<detalle_pedido> detalle_pedido { get; set; }
+        public virtual DbSet<pedido_detalle> pedido_detalle { get; set; }
     }
 }
