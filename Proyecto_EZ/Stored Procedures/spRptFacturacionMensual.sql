@@ -2,7 +2,7 @@ IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('spRptFacturacionMensua
 	DROP PROCEDURE spRptFacturacionMensual
 GO
 
-CREATE PROCEDURE spRptFacturacionMensual		(@FechaDesde datetime, @FechaHasta datetime,@Repartidor int)												
+CREATE PROCEDURE spRptFacturacionMensual		(@FechaDesde datetime, @FechaHasta datetime,@Repartidor varchar(10))												
 WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT

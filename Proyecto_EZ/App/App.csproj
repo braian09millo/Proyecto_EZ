@@ -152,6 +152,11 @@
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Reportes\FactMensualDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FactMensualDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -210,6 +215,17 @@
       <DependentUpon>RemitoDataSet.xsd</DependentUpon>
     </Content>
     <Content Include="Fonts\Raleway-Regular.ttf" />
+    <Content Include="Reportes\FactMensualDataSet.xsc">
+      <DependentUpon>FactMensualDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="Reportes\FactMensualDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FactMensualDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Reportes\FactMensualDataSet.xss">
+      <DependentUpon>FactMensualDataSet.xsd</DependentUpon>
+    </Content>
     <None Include="Reportes\RemitoDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>RemitoDataSet.Designer.cs</LastGenOutput>
@@ -276,7 +292,8 @@
     <Content Include="Views\Pedido\comboClientes.cshtml" />
     <Content Include="Views\Pedido\comboUsuarios.cshtml" />
     <Content Include="Views\Pedido\modalVerDetalle.cshtml" />
-    <Content Include="Views\Informe\FacturacionCliente.cshtml" />
+    <Content Include="Views\Informe\FacturacionMensual.cshtml" />
+    <Content Include="Views\Informe\comboUsuarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -307,6 +324,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reportes\rptFacturacionMensual.rdlc" />
     <EmbeddedResource Include="Reportes\rptRemito.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>

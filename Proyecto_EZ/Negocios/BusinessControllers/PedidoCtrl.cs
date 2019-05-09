@@ -45,7 +45,7 @@ namespace Negocios.BusinessControllers
                         //Actualizamos el pedido
                         xoPedido.ped_cliente = xiCliente;
                         xoPedido.ped_monto = Math.Round(xdTotal);
-                        xoPedido.ped_resto = Math.Round(xdFacturado);
+                        xoPedido.ped_resto = Math.Round(xdTotal) - Math.Round(xdFacturado);
                         xoPedido.ped_estado = xsEstado;
                         xoPedido.ped_repartidor = xsUsuario;
 
@@ -63,7 +63,7 @@ namespace Negocios.BusinessControllers
                             ped_cliente = xiCliente,
                             ped_fecha = xdFechaEntrega,
                             ped_monto = Math.Round(xdTotal),
-                            ped_resto = Math.Round(xdFacturado),
+                            ped_resto = Math.Round(xdTotal) - Math.Round(xdFacturado),
                             ped_estado = "C",
                             ped_repartidor = xsUsuario
                         };
@@ -177,6 +177,29 @@ namespace Negocios.BusinessControllers
                 {
                     xoResultado = xoDB.Database.SqlQuery<spRptRemito>("exec spGetRptPedido @Pedido",
                                                new SqlParameter("@Pedido", xiPedido)).ToList();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return xoResultado;
+        }
+
+        public List<spGetFacturacionMensual> ObtenerFacturacionMensualRpt(DateTime xdFechaDesde, DateTime xdFechaHasta, string xsRepartidor)
+        {
+            var xoResultado = new List<spGetFacturacionMensual>();
+            if (xsRepartidor == "") xsRepartidor = null; 
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    xoResultado = xoDB.Database.SqlQuery<spGetFacturacionMensual>("exec spRptFacturacionMensual @FechaDesde, @FechaHasta, @Repartidor",
+                                               new SqlParameter("@FechaDesde", xdFechaDesde),
+                                               new SqlParameter("@FechaHasta", xdFechaHasta),
+                                               new SqlParameter("@Repartidor", xsRepartidor == null ? SqlString.Null : xsRepartidor)).ToList();
                 }
                 catch (Exception ex)
                 {

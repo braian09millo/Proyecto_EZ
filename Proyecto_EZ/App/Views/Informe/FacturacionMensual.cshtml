@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "FacturacionCliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="padding-top: 50px;">
+    <h2 class="h2 text-center">Informes</h2>
+    <br />
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="col-md-3 col-sm-4 col-xs-3"></div>
+            <div class="col-md-6 col-sm-4 col-xs-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Desde</label>
+                    <div class="col-sm-7">
+                        <input type="date" id="txtFechaDesde" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Hasta</label>
+                    <div class="col-sm-7">
+                        <input type="date" id="txtFechaHasta" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Repartidores</label>
+                    <div class="col-sm-7">
+                        @Html.Partial("comboUsuarios")
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-block btn-warning" id="btnGenerar" style="color: #000000;">Generar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-3"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        CargarFechas();
+
+        //Cargarmos los datepickers
+        function CargarFechas() {
+
+            var today = new Date();
+            var anio = today.getFullYear();
+            var mes = today.getMonth();
+            var mesSig = today.getMonth() + 1;
+            var dia = today.getDate();
+
+            if (mes < 10)
+                mes = '0' + mes;
+
+            if (mesSig < 10)
+                mesSig = '0' + mesSig;
+
+            if (dia < 10)
+                dia = '0' + dia;
+
+            var fechaDesde = anio + '-' + mes + '-' + dia;
+            var fechaHasta = anio + '-' + mesSig + '-' + dia;
+
+            document.getElementById("txtFechaDesde").value = fechaDesde;
+            document.getElementById("txtFechaHasta").value = fechaHasta;
+        }
+
+    });
+
+    function ValidarDatos(objError, desde, hasta)
+    {
+        if (desde == "" || desde == null || desde == undefined)
+        {
+            objError.bPuede = false;
+            objError.msj = "La fecha desde no puede ser nula o vacía";
+        }
+
+        if (hasta == "" || hasta == null || hasta == undefined)
+        {
+            objError.bPuede = false;
+            objError.msj = "La fecha hasta no puede ser nula o vacía";
+        }
+
+        return objError.bPuede;
+    }
+
+    $('#btnGenerar').click(function (e) {
+        GetInformeFacturacionMensual();
+    });
+
+    function GetInformeFacturacionMensual() {
+
+        var fechaDesde = $('#txtFechaDesde').val();
+        var fechaHasta = $('#txtFechaHasta').val();
+        var repartidor = $('#cmbUsuarios').val();
+        var objError = { bPuede: true, msj: "" };        
+
+        if (ValidarDatos(objError, fechaDesde, fechaHasta))
+        {
+            var url = '/Reporte/GetFacturacionMensual?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xsRepartidor=' + repartidor;
+            window.open(url);
+        }
+        else
+        {
+            swal({
+                title: "Atención",
+                text: objError.msj,
+                icon: "warning",
+                button: "Aceptar"
+            });
+        }
+
+    }
+
+</script>
+
+}
+
+

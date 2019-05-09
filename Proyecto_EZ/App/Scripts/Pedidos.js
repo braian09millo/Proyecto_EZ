@@ -384,7 +384,7 @@ $(document).ready(function () {
             var data = tabla.row($(this).parents('tr')).data();
             var id = parseInt(data[0]);
 
-            var url = '/Reporte/GetInformeRemito?xiPedido=' + id;
+            var url = '/Reporte/GetRemito?xiPedido=' + id;
             window.open(url);
 
         });
