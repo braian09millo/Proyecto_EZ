@@ -1,16 +1,16 @@
 ﻿
 @{
-    ViewBag.Title = "Modelo";
+    ViewBag.Title = "Tamanio";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div style="padding-top: 50px;">
-    <h2 class="h2 text-center">MODELOS</h2>
+    <h2 class="h2 text-center">TAMAÑOS</h2>
     <br />
     <div class="row">
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
-            <button id="btnNuevo" class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-plus"></i>&nbsp;&nbsp;Nuevo Modelo</button>
+            <button id="btnNuevo" class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-plus"></i>&nbsp;&nbsp;Nuevo Tamaño</button>
         </div>
         <div class="col-sm-3"></div>
     </div>
@@ -21,11 +21,10 @@
             <div class="panel panel-primary">
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table id="tableModelos" class="table table-hover table-condensed table-bordered table-estilo">
+                        <table id="tableTamanios" class="table table-hover table-condensed table-bordered table-estilo">
                             <thead>
                                 <tr>
-                                    <td>Marca</td>
-                                    <td>Modelo</td>
+                                    <td>Descripción</td>
                                     <td>Acciones</td>
                                 </tr>
                             </thead>
@@ -42,31 +41,17 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Agregar/Modificar Modelos</h4>
+                    <h4 class="modal-title" id="myModalLabel">Agregar/Modificar Tamaños</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-2"></div>
                         <div class="col-sm-8">
-                            <form id="MarcaForm" class="form-horizontal">
+                            <form id="TamanioForm" class="form-horizontal">
                                 <input type="hidden" id="txtId" name="id" />
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        @Html.Partial("comboMarcas")
-                                    </div>
-                                </div>                                
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="txtModelo" name="marca" placeholder="Modelo" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" id="chkAplica"> No aplica modelo
-                                            </label>
-                                        </div>
+                                        <input type="text" class="form-control" id="txtTamanio" name="tamanio" placeholder="Tamaño" />
                                     </div>
                                 </div>
                             </form>
@@ -98,7 +83,7 @@
             CargarDatos();
 
             function Limpiar() {
-                $("#tableModelos").dataTable().fnDestroy();
+                $("#tableTamanios").dataTable().fnDestroy();
             }
 
             $('#NuevoForm').on('hidden.bs.modal', function (e) {
@@ -112,33 +97,31 @@
                      .end();
 
                 $('#txtId').val(0);
-                $('#txtModelo').prop('disabled', false);
             });
 
             function CargarDatos() {
 
                 $.ajax({
                     method: 'GET',
-                    url: '/Producto/GetModelos',
+                    url: '/Producto/GetTamanios',
                     success: function (response) {
                         if (response.error == '') {
-                            var tabla = $('#tableModelos').DataTable({
+                            var tabla = $('#tableTamanios').DataTable({
                                 data: response.data,
                                 select: true,
                                 "info": false,
                                 columns: [
-                                    { 'data': 'mod_marcaDesc' },
-                                    { 'data': 'mod_nombre' },
+                                    { 'data': 'tam_descripcion' },
                                     { 'defaultContent': '<button class="btn btn-success btn-xs" disabled title="Habilitar"><i class="fas fa-check"></i></button> <button class="btn btn-info btn-xs" title="Editar"><i class="fas fa-pencil-alt"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>' }
                                 ],
                                 aoColumnDefs: [
-                                    { "aTargets": [2], "bSortable": false }
+                                    { "aTargets": [1], "bSortable": false }
                                 ],
                                 "createdRow": function (row, data, dataIndex) {
-                                    if (data.mod_delet == "S") {
+                                    if (data.tam_delet == "S") {
                                         $(row).css('background-color', '#B8DBD9');
-                                        $(row).find("td:eq(2)").find('.btn-danger').prop('disabled', true);
-                                        $(row).find("td:eq(2)").find('.btn-success').prop('disabled', false);
+                                        $(row).find("td:eq(1)").find('.btn-danger').prop('disabled', true);
+                                        $(row).find("td:eq(1)").find('.btn-success').prop('disabled', false);
                                     }
                                 },
                                 "language": {
@@ -146,9 +129,9 @@
                                 }
                             });
 
-                            editarModelo('#tableModelos tbody', tabla);
-                            eliminarModelo('#tableModelos tbody', tabla);
-                            habilitarModelo('#tableModelos tbody', tabla);
+                            editarTamanio('#tableTamanios tbody', tabla);
+                            eliminarTamanio('#tableTamanios tbody', tabla);
+                            habilitarTamanio('#tableTamanios tbody', tabla);
 
                         }
                         else
@@ -168,40 +151,21 @@
                 });
             }
 
-            $('#chkAplica').on('change', function () {
-
-                if ($(this).is(':checked'))
-                    $('#txtModelo').prop('disabled', true);
-                else
-                    $('#txtModelo').prop('disabled', false);
-
-            });
-
-            var editarModelo = function (tbody, tabla) {
+            var editarTamanio = function (tbody, tabla) {
 
                 $(tbody).off('click', 'button.btn-info.btn-xs');
                 $(tbody).on('click', 'button.btn-info.btn-xs', function () {
 
                     var data = tabla.row($(this).parents('tr')).data();
 
-                    $('#txtId').val(data.mod_id);
-                    $('#cmbMarcas').val(data.mod_marca);
-                    if (data.mod_nombre.toLowerCase() == 'no aplica')
-                    {
-                        $('#chkAplica').prop('checked', true);
-                        $('#txtModelo').prop('disabled', true);
-                    }
-                    else
-                    {
-                        $('#chkAplica').prop('checked', false);
-                        $('#txtModelo').prop('disabled', false).val(data.mod_nombre);
-                    }
+                    $('#txtId').val(data.tam_id);
+                    $('#txtTamanio').val(data.tam_descripcion);
 
                     $('#NuevoForm').modal('show');
                 });
             }
 
-            var habilitarModelo = function (tbody, tabla) {
+            var habilitarTamanio = function (tbody, tabla) {
 
                 $(tbody).off('click', 'button.btn-success.btn-xs');
                 $(tbody).on('click', 'button.btn-success.btn-xs', function () {
@@ -209,11 +173,11 @@
                     var data = tabla.row($(this).parents('tr')).data();
 
                     var dataToPost = {
-                        xiId: data.mod_id
+                        xiId: data.tam_id
                     }
 
                     swal({
-                        title: "¿Está seguro que desea habilitar el siguiente modelo?",
+                        title: "¿Está seguro que desea habilitar el siguiente tamaño?",
                         text: "",
                         icon: "warning",
                         buttons: ['Cancelar', 'Confirmar'],
@@ -222,12 +186,12 @@
                         if (bHabilita) {
                             $.ajax({
                                 method: 'POST',
-                                url: '/Producto/PostHabilitarModelo',
+                                url: '/Producto/PostHabilitarTamanio',
                                 data: JSON.stringify(dataToPost),
                                 contentType: 'application/json; charset=utf-8',
                                 success: function (response) {
                                     if (response == '') {
-                                        swal("El modelo se habilitó correctamente", {
+                                        swal("El tamaño se habilitó correctamente", {
                                             icon: "success",
                                         });
                                         Limpiar();
@@ -250,18 +214,18 @@
 
             }
 
-            var eliminarModelo = function (tbody, tabla) {
+            var eliminarTamanio = function (tbody, tabla) {
 
                 $(tbody).off('click', 'button.btn-danger.btn-xs');
                 $(tbody).on('click', 'button.btn-danger.btn-xs', function () {
 
                     var data = tabla.row($(this).parents('tr')).data();
                     var dataToPost = {
-                        xiId: data.mod_id
+                        xiId: data.tam_id
                     }
 
                     swal({
-                        title: "¿Está seguro que desea deshabilitar el siguiente modelo?",
+                        title: "¿Está seguro que desea deshabilitar el siguiente tamaño?",
                         text: "",
                         icon: "warning",
                         buttons: ['Cancelar', 'Confirmar'],
@@ -270,7 +234,7 @@
                         if (bElimina) {
                             $.ajax({
                                 method: 'POST',
-                                url: '/Producto/PostEliminarModelo',
+                                url: '/Producto/PostEliminarTamanio',
                                 data: JSON.stringify(dataToPost),
                                 contentType: 'application/json; charset=utf-8',
                                 success: function (response) {
@@ -302,53 +266,35 @@
 
             function PuedeGuardar()
             {
-                var resultado = true;
-                var marca = $('#cmbMarcas').val();
-                var modelo = $('#txtModelo').val();
-                var check = $('#chkAplica').val();
-
-                if (marca == '' || marca == null || marca == undefined)
-                    resultado = false;
-                
-                if (!check)
-                {
-                    if (modelo == '' || modelo == null || modelo == undefined) 
-                        resultado = false;
-                }
-
-                return resultado;
+                var tamanio = $('#txtTamanio').val();
+                if (tamanio == '' || tamanio == null || tamanio == undefined)
+                    return false;
+                else
+                    return true;
             }
 
-            function guardarModelo() {
-
-                var modelo;
-
-                if ($('#chkAplica').is(':checked'))
-                    modelo = 'No Aplica';
-                else
-                    modelo = $('#txtModelo').val();
+            function guardarTamanio() {
 
                 if (PuedeGuardar())
                 {
                     var dataToPost = {
 
                         Id: $('#txtId').val(),
-                        IdMarca: $('#cmbMarcas').val(),
-                        Nombre: modelo
+                        Descripcion: $('#txtTamanio').val()
                     };
 
                     $.ajax({
 
                         method: 'POST',
-                        url: '/Producto/PostGuardarModelo',
+                        url: '/Producto/PostGuardarTamanio',
                         data: JSON.stringify(dataToPost),
                         type: 'json',
                         contentType: 'application/json; charset=utf-8',
                         success: function (response) {
                             if (response == '') {
                                 swal({
-                                    title: 'Modelos',
-                                    text: 'Modelo guardada correctamente',
+                                    title: 'Tamaños',
+                                    text: 'Tamaño guardado correctamente',
                                     icon: 'success',
                                     button: 'Aceptar'
                                 });
@@ -358,7 +304,7 @@
                             }
                             else {
                                 swal({
-                                    title: 'Modelos',
+                                    title: 'Tamaños',
                                     text: response,
                                     icon: 'warning',
                                     button: 'Aceptar'
@@ -379,7 +325,7 @@
                 {
                     swal({
                         title: 'Atención',
-                        text: 'Debe ingresar un modelo',
+                        text: 'Debe ingresar un tamaño',
                         icon: 'warning',
                         button: 'Aceptar'
                     });
@@ -388,7 +334,7 @@
 
             $('#btnGuardar').click(function (e) {
                 e.preventDefault();
-                guardarModelo();
+                guardarTamanio();
             });
         });
     </script>

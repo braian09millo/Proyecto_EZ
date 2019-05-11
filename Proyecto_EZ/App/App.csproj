@@ -305,6 +305,7 @@
     <Content Include="Views\Informe\comboUsuarios.cshtml" />
     <Content Include="Views\Producto\Marca.cshtml" />
     <Content Include="Views\Producto\Modelo.cshtml" />
+    <Content Include="Views\Producto\Tamanio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

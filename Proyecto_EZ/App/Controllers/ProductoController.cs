@@ -206,5 +206,54 @@ namespace App.Controllers
         }
 
         #endregion
+
+        #region TAMAÑOS
+
+        public ActionResult Tamanio()
+        {
+            return View();
+        }
+
+        public JsonResult GetTamanios()
+        {
+            string xsError = "";
+            var lstTamanios = xoProductoCtrl.ObtenerTamanios(out xsError)
+                                          .Select(x => new tamanio { tam_id = x.tam_id, tam_descripcion = x.tam_descripcion, tam_delet = x.tam_delet ?? "N" })
+                                          .ToList();
+
+            var resultadoJS = new
+            {
+                data = lstTamanios,
+                error = xsError
+            };
+
+            return Json(resultadoJS, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult PostEliminarTamanio(int xiId)
+        {
+            string xsError = "";
+            xoProductoCtrl.EliminarTamanio(xiId, out xsError);
+            return Json(xsError);
+        }
+
+        [HttpPost]
+        public JsonResult PostHabilitarTamanio(int xiId)
+        {
+            string xsError = "";
+            xoProductoCtrl.HabilitarTamanio(xiId, out xsError);
+            return Json(xsError);
+        }
+
+        [HttpPost]
+        public JsonResult PostGuardarTamanio(TamanioForm xoTamanio)
+        {
+            string xsError = "";
+            xoProductoCtrl.GuardarTamanio(xoTamanio, out xsError);
+            return Json(xsError);
+        }
+
+        #endregion
     }
 }

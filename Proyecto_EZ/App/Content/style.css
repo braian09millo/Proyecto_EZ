@@ -58,17 +58,12 @@ body {
     box-shadow: none;
 }
 
-#tableClientes, #tableProductos, #EditorTable, #tablePedidos, #tableMarcas, #tableModelos {
+.table-estilo {
     font-size: 14px;
     border-bottom: 1px solid #ddd;
 }
 
-#tableClientes thead tr td,
-#tableProductos thead tr td,
-#EditorTable thead tr td,
-#tablePedidos thead tr td,
-#tableMarcas thead tr td,
-#tableModelos thead tr td {
+.table-estilo thead tr td {
     font-weight: bolder; 
     font-size: 14px;
     background-color: #333;
@@ -76,30 +71,14 @@ body {
     border-bottom: 0;
 }
 
-#tableClientes tbody tr td,
-#tableProductos tbody tr td,
-#EditorTable tbody tr td
-#tablePedidos tbody tr td,
-#tableMarcas tbody tr td,
-#tableModelos tbody tr td  {
+.table-estilo tbody tr td  {
     font-size: 14px;
 }
 
-#tableClientes thead tr td,
-#tableProductos thead tr td,
-#EditorTable thead tr td,
-#tablePedidos thead tr td,
-#tableMarcas thead tr td,
-#tableModelos thead tr td,
-#tableClientes tbody tr td,
-#tableProductos tbody tr td,
-#EditorTable tbody tr td,
-#tablePedidos tbody tr td,
-#tableMarcas tbody tr td,
-#tableModelos tbody tr td  {
+.table-estilo thead tr td,
+.table-estilo tbody tr td  {
     text-align: center;
 }
-
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
     box-sizing: unset;
@@ -119,6 +98,10 @@ body {
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
     border: 0;
+}
+
+table.dataTable.no-footer {
+     border-bottom: 0; 
 }
 
 .form-group > label::after {

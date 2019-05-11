@@ -26,7 +26,7 @@ namespace Negocios.BusinessControllers
 
         #endregion
 
-        #region COMPORTAMIENTO
+        #region PRODUCTOS
 
         public List<marca> ObtenerMarcas(out string xsError)
         {
@@ -133,7 +133,8 @@ namespace Negocios.BusinessControllers
                     if (prodExistente != null)
                     {
                         xsError = "El producto ya existe";
-                    } else
+                    }
+                    else
                     {
                         using (var xoTransaccion = xoDB.Database.BeginTransaction())
                         {
@@ -169,182 +170,6 @@ namespace Negocios.BusinessControllers
                             }
                         }
                     }
-                }
-            }
-        }
-
-        public void GuardarMarca(MarcaForm xoMarca, out string xsError)
-        {
-            xsError = "";
-
-            using (BD_Entities xoDB = new BD_Entities())
-            {
-                try
-                {
-                    var loMarca = xoDB.marca.Find(xoMarca.Id);
-
-                    if (loMarca != null)
-                    {
-                        loMarca.mar_nombre = xoMarca.Nombre;
-                    }
-                    else
-                    {
-                        var _marca = xoDB.marca.FirstOrDefault(x => x.mar_nombre.ToLower().Equals(xoMarca.Nombre));
-
-                        if (_marca != null)
-                            xsError = "Ya existe ésta marca";
-                        else
-                        { 
-                            xoDB.marca.Add(new marca() { mar_nombre = xoMarca.Nombre });                            
-                        }
-                    }
-
-                    if (xsError == "")
-                    {
-                        xoDB.SaveChanges();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    xsError = ex.Message;
-                }
-            }
-        }
-
-        public void GuardarModelo(ModeloForm xoModelo, out string xsError)
-        {
-            xsError = "";
-
-            using (BD_Entities xoDB = new BD_Entities())
-            {
-                try
-                {
-                    var loModelo = xoDB.modelo.FirstOrDefault(x => x.mod_id == xoModelo.Id && x.mod_marca == xoModelo.IdMarca);
-
-                    if (loModelo != null)
-                    {
-                        loModelo.mod_nombre = xoModelo.Nombre;
-                    }
-                    else
-                    {
-                        var _modelo = xoDB.modelo.FirstOrDefault(x => x.mod_nombre.ToLower().Equals(xoModelo.Nombre));
-
-                        if (_modelo != null)
-                            xsError = "Ya existe éste modelo";
-                        else
-                        {
-                            xoDB.modelo.Add(new modelo() { mod_nombre = xoModelo.Nombre, mod_marca = xoModelo.IdMarca });
-                        }
-                    }
-
-                    if (xsError == "")
-                    {
-                        xoDB.SaveChanges();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    xsError = ex.Message;
-                }
-            }
-        }
-
-        public void HabilitarModelo(int xiId, out string xsError)
-        {
-            xsError = "";
-
-            using (BD_Entities xoDB = new BD_Entities())
-            {
-                try
-                {
-                    var xoModelo = xoDB.modelo.Find(xiId);
-
-                    if (xoModelo != null)
-                    {
-                        xoModelo.mod_delet = "N";
-                        xoDB.SaveChanges();
-                    }
-                    else
-                        xsError = "El modelo seleccionado no existe";
-                }
-                catch (Exception ex)
-                {
-                    xsError = ex.Message;
-                }
-            }
-        }
-
-        public void EliminarModelo(int xiId, out string xsError)
-        {
-            xsError = "";
-
-            using (BD_Entities xoDB = new BD_Entities())
-            {
-                try
-                {
-                    var xoModelo = xoDB.modelo.Find(xiId);
-
-                    if (xoModelo != null)
-                    {
-                        xoModelo.mod_delet = "S";
-                        xoDB.SaveChanges();
-                    }
-                    else
-                        xsError = "El modelo seleccionado no existe";
-                }
-                catch (Exception ex)
-                {
-                    xsError = ex.Message;
-                }
-            }
-        }
-
-        public void HabilitarMarca(int xiId, out string xsError)
-        {
-            xsError = "";
-
-            using (BD_Entities xoDB = new BD_Entities())
-            {
-                try
-                {
-                    var xoMarca = xoDB.marca.Find(xiId);
-
-                    if (xoMarca != null)
-                    {
-                        xoMarca.mar_delet = "N";
-                        xoDB.SaveChanges();
-                    }
-                    else
-                        xsError = "La marca seleccionada no existe";
-                }
-                catch (Exception ex)
-                {
-                    xsError = ex.Message;
-                }
-            }
-        }
-
-        public void EliminarMarca(int xiId, out string xsError)
-        {
-            xsError = "";
-
-            using (BD_Entities xoDB = new BD_Entities())
-            {
-                try
-                {
-                    var xoMarca = xoDB.marca.Find(xiId);
-
-                    if (xoMarca != null)
-                    {
-                        xoMarca.mar_delet = "S";
-                        xoDB.SaveChanges();
-                    }
-                    else
-                        xsError = "La marca seleccionada no existe";
-                }
-                catch (Exception ex)
-                {
-                    xsError = ex.Message;
                 }
             }
         }
@@ -509,5 +334,274 @@ namespace Negocios.BusinessControllers
 
         #endregion
 
+        #region MARCAS
+
+        public void GuardarMarca(MarcaForm xoMarca, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var loMarca = xoDB.marca.Find(xoMarca.Id);
+
+                    if (loMarca != null)
+                    {
+                        loMarca.mar_nombre = xoMarca.Nombre;
+                    }
+                    else
+                    {
+                        var _marca = xoDB.marca.FirstOrDefault(x => x.mar_nombre.ToLower().Equals(xoMarca.Nombre));
+
+                        if (_marca != null)
+                            xsError = "Ya existe ésta marca";
+                        else
+                        {
+                            xoDB.marca.Add(new marca() { mar_nombre = xoMarca.Nombre });
+                        }
+                    }
+
+                    if (xsError == "")
+                    {
+                        xoDB.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public void HabilitarMarca(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoMarca = xoDB.marca.Find(xiId);
+
+                    if (xoMarca != null)
+                    {
+                        xoMarca.mar_delet = "N";
+                        xoDB.SaveChanges();
+                    }
+                    else
+                        xsError = "La marca seleccionada no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public void EliminarMarca(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoMarca = xoDB.marca.Find(xiId);
+
+                    if (xoMarca != null)
+                    {
+                        xoMarca.mar_delet = "S";
+                        xoDB.SaveChanges();
+                    }
+                    else
+                        xsError = "La marca seleccionada no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        #endregion
+
+        #region MODELOS
+
+        public void GuardarModelo(ModeloForm xoModelo, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var loModelo = xoDB.modelo.FirstOrDefault(x => x.mod_id == xoModelo.Id && x.mod_marca == xoModelo.IdMarca);
+
+                    if (loModelo != null)
+                    {
+                        loModelo.mod_nombre = xoModelo.Nombre;
+                    }
+                    else
+                    {
+                        var _modelo = xoDB.modelo.FirstOrDefault(x => x.mod_nombre.ToLower().Equals(xoModelo.Nombre));
+
+                        if (_modelo != null)
+                            xsError = "Ya existe éste modelo";
+                        else
+                        {
+                            xoDB.modelo.Add(new modelo() { mod_nombre = xoModelo.Nombre, mod_marca = xoModelo.IdMarca });
+                        }
+                    }
+
+                    if (xsError == "")
+                    {
+                        xoDB.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public void HabilitarModelo(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoModelo = xoDB.modelo.Find(xiId);
+
+                    if (xoModelo != null)
+                    {
+                        xoModelo.mod_delet = "N";
+                        xoDB.SaveChanges();
+                    }
+                    else
+                        xsError = "El modelo seleccionado no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public void EliminarModelo(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoModelo = xoDB.modelo.Find(xiId);
+
+                    if (xoModelo != null)
+                    {
+                        xoModelo.mod_delet = "S";
+                        xoDB.SaveChanges();
+                    }
+                    else
+                        xsError = "El modelo seleccionado no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        #endregion
+
+        #region TAMAÑOS
+
+        public void GuardarTamanio(TamanioForm xoTamanio, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var loTamanio = xoDB.tamanio.Find(xoTamanio.Id);
+
+                    if (loTamanio != null)
+                        loTamanio.tam_descripcion = xoTamanio.Descripcion;
+                    else
+                    {
+                        var _tamanio = xoDB.tamanio.FirstOrDefault(x => x.tam_descripcion.ToLower().Equals(xoTamanio.Descripcion));
+
+                        if (_tamanio != null)
+                            xsError = "Ya existe éste tamaño";
+                        else
+                            xoDB.tamanio.Add(new tamanio() { tam_descripcion = xoTamanio.Descripcion });
+                    }
+
+                    if (xsError == "")
+                        xoDB.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public void HabilitarTamanio(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoTamanio = xoDB.tamanio.Find(xiId);
+
+                    if (xoTamanio != null)
+                    {
+                        xoTamanio.tam_delet = "N";
+                        xoDB.SaveChanges();
+                    }
+                    else
+                        xsError = "El tamanio seleccionado no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public void EliminarTamanio(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoTamanio = xoDB.tamanio.Find(xiId);
+
+                    if (xoTamanio != null)
+                    {
+                        xoTamanio.tam_delet = "S";
+                        xoDB.SaveChanges();
+                    }
+                    else
+                        xsError = "El tamaño seleccionado no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        #endregion
     }
 }
