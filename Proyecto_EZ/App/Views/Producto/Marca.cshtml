@@ -1,0 +1,351 @@
+﻿
+@{
+    ViewBag.Title = "Marca";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="padding-top: 50px;">
+    <h2 class="h2 text-center">MARCAS</h2>
+    <br />
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <button id="btnNuevo" class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-plus"></i>&nbsp;&nbsp;Nueva Marca</button>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="tableMarcas" class="table table-hover table-condensed table-bordered">
+                            <thead>
+                                <tr>
+                                    <td>Descripción</td>
+                                    <td>Acciones</td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+
+    <div class="modal fade" id="NuevoForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Agregar/Modificar Marcas</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8">
+                            <form id="MarcaForm" class="form-horizontal">
+                                <input type="hidden" id="txtId" name="id" />
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="txtMarca" name="marca" placeholder="Marca" />
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button class="btn btn-success" type="submit" id="btnGuardar"><i class="fas fa-save"></i>&nbsp;Guardar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp;Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            //Cargamos la grilla al iniciar
+            CargarDatos();
+
+            function Limpiar() {
+                $("#tableMarcas").dataTable().fnDestroy();
+            }
+
+            $('#NuevoForm').on('hidden.bs.modal', function (e) {
+
+                $(this)
+                  .find("input[type=text],textarea,select")
+                     .val('')
+                     .end()
+                  .find("input[type=checkbox], input[type=radio]")
+                     .prop("checked", "")
+                     .end();
+
+                $('#txtId').val(0);
+            });
+
+            function CargarDatos() {
+
+                $.ajax({
+                    method: 'GET',
+                    url: '/Producto/GetMarcas',
+                    success: function (response) {
+                        if (response.error == '') {
+                            var tabla = $('#tableMarcas').DataTable({
+                                data: response.data,
+                                select: true,
+                                "info": false,
+                                columns: [
+                                    { 'data': 'mar_nombre' },
+                                    { 'defaultContent': '<button class="btn btn-success btn-xs" disabled title="Habilitar"><i class="fas fa-check"></i></button> <button class="btn btn-info btn-xs" title="Editar"><i class="fas fa-pencil-alt"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>' }
+                                ],
+                                aoColumnDefs: [
+                                    { "aTargets": [1], "bSortable": false }
+                                ],
+                                "createdRow": function (row, data, dataIndex) {
+                                    if (data.mar_delet == "S") {
+                                        $(row).css('background-color', '#B8DBD9');
+                                        $(row).find("td:eq(1)").find('.btn-danger').prop('disabled', true);
+                                        $(row).find("td:eq(1)").find('.btn-success').prop('disabled', false);
+                                    }
+                                },
+                                "language": {
+                                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                                }
+                            });
+
+                            editarMarca('#tableMarcas tbody', tabla);
+                            eliminarMarca('#tableMarcas tbody', tabla);
+                            habilitarMarca('#tableMarcas tbody', tabla);
+
+                        }
+                        else
+                        {
+                            swal({
+                                title: "Error",
+                                text: response.error,
+                                icon: "warning",
+                                buttons: "Aceptar"
+                            });
+                        }
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+            var editarMarca = function (tbody, tabla) {
+
+                $(tbody).off('click', 'button.btn-info.btn-xs');
+                $(tbody).on('click', 'button.btn-info.btn-xs', function () {
+
+                    var data = tabla.row($(this).parents('tr')).data();
+
+                    $('#txtId').val(data.mar_id);
+                    $('#txtMarca').val(data.mar_nombre);
+
+                    $('#NuevoForm').modal('show');
+                });
+            }
+
+            var habilitarMarca = function (tbody, tabla) {
+
+                $(tbody).off('click', 'button.btn-success.btn-xs');
+                $(tbody).on('click', 'button.btn-success.btn-xs', function () {
+
+                    var data = tabla.row($(this).parents('tr')).data();
+
+                    var dataToPost = {
+                        xiId: data.mar_id
+                    }
+
+                    swal({
+                        title: "¿Está seguro que desea habilitar la siguiente marca?",
+                        text: "",
+                        icon: "warning",
+                        buttons: ['Cancelar', 'Confirmar'],
+                        dangerMode: true,
+                    }).then(function (bHabilita) {
+                        if (bHabilita) {
+                            $.ajax({
+                                method: 'POST',
+                                url: '/Producto/PostHabilitarMarca',
+                                data: JSON.stringify(dataToPost),
+                                contentType: 'application/json; charset=utf-8',
+                                success: function (response) {
+                                    if (response == '') {
+                                        swal("La marca se habilitó correctamente", {
+                                            icon: "success",
+                                        });
+                                        Limpiar();
+                                        CargarDatos();
+                                    }
+                                    else {
+                                        swal(response, {
+                                            icon: "error",
+                                            buttons: "Aceptar"
+                                        });
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                        }
+                    })
+                });
+
+            }
+
+            var eliminarMarca = function (tbody, tabla) {
+
+                $(tbody).off('click', 'button.btn-danger.btn-xs');
+                $(tbody).on('click', 'button.btn-danger.btn-xs', function () {
+
+                    var data = tabla.row($(this).parents('tr')).data();
+                    var dataToPost = {
+                        xiId: data.mar_id
+                    }
+
+                    swal({
+                        title: "¿Está seguro que desea deshabilitar la siguiente marca?",
+                        text: "",
+                        icon: "warning",
+                        buttons: ['Cancelar', 'Confirmar'],
+                        dangerMode: true,
+                    }).then(function (bElimina) {
+                        if (bElimina) {
+                            $.ajax({
+                                method: 'POST',
+                                url: '/Producto/PostEliminarMarca',
+                                data: JSON.stringify(dataToPost),
+                                contentType: 'application/json; charset=utf-8',
+                                success: function (response) {
+                                    if (response == '') {
+                                        swal("El registro se eliminó correctamente", {
+                                            icon: "success",
+                                        });
+                                        Limpiar();
+                                        CargarDatos();
+                                    }
+                                    else {
+                                        swal({
+                                            title: "Error",
+                                            test: response,
+                                            icon: "error",
+                                            buttons: "Aceptar"
+                                        });
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                        }
+                    })
+                });
+
+            }
+
+            function PuedeGuardar()
+            {                
+                var marca = $('#txtMarca').val();
+                if (marca == '' || marca == null || marca == undefined)
+                    return false;
+                else
+                    return true;
+            }
+
+            function guardarMarca() {
+
+                if (PuedeGuardar())
+                {
+                    var dataToPost = {
+
+                        Id: $('#txtId').val(),
+                        Nombre: $('#txtMarca').val()
+                    };
+
+                    $.ajax({
+
+                        method: 'POST',
+                        url: '/Producto/PostGuardarMarca',
+                        data: JSON.stringify(dataToPost),
+                        type: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (response) {
+                            if (response == '') {
+                                swal({
+                                    title: 'Marcas',
+                                    text: 'Marca guardada correctamente',
+                                    icon: 'success',
+                                    button: 'Aceptar'
+                                });
+                                $('#NuevoForm').modal('hide');
+                                Limpiar();
+                                CargarDatos();
+                            }
+                            else {
+                                swal({
+                                    title: 'Marcas',
+                                    text: response,
+                                    icon: 'warning',
+                                    button: 'Aceptar'
+                                });
+                            }
+                        },
+                        error: function (error) {
+                            swal({
+                                title: 'Error',
+                                text: error,
+                                icon: 'error',
+                                button: 'Aceptar'
+                            });
+                        }
+                    });
+                }
+                else
+                {
+                    swal({
+                        title: 'Atención',
+                        text: 'Debe ingresar una marca',
+                        icon: 'warning',
+                        button: 'Aceptar'
+                    });
+                }                
+            }
+
+            $('#btnGuardar').click(function (e) {                
+                e.preventDefault();
+                guardarMarca();
+            });
+        });
+    </script>
+
+}
+
+@section Styles {
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+
+}
+

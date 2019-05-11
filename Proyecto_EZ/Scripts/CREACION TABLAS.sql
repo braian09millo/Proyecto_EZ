@@ -54,7 +54,8 @@ CREATE TABLE usuario
 CREATE TABLE marca 
 (
 	mar_id INT IDENTITY PRIMARY KEY,
-	mar_nombre VARCHAR(100) NOT NULL
+	mar_nombre VARCHAR(100) NOT NULL,
+	mar_delet CHAR(1) NULL
 )
 
 CREATE TABLE modelo
@@ -62,6 +63,7 @@ CREATE TABLE modelo
 	mod_id INT IDENTITY,
 	mod_marca INT NOT NULL,
 	mod_nombre VARCHAR(100) NOT NULL,
+	mod_delet CHAR(1) NULL,
 	CONSTRAINT FK_Marca_Modelo FOREIGN KEY (mod_marca) REFERENCES MARCA(mar_id),
 	CONSTRAINT PK_Modelo PRIMARY KEY (mod_id)
 )
@@ -75,7 +77,8 @@ CREATE TABLE tipo
 CREATE TABLE tamanio 
 (
 	tam_id INT IDENTITY PRIMARY KEY, 
-	tam_descripcion VARCHAR(50) NOT NULL
+	tam_descripcion VARCHAR(50) NOT NULL,
+	tam_delet CHAR(1) NULL
 )
 
 CREATE TABLE producto

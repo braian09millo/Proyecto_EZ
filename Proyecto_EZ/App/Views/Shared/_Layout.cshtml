@@ -7,6 +7,11 @@
     <title>EZ Distribuidora</title>  
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/datatables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/sweetalert.min.js"></script>
     @RenderSection("Styles", required: false)
 </head>
 <body>
@@ -27,7 +32,13 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="@Url.Action("Index","Cliente")"><i class="fas fa-users"></i>&nbsp; Clientes</a></li>
-                    <li><a href="@Url.Action("Index","Producto")"><i class="fas fa-barcode"></i>&nbsp; Productos</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-barcode"></i>&nbsp; Productos <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("Index","Producto")"><i class="fas fa-dolly"></i>&nbsp; Lista de Productos</a></li>
+                            <li><a href="@Url.Action("Marca","Producto")"><i class="fas fa-copyright"></i>&nbsp; Marcas</a></li>
+                        </ul>
+                    </li>                    
                     <li><a href="@Url.Action("Index","Pedido")"><i class="fas fa-clipboard-list"></i>&nbsp; Pedidos</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-file-invoice"></i>&nbsp; Informes <span class="caret"></span></a>
@@ -44,12 +55,6 @@
         @RenderBody()
     </div>
 
-
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/datatables.min.js"></script>
-    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
-    <script src="~/Scripts/sweetalert.min.js"></script>
     @RenderSection("scripts", required: false)
 
 </body>

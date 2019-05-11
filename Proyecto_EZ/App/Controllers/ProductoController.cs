@@ -1,4 +1,5 @@
-﻿using Entidades;
+﻿using Datos;
+using Entidades;
 using Negocios;
 using Negocios.BusinessControllers;
 using System;
@@ -88,6 +89,51 @@ namespace App.Controllers
         {
             string xsError = "";
             xoProductoCtrl.ActualizarPrecios(xoPrecios, out xsError);
+            return Json(xsError);
+        }
+
+        public ActionResult Marca()
+        {
+            return View();
+        }
+
+        public JsonResult GetMarcas()
+        {
+            string xsError = "";
+            var lstMarcas = xoProductoCtrl.ObtenerMarcas(out xsError)
+                                          .Select(x => new marca { mar_id = x.mar_id, mar_nombre = x.mar_nombre, mar_delet = x.mar_delet ?? "N" } )
+                                          .ToList();
+
+            var resultadoJS = new
+            {
+                data = lstMarcas,
+                error = xsError
+            };
+
+            return Json(resultadoJS, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult PostEliminarMarca(int xiId)
+        {
+            string xsError = "";
+            xoProductoCtrl.EliminarMarca(xiId, out xsError);
+            return Json(xsError);
+        }
+
+        [HttpPost]
+        public JsonResult PostHabilitarMarca(int xiId)
+        {
+            string xsError = "";
+            xoProductoCtrl.HabilitarMarca(xiId, out xsError);
+            return Json(xsError);
+        }
+
+        [HttpPost]
+        public JsonResult PostGuardarMarca(MarcaForm xoMarca)
+        {
+            string xsError = "";
+            xoProductoCtrl.GuardarMarca(xoMarca, out xsError);
             return Json(xsError);
         }
     }

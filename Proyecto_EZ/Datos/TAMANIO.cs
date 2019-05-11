@@ -22,6 +22,7 @@ namespace Datos
     
         public int tam_id { get; set; }
         public string tam_descripcion { get; set; }
+        public string tam_delet { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<producto> producto { get; set; }

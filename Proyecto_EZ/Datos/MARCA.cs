@@ -23,6 +23,7 @@ namespace Datos
     
         public int mar_id { get; set; }
         public string mar_nombre { get; set; }
+        public string mar_delet { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<modelo> modelo { get; set; }

@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MarcaForm.cs" />
     <Compile Include="Pedido.cs" />
     <Compile Include="PrecioEdicion.cs" />
     <Compile Include="ProductoForm.cs" />

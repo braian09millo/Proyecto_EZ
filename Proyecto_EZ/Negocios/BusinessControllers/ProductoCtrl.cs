@@ -173,6 +173,94 @@ namespace Negocios.BusinessControllers
             }
         }
 
+        public void GuardarMarca(MarcaForm xoMarca, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var loMarca = xoDB.marca.Find(xoMarca.Id);
+
+                    if (loMarca != null)
+                    {
+                        loMarca.mar_nombre = xoMarca.Nombre;
+                    }
+                    else
+                    {
+                        var _marca = xoDB.marca.FirstOrDefault(x => x.mar_nombre.ToLower().Equals(xoMarca.Nombre));
+
+                        if (_marca != null)
+                            xsError = "Ya existe ésta marca";
+                        else
+                        { 
+                            xoDB.marca.Add(new marca() { mar_nombre = xoMarca.Nombre });                            
+                        }
+                    }
+
+                    if (xsError == "")
+                    {
+                        xoDB.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public void HabilitarMarca(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoMarca = xoDB.marca.Find(xiId);
+
+                    if (xoMarca != null)
+                    {
+                        xoMarca.mar_delet = "N";
+                        xoDB.SaveChanges();
+                    }
+                    else
+                        xsError = "La marca seleccionada no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public void EliminarMarca(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoMarca = xoDB.marca.Find(xiId);
+
+                    if (xoMarca != null)
+                    {
+                        xoMarca.mar_delet = "S";
+                        xoDB.SaveChanges();
+                    }
+                    else
+                        xsError = "La marca seleccionada no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
         public List<spGetProductos> ObtenerProductos(out string xsError)
         {
             xsError = "";

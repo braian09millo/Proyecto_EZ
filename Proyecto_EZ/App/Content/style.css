@@ -58,7 +58,7 @@ body {
     box-shadow: none;
 }
 
-#tableClientes, #tableProductos, #EditorTable, #tablePedidos {
+#tableClientes, #tableProductos, #EditorTable, #tablePedidos, #tableMarcas {
     font-size: 14px;
     border-bottom: 1px solid #ddd;
 }
@@ -66,7 +66,8 @@ body {
 #tableClientes thead tr td,
 #tableProductos thead tr td,
 #EditorTable thead tr td,
-#tablePedidos thead tr td {
+#tablePedidos thead tr td,
+#tableMarcas thead tr td {
     font-weight: bolder; 
     font-size: 14px;
     background-color: #333;
@@ -77,7 +78,8 @@ body {
 #tableClientes tbody tr td,
 #tableProductos tbody tr td,
 #EditorTable tbody tr td
-#tablePedidos tbody tr td {
+#tablePedidos tbody tr td,
+#tableMarcas thead tr td  {
     font-size: 14px;
 }
 
@@ -85,10 +87,12 @@ body {
 #tableProductos thead tr td,
 #EditorTable thead tr td,
 #tablePedidos thead tr td,
+#tableMarcas thead tr td,
 #tableClientes tbody tr td,
 #tableProductos tbody tr td,
 #EditorTable tbody tr td,
-#tablePedidos tbody tr td  {
+#tablePedidos tbody tr td,
+#tableMarcas tbody tr td  {
     text-align: center;
 }
 
