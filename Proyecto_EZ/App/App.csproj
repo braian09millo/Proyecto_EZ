@@ -152,6 +152,9 @@
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Reportes\FactMensualDataSet.cs">
+      <DependentUpon>FactMensualDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\FactMensualDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -200,7 +203,13 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Imagenes\Logos\coca.png" />
+    <Content Include="Imagenes\Logos\fbranca.png" />
+    <Content Include="Imagenes\Logos\heineken-logo.png" />
     <Content Include="Imagenes\Logos\logoEZ.png" />
+    <Content Include="Imagenes\Logos\pepsi.png" />
+    <Content Include="Imagenes\Logos\sevenup-logo7.png" />
+    <Content Include="Imagenes\Logos\villavicencio.png" />
     <Content Include="Scripts\Clientes.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\moment.js" />
@@ -324,7 +333,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Reportes\rptFacturacionMensual.rdlc" />
+    <EmbeddedResource Include="Reportes\rptFacturacionMensual.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\rptRemito.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>

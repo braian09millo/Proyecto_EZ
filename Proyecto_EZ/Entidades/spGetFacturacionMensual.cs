@@ -8,7 +8,7 @@ namespace Entidades
 {
     public class spGetFacturacionMensual
     {
-        public string Dia { get; set; }
+        public DateTime Dia { get; set; }
         public int IDRemito { get; set; }
         public string Nombre { get; set; }
         public int Packs { get; set; }

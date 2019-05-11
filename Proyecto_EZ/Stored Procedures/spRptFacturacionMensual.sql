@@ -7,9 +7,10 @@ WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT
 
-SELECT convert(varchar, getdate(), 111) as Dia,
+SELECT  
+		ped_fecha as Dia,
 		ped_id IDRemito,
-		max(cli_nombre) as Nombre,
+		max(cli_nombre) + ' - ' + max(cli_direccion)  as Nombre,
 		sum(det_cantidad) Packs,
 		sum(prd_precioC*det_cantidad) costo,
 		max(ped_monto) MontoRemito,
@@ -25,7 +26,7 @@ SELECT convert(varchar, getdate(), 111) as Dia,
 	LEFT JOIN usuario on ped_repartidor = usu_usuario
 	WHERE ped_fecha between @FechaDesde and @FechaHasta
 	and (ped_repartidor = @Repartidor or @repartidor is null)
-	group by ped_id
+	group by ped_id, ped_fecha
 
 	SET @@nRet = @@error
 	IF @@nRet <> 0 

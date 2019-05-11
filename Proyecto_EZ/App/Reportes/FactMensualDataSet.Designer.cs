@@ -439,7 +439,7 @@ namespace App.Reportes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public spRptFacturacionMensualRow AddspRptFacturacionMensualRow(string Dia, string Nombre, int Packs, decimal costo, decimal MontoRemito, decimal Debe, decimal Facturado, string Repartidor) {
+            public spRptFacturacionMensualRow AddspRptFacturacionMensualRow(System.DateTime Dia, string Nombre, int Packs, decimal costo, decimal MontoRemito, decimal Debe, decimal Facturado, string Repartidor) {
                 spRptFacturacionMensualRow rowspRptFacturacionMensualRow = ((spRptFacturacionMensualRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Dia,
@@ -494,7 +494,7 @@ namespace App.Reportes {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnDia = new global::System.Data.DataColumn("Dia", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnDia = new global::System.Data.DataColumn("Dia", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDia);
                 this.columnIDRemito = new global::System.Data.DataColumn("IDRemito", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIDRemito);
@@ -514,9 +514,10 @@ namespace App.Reportes {
                 base.Columns.Add(this.columnRepartidor);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnIDRemito}, true));
-                this.columnDia.ReadOnly = true;
-                this.columnDia.MaxLength = 30;
+                this.columnDia.AllowDBNull = false;
                 this.columnIDRemito.AutoIncrement = true;
+                this.columnIDRemito.AutoIncrementSeed = -1;
+                this.columnIDRemito.AutoIncrementStep = -1;
                 this.columnIDRemito.AllowDBNull = false;
                 this.columnIDRemito.ReadOnly = true;
                 this.columnIDRemito.Unique = true;
@@ -671,14 +672,9 @@ namespace App.Reportes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Dia {
+            public System.DateTime Dia {
                 get {
-                    try {
-                        return ((string)(this[this.tablespRptFacturacionMensual.DiaColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Dia\' de la tabla \'spRptFacturacionMensual\' es DBNull.", e);
-                    }
+                    return ((global::System.DateTime)(this[this.tablespRptFacturacionMensual.DiaColumn]));
                 }
                 set {
                     this[this.tablespRptFacturacionMensual.DiaColumn] = value;
@@ -809,18 +805,6 @@ namespace App.Reportes {
                 set {
                     this[this.tablespRptFacturacionMensual.RepartidorColumn] = value;
                 }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsDiaNull() {
-                return this.IsNull(this.tablespRptFacturacionMensual.DiaColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetDiaNull() {
-                this[this.tablespRptFacturacionMensual.DiaColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
