@@ -304,6 +304,7 @@
     <Content Include="Views\Informe\FacturacionMensual.cshtml" />
     <Content Include="Views\Informe\comboUsuarios.cshtml" />
     <Content Include="Views\Producto\Marca.cshtml" />
+    <Content Include="Views\Producto\Modelo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

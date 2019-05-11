@@ -1,0 +1,409 @@
+﻿
+@{
+    ViewBag.Title = "Modelo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="padding-top: 50px;">
+    <h2 class="h2 text-center">MODELOS</h2>
+    <br />
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <button id="btnNuevo" class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-plus"></i>&nbsp;&nbsp;Nuevo Modelo</button>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="tableModelos" class="table table-hover table-condensed table-bordered">
+                            <thead>
+                                <tr>
+                                    <td>Marca</td>
+                                    <td>Modelo</td>
+                                    <td>Acciones</td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+
+    <div class="modal fade" id="NuevoForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Agregar/Modificar Modelos</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8">
+                            <form id="MarcaForm" class="form-horizontal">
+                                <input type="hidden" id="txtId" name="id" />
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        @Html.Partial("comboMarcas")
+                                    </div>
+                                </div>                                
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="txtModelo" name="marca" placeholder="Modelo" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" id="chkAplica"> No aplica modelo
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button class="btn btn-success" type="submit" id="btnGuardar"><i class="fas fa-save"></i>&nbsp;Guardar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp;Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            //Cargamos la grilla al iniciar
+            CargarDatos();
+
+            function Limpiar() {
+                $("#tableModelos").dataTable().fnDestroy();
+            }
+
+            $('#NuevoForm').on('hidden.bs.modal', function (e) {
+
+                $(this)
+                  .find("input[type=text],textarea,select")
+                     .val('')
+                     .end()
+                  .find("input[type=checkbox], input[type=radio]")
+                     .prop("checked", "")
+                     .end();
+
+                $('#txtId').val(0);
+                $('#txtModelo').prop('disabled', false);
+            });
+
+            function CargarDatos() {
+
+                $.ajax({
+                    method: 'GET',
+                    url: '/Producto/GetModelos',
+                    success: function (response) {
+                        if (response.error == '') {
+                            var tabla = $('#tableModelos').DataTable({
+                                data: response.data,
+                                select: true,
+                                "info": false,
+                                columns: [
+                                    { 'data': 'mod_marcaDesc' },
+                                    { 'data': 'mod_nombre' },
+                                    { 'defaultContent': '<button class="btn btn-success btn-xs" disabled title="Habilitar"><i class="fas fa-check"></i></button> <button class="btn btn-info btn-xs" title="Editar"><i class="fas fa-pencil-alt"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>' }
+                                ],
+                                aoColumnDefs: [
+                                    { "aTargets": [2], "bSortable": false }
+                                ],
+                                "createdRow": function (row, data, dataIndex) {
+                                    if (data.mod_delet == "S") {
+                                        $(row).css('background-color', '#B8DBD9');
+                                        $(row).find("td:eq(2)").find('.btn-danger').prop('disabled', true);
+                                        $(row).find("td:eq(2)").find('.btn-success').prop('disabled', false);
+                                    }
+                                },
+                                "language": {
+                                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                                }
+                            });
+
+                            editarModelo('#tableModelos tbody', tabla);
+                            eliminarModelo('#tableModelos tbody', tabla);
+                            habilitarModelo('#tableModelos tbody', tabla);
+
+                        }
+                        else
+                        {
+                            swal({
+                                title: "Error",
+                                text: response.error,
+                                icon: "warning",
+                                buttons: "Aceptar"
+                            });
+                        }
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+            $('#chkAplica').on('change', function () {
+
+                if ($(this).is(':checked'))
+                    $('#txtModelo').prop('disabled', true);
+                else
+                    $('#txtModelo').prop('disabled', false);
+
+            });
+
+            var editarModelo = function (tbody, tabla) {
+
+                $(tbody).off('click', 'button.btn-info.btn-xs');
+                $(tbody).on('click', 'button.btn-info.btn-xs', function () {
+
+                    var data = tabla.row($(this).parents('tr')).data();
+
+                    $('#txtId').val(data.mod_id);
+                    $('#cmbMarcas').val(data.mod_marca);
+                    if (data.mod_nombre.toLowerCase() == 'no aplica')
+                    {
+                        $('#chkAplica').prop('checked', true);
+                        $('#txtModelo').prop('disabled', true);
+                    }
+                    else
+                    {
+                        $('#chkAplica').prop('checked', false);
+                        $('#txtModelo').prop('disabled', false).val(data.mod_nombre);
+                    }
+
+                    $('#NuevoForm').modal('show');
+                });
+            }
+
+            var habilitarModelo = function (tbody, tabla) {
+
+                $(tbody).off('click', 'button.btn-success.btn-xs');
+                $(tbody).on('click', 'button.btn-success.btn-xs', function () {
+
+                    var data = tabla.row($(this).parents('tr')).data();
+
+                    var dataToPost = {
+                        xiId: data.mod_id
+                    }
+
+                    swal({
+                        title: "¿Está seguro que desea habilitar el siguiente modelo?",
+                        text: "",
+                        icon: "warning",
+                        buttons: ['Cancelar', 'Confirmar'],
+                        dangerMode: true,
+                    }).then(function (bHabilita) {
+                        if (bHabilita) {
+                            $.ajax({
+                                method: 'POST',
+                                url: '/Producto/PostHabilitarModelo',
+                                data: JSON.stringify(dataToPost),
+                                contentType: 'application/json; charset=utf-8',
+                                success: function (response) {
+                                    if (response == '') {
+                                        swal("El modelo se habilitó correctamente", {
+                                            icon: "success",
+                                        });
+                                        Limpiar();
+                                        CargarDatos();
+                                    }
+                                    else {
+                                        swal(response, {
+                                            icon: "error",
+                                            buttons: "Aceptar"
+                                        });
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                        }
+                    })
+                });
+
+            }
+
+            var eliminarModelo = function (tbody, tabla) {
+
+                $(tbody).off('click', 'button.btn-danger.btn-xs');
+                $(tbody).on('click', 'button.btn-danger.btn-xs', function () {
+
+                    var data = tabla.row($(this).parents('tr')).data();
+                    var dataToPost = {
+                        xiId: data.mod_id
+                    }
+
+                    swal({
+                        title: "¿Está seguro que desea deshabilitar el siguiente modelo?",
+                        text: "",
+                        icon: "warning",
+                        buttons: ['Cancelar', 'Confirmar'],
+                        dangerMode: true,
+                    }).then(function (bElimina) {
+                        if (bElimina) {
+                            $.ajax({
+                                method: 'POST',
+                                url: '/Producto/PostEliminarModelo',
+                                data: JSON.stringify(dataToPost),
+                                contentType: 'application/json; charset=utf-8',
+                                success: function (response) {
+                                    if (response == '') {
+                                        swal("El registro se eliminó correctamente", {
+                                            icon: "success",
+                                        });
+                                        Limpiar();
+                                        CargarDatos();
+                                    }
+                                    else {
+                                        swal({
+                                            title: "Error",
+                                            test: response,
+                                            icon: "error",
+                                            buttons: "Aceptar"
+                                        });
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                        }
+                    })
+                });
+
+            }
+
+            function PuedeGuardar()
+            {
+                var resultado = true;
+                var marca = $('#cmbMarcas').val();
+                var modelo = $('#txtModelo').val();
+                var check = $('#chkAplica').val();
+
+                if (marca == '' || marca == null || marca == undefined)
+                    resultado = false;
+                
+                if (!check)
+                {
+                    if (modelo == '' || modelo == null || modelo == undefined) 
+                        resultado = false;
+                }
+
+                return resultado;
+            }
+
+            function guardarModelo() {
+
+                var modelo;
+
+                if ($('#chkAplica').is(':checked'))
+                    modelo = 'No Aplica';
+                else
+                    modelo = $('#txtModelo').val();
+
+                if (PuedeGuardar())
+                {
+                    var dataToPost = {
+
+                        Id: $('#txtId').val(),
+                        IdMarca: $('#cmbMarcas').val(),
+                        Nombre: modelo
+                    };
+
+                    $.ajax({
+
+                        method: 'POST',
+                        url: '/Producto/PostGuardarModelo',
+                        data: JSON.stringify(dataToPost),
+                        type: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (response) {
+                            if (response == '') {
+                                swal({
+                                    title: 'Modelos',
+                                    text: 'Modelo guardada correctamente',
+                                    icon: 'success',
+                                    button: 'Aceptar'
+                                });
+                                $('#NuevoForm').modal('hide');
+                                Limpiar();
+                                CargarDatos();
+                            }
+                            else {
+                                swal({
+                                    title: 'Modelos',
+                                    text: response,
+                                    icon: 'warning',
+                                    button: 'Aceptar'
+                                });
+                            }
+                        },
+                        error: function (error) {
+                            swal({
+                                title: 'Error',
+                                text: error,
+                                icon: 'error',
+                                button: 'Aceptar'
+                            });
+                        }
+                    });
+                }
+                else
+                {
+                    swal({
+                        title: 'Atención',
+                        text: 'Debe ingresar un modelo',
+                        icon: 'warning',
+                        button: 'Aceptar'
+                    });
+                }
+            }
+
+            $('#btnGuardar').click(function (e) {
+                e.preventDefault();
+                guardarModelo();
+            });
+        });
+    </script>
+
+}
+
+@section Styles {
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+
+}
+
+
+
+
+

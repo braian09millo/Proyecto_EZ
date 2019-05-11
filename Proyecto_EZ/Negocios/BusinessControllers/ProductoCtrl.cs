@@ -211,6 +211,94 @@ namespace Negocios.BusinessControllers
             }
         }
 
+        public void GuardarModelo(ModeloForm xoModelo, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var loModelo = xoDB.modelo.FirstOrDefault(x => x.mod_id == xoModelo.Id && x.mod_marca == xoModelo.IdMarca);
+
+                    if (loModelo != null)
+                    {
+                        loModelo.mod_nombre = xoModelo.Nombre;
+                    }
+                    else
+                    {
+                        var _modelo = xoDB.modelo.FirstOrDefault(x => x.mod_nombre.ToLower().Equals(xoModelo.Nombre));
+
+                        if (_modelo != null)
+                            xsError = "Ya existe éste modelo";
+                        else
+                        {
+                            xoDB.modelo.Add(new modelo() { mod_nombre = xoModelo.Nombre, mod_marca = xoModelo.IdMarca });
+                        }
+                    }
+
+                    if (xsError == "")
+                    {
+                        xoDB.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public void HabilitarModelo(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoModelo = xoDB.modelo.Find(xiId);
+
+                    if (xoModelo != null)
+                    {
+                        xoModelo.mod_delet = "N";
+                        xoDB.SaveChanges();
+                    }
+                    else
+                        xsError = "El modelo seleccionado no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public void EliminarModelo(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoModelo = xoDB.modelo.Find(xiId);
+
+                    if (xoModelo != null)
+                    {
+                        xoModelo.mod_delet = "S";
+                        xoDB.SaveChanges();
+                    }
+                    else
+                        xsError = "El modelo seleccionado no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
         public void HabilitarMarca(int xiId, out string xsError)
         {
             xsError = "";
