@@ -48,6 +48,7 @@ CREATE TABLE usuario
 	usu_nombre VARCHAR(50) NOT NULL,
 	usu_apellido VARCHAR(50) NOT NULL,
 	usu_fecha_acceso DATETIME NULL,
+	usu_delet CHAR(1) NULL,
 	CONSTRAINT FK_Grupo_Usuario FOREIGN KEY (usu_grupo) REFERENCES GRUPO(gru_id),
 )
 

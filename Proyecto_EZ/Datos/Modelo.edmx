@@ -158,6 +158,7 @@
           <Property Name="usu_nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="usu_apellido" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="usu_fecha_acceso" Type="datetime" />
+          <Property Name="usu_delet" Type="char" MaxLength="1" />
         </EntityType>
         <Association Name="FK_Cliente_Pedido">
           <End Role="cliente" Type="Self.cliente" Multiplicity="1" />
@@ -749,6 +750,7 @@
           <Property Name="usu_fecha_acceso" Type="DateTime" Precision="3" />
           <NavigationProperty Name="grupo" Relationship="Modelo.FK_Grupo_Usuario" FromRole="usuario" ToRole="grupo" />
           <NavigationProperty Name="pedido" Relationship="Modelo.FK_Usuario_Pedido" FromRole="usuario" ToRole="pedido" />
+          <Property Name="usu_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <Association Name="FK_Localidad_Cliente">
           <End Type="Modelo.localidad" Role="localidad" Multiplicity="1" />
@@ -1028,6 +1030,7 @@
           <EntitySetMapping Name="usuario">
             <EntityTypeMapping TypeName="Modelo.usuario">
               <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="usu_delet" ColumnName="usu_delet" />
                 <ScalarProperty Name="usu_fecha_acceso" ColumnName="usu_fecha_acceso" />
                 <ScalarProperty Name="usu_apellido" ColumnName="usu_apellido" />
                 <ScalarProperty Name="usu_nombre" ColumnName="usu_nombre" />

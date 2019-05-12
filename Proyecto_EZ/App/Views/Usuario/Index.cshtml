@@ -1,0 +1,415 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="padding-top: 50px;">
+    <h2 class="h2 text-center">USUARIOS</h2>
+    <br />
+    <div class="row">
+        <div class="col-sm-12">
+            <button id="btnNuevo" class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-user-lock"></i>&nbsp;&nbsp;Nuevo Usuario</button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="tableUsuarios" class="table table-hover table-condensed table-bordered table-estilo" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <td>Usuario</td>
+                                    <td>Grupo</td>
+                                    <td>Nombre</td>
+                                    <td>Apellido</td>
+                                    <td>Último Acceso</td>
+                                    <td>Acciones</td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="NuevoForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Agregar/Modificar Usuarios</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8">
+                            <form id="UsuarioForm" class="form-horizontal">
+                                <div class="form-group" id="nombre">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="txtNombre" name="nombre" placeholder="Nombre" />
+                                    </div>
+                                </div>
+                                <div class="form-group" id="apellido">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="txtApellido" name="apellido" placeholder="Apellido" />
+                                    </div>
+                                </div>
+                                <div class="form-group" id="grupos">
+                                    <div class="col-sm-12">
+                                        @Html.Partial("comboGrupos")
+                                    </div>
+                                </div>
+                                <div class="form-group" id="usuario">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="txtUsuario" name="usuario" placeholder="Usuario" />
+                                    </div>
+                                </div>
+                                <div class="form-group" id="passVieja" style="display: none;">
+                                    <div class="col-sm-12">
+                                        <input type="password" class="form-control" id="txtPassVieja" name="pass" placeholder="Contraseña Antigua" />
+                                    </div>
+                                </div>
+                                <div class="form-group" id="pass">
+                                    <div class="col-sm-12">
+                                        <input type="password" class="form-control" id="txtPass" name="pass" placeholder="Contraseña" />
+                                    </div>
+                                </div>
+                                <div class="form-group" id="passConf">
+                                    <div class="col-sm-12">
+                                        <input type="password" class="form-control" id="txtPass2" name="pass2" placeholder="Confirmar Contraseña" />
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button class="btn btn-success" type="submit" id="btnAgregar"><i class="fas fa-save"></i>&nbsp;Guardar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp;Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            //Cargamos la grilla al iniciar
+            CargarDatos();
+
+            function Limpiar() {
+                $("#tableUsuarios").dataTable().fnDestroy();
+            }
+
+            $('#NuevoForm').on('hidden.bs.modal', function (e) {
+
+                $(this)
+                  .find("input[type=text],textarea,select")
+                     .val('')
+                     .end()
+                  .find("input[type=checkbox], input[type=radio]")
+                     .prop("checked", "")
+                     .end();
+
+                $('#nombre').css('display', 'block');
+                $('#apellido').css('display', 'block');
+                $('#grupos').css('display', 'block');
+                $('#txtUsuario').prop('readonly', false);
+                $('#pass').css('display', 'block');
+                $('#passConf').css('display', 'block');
+            });
+
+            function CargarDatos() {
+
+                $.ajax({
+                    method: 'GET',
+                    url: '/Usuario/GetUsuarios',
+                    success: function (response) {
+                        if (response.error == '') {
+                            var tabla = $('#tableUsuarios').DataTable({
+                                data: response.data,
+                                select: true,
+                                "info": false,
+                                columns: [
+                                    { 'data': 'usu_usuario' },
+                                    { 'data': 'usu_grupoDesc' },
+                                    { 'data': 'usu_nombre' },
+                                    { 'data': 'usu_apellido' },
+                                    { 'data': 'usu_fecha_acceso' },
+                                    { 'defaultContent': '<button class="btn btn-success btn-xs" disabled title="Habilitar"><i class="fas fa-check"></i></button> <button class="btn btn-info btn-xs" title="Editar"><i class="fas fa-pencil-alt"></i></button> <button class="btn btn-warning btn-xs" title="Cambiar Contraseña"><i class="fas fa-sync-alt"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>' }
+                                ],
+                                aoColumnDefs: [
+                                    { "aTargets": [5], "bSortable": false }
+                                ],
+                                "createdRow": function (row, data, dataIndex) {
+                                    if (data.usu_delet == "S") {
+                                        $(row).css('background-color', '#B8DBD9');
+                                        $(row).find("td:eq(5)").find('.btn-danger').prop('disabled', true);
+                                        $(row).find("td:eq(5)").find('.btn-success').prop('disabled', false);
+                                    }
+                                },
+                                "language": {
+                                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                                }
+                            });
+
+                            editarUsuario('#tableUsuarios tbody', tabla);
+                            cambiarPassword('#tableUsuarios tbody', tabla);
+                            eliminarUsuario('#tableUsuarios tbody', tabla);
+                            habilitarUsuario('#tableUsuarios tbody', tabla);
+
+                        }
+                        else
+                        {
+                            swal({
+                                title: "Error",
+                                text: response.error,
+                                icon: "warning",
+                                buttons: "Aceptar"
+                            });
+                        }
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+            var cambiarPassword = function (tbody, tabla) {
+
+                $(tbody).off('click', 'button.btn-warning.btn-xs');
+                $(tbody).on('click', 'button.btn-warning.btn-xs', function () {
+
+                    var data = tabla.row($(this).parents('tr')).data();
+
+                    $('#nombre').css('display', 'none');
+                    $('#apellido').css('display', 'none');
+                    $('#grupos').css('display', 'none');
+                    $('#txtUsuario').val(data.usu_usuario).prop('readonly', true);
+                    $('#passVieja').css('display', 'block').val(data.usu_password);
+                    $('#pass').css('display', 'block');
+                    $('#passConf').css('display', 'block');
+                    $('#txtPassVieja').val(data.usu_password);                   
+
+                    $('#NuevoForm').modal('show');
+                });
+            }
+
+            var editarUsuario = function (tbody, tabla) {
+
+                $(tbody).off('click', 'button.btn-info.btn-xs');
+                $(tbody).on('click', 'button.btn-info.btn-xs', function () {
+
+                    var data = tabla.row($(this).parents('tr')).data();
+
+                    $('#txtNombre').val(data.usu_nombre);
+                    $('#txtApellido').val(data.usu_apellido);
+                    $('#cmbGrupos').val(data.usu_grupo);
+                    $('#txtUsuario').val(data.usu_usuario);
+                    $('#pass').css('display', 'none');
+                    $('#passConf').css('display','none');
+
+                    $('#NuevoForm').modal('show');
+                });
+            }
+
+            var habilitarUsuario = function (tbody, tabla) {
+
+                $(tbody).off('click', 'button.btn-success.btn-xs');
+                $(tbody).on('click', 'button.btn-success.btn-xs', function () {
+
+                    var data = tabla.row($(this).parents('tr')).data();
+
+                    var dataToPost = {
+                        xsUsuario: data.usu_usuario
+                    }
+
+                    swal({
+                        title: "¿Está seguro que desea habilitar al usuario?",
+                        text: "",
+                        icon: "warning",
+                        buttons: ['Cancelar', 'Confirmar'],
+                        dangerMode: true,
+                    }).then(function (bHabilita) {
+                        if (bHabilita) {
+                            $.ajax({
+                                method: 'POST',
+                                url: '/Usuario/PostHabilitarUsuario',
+                                data: JSON.stringify(dataToPost),
+                                contentType: 'application/json; charset=utf-8',
+                                success: function (response) {
+                                    if (response == '') {
+                                        swal("El usuario se habilitó correctamente", {
+                                            icon: "success",
+                                        });
+                                        Limpiar();
+                                        CargarDatos();
+                                    }
+                                    else {
+                                        swal(response, {
+                                            icon: "error",
+                                            buttons: "Aceptar"
+                                        });
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                        }
+                    })
+                });
+
+            }
+
+            var eliminarUsuario = function (tbody, tabla) {
+
+                $(tbody).off('click', 'button.btn-danger.btn-xs');
+                $(tbody).on('click', 'button.btn-danger.btn-xs', function () {
+
+                    var data = tabla.row($(this).parents('tr')).data();
+                    var dataToPost = {
+                        xsUsuario: data.usu_usuario
+                    }
+
+                    swal({
+                        title: "¿Está seguro que desea deshabilitar el usuario?",
+                        text: "",
+                        icon: "warning",
+                        buttons: ['Cancelar', 'Confirmar'],
+                        dangerMode: true,
+                    }).then(function (bElimina) {
+                        if (bElimina) {
+                            $.ajax({
+                                method: 'POST',
+                                url: '/Usuario/PostEliminarUsuario',
+                                data: JSON.stringify(dataToPost),
+                                contentType: 'application/json; charset=utf-8',
+                                success: function (response) {
+                                    if (response == '') {
+                                        swal("El usuario se deshabilitó correctamente", {
+                                            icon: "success",
+                                        });
+                                        Limpiar();
+                                        CargarDatos();
+                                    }
+                                    else {
+                                        swal({
+                                            title: "Error",
+                                            test: response,
+                                            icon: "error",
+                                            buttons: "Aceptar"
+                                        });
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                        }
+                    })
+                });
+
+            }
+
+            function PuedeGuardar()
+            {
+                var pass1 = $('#txtPass').val();
+                var pass2 = $('#txtPass2').val();
+                if (pass1 != pass2)
+                    return false;
+                else
+                    return true;
+            }
+
+            function guardarUsuario() {
+
+                if (PuedeGuardar())
+                {
+                    var dataToPost = {
+
+                        Nombre: $('#txtNombre').val(),
+                        Apellido: $('#txtApellido').val(),
+                        Grupo: $('#cmbGrupos').val(),
+                        Usuario: $('#txtUsuario').val(),
+                        Password: $('#txtPass').val()
+                    };
+
+                    $.ajax({
+
+                        method: 'POST',
+                        url: '/Usuario/PostGuardarUsuario',
+                        data: JSON.stringify(dataToPost),
+                        type: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (response) {
+                            if (response == '') {
+                                swal({
+                                    title: 'Usuarios',
+                                    text: 'Usuario guardado correctamente',
+                                    icon: 'success',
+                                    button: 'Aceptar'
+                                });
+                                $('#NuevoForm').modal('hide');
+                                Limpiar();
+                                CargarDatos();
+                            }
+                            else {
+                                swal({
+                                    title: 'Usuarios',
+                                    text: response,
+                                    icon: 'warning',
+                                    button: 'Aceptar'
+                                });
+                            }
+                        },
+                        error: function (error) {
+                            swal({
+                                title: 'Error',
+                                text: error,
+                                icon: 'error',
+                                button: 'Aceptar'
+                            });
+                        }
+                    });
+                }
+                else
+                {
+                    swal({
+                        title: 'Atención',
+                        text: 'Las contraseñas deben coincidir',
+                        icon: 'warning',
+                        button: 'Aceptar'
+                    });
+                }
+            }
+
+            $('#btnAgregar').click(function (e) {
+                e.preventDefault();
+                guardarUsuario();
+            });
+        });
+    </script>
+
+}
+
+@section Styles {
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+
+}

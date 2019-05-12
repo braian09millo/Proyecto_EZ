@@ -26,6 +26,7 @@ namespace Datos
         public string usu_nombre { get; set; }
         public string usu_apellido { get; set; }
         public Nullable<System.DateTime> usu_fecha_acceso { get; set; }
+        public string usu_delet { get; set; }
     
         public virtual grupo grupo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

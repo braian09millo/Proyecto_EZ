@@ -58,6 +58,7 @@
     <Compile Include="BusinessControllers\ProductoCtrl.cs" />
     <Compile Include="BusinessControllers\UsuarioCtrl.cs" />
     <Compile Include="Factory.cs" />
+    <Compile Include="Helpers\Encriptacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
