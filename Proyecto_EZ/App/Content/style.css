@@ -69,6 +69,7 @@ body {
     background-color: #333;
     color: antiquewhite;
     border-bottom: 0;
+    padding: 9px 11px;
 }
 
 .table-estilo tbody tr td  {
@@ -113,8 +114,8 @@ table.dataTable.no-footer {
 }
 
 .navbar-default {
-  background-color: #e12003;
-  border-color: #e12003;
+  background-color: #BC2707;
+  border-color: #BC2707;
 }
 .navbar-default .navbar-brand {
   color: #ecf0f1;
@@ -181,4 +182,17 @@ table.dataTable.no-footer {
     color: #1d1d1e;
     background-color: #f4edeb;
   }
+}
+
+.modal-content {
+    border-radius: 5px;
+}
+
+.modal-header {
+    background-color: #BC2707;
+    color: #fff
+}
+
+.modal-header > button.close {
+    color: #fff;
 }
