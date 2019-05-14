@@ -40,6 +40,32 @@ namespace App.Controllers
             return Json(resultadoJS, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult PostHabilitarUsuario(string xsUsuario)
+        {
+            string xsError = "";
+            xoUsuarioCtrl.HabilitarUsuario(xsUsuario, out xsError);
+            return Json(xsError);
+        }
+
+        public JsonResult PostEliminarUsuario(string xsUsuario)
+        {
+            string xsError = "";
+            xoUsuarioCtrl.EliminarUsuario(xsUsuario, out xsError);
+            return Json(xsError);
+        }
+
+        public JsonResult PostCambiarPassword(string xsUsuario, string xsPassAntigua, string xsPassNueva)
+        {
+            string xsError = "";
+
+            if (string.IsNullOrEmpty(xsPassAntigua) || string.IsNullOrEmpty(xsPassNueva))
+                xsError = "Ninguno de los campos puede ser nulo o vacío";
+            else
+                xoUsuarioCtrl.CambiarPassword(xsUsuario, xsPassAntigua, xsPassNueva, out xsError);
+
+            return Json(xsError);
+        }
+
         public JsonResult PostGuardarUsuario(UsuarioForm xoUsuario)
         {
             string xsError = "";

@@ -60,6 +60,86 @@ namespace Negocios.BusinessControllers
             return xoResultado;
         }
 
+        public void EliminarUsuario(string xsUsuario, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoUsuario = xoDB.usuario.Find(xsUsuario);
+
+                    if (xoUsuario != null)
+                    {
+                        xoUsuario.usu_delet = "S";
+                        xoDB.SaveChanges();
+                    }
+                    else
+                        xsError = "El usuario seleccionado no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public void CambiarPassword(string xsUsuario, string xsPassAntigua, string xsPassNueva, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoUsuario = xoDB.usuario.Find(xsUsuario);
+
+                    if (xoUsuario != null)
+                    {
+                        if (Encriptacion.EncriptarPassword(xsUsuario.ToUpper() + xsPassAntigua.ToUpper()).Equals(xoUsuario.usu_password))
+                        {
+                            xoUsuario.usu_password = Encriptacion.EncriptarPassword(xoUsuario.usu_usuario.ToUpper() + xsPassNueva.ToUpper());
+                            xoDB.SaveChanges();
+                        }
+                        else
+                            xsError = "Las contraseña ingresada no coincide con la antigua";
+                    }
+                    else
+                        xsError = "El usuario no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public void HabilitarUsuario(string xsUsuario, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoUsuario = xoDB.usuario.Find(xsUsuario);
+
+                    if (xoUsuario != null)
+                    {
+                        xoUsuario.usu_delet = "N";
+                        xoDB.SaveChanges();
+                    }
+                    else
+                        xsError = "El usuario seleccionado no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
         public void GuardarUsuario(UsuarioForm xoUsuario, out string xsError)
         {
             xsError = "";

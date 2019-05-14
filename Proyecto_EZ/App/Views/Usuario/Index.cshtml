@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="form-group" id="usuario">
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="txtUsuario" name="usuario" placeholder="Usuario" />
+                                        <input type="text" class="form-control" id="txtUsuario" name="usuario" placeholder="Usuario" maxlength="10"/>
                                     </div>
                                 </div>
                                 <div class="form-group" id="passVieja" style="display: none;">
@@ -92,7 +92,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <button class="btn btn-success" type="submit" id="btnAgregar"><i class="fas fa-save"></i>&nbsp;Guardar</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp;Cancelar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp;Cancelar</button>                            
                         </div>
                     </div>
                 </div>
@@ -105,6 +105,8 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+
+            var bCambiaPassword = false;
 
             //Cargamos la grilla al iniciar
             CargarDatos();
@@ -127,8 +129,10 @@
                 $('#apellido').css('display', 'block');
                 $('#grupos').css('display', 'block');
                 $('#txtUsuario').prop('readonly', false);
+                $('#passVieja').css('display', 'none');
                 $('#pass').css('display', 'block');
                 $('#passConf').css('display', 'block');
+                bCambiaPassword = false;
             });
 
             function CargarDatos() {
@@ -194,16 +198,16 @@
                 $(tbody).on('click', 'button.btn-warning.btn-xs', function () {
 
                     var data = tabla.row($(this).parents('tr')).data();
+                    bCambiaPassword = true;
 
                     $('#nombre').css('display', 'none');
                     $('#apellido').css('display', 'none');
                     $('#grupos').css('display', 'none');
                     $('#txtUsuario').val(data.usu_usuario).prop('readonly', true);
-                    $('#passVieja').css('display', 'block').val(data.usu_password);
+                    $('#passVieja').css('display', 'block');
                     $('#pass').css('display', 'block');
-                    $('#passConf').css('display', 'block');
-                    $('#txtPassVieja').val(data.usu_password);                   
-
+                    $('#passConf').css('display', 'block');                  
+                    console.log(bCambiaPassword);
                     $('#NuevoForm').modal('show');
                 });
             }
@@ -220,7 +224,8 @@
                     $('#cmbGrupos').val(data.usu_grupo);
                     $('#txtUsuario').val(data.usu_usuario);
                     $('#pass').css('display', 'none');
-                    $('#passConf').css('display','none');
+                    $('#passConf').css('display', 'none');
+                    $('#passVieja').css('display', 'none');
 
                     $('#NuevoForm').modal('show');
                 });
@@ -397,10 +402,75 @@
                 }
             }
 
+            function guardarPasswordNueva() {
+                
+                if (PuedeGuardar()) {
+
+                    var dataToPost = {
+                        xsUsuario: $('#txtUsuario').val(),
+                        xsPassAntigua: $('#txtPassVieja').val(),
+                        xsPassNueva: $('#txtPass').val()
+                    };
+
+                    $.ajax({
+
+                        method: 'POST',
+                        url: '/Usuario/PostCambiarPassword',
+                        data: JSON.stringify(dataToPost),
+                        type: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (response) {
+                            if (response == '') {
+                                swal({
+                                    title: 'Usuarios',
+                                    text: 'Contraseña cambiada correctamente. Será redirigido hacia el login para ingresar nuevamente...',
+                                    icon: 'success',
+                                    button: 'Aceptar'
+                                });
+                                $('#NuevoForm').modal('hide');
+                                bCambiaPassword = false;
+                                Limpiar();
+                                CargarDatos();
+                                //setTimeout(window.open('/Login/Index'), 3000);
+                            }
+                            else {
+                                swal({
+                                    title: 'Usuarios',
+                                    text: response,
+                                    icon: 'warning',
+                                    button: 'Aceptar'
+                                });
+                            }
+                        },
+                        error: function (error) {
+                            swal({
+                                title: 'Error',
+                                text: error,
+                                icon: 'error',
+                                button: 'Aceptar'
+                            });
+                        }
+                    });
+                }
+                else {
+                    swal({
+                        title: 'Atención',
+                        text: 'Las contraseñas deben coincidir',
+                        icon: 'warning',
+                        button: 'Aceptar'
+                    });
+                }
+            }
+
             $('#btnAgregar').click(function (e) {
                 e.preventDefault();
-                guardarUsuario();
+                console.log(bCambiaPassword);
+                if (bCambiaPassword)
+                    guardarPasswordNueva();
+                else
+                    guardarUsuario();
             });
+
         });
     </script>
 

@@ -15,5 +15,6 @@ namespace Entidades
         public DateTime? usu_fecha_acceso { get; set; }
         public string usu_password { get; set; }
         public byte usu_grupo { get; set; }
+        public string usu_delet { get; set; }
     }
 }

@@ -101,7 +101,7 @@ body {
 }
 
 table.dataTable.no-footer {
-     border-bottom: 0; 
+     border-bottom: 1px solid #ddd; 
 }
 
 .form-group > label::after {
