@@ -37,6 +37,7 @@
         <EntityTypeShape EntityType="Modelo.pedido_detalle" Width="1.5" PointX="16.5" PointY="5.25" />
         <AssociationConnector Association="Modelo.FK_Pedido_DetallePedido" />
         <AssociationConnector Association="Modelo.FK_Producto_DetallePedido" />
+        <EntityTypeShape EntityType="Modelo.gasto" Width="1.5" PointX="0.75" PointY="9.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

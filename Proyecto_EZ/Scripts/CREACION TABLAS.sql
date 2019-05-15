@@ -165,6 +165,14 @@ CREATE TABLE AuxPrecios
 	CONSTRAINT PK_AuxPrecios PRIMARY KEY (Marca,Tamanio)
 )
 
+CREATE TABLE gasto
+(
+	gas_id INT IDENTITY PRIMARY KEY,
+	gas_fecha DATETIME NOT NULL,
+	gas_descripcion VARCHAR(100) NOT NULL,
+	gas_monto MONEY NOT NULL
+)
+
 GO
 
 --Inicializacion de tablas

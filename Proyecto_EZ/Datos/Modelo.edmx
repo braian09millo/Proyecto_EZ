@@ -32,6 +32,15 @@
           <Property Name="cli_mail" Type="varchar" MaxLength="50" />
           <Property Name="cli_delet" Type="char" MaxLength="1" />
         </EntityType>
+        <EntityType Name="gasto">
+          <Key>
+            <PropertyRef Name="gas_id" />
+          </Key>
+          <Property Name="gas_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="gas_fecha" Type="datetime" Nullable="false" />
+          <Property Name="gas_descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="gas_monto" Type="money" Nullable="false" />
+        </EntityType>
         <EntityType Name="grupo">
           <Key>
             <PropertyRef Name="gru_id" />
@@ -355,6 +364,7 @@
         <EntityContainer Name="ModeloStoreContainer">
           <EntitySet Name="AuxPrecios" EntityType="Self.AuxPrecios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cliente" EntityType="Self.cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="gasto" EntityType="Self.gasto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="grupo" EntityType="Self.grupo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="localidad" EntityType="Self.localidad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="marca" EntityType="Self.marca" Schema="dbo" store:Type="Tables" />
@@ -519,6 +529,7 @@
             <End Role="producto" EntitySet="producto" />
             <End Role="pedido_detalle" EntitySet="pedido_detalle" />
           </AssociationSet>
+          <EntitySet Name="gasto" EntityType="Modelo.gasto" />
           </EntityContainer>
         <EntityType Name="localidad">
           <Key>
@@ -899,6 +910,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="gasto">
+          <Key>
+            <PropertyRef Name="gas_id" />
+          </Key>
+          <Property Name="gas_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="gas_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="gas_descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="gas_monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1070,6 +1090,16 @@
                 <ScalarProperty Name="det_cantidad" ColumnName="det_cantidad" />
                 <ScalarProperty Name="det_producto" ColumnName="det_producto" />
                 <ScalarProperty Name="det_pedido" ColumnName="det_pedido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="gasto">
+            <EntityTypeMapping TypeName="Modelo.gasto">
+              <MappingFragment StoreEntitySet="gasto">
+                <ScalarProperty Name="gas_monto" ColumnName="gas_monto" />
+                <ScalarProperty Name="gas_descripcion" ColumnName="gas_descripcion" />
+                <ScalarProperty Name="gas_fecha" ColumnName="gas_fecha" />
+                <ScalarProperty Name="gas_id" ColumnName="gas_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

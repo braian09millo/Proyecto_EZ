@@ -57,6 +57,9 @@
     <Compile Include="cliente.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="gasto.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="grupo.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

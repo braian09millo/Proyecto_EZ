@@ -1,0 +1,414 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="padding-top: 50px;">
+    <h2 class="h2 text-center">GASTOS</h2>
+    <br />
+    <div class="row">
+        <form class="form-horizontal">
+            <div class="col-md-4 col-sm-4 col-xs-3"></div>
+            <div class="col-md-4 col-sm-4 col-xs-6">
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Desde</label>
+                    <div class="col-sm-7">
+                        <input type="date" id="txtDesde" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Hasta</label>
+                    <div class="col-sm-7">
+                        <input type="date" id="txtHasta" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-block btn-success" id="btnBuscar">Buscar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-3"></div>
+        </form>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <button id="btnNuevo" class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-plus"></i>&nbsp;&nbsp;Nueva Gasto</button>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="tableGastos" class="table table-hover table-condensed table-bordered table-estilo">
+                            <thead>
+                                <tr>
+                                    <td>Fecha</td>
+                                    <td>Descripción</td>
+                                    <td>Monto</td>
+                                    <td>Acciones</td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+
+    <div class="modal fade" id="NuevoForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Agregar/Modificar Gastos</h4>
+                </div>
+                <div class="modal-body">
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8">
+                            <form id="GastoForm" class="form-horizontal">
+                                <input type="hidden" id="txtId" name="id" />
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input type="date" class="form-control" id="txtFecha" name="fecha" placeholder="Fecha" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="txtDescr" name="descr" placeholder="Descripcion" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="txtMonto" name="monto" placeholder="Monto" />
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button class="btn btn-success" type="submit" id="btnGuardar"><i class="fas fa-save"></i>&nbsp;Guardar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp;Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            CargarFechas();
+            CargarDatos();
+
+            //Cargarmos los datepickers
+            function CargarFechas() {
+
+                var today = new Date();
+                var anio = today.getFullYear();
+                var mes = today.getMonth();
+                var mesSig = today.getMonth() + 1;
+                var dia = today.getDate();
+
+                if (mes < 10)
+                    mes = '0' + mes;
+
+                if (mesSig < 10)
+                    mesSig = '0' + mesSig;
+
+                if (dia < 10)
+                    dia = '0' + dia;
+
+                var fechaDesde = anio + '-' + mes + '-' + dia;
+                var fechaHasta = anio + '-' + mesSig + '-' + dia;
+
+                document.getElementById("txtDesde").value = fechaDesde;
+                document.getElementById("txtHasta").value = fechaHasta;
+            }
+
+            function toDate(fecha) {
+
+                var parts = fecha.split('-');
+                var f = new Date(parts[2], parts[1], parts[0]);
+                var anio = f.getFullYear();
+                var mes = f.getMonth();
+                var dia = f.getDate();
+
+                if (mes < 10)
+                    mes = '0' + mes;
+
+                if (dia < 10)
+                    dia = '0' + dia;
+
+                var fechaEntrega = anio + '-' + mes + '-' + dia;
+
+                return fechaEntrega;
+            }
+
+            function Limpiar() {
+                $("#tableGastos").dataTable().fnDestroy();
+            }
+
+            $('#NuevoForm').on('hidden.bs.modal', function (e) {
+
+                $(this)
+                  .find("input[type=text],textarea,select")
+                     .val('')
+                     .end()
+                  .find("input[type=checkbox], input[type=radio]")
+                     .prop("checked", "")
+                     .end();
+
+                $('#txtId').val(0);
+            });
+
+            function CargarDatos() {
+
+                var fechaDesde = $('#txtDesde').val();
+                var fechaHasta = $('#txtHasta').val();
+
+                var url = '/Gasto/GetGastos?xsFechaDesde=' + fechaDesde + '&xsFechaHasta=' + fechaHasta;
+
+                var tabla = $('#tableGastos').DataTable({
+                    select: true,
+                    "ajax": url,
+                    "info": false,
+                    aoColumnDefs: [
+                        { targets: [0], "bSortable": true },
+                        { targets: [1], "bSortable": true },
+                        { targets: [2], "bSortable": true },
+                        {
+                            "targets": 3,
+                            "data": null,
+                            "bSortable": false,
+                            "width": "20%",
+                            "defaultContent": '<button class="btn btn-info btn-xs" title="Editar"><i class="glyphicon glyphicon-pencil"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>'
+                        }
+                    ],
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                    },
+                    initComplete: function (settings, json) {
+
+                        if (json.error !== "") {
+                            swal({
+                                title: "Error",
+                                text: json.error,
+                                icon: "error",
+                                button: "Aceptar"
+                            });
+                        }
+                        else {
+                            data: json.data;
+                        }
+                    }
+                });
+
+                editarGasto('#tableGastos tbody', tabla);
+                eliminarGasto('#tableGastos tbody', tabla);
+            }
+
+
+            function editarGasto(tbody, tabla) {
+
+                $(tbody).off('click', 'button.btn-info.btn-xs');
+                $(tbody).on('click', 'button.btn-info.btn-xs', function () {
+
+                    var data = tabla.row($(this).parents('tr')).data();
+                    var gasto = JSON.parse(data[4]);
+
+                    $('#txtId').val(gasto.gas_id);
+                    $('#txtDescr').val(gasto.gas_descripcion);
+                    document.getElementById("txtFecha").value = toDate(gasto.gas_fecha);
+                    $('#txtMonto').val(gasto.gas_monto);
+
+                    $('#NuevoForm').modal('show');
+                });
+            }
+
+            function eliminarGasto(tbody, tabla) {
+
+                $(tbody).off('click', 'button.btn-danger.btn-xs');
+                $(tbody).on('click', 'button.btn-danger.btn-xs', function () {
+
+                    var data = tabla.row($(this).parents('tr')).data();
+                    var dataToPost = {
+                        xiId: data.gas_id
+                    }
+
+                    swal({
+                        title: "¿Está seguro que desea eliminar el siguiente gasto?",
+                        text: "",
+                        icon: "warning",
+                        buttons: ['Cancelar', 'Confirmar'],
+                        dangerMode: true,
+                    }).then(function (bElimina) {
+                        if (bElimina) {
+                            $.ajax({
+                                method: 'POST',
+                                url: '/Gasto/PostEliminarGasto',
+                                data: JSON.stringify(dataToPost),
+                                contentType: 'application/json; charset=utf-8',
+                                success: function (response) {
+                                    if (response == '') {
+                                        swal("El registro se eliminó correctamente", {
+                                            icon: "success",
+                                        });
+                                        Limpiar();
+                                        CargarDatos();
+                                    }
+                                    else {
+                                        swal({
+                                            title: "Error",
+                                            test: response,
+                                            icon: "error",
+                                            buttons: "Aceptar"
+                                        });
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                        }
+                    })
+                });
+
+            }
+
+            function PuedeGuardar(objError) {
+
+                var fecha = $('#txtFecha').val();
+                var monto = $('#txtMonto').val();
+                var descr = $('#txtDescr').val();
+
+                if (fecha == null || fecha == '' || fecha == undefined) {
+                    objError.bPuede = false;
+                    objError.msj = "Debe ingresar la fecha del gasto";
+                }
+
+                if (monto == null || monto == '' || monto == undefined) {
+                    objError.bPuede = false;
+                    objError.msj = "Debe ingresar el monto del gasto";
+                }
+
+
+                if (descr == null || descr == '' || descr == undefined) {
+                    objError.bPuede = false;
+                    objError.msj = "Debe ingresar la descripción del gasto";
+                }
+
+                return objError.bPuede;
+            }
+
+            function guardarGasto() {
+
+                var objError = {
+                    bPuede: true,
+                    msj: ''
+                }
+
+                if (PuedeGuardar(objError)) {
+                    var dataToPost = {
+
+                        Id: $('#txtId').val(),
+                        Fecha: $('#txtFecha').val(),
+                        Monto: $('#txtMonto').val(),
+                        Descripcion: $('#txtDescr').val()
+                    };
+
+                    $.ajax({
+
+                        method: 'POST',
+                        url: '/Gasto/PostGuardarGasto',
+                        data: JSON.stringify(dataToPost),
+                        type: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (response) {
+                            if (response == '') {
+                                swal({
+                                    title: 'Gastos',
+                                    text: 'Gasto guardado correctamente',
+                                    icon: 'success',
+                                    button: 'Aceptar'
+                                });
+                                $('#NuevoForm').modal('hide');
+                                Limpiar();
+                                CargarDatos();
+                            }
+                            else {
+                                swal({
+                                    title: 'Gastos',
+                                    text: response,
+                                    icon: 'warning',
+                                    button: 'Aceptar'
+                                });
+                            }
+                        },
+                        error: function (error) {
+                            swal({
+                                title: 'Error',
+                                text: error,
+                                icon: 'error',
+                                button: 'Aceptar'
+                            });
+                        }
+                    });
+                }
+                else {
+                    swal({
+                        title: 'Atención',
+                        text: objError.msj,
+                        icon: 'warning',
+                        button: 'Aceptar'
+                    });
+                }
+            }
+
+            $('#btnGuardar').click(function (e) {
+                e.preventDefault();
+                guardarGasto();
+            });
+
+            $('#btnBuscar').click(function (e) {
+                e.preventDefault();
+                CargarDatos();
+            });
+        });
+    </script>
+
+}
+
+@section Styles {
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+
+}
+
+
+
+
+
