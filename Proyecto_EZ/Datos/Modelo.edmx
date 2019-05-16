@@ -81,7 +81,7 @@
           <Property Name="ped_cliente" Type="int" Nullable="false" />
           <Property Name="ped_fecha" Type="datetime" Nullable="false" />
           <Property Name="ped_monto" Type="money" Nullable="false" />
-          <Property Name="ped_resto" Type="money" Nullable="false" />
+          <Property Name="ped_factu" Type="money" Nullable="false" />
           <Property Name="ped_estado" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="ped_repartidor" Type="varchar" MaxLength="10" />
         </EntityType>
@@ -502,15 +502,25 @@
             <End Role="grupo" EntitySet="grupo" />
             <End Role="usuario" EntitySet="usuario" />
           </AssociationSet>
-          <EntitySet Name="pedido" EntityType="Modelo.pedido" />
           <EntitySet Name="remito" EntityType="Modelo.remito" />
+          <AssociationSet Name="FK_Cliente_Remito" Association="Modelo.FK_Cliente_Remito">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="remito" EntitySet="remito" />
+          </AssociationSet>
+          <EntitySet Name="pedido_detalle" EntityType="Modelo.pedido_detalle" />
+          <AssociationSet Name="FK_Producto_DetallePedido" Association="Modelo.FK_Producto_DetallePedido">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="pedido_detalle" EntitySet="pedido_detalle" />
+          </AssociationSet>
+          <EntitySet Name="gasto" EntityType="Modelo.gasto" />
+          <EntitySet Name="pedido" EntityType="Modelo.pedido" />
           <AssociationSet Name="FK_Cliente_Pedido" Association="Modelo.FK_Cliente_Pedido">
             <End Role="cliente" EntitySet="cliente" />
             <End Role="pedido" EntitySet="pedido" />
           </AssociationSet>
-          <AssociationSet Name="FK_Cliente_Remito" Association="Modelo.FK_Cliente_Remito">
-            <End Role="cliente" EntitySet="cliente" />
-            <End Role="remito" EntitySet="remito" />
+          <AssociationSet Name="FK_Pedido_DetallePedido" Association="Modelo.FK_Pedido_DetallePedido">
+            <End Role="pedido" EntitySet="pedido" />
+            <End Role="pedido_detalle" EntitySet="pedido_detalle" />
           </AssociationSet>
           <AssociationSet Name="FK_Pedido_Remito" Association="Modelo.FK_Pedido_Remito">
             <End Role="pedido" EntitySet="pedido" />
@@ -520,16 +530,6 @@
             <End Role="usuario" EntitySet="usuario" />
             <End Role="pedido" EntitySet="pedido" />
           </AssociationSet>
-          <EntitySet Name="pedido_detalle" EntityType="Modelo.pedido_detalle" />
-          <AssociationSet Name="FK_Pedido_DetallePedido" Association="Modelo.FK_Pedido_DetallePedido">
-            <End Role="pedido" EntitySet="pedido" />
-            <End Role="pedido_detalle" EntitySet="pedido_detalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Producto_DetallePedido" Association="Modelo.FK_Producto_DetallePedido">
-            <End Role="producto" EntitySet="producto" />
-            <End Role="pedido_detalle" EntitySet="pedido_detalle" />
-          </AssociationSet>
-          <EntitySet Name="gasto" EntityType="Modelo.gasto" />
           </EntityContainer>
         <EntityType Name="localidad">
           <Key>
@@ -738,8 +738,8 @@
           <Property Name="cli_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="localidad" Relationship="Modelo.FK_Localidad_Cliente" FromRole="cliente" ToRole="localidad" />
           <NavigationProperty Name="provincia" Relationship="Modelo.FK_Provincia_Cliente" FromRole="cliente" ToRole="provincia" />
-          <NavigationProperty Name="pedido" Relationship="Modelo.FK_Cliente_Pedido" FromRole="cliente" ToRole="pedido" />
           <NavigationProperty Name="remito" Relationship="Modelo.FK_Cliente_Remito" FromRole="cliente" ToRole="remito" />
+          <NavigationProperty Name="pedido" Relationship="Modelo.FK_Cliente_Pedido" FromRole="cliente" ToRole="pedido" />
         </EntityType>
         <EntityType Name="grupo">
           <Key>
@@ -760,8 +760,8 @@
           <Property Name="usu_apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="usu_fecha_acceso" Type="DateTime" Precision="3" />
           <NavigationProperty Name="grupo" Relationship="Modelo.FK_Grupo_Usuario" FromRole="usuario" ToRole="grupo" />
-          <NavigationProperty Name="pedido" Relationship="Modelo.FK_Usuario_Pedido" FromRole="usuario" ToRole="pedido" />
           <Property Name="usu_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="pedido" Relationship="Modelo.FK_Usuario_Pedido" FromRole="usuario" ToRole="pedido" />
         </EntityType>
         <Association Name="FK_Localidad_Cliente">
           <End Type="Modelo.localidad" Role="localidad" Multiplicity="1" />
@@ -799,22 +799,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="pedido">
-          <Key>
-            <PropertyRef Name="ped_id" />
-          </Key>
-          <Property Name="ped_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ped_cliente" Type="Int32" Nullable="false" />
-          <Property Name="ped_fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ped_monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="ped_resto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="ped_estado" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="ped_repartidor" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="cliente" Relationship="Modelo.FK_Cliente_Pedido" FromRole="pedido" ToRole="cliente" />
-          <NavigationProperty Name="remito" Relationship="Modelo.FK_Pedido_Remito" FromRole="pedido" ToRole="remito" />
-          <NavigationProperty Name="usuario" Relationship="Modelo.FK_Usuario_Pedido" FromRole="pedido" ToRole="usuario" />
-          <NavigationProperty Name="pedido_detalle" Relationship="Modelo.FK_Pedido_DetallePedido" FromRole="pedido" ToRole="pedido_detalle" />
-        </EntityType>
         <EntityType Name="remito">
           <Key>
             <PropertyRef Name="rem_numero" />
@@ -824,6 +808,68 @@
           <Property Name="rem_pedido" Type="Int32" Nullable="false" />
           <NavigationProperty Name="cliente" Relationship="Modelo.FK_Cliente_Remito" FromRole="remito" ToRole="cliente" />
           <NavigationProperty Name="pedido" Relationship="Modelo.FK_Pedido_Remito" FromRole="remito" ToRole="pedido" />
+        </EntityType>
+        <Association Name="FK_Cliente_Remito">
+          <End Type="Modelo.cliente" Role="cliente" Multiplicity="1" />
+          <End Type="Modelo.remito" Role="remito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="cli_id" />
+            </Principal>
+            <Dependent Role="remito">
+              <PropertyRef Name="rem_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="pedido_detalle">
+          <Key>
+            <PropertyRef Name="det_pedido" />
+            <PropertyRef Name="det_producto" />
+          </Key>
+          <Property Name="det_pedido" Type="Int32" Nullable="false" />
+          <Property Name="det_producto" Type="Int32" Nullable="false" />
+          <Property Name="det_cantidad" Type="Int32" Nullable="false" />
+          <Property Name="det_precio" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="det_monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="producto" Relationship="Modelo.FK_Producto_DetallePedido" FromRole="pedido_detalle" ToRole="producto" />
+          <NavigationProperty Name="pedido" Relationship="Modelo.FK_Pedido_DetallePedido" FromRole="pedido_detalle" ToRole="pedido" />
+        </EntityType>
+        <Association Name="FK_Producto_DetallePedido">
+          <End Type="Modelo.producto" Role="producto" Multiplicity="1" />
+          <End Type="Modelo.pedido_detalle" Role="pedido_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="prod_id" />
+            </Principal>
+            <Dependent Role="pedido_detalle">
+              <PropertyRef Name="det_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="gasto">
+          <Key>
+            <PropertyRef Name="gas_id" />
+          </Key>
+          <Property Name="gas_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="gas_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="gas_descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="gas_monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="pedido">
+          <Key>
+            <PropertyRef Name="ped_id" />
+          </Key>
+          <Property Name="ped_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ped_cliente" Type="Int32" Nullable="false" />
+          <Property Name="ped_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ped_monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ped_factu" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ped_estado" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ped_repartidor" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cliente" Relationship="Modelo.FK_Cliente_Pedido" FromRole="pedido" ToRole="cliente" />
+          <NavigationProperty Name="pedido_detalle" Relationship="Modelo.FK_Pedido_DetallePedido" FromRole="pedido" ToRole="pedido_detalle" />
+          <NavigationProperty Name="remito" Relationship="Modelo.FK_Pedido_Remito" FromRole="pedido" ToRole="remito" />
+          <NavigationProperty Name="usuario" Relationship="Modelo.FK_Usuario_Pedido" FromRole="pedido" ToRole="usuario" />
         </EntityType>
         <Association Name="FK_Cliente_Pedido">
           <End Type="Modelo.cliente" Role="cliente" Multiplicity="1" />
@@ -837,15 +883,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Cliente_Remito">
-          <End Type="Modelo.cliente" Role="cliente" Multiplicity="1" />
-          <End Type="Modelo.remito" Role="remito" Multiplicity="*" />
+        <Association Name="FK_Pedido_DetallePedido">
+          <End Type="Modelo.pedido" Role="pedido" Multiplicity="1" />
+          <End Type="Modelo.pedido_detalle" Role="pedido_detalle" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="cliente">
-              <PropertyRef Name="cli_id" />
+            <Principal Role="pedido">
+              <PropertyRef Name="ped_id" />
             </Principal>
-            <Dependent Role="remito">
-              <PropertyRef Name="rem_cliente" />
+            <Dependent Role="pedido_detalle">
+              <PropertyRef Name="det_pedido" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -873,52 +919,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="pedido_detalle">
-          <Key>
-            <PropertyRef Name="det_pedido" />
-            <PropertyRef Name="det_producto" />
-          </Key>
-          <Property Name="det_pedido" Type="Int32" Nullable="false" />
-          <Property Name="det_producto" Type="Int32" Nullable="false" />
-          <Property Name="det_cantidad" Type="Int32" Nullable="false" />
-          <Property Name="det_precio" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="det_monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="pedido" Relationship="Modelo.FK_Pedido_DetallePedido" FromRole="pedido_detalle" ToRole="pedido" />
-          <NavigationProperty Name="producto" Relationship="Modelo.FK_Producto_DetallePedido" FromRole="pedido_detalle" ToRole="producto" />
-        </EntityType>
-        <Association Name="FK_Pedido_DetallePedido">
-          <End Type="Modelo.pedido" Role="pedido" Multiplicity="1" />
-          <End Type="Modelo.pedido_detalle" Role="pedido_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="pedido">
-              <PropertyRef Name="ped_id" />
-            </Principal>
-            <Dependent Role="pedido_detalle">
-              <PropertyRef Name="det_pedido" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Producto_DetallePedido">
-          <End Type="Modelo.producto" Role="producto" Multiplicity="1" />
-          <End Type="Modelo.pedido_detalle" Role="pedido_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="producto">
-              <PropertyRef Name="prod_id" />
-            </Principal>
-            <Dependent Role="pedido_detalle">
-              <PropertyRef Name="det_producto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="gasto">
-          <Key>
-            <PropertyRef Name="gas_id" />
-          </Key>
-          <Property Name="gas_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="gas_fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="gas_descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="gas_monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1060,19 +1060,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="pedido">
-            <EntityTypeMapping TypeName="Modelo.pedido">
-              <MappingFragment StoreEntitySet="pedido">
-                <ScalarProperty Name="ped_repartidor" ColumnName="ped_repartidor" />
-                <ScalarProperty Name="ped_estado" ColumnName="ped_estado" />
-                <ScalarProperty Name="ped_resto" ColumnName="ped_resto" />
-                <ScalarProperty Name="ped_monto" ColumnName="ped_monto" />
-                <ScalarProperty Name="ped_fecha" ColumnName="ped_fecha" />
-                <ScalarProperty Name="ped_cliente" ColumnName="ped_cliente" />
-                <ScalarProperty Name="ped_id" ColumnName="ped_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="remito">
             <EntityTypeMapping TypeName="Modelo.remito">
               <MappingFragment StoreEntitySet="remito">
@@ -1100,6 +1087,19 @@
                 <ScalarProperty Name="gas_descripcion" ColumnName="gas_descripcion" />
                 <ScalarProperty Name="gas_fecha" ColumnName="gas_fecha" />
                 <ScalarProperty Name="gas_id" ColumnName="gas_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pedido">
+            <EntityTypeMapping TypeName="Modelo.pedido">
+              <MappingFragment StoreEntitySet="pedido">
+                <ScalarProperty Name="ped_repartidor" ColumnName="ped_repartidor" />
+                <ScalarProperty Name="ped_estado" ColumnName="ped_estado" />
+                <ScalarProperty Name="ped_factu" ColumnName="ped_factu" />
+                <ScalarProperty Name="ped_monto" ColumnName="ped_monto" />
+                <ScalarProperty Name="ped_fecha" ColumnName="ped_fecha" />
+                <ScalarProperty Name="ped_cliente" ColumnName="ped_cliente" />
+                <ScalarProperty Name="ped_id" ColumnName="ped_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

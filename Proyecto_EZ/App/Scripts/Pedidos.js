@@ -401,7 +401,7 @@ $(document).ready(function () {
             $('#BodyDetalle > tr').remove();
 
             var data = tabla.row($(this).parents('tr')).data();
-            var items = JSON.parse(data[9]);
+            var items = JSON.parse(data[10]);
 
             for (var i = 0; i < items.length; i++) {
 

@@ -17,8 +17,8 @@ namespace Datos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public cliente()
         {
-            this.pedido = new HashSet<pedido>();
             this.remito = new HashSet<remito>();
+            this.pedido = new HashSet<pedido>();
         }
     
         public int cli_id { get; set; }
@@ -36,8 +36,8 @@ namespace Datos
         public virtual localidad localidad { get; set; }
         public virtual provincia provincia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<pedido> pedido { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<remito> remito { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<pedido> pedido { get; set; }
     }
 }

@@ -26,10 +26,11 @@ WITH ENCRYPTION AS
 			WHEN 'PP' THEN 'PAGO PARCIAL' 
 		END AS EstadoDescripcion,
 		ped_monto AS Monto,
-		ped_resto AS Facturado,
+		ped_factu AS Facturado,
 		ISNULL(usu_nombre, '') AS Repartidor,
 		ped_estado AS Estado,
-		cli_id AS IdCliente
+		cli_id AS IdCliente,
+		usu_usuario AS IdRepartidor
 	FROM pedido
 	LEFT JOIN cliente ON cli_id = ped_cliente
 	LEFT JOIN usuario ON usu_usuario = ped_repartidor

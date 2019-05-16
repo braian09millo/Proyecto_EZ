@@ -10,8 +10,8 @@ WITH ENCRYPTION AS
 SELECT max(cli_nombre) as Nombre,
 		count(*) as [Cantidad Pedidos],
 		SUM(ped_monto) [Monto Remitos],
-		SUM(ped_resto) [Debe],
-		SUM(ped_monto)-SUM(ped_resto) Facturado,
+		SUM(ped_factu) [Debe],
+		SUM(ped_monto)-SUM(ped_factu) Facturado,
 		max(usu_nombre) Repartidor
 	FROM Pedido
 	JOIN cliente on cli_id = ped_cliente

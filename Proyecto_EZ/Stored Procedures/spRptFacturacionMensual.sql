@@ -14,8 +14,8 @@ SELECT
 		sum(det_cantidad) Packs,
 		sum(prd_precioC*det_cantidad) costo,
 		max(ped_monto) MontoRemito,
-		max(ped_resto) Debe,
-		max(ped_monto)-isnull(max(ped_resto),0) Facturado,
+		max(ped_monto)-isnull(max(ped_factu),0) Debe,
+		max(ped_factu) Facturado,
 		isnull(max(usu_nombre),'-') Repartidor
 	FROM Pedido
 	JOIN pedido_detalle on det_pedido = ped_id

@@ -73,7 +73,7 @@
                                     <td>Fecha Entrega</td>
                                     <td>Estado</td>
                                     <td>Monto</td>
-                                    <td>Resta Pagar</td>
+                                    <td>Facturado</td>
                                     <td>Repartidor</td>
                                     <td>Acciones</td>
                                 </tr>
@@ -256,13 +256,13 @@
                 e.preventDefault();
 
                 var data = tabla.row($(this).parents('tr')).data();
-                var items = JSON.parse(data[9]);
+                var items = JSON.parse(data[10]);
                 var primerItem = items[0];
 
                 //Cargamos los datos especificos del pedido
                 $('#txtId').val(parseInt(data[0]));
                 $('#cmbClientesPedido').val(parseInt(data[8]));
-                $('#cmbUsuariosPedido').val(data[6]);
+                $('#cmbUsuariosPedido').val(data[9]);
                 $('#txtFacturado').val(parseFloat(data[5]));
                 $('#cmbEstadosPedido').val(data[7].trim());
                 document.getElementById("txtFechaEntrega").value = toDate(data[2]);

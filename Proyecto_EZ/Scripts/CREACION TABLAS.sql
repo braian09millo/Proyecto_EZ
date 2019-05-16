@@ -104,7 +104,7 @@ CREATE TABLE pedido
 	ped_cliente INT NOT NULL,
 	ped_fecha DATETIME NOT NULL,
 	ped_monto MONEY NOT NULL,
-	ped_resto MONEY NOT NULL,
+	ped_factu MONEY NOT NULL,
 	ped_estado CHAR(2) NOT NULL, /* C: cargado, E: entregado, F: facturado, PP: pago parcial */
 	ped_repartidor VARCHAR(10) NULL,
 	CONSTRAINT FK_Cliente_Pedido FOREIGN KEY (ped_cliente) REFERENCES CLIENTE(cli_id),

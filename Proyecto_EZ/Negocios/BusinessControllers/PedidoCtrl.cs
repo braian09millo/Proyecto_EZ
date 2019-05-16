@@ -45,7 +45,7 @@ namespace Negocios.BusinessControllers
                         //Actualizamos el pedido
                         xoPedido.ped_cliente = xiCliente;
                         xoPedido.ped_monto = Math.Round(xdTotal);
-                        xoPedido.ped_resto = Math.Round(xdTotal) - Math.Round(xdFacturado);
+                        xoPedido.ped_factu = Math.Round(xdFacturado);
                         xoPedido.ped_estado = xsEstado;
                         xoPedido.ped_repartidor = xsUsuario;
 
@@ -63,7 +63,7 @@ namespace Negocios.BusinessControllers
                             ped_cliente = xiCliente,
                             ped_fecha = xdFechaEntrega,
                             ped_monto = Math.Round(xdTotal),
-                            ped_resto = Math.Round(xdTotal) - Math.Round(xdFacturado),
+                            ped_factu = Math.Round(xdFacturado),
                             ped_estado = "C",
                             ped_repartidor = xsUsuario
                         };
@@ -130,7 +130,8 @@ namespace Negocios.BusinessControllers
                         string.Format("{0:0.##}", x.Facturado),
                         x.Repartidor,
                         x.Estado,
-                        x.IdCliente.ToString(),
+                        x.IdCliente.ToString(), 
+                        x.IdRepartidor,                       
                         JsonConvert.SerializeObject(x.PedidoDetalle)}).ToList();
                 }
                 catch (Exception ex)

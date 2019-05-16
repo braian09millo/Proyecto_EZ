@@ -18,6 +18,7 @@ namespace Entidades
         public string Repartidor { get; set; }
         public string Estado { get; set; }
         public int IdCliente { get; set; }
+        public string IdRepartidor { get; set; }
         public List<spGetPedidoDetalle> PedidoDetalle { get; set; }
     }
 }
