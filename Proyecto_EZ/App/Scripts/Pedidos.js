@@ -64,6 +64,8 @@ $(document).ready(function () {
              .prop("checked", "")
              .end();
 
+        document.getElementById("txtFechaEntrega").valueAsDate = null;
+
         LimpiarFormulario();
     });
 

@@ -82,5 +82,29 @@ namespace Negocios.BusinessControllers
                 }
             }
         }
+
+        public void EliminarGasto(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var loGasto = xoDB.gasto.Find(xiId);
+
+                    if (loGasto != null)
+                        xoDB.gasto.Remove(loGasto);
+                    else
+                        xsError = "El gasto seleccionado no existe";
+
+                    xoDB.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
     }
 }

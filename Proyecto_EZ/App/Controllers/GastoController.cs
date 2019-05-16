@@ -32,7 +32,6 @@ namespace App.Controllers
             var resultadoJS = new
             {
                 data = lstGastos.AsEnumerable().Select(x => new[] {
-                    x.gas_id.ToString(),
                     x.gas_fecha.ToString("dd-MM-yyyy"),
                     x.gas_descripcion,
                     string.Format("{0:0.##}", x.gas_monto),
@@ -49,6 +48,15 @@ namespace App.Controllers
             string xsError = "";
 
             xoGastoCtrl.GuardarGasto(xoGasto, out xsError);
+
+            return Json(xsError);
+        }
+
+        public JsonResult PostEliminarGasto(int xiId)
+        {
+            string xsError = "";
+
+            xoGastoCtrl.EliminarGasto(xiId, out xsError);
 
             return Json(xsError);
         }

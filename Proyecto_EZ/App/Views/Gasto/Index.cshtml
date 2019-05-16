@@ -181,6 +181,7 @@
                      .end();
 
                 $('#txtId').val(0);
+                document.getElementById("txtFecha").valueAsDate = null;
             });
 
             function CargarDatos() {
@@ -236,11 +237,11 @@
                 $(tbody).on('click', 'button.btn-info.btn-xs', function () {
 
                     var data = tabla.row($(this).parents('tr')).data();
-                    var gasto = JSON.parse(data[4]);
+                    var gasto = JSON.parse(data[3]);
 
                     $('#txtId').val(gasto.gas_id);
                     $('#txtDescr').val(gasto.gas_descripcion);
-                    document.getElementById("txtFecha").value = toDate(gasto.gas_fecha);
+                    document.getElementById("txtFecha").value = toDate(data[0]);
                     $('#txtMonto').val(gasto.gas_monto);
 
                     $('#NuevoForm').modal('show');
@@ -253,8 +254,10 @@
                 $(tbody).on('click', 'button.btn-danger.btn-xs', function () {
 
                     var data = tabla.row($(this).parents('tr')).data();
+                    var gasto = JSON.parse(data[3]);
+
                     var dataToPost = {
-                        xiId: data.gas_id
+                        xiId: gasto.gas_id
                     }
 
                     swal({
