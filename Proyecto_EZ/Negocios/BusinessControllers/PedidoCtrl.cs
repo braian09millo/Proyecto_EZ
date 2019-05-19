@@ -62,6 +62,7 @@ namespace Negocios.BusinessControllers
                         {
                             ped_cliente = xiCliente,
                             ped_fecha = xdFechaEntrega,
+                            ped_fechaCarga = DateTime.Now,
                             ped_monto = Math.Round(xdTotal),
                             ped_factu = Math.Round(xdFacturado),
                             ped_estado = "C",

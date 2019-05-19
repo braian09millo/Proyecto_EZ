@@ -103,6 +103,7 @@ CREATE TABLE pedido
 	ped_id INT IDENTITY PRIMARY KEY,
 	ped_cliente INT NOT NULL,
 	ped_fecha DATETIME NOT NULL,
+	ped_fechaCarga DATETIME NOT NULL,
 	ped_monto MONEY NOT NULL,
 	ped_factu MONEY NOT NULL,
 	ped_estado CHAR(2) NOT NULL, /* C: cargado, E: entregado, F: facturado, PP: pago parcial */
