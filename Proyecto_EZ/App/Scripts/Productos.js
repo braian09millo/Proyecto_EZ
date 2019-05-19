@@ -155,9 +155,9 @@ $(document).ready(function () {
         var valor = $(this).val();
 
         if (valor === null || valor === "" || valor === undefined)
-            $("#cmbModelos").val('');
+            $("#cmbModelos").prop('disabled',true).val('');
         else {
-            $("#cmbModelos").empty();
+            $("#cmbModelos").empty().prop('disabled',false);
             $('#cmbModelos').append("<option value=''>Elija un modelo</option>");
             $(optModelos).each(function () {
                 if ($(this).data("info") == valor) {

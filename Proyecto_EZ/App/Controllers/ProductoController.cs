@@ -20,17 +20,17 @@ namespace App.Controllers
             string xsError = "";
 
             //Cargamos el combo de marcas
-            var xoMarcas = xoProductoCtrl.ObtenerMarcas(out xsError);
+            var xoMarcas = xoProductoCtrl.ObtenerMarcas(out xsError).OrderBy(x => x.mar_nombre);
             var lstMarcas = xoMarcas.Select(x => new SelectListItem() { Value = x.mar_id.ToString(), Text = x.mar_nombre }).ToList();
             ViewBag.ComboMarcas = lstMarcas;
 
             //Cargamos el combo de tamanios
-            var xoTamanios = xoProductoCtrl.ObtenerTamanios(out xsError);
+            var xoTamanios = xoProductoCtrl.ObtenerTamanios(out xsError).OrderBy(x => x.tam_descripcion);
             var lstTamanios = xoTamanios.Select(x => new SelectListItem() { Value = x.tam_id.ToString(), Text = x.tam_descripcion }).ToList();
             ViewBag.ComboTamanios = lstTamanios;
 
             //Cargamos el combo de tipos
-            var xoTipos = xoProductoCtrl.ObtenerTipos(out xsError);
+            var xoTipos = xoProductoCtrl.ObtenerTipos(out xsError).OrderBy(x => x.tip_descr);
             var lstTipos = xoTipos.Select(x => new SelectListItem() { Value = x.tip_id.ToString(), Text = x.tip_descr }).ToList();
             ViewBag.ComboTipos = lstTipos;
 

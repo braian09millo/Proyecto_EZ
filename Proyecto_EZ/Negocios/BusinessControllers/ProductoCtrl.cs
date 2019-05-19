@@ -57,7 +57,7 @@ namespace Negocios.BusinessControllers
             {
                 using (BD_Entities xoDB = new BD_Entities())
                 {
-                    loModelos = xoDB.modelo.ToList();
+                    loModelos = xoDB.modelo.GroupBy(x => x.mod_nombre).Select(x => x.FirstOrDefault()).ToList();
                 }
             }
             catch (Exception ex)
