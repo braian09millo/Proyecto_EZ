@@ -1,0 +1,158 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EZ Distribuidora</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/login.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <div id="main-cnt" class="container">
+
+        <!-- PANEL DE INICIO SESIÓN-->
+        <div class="row">
+            <div class="col-xs-1 col-sm-3"></div>
+            <div class="col-xs-10 col-sm-6">
+
+                <!-- FORMULARIO DE INICIO -->
+                <div class="modal-content-login">
+                    <div class="header">
+                        <p>Bienvenido al sistema!</p>
+                    </div>
+                    <div class="body">
+                        <div class="content">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">Usuario</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="txtUsuario" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">Contraseña</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" id="txtPass" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-2"></div>
+                                    <div class="col-sm-10">
+                                        <button type="button" data-loading-text="Procesando..." id="btnIngresar" class="btn btn-danger btn-block">Ingresar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-1 col-sm-3"></div>
+        </div>
+    </div> <!-- FINAL CONTAINER -->
+    <!-- MODAL DE ERRORES -->
+    <div class="modal fade" id="modalErrores" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Error al iniciar sesión</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="mensajeError"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            function PuedeIngresar(objError) {
+
+                var usuario = $('#txtUsuario').val();
+                var pass = $('#txtPass').val();
+
+                if (usuario == '' || usuario == null || usuario == undefined) {
+                    objError.bPuede = false;
+                    objError.msj = 'Debe ingresar el usuario';
+                }
+
+                if (pass == '' || pass == null || pass == undefined) {
+                    objError.bPuede = false;
+                    objError.msj = 'Debe ingresar la contraseña';
+                }
+
+                return objError.bPuede;
+            }
+
+            ValidarUsuario = function() {
+
+                var objError = {
+                    bPuede: true,
+                    msj: ''
+                }
+
+                if (PuedeIngresar(objError)) {
+                    var usuario = $('#txtUsuario').val();
+                    var pass = $('#txtPass').val();
+
+                    console.log(usuario);
+                    console.log(pass);
+
+                    var dataToPost = {
+                        Usuario: usuario,
+                        Password: pass
+                    }
+
+                    $.ajax({
+
+                        method: 'POST',
+                        url: '/Login/VerificarSesion',
+                        data: { xoLogin: dataToPost },
+                        success: function (response) {
+                            if (response != '') {
+                                $('#mensajeError').html(response);
+                                $('#modalErrores').modal('show');
+                            }
+                            else {
+                                window.open('/Home/Index', '_self');
+                            }
+                        },
+                        error: function (error) {
+                            $('#mensajeError').html(error);
+                            $('#modalErrores').modal('show');
+                        }
+                    });
+                }
+                else {
+                    console.log(objError.msj);
+                    $('#mensajeError').html(objError.msj);
+                    $('#modalErrores').modal('show');
+                }
+            }
+
+
+        });
+       
+        $('#btnIngresar').on('click', function (e) {
+            e.preventDefault();
+            $btn = $(this);
+            $btn.button('loading');
+            setTimeout(function () {
+                ValidarUsuario();
+                $btn.button('reset');
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

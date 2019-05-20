@@ -1,0 +1,92 @@
+﻿@font-face {
+  font-family: myFirstFont;
+  src: url(../Fonts/Roboto-Regular.ttf);
+}
+
+@font-face {
+  font-family: hFont;
+  src: url(../Fonts/Raleway-Regular.ttf);
+}
+
+* {
+    font-family: hFont;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #eee;
+}
+
+#main-cnt {
+    margin-top: 100px;
+}
+
+.header {
+	padding: 25px;
+	position: relative;
+	border: 0;
+	width: 90%;
+	margin-left: 90px;
+	margin-bottom: 25px;
+	z-index: 1;
+	background: #DF0404;
+	top: 65px;
+	right: -2px;
+	border-radius: 4px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.header > p {
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	color: #fff;
+}
+
+.body {
+	padding: 15px;
+	border: 0;
+	background-color: #fff;
+	width: 100%;
+	margin-right: auto;
+	margin-left: auto;
+	box-shadow: 0 1px 5px 0 gray;
+	height: auto;
+    border-radius: 3px;
+}
+
+.body > .content {
+	margin-top: 55px;
+}
+
+.content > .btn-danger {
+	background-color:#DF0404 !important; 
+}
+
+.input-icon .form-control {	 
+	padding-left: 45px;
+}
+
+.input-icon {
+	position: relative;
+}
+
+.input-icon i {
+	position: absolute;
+	left: 0;
+	top: 1px;
+	padding: 9px 15px;
+	color: #aaaaaa;
+	transition: .3s;
+}
+
+.input-icon input:focus + i {
+	color: #ddd;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 1px solid #bbb;
+}

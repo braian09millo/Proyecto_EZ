@@ -23,19 +23,6 @@ namespace Negocios.BusinessControllers
             return _UsuarioCtrl;
         }
 
-        public List<grupo> obtenerGrupos(out string xsError)
-        {
-            xsError = "";
-            var xoResultado = new List<grupo>();
-
-            using (BD_Entities xoDB = new BD_Entities())
-            {
-                xoResultado = xoDB.grupo.ToList();
-            }
-
-            return xoResultado;
-        }
-
         #endregion
 
         #region COMPORTAMIENTO
@@ -177,6 +164,47 @@ namespace Negocios.BusinessControllers
                     xsError = ex.Message;
                 }
             }
+        }
+
+        public List<grupo> obtenerGrupos(out string xsError)
+        {
+            xsError = "";
+            var xoResultado = new List<grupo>();
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                xoResultado = xoDB.grupo.ToList();
+            }
+
+            return xoResultado;
+        }
+
+        public usuario ValidarIdentidadUsuario(string xsUsuario, out bool xbUsuarioValido, out string xsError)
+        {
+            xbUsuarioValido = default(bool);
+            xsError = "";
+            usuario xoUsuario = null;
+
+            try
+            {
+                using (BD_Entities xoDB = new BD_Entities())
+                {
+                    var _UsuarioEncontrado = xoDB.usuario.FirstOrDefault(u => u.usu_usuario == xsUsuario);
+                    if (_UsuarioEncontrado != null)
+                    {
+                        xoUsuario = _UsuarioEncontrado;
+                        xbUsuarioValido = true;
+                    }
+                    else
+                        xsError = "Usuario inválido";
+                }
+            }
+            catch (Exception ex)
+            {
+                xsError = ex.Message;
+            }
+
+            return xoUsuario;
         }
 
 
