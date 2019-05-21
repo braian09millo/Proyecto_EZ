@@ -154,6 +154,16 @@
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="GastoMensualDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GastoMensualDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="GastoMensualDS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GastoMensualDS.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\FactMensualDataSet.cs">
       <DependentUpon>FactMensualDataSet.xsd</DependentUpon>
     </Compile>
@@ -230,6 +240,28 @@
     <Content Include="Fonts\Raleway-Regular.ttf" />
     <Content Include="Reportes\FactMensualDataSet.xsc">
       <DependentUpon>FactMensualDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="GastoMensualDS.xsc">
+      <DependentUpon>GastoMensualDS.xsd</DependentUpon>
+    </Content>
+    <Content Include="GastoMensualDataSet.xsc">
+      <DependentUpon>GastoMensualDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="GastoMensualDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GastoMensualDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="GastoMensualDataSet.xss">
+      <DependentUpon>GastoMensualDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="GastoMensualDS.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GastoMensualDS.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="GastoMensualDS.xss">
+      <DependentUpon>GastoMensualDS.xsd</DependentUpon>
     </Content>
     <None Include="Reportes\FactMensualDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>

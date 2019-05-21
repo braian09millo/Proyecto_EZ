@@ -13,6 +13,7 @@ namespace App.Controllers
     public class ReporteController : Controller
     {
         PedidoCtrl xoCtrlPedido = new Factory().GetCtrlPedido();
+        GastosCtrl xoCtrlGasto = new Factory().GetCtrlGasto();
 
         [HttpGet]
         public FileResult GetRemito(int xiPedido)
@@ -30,12 +31,15 @@ namespace App.Controllers
         [HttpGet]
         public FileResult GetFacturacionMensual(DateTime xdFechaDesde, DateTime xdFechaHasta, string xsRepartidor)
         {
+            string xsError = "";
             var _nombre = "rptFacturacionMensual.rdlc";
-            var _nombreDs = "FactMensualDS";
+            var _nombresDs = new List<string>(){ "FactMensualDS", "GastoMensualDS" };
             var _path = HttpContext.Server.MapPath("~/Reportes/" + _nombre);
-            var _lista = xoCtrlPedido.ObtenerFacturacionMensualRpt(xdFechaDesde, xdFechaHasta, xsRepartidor);
+            var listas = new List<object>();
+            listas.Add(xoCtrlPedido.ObtenerFacturacionMensualRpt(xdFechaDesde, xdFechaHasta, xsRepartidor));
+            listas.Add(xoCtrlGasto.ObtenerGastos(xdFechaDesde, xdFechaHasta, out xsError));
 
-            var bytes = Reporting.GenerarInforme(_lista, _path, _nombre, _nombreDs, "PDF");
+            var bytes = Reporting.GenerarInforme(listas, _path, _nombre, _nombresDs, "PDF");
 
             return File(bytes, "application/pdf", "FacturacionMensual_" + xdFechaDesde.ToString("ddMMyyyy") + "_" + xdFechaHasta.ToString("ddMMyyyy") + ".pdf");
         }
