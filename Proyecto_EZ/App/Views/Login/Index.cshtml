@@ -133,6 +133,7 @@
                             if (response != '') {
                                 $('#mensajeError').html(response);
                                 $('#modalErrores').modal('show');
+                                Limpiar();
                             }
                             else {
                                 window.open('/Home/Index', '_self');
@@ -141,7 +142,7 @@
                         error: function (error) {
                             $('#mensajeError').html(error);
                             $('#modalErrores').modal('show');
-
+                            Limpiar();
                         }
                     });
                 }

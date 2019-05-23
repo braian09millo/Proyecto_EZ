@@ -63,12 +63,23 @@
             </div>
         </div>
     </nav>
-
     <div class="container-fluid">
+        <div class="loader"></div>
         @RenderBody()
     </div>
 
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(function () {
 
+            $('.loader').css('display','block');
+            $('body').css('opacity','0.5');
+
+            setTimeout(function(){
+                $('.loader').css('display','none');
+                $('body').css('opacity','1');
+            }, 4000);
+        });
+    </script>
 </body>
 </html>
