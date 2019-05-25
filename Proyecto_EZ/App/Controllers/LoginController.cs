@@ -42,19 +42,10 @@ namespace App.Controllers
                         xsError = "Password incorrecta";
                     }
                 }
-                else
-                {
-                    xsError = "Usuario inválido";
-                }
             }
             catch (Exception ex)
             {
                 xsError = ex.Message;
-            }
-
-            if (xsError == "")
-            {
-                RedirectToAction("Index","Home");
             }
 
             return Json(xsError);

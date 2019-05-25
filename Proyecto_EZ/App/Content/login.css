@@ -66,27 +66,6 @@ body {
 	background-color:#DF0404 !important; 
 }
 
-.input-icon .form-control {	 
-	padding-left: 45px;
-}
-
-.input-icon {
-	position: relative;
-}
-
-.input-icon i {
-	position: absolute;
-	left: 0;
-	top: 1px;
-	padding: 9px 15px;
-	color: #aaaaaa;
-	transition: .3s;
-}
-
-.input-icon input:focus + i {
-	color: #ddd;
-}
-
 .form-control:focus {
     box-shadow: none;
     border: 1px solid #bbb;

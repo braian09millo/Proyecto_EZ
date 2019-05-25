@@ -192,8 +192,13 @@ namespace Negocios.BusinessControllers
                     var _UsuarioEncontrado = xoDB.usuario.FirstOrDefault(u => u.usu_usuario == xsUsuario);
                     if (_UsuarioEncontrado != null)
                     {
-                        xoUsuario = _UsuarioEncontrado;
-                        xbUsuarioValido = true;
+                        if ((_UsuarioEncontrado.usu_delet ?? "N") == "S")
+                            xsError = "El usuario se encuentra deshabilitado";
+                        else
+                        {
+                            xoUsuario = _UsuarioEncontrado;
+                            xbUsuarioValido = true;
+                        }
                     }
                     else
                         xsError = "Usuario inválido";
@@ -206,37 +211,6 @@ namespace Negocios.BusinessControllers
 
             return xoUsuario;
         }
-
-
-
-        //public usuario ValidarIdentidadUsuario(string sId, out bool bUsuarioValido, out string sError)
-        //{
-        //    //Definicion de variables
-        //    bUsuarioValido = default(bool);
-        //    sError = default(string);
-        //    Usuario oUsuario = null;
-
-        //    try
-        //    {
-        //        using (GestionEntities oEntidad = new GestionEntities())
-        //        {
-        //            var _UsuarioEncontrado = oEntidad.users.FirstOrDefault(u => u.use_id == sId);
-        //            if (_UsuarioEncontrado != null)
-        //            {
-        //                oUsuario = CargarDatosUsuario(_UsuarioEncontrado);
-        //                bUsuarioValido = true;
-        //            }
-        //            else
-        //                sError = "Usuario inválido";
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        sError = ex.Message;
-        //    }
-
-        //    return oUsuario;
-        //}
 
         #endregion
     }

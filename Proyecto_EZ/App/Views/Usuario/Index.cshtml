@@ -432,7 +432,9 @@
                                 bCambiaPassword = false;
                                 Limpiar();
                                 CargarDatos();
-                                //setTimeout(window.open('/Login/Index'), 3000);
+                                setTimeout(function () {
+                                    window.open('/Login/Index', '_self')
+                                }, 4000);
                             }
                             else {
                                 swal({
