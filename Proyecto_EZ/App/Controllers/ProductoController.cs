@@ -17,6 +17,9 @@ namespace App.Controllers
         #region PRODUCTOS
         public ActionResult Index()
         {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Index", "Login");
+
             string xsError = "";
 
             //Cargamos el combo de marcas
@@ -79,6 +82,9 @@ namespace App.Controllers
 
         public ActionResult EditorPrecios()
         {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Index", "Login");
+
             string xsError = "";
             ViewBag.Productos = xoProductoCtrl.ObtenerProductosEdicion(out xsError);
 
@@ -97,6 +103,9 @@ namespace App.Controllers
         #region MARCAS
         public ActionResult Marca()
         {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Index", "Login");
+
             return View();
         }
 
@@ -145,6 +154,9 @@ namespace App.Controllers
 
         public ActionResult Modelo()
         {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Index", "Login");
+
             string xsError = "";
 
             //Cargamos el combo de marcas
@@ -211,6 +223,9 @@ namespace App.Controllers
 
         public ActionResult Tamanio()
         {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Index", "Login");
+
             return View();
         }
 

@@ -154,7 +154,7 @@
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
-    <Compile Include="RendicionDataSet.Designer.cs">
+    <Compile Include="Reportes\RendicionDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RendicionDataSet.xsd</DependentUpon>
@@ -244,15 +244,15 @@
     <Content Include="Reportes\GastoMensualDataSet.xsc">
       <DependentUpon>GastoMensualDataSet.xsd</DependentUpon>
     </Content>
-    <Content Include="RendicionDataSet.xsc">
+    <Content Include="Reportes\RendicionDataSet.xsc">
       <DependentUpon>RendicionDataSet.xsd</DependentUpon>
     </Content>
-    <None Include="RendicionDataSet.xsd">
+    <None Include="Reportes\RendicionDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>RendicionDataSet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <Content Include="RendicionDataSet.xss">
+    <Content Include="Reportes\RendicionDataSet.xss">
       <DependentUpon>RendicionDataSet.xsd</DependentUpon>
     </Content>
     <None Include="Reportes\GastoMensualDataSet.xsd">

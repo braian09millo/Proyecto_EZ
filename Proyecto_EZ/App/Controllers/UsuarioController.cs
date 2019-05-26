@@ -16,6 +16,9 @@ namespace App.Controllers
         // GET: Usuario
         public ActionResult Index()
         {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Index", "Login");
+
             string xsError = "";
 
             //Cargamos el combo de grupos

@@ -41,6 +41,8 @@ namespace App.Controllers
                         xbUsuarioValido = false;
                         xsError = "Password incorrecta";
                     }
+                    else
+                        Session["Usuario"] = xoLogin.Usuario;
                 }
             }
             catch (Exception ex)
@@ -49,6 +51,17 @@ namespace App.Controllers
             }
 
             return Json(xsError);
+        }
+
+        public ActionResult CerrarSesion()
+        {
+            if (Session["Usuario"] != null)
+            {
+                Session.Clear();
+                Session.Abandon();
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

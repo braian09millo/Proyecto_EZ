@@ -18,6 +18,9 @@ namespace App.Controllers
 
         public ActionResult Index()
         {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Index", "Login");
+
             string xsError = "";
 
             //Cargamos el combo de clientes
@@ -40,6 +43,9 @@ namespace App.Controllers
 
         public ActionResult PedidosCliente(int xiId)
         {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Index", "Login");
+
             string xsError = "";
 
             //Cargamos el combo de clientes

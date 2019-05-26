@@ -17,6 +17,9 @@ namespace App.Controllers
 
         public ActionResult FacturacionMensual()
         {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Index", "Login");
+
             string xsError = "";
 
             //Cargamos el combo de usuarios
@@ -30,6 +33,9 @@ namespace App.Controllers
 
         public ActionResult Rendicion()
         {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Index", "Login");
+
             return View();
         }
     }

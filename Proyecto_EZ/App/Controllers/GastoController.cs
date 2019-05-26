@@ -16,6 +16,9 @@ namespace App.Controllers
 
         public ActionResult Index()
         {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Index", "Login");
+
             return View();
         }
 
