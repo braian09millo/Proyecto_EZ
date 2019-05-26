@@ -34,11 +34,12 @@ namespace App.Controllers
         {
             string xsError = "";
             var _nombre = "rptFacturacionMensual.rdlc";
-            var _nombresDs = new List<string>() { "FactMensualDS", "GastoMensualDS" };
+            var _nombresDs = new List<string>() { "FactMensualDS", "GastoMensualDS", "FactResultadoDS" };
             var _path = HttpContext.Server.MapPath("~/Reportes/" + _nombre);
             var listas = new List<object>();
             listas.Add(xoCtrlPedido.ObtenerFacturacionMensualRpt(xdFechaDesde, xdFechaHasta, xsRepartidor));
             listas.Add(xoCtrlGasto.ObtenerGastos(xdFechaDesde, xdFechaHasta, out xsError));
+            listas.Add(xoCtrlPedido.ObtenerFacturacionResultadoRpt(xdFechaDesde, xdFechaHasta, xsRepartidor));
 
             var bytes = Reporting.GenerarInforme(listas, _path, _nombre, _nombresDs, "PDF", null);
             return File(bytes, "application/pdf", "FacturacionMensual_" + xdFechaDesde.ToString("ddMMyyyy") + "_" + xdFechaHasta.ToString("ddMMyyyy") + ".pdf");
