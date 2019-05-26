@@ -23,12 +23,18 @@ namespace App.Controllers
             string xsError = "";
 
             //Cargamos el combo de usuarios
-            var xoUsuarios = xoUsuarioCtrl.ObtenerUsuarios(out xsError);
+            var xoUsuarios = xoUsuarioCtrl.ObtenerUsuarios(out xsError).Where(x => x.usu_delet != "S").ToList();
             var lstUsuarios = xoUsuarios.Select(x => new SelectListItem { Value = x.usu_usuario, Text = x.usu_nombre }).ToList();
             ViewBag.Usuarios = lstUsuarios;
             ViewBag.UsuariosPedido = xoUsuarios.OrderBy(x => x.usu_nombre).ToList();
 
             return View();
+        }
+
+        public JsonResult PuedeFacturar(DateTime xdFechaDesde, DateTime xdFechaHasta, string xsRepartidor)
+        {
+            var xoResultado = xoPedidoCtrl.ObtenerFacturacionMensualRpt(xdFechaDesde, xdFechaHasta, xsRepartidor);
+            return Json(xoResultado);
         }
 
         public ActionResult Rendicion()
@@ -37,6 +43,12 @@ namespace App.Controllers
                 return RedirectToAction("Index", "Login");
 
             return View();
+        }
+
+        public JsonResult PuedeRendir(DateTime xdFechaDesde, DateTime xdFechaHasta)
+        {
+            var xoResultado = xoPedidoCtrl.ObtenerRendicionRpt(xdFechaDesde, xdFechaHasta);
+            return Json(xoResultado);
         }
     }
 }

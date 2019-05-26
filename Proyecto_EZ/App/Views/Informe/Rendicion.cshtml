@@ -99,8 +99,34 @@
 
         if (ValidarDatos(objError, fechaDesde, fechaHasta))
         {
-            var url = '/Reporte/GetRendicion?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta;
-            window.open(url);
+            $.ajax({
+
+                method: 'POST',
+                url: '/Informe/PuedeRendir?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta,
+                success: function (response) {
+
+                    if (response.length > 0)
+                        Reporte(fechaDesde, fechaHasta);
+                    else {
+                        swal({
+                            title: "Atención",
+                            text: "No se encontraron resultados para la búsqueda",
+                            icon: "warning",
+                            button: "Aceptar"
+                        });
+                    }
+                },
+                error: function (error) {
+
+                    swal({
+                        title: "Atención",
+                        text: error,
+                        icon: "warning",
+                        button: "Aceptar"
+                    });
+                }
+
+            });
         }
         else
         {
@@ -111,7 +137,12 @@
                 button: "Aceptar"
             });
         }
+    }
 
+    function Reporte(fechaDesde, fechaHasta)
+    {
+        var url = '/Reporte/GetRendicion?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta;
+        window.open(url);
     }
 
     </script>

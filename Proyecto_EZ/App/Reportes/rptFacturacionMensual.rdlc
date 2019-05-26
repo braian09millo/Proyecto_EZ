@@ -1970,7 +1970,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>GastoMensualDataSet</rd:DataSetName>
-        <rd:SchemaPath>C:\Proyectos GIT\Proyecto_EZ\Proyecto_EZ\App\GastoMensualDataSet.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Proyectos GIT\Proyecto_EZ\Proyecto_EZ\App\Reportes\GastoMensualDataSet.xsd</rd:SchemaPath>
         <rd:TableName>spGetGastos</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

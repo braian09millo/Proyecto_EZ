@@ -106,8 +106,35 @@
 
         if (ValidarDatos(objError, fechaDesde, fechaHasta))
         {
-            var url = '/Reporte/GetFacturacionMensual?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xsRepartidor=' + repartidor;
-            window.open(url);
+            $.ajax({
+
+                method: 'POST',
+                url: '/Informe/PuedeFacturar?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xsRepartidor=' + repartidor,
+                success: function (response) {
+
+                    if (response.length > 0)
+                        Reporte(fechaDesde, fechaHasta, repartidor);
+                    else
+                    {
+                        swal({
+                            title: "Atención",
+                            text: "No se encontraron resultados para la búsqueda",
+                            icon: "warning",
+                            button: "Aceptar"
+                        });
+                    }
+                },
+                error: function (error) {
+
+                    swal({
+                        title: "Atención",
+                        text: error,
+                        icon: "warning",
+                        button: "Aceptar"
+                    });
+                }
+
+            });
         }
         else
         {
@@ -118,7 +145,12 @@
                 button: "Aceptar"
             });
         }
+    }
 
+    function Reporte(fechaDesde, fechaHasta, repartidor)
+    {
+        var url = '/Reporte/GetFacturacionMensual?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xsRepartidor=' + repartidor;
+        window.open(url);
     }
 
 </script>

@@ -30,7 +30,7 @@ namespace App.Controllers
             ViewBag.ClientesPedido = xoClientes.OrderBy(x => x.cli_nombre).ToList();
 
             //Cargamos el combo de usuarios
-            var xoUsuarios = xoUsuarioCtrl.ObtenerUsuarios(out xsError);
+            var xoUsuarios = xoUsuarioCtrl.ObtenerUsuarios(out xsError).Where(x => x.usu_delet != "S").ToList();
             var lstUsuarios = xoUsuarios.Select(x => new SelectListItem { Value = x.usu_usuario, Text = x.usu_nombre }).ToList();
             ViewBag.Usuarios = lstUsuarios;
             ViewBag.UsuariosPedido = xoUsuarios.OrderBy(x => x.usu_nombre).ToList();

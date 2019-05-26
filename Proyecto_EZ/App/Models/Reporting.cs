@@ -34,7 +34,7 @@ namespace App.Models
                     _rv.LocalReport.LoadReportDefinition(stream);
 
                     _rv.LocalReport.DataSources.Clear();
-                    if (loParametros.Count > 0) _rv.LocalReport.SetParameters(loParametros);
+                    if (loParametros != null) _rv.LocalReport.SetParameters(loParametros);
                     _rv.LocalReport.DataSources.Add(new ReportDataSource(sNombreDS, lista));                
                     _rv.LocalReport.Refresh();
 
@@ -72,7 +72,7 @@ namespace App.Models
 
                     _rv.LocalReport.EnableExternalImages = true;
                     _rv.LocalReport.LoadReportDefinition(stream);
-                    if (loParametros.Count > 0) _rv.LocalReport.SetParameters(loParametros);
+                    if (loParametros != null) _rv.LocalReport.SetParameters(loParametros);
                     _rv.LocalReport.DataSources.Clear();
 
                     for (int i = 0; i < lista.Count; i++)
