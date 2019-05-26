@@ -86,14 +86,14 @@
                 var usuario = $('#txtUsuario').val();
                 var pass = $('#txtPass').val();
 
-                if (usuario == '' || usuario == null || usuario == undefined) {
-                    objError.bPuede = false;
-                    objError.msj = 'Debe ingresar el usuario';
-                }
-
                 if (pass == '' || pass == null || pass == undefined) {
                     objError.bPuede = false;
                     objError.msj = 'Debe ingresar la contraseña';
+                }
+
+                if (usuario == '' || usuario == null || usuario == undefined) {
+                    objError.bPuede = false;
+                    objError.msj = 'Debe ingresar el usuario';
                 }
 
                 return objError.bPuede;
@@ -150,6 +150,7 @@
                     console.log(objError.msj);
                     $('#mensajeError').html(objError.msj);
                     $('#modalErrores').modal('show');
+                    Limpiar();
                 }
             }
         });
@@ -162,7 +163,6 @@
             $btn.prop('disabled', true);
             setTimeout(function () {
                 ValidarUsuario();
-                Limpiar();
             }, 5000);
         });
     </script>

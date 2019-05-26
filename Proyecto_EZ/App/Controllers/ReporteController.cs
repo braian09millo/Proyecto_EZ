@@ -1,5 +1,6 @@
 ﻿using App.Models;
 using Entidades;
+using Microsoft.Reporting.WebForms;
 using Negocios;
 using Negocios.BusinessControllers;
 using System;
@@ -23,7 +24,7 @@ namespace App.Controllers
             var _path = HttpContext.Server.MapPath("~/Reportes/" + _nombre);
             var _lista = xoCtrlPedido.ObtenerPedidosRpt(xiPedido);
 
-            var bytes = Reporting.GenerarInforme(_lista, _path, _nombre, _nombreDs, "PDF");
+            var bytes = Reporting.GenerarInforme(_lista, _path, _nombre, _nombreDs, "PDF", null);
 
             return File(bytes, "application/pdf", "Remito_N°" + xiPedido.ToString() + ".pdf");
         }
@@ -33,15 +34,30 @@ namespace App.Controllers
         {
             string xsError = "";
             var _nombre = "rptFacturacionMensual.rdlc";
-            var _nombresDs = new List<string>(){ "FactMensualDS", "GastoMensualDS" };
+            var _nombresDs = new List<string>() { "FactMensualDS", "GastoMensualDS" };
             var _path = HttpContext.Server.MapPath("~/Reportes/" + _nombre);
             var listas = new List<object>();
             listas.Add(xoCtrlPedido.ObtenerFacturacionMensualRpt(xdFechaDesde, xdFechaHasta, xsRepartidor));
             listas.Add(xoCtrlGasto.ObtenerGastos(xdFechaDesde, xdFechaHasta, out xsError));
 
-            var bytes = Reporting.GenerarInforme(listas, _path, _nombre, _nombresDs, "PDF");
-
+            var bytes = Reporting.GenerarInforme(listas, _path, _nombre, _nombresDs, "PDF", null);
             return File(bytes, "application/pdf", "FacturacionMensual_" + xdFechaDesde.ToString("ddMMyyyy") + "_" + xdFechaHasta.ToString("ddMMyyyy") + ".pdf");
+        }
+
+        [HttpGet]
+        public FileResult GetRendicion(DateTime xdFechaDesde, DateTime xdFechaHasta)
+        {
+            var _nombre = "rptRendicion.rdlc";
+            var _nombreDs = "RendicionDS";
+            var _path = HttpContext.Server.MapPath("~/Reportes/" + _nombre);
+            var lista = xoCtrlPedido.ObtenerRendicionRpt(xdFechaDesde, xdFechaHasta);
+
+            var parFechaDesde = new ReportParameter("FechaDesde", xdFechaDesde.ToString("dd-MM-yy"));
+            var parFechaHasta = new ReportParameter("FechaHasta", xdFechaHasta.ToString("dd-MM-yy"));
+            var listaParametros = new List<ReportParameter>() { parFechaDesde, parFechaHasta };
+
+            var bytes = Reporting.GenerarInforme(lista, _path, _nombre, _nombreDs, "PDF", listaParametros);
+            return File(bytes, "application/pdf", "RendicionFacu_" + xdFechaDesde.ToString("ddMMyyyy") + "_" + xdFechaHasta.ToString("ddMMyyyy") + ".pdf");
         }
     }
 }

@@ -54,6 +54,7 @@
     <Compile Include="spGetPedidos.cs" />
     <Compile Include="spGetProductos.cs" />
     <Compile Include="spGetProductosEdicion.cs" />
+    <Compile Include="spGetRendicion.cs" />
     <Compile Include="spGetUsuarios.cs" />
     <Compile Include="spRptRemito.cs" />
     <Compile Include="TamanioForm.cs" />

@@ -154,15 +154,15 @@
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
-    <Compile Include="GastoMensualDataSet.Designer.cs">
+    <Compile Include="RendicionDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RendicionDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\GastoMensualDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GastoMensualDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="GastoMensualDS.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GastoMensualDS.xsd</DependentUpon>
     </Compile>
     <Compile Include="Reportes\FactMensualDataSet.cs">
       <DependentUpon>FactMensualDataSet.xsd</DependentUpon>
@@ -241,27 +241,27 @@
     <Content Include="Reportes\FactMensualDataSet.xsc">
       <DependentUpon>FactMensualDataSet.xsd</DependentUpon>
     </Content>
-    <Content Include="GastoMensualDS.xsc">
-      <DependentUpon>GastoMensualDS.xsd</DependentUpon>
-    </Content>
-    <Content Include="GastoMensualDataSet.xsc">
+    <Content Include="Reportes\GastoMensualDataSet.xsc">
       <DependentUpon>GastoMensualDataSet.xsd</DependentUpon>
     </Content>
-    <None Include="GastoMensualDataSet.xsd">
+    <Content Include="RendicionDataSet.xsc">
+      <DependentUpon>RendicionDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="RendicionDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RendicionDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="RendicionDataSet.xss">
+      <DependentUpon>RendicionDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="Reportes\GastoMensualDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>GastoMensualDataSet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <Content Include="GastoMensualDataSet.xss">
+    <Content Include="Reportes\GastoMensualDataSet.xss">
       <DependentUpon>GastoMensualDataSet.xsd</DependentUpon>
-    </Content>
-    <None Include="GastoMensualDS.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>GastoMensualDS.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="GastoMensualDS.xss">
-      <DependentUpon>GastoMensualDS.xsd</DependentUpon>
     </Content>
     <None Include="Reportes\FactMensualDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
@@ -346,6 +346,7 @@
     <Content Include="Views\Usuario\comboGrupos.cshtml" />
     <Content Include="Views\Gasto\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Informe\Rendicion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -381,6 +382,7 @@
     <EmbeddedResource Include="Reportes\rptRemito.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rptRendicion.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

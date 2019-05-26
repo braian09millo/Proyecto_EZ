@@ -189,6 +189,28 @@ namespace Negocios.BusinessControllers
             return xoResultado;
         }
 
+
+        public List<spGetRendicion> ObtenerRendicionRpt(DateTime xdFechaDesde, DateTime xdFechaHasta)
+        {
+            var xoResultado = new List<spGetRendicion>();
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    xoResultado = xoDB.Database.SqlQuery<spGetRendicion>("exec spRptRendicion @FechaDesde, @FechaHasta",
+                                               new SqlParameter("@FechaDesde", xdFechaDesde),
+                                               new SqlParameter("@FechaHasta", xdFechaHasta)).ToList();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return xoResultado;
+        }
+
         public List<spGetFacturacionMensual> ObtenerFacturacionMensualRpt(DateTime xdFechaDesde, DateTime xdFechaHasta, string xsRepartidor)
         {
             var xoResultado = new List<spGetFacturacionMensual>();

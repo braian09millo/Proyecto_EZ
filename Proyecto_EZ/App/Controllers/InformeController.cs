@@ -27,5 +27,10 @@ namespace App.Controllers
 
             return View();
         }
+
+        public ActionResult Rendicion()
+        {
+            return View();
+        }
     }
 }

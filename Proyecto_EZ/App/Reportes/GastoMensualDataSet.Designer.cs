@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace App {
+namespace App.Reportes {
     
     
     /// <summary>
@@ -20,17 +20,17 @@ namespace App {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("GastoMensualDS")]
+    [global::System.Xml.Serialization.XmlRootAttribute("GastoMensualDataSet")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class GastoMensualDS : global::System.Data.DataSet {
+    public partial class GastoMensualDataSet : global::System.Data.DataSet {
         
-        private gastoDataTable tablegasto;
+        private spGetGastosDataTable tablespGetGastos;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public GastoMensualDS() {
+        public GastoMensualDataSet() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace App {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected GastoMensualDS(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected GastoMensualDataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -54,8 +54,8 @@ namespace App {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["gasto"] != null)) {
-                    base.Tables.Add(new gastoDataTable(ds.Tables["gasto"]));
+                if ((ds.Tables["spGetGastos"] != null)) {
+                    base.Tables.Add(new spGetGastosDataTable(ds.Tables["spGetGastos"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace App {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public gastoDataTable gasto {
+        public spGetGastosDataTable spGetGastos {
             get {
-                return this.tablegasto;
+                return this.tablespGetGastos;
             }
         }
         
@@ -127,7 +127,7 @@ namespace App {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            GastoMensualDS cln = ((GastoMensualDS)(base.Clone()));
+            GastoMensualDataSet cln = ((GastoMensualDataSet)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -152,8 +152,8 @@ namespace App {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["gasto"] != null)) {
-                    base.Tables.Add(new gastoDataTable(ds.Tables["gasto"]));
+                if ((ds.Tables["spGetGastos"] != null)) {
+                    base.Tables.Add(new spGetGastosDataTable(ds.Tables["spGetGastos"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace App {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tablegasto = ((gastoDataTable)(base.Tables["gasto"]));
+            this.tablespGetGastos = ((spGetGastosDataTable)(base.Tables["spGetGastos"]));
             if ((initTable == true)) {
-                if ((this.tablegasto != null)) {
-                    this.tablegasto.InitVars();
+                if ((this.tablespGetGastos != null)) {
+                    this.tablespGetGastos.InitVars();
                 }
             }
         }
@@ -199,18 +199,18 @@ namespace App {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "GastoMensualDS";
+            this.DataSetName = "GastoMensualDataSet";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/GastoMensualDS.xsd";
+            this.Namespace = "http://tempuri.org/GastoMensualDataSet.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tablegasto = new gastoDataTable();
-            base.Tables.Add(this.tablegasto);
+            this.tablespGetGastos = new spGetGastosDataTable();
+            base.Tables.Add(this.tablespGetGastos);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializegasto() {
+        private bool ShouldSerializespGetGastos() {
             return false;
         }
         
@@ -225,7 +225,7 @@ namespace App {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            GastoMensualDS ds = new GastoMensualDS();
+            GastoMensualDataSet ds = new GastoMensualDataSet();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -270,14 +270,14 @@ namespace App {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void gastoRowChangeEventHandler(object sender, gastoRowChangeEvent e);
+        public delegate void spGetGastosRowChangeEventHandler(object sender, spGetGastosRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class gastoDataTable : global::System.Data.TypedTableBase<gastoRow> {
+        public partial class spGetGastosDataTable : global::System.Data.TypedTableBase<spGetGastosRow> {
             
             private global::System.Data.DataColumn columngas_id;
             
@@ -289,8 +289,8 @@ namespace App {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public gastoDataTable() {
-                this.TableName = "gasto";
+            public spGetGastosDataTable() {
+                this.TableName = "spGetGastos";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -298,7 +298,7 @@ namespace App {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal gastoDataTable(global::System.Data.DataTable table) {
+            internal spGetGastosDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -315,7 +315,7 @@ namespace App {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected gastoDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected spGetGastosDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -363,55 +363,55 @@ namespace App {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public gastoRow this[int index] {
+            public spGetGastosRow this[int index] {
                 get {
-                    return ((gastoRow)(this.Rows[index]));
+                    return ((spGetGastosRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event gastoRowChangeEventHandler gastoRowChanging;
+            public event spGetGastosRowChangeEventHandler spGetGastosRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event gastoRowChangeEventHandler gastoRowChanged;
+            public event spGetGastosRowChangeEventHandler spGetGastosRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event gastoRowChangeEventHandler gastoRowDeleting;
+            public event spGetGastosRowChangeEventHandler spGetGastosRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event gastoRowChangeEventHandler gastoRowDeleted;
+            public event spGetGastosRowChangeEventHandler spGetGastosRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddgastoRow(gastoRow row) {
+            public void AddspGetGastosRow(spGetGastosRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public gastoRow AddgastoRow(System.DateTime gas_fecha, string gas_descripcion, decimal gas_monto) {
-                gastoRow rowgastoRow = ((gastoRow)(this.NewRow()));
+            public spGetGastosRow AddspGetGastosRow(System.DateTime gas_fecha, string gas_descripcion, decimal gas_monto) {
+                spGetGastosRow rowspGetGastosRow = ((spGetGastosRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         gas_fecha,
                         gas_descripcion,
                         gas_monto};
-                rowgastoRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowgastoRow);
-                return rowgastoRow;
+                rowspGetGastosRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowspGetGastosRow);
+                return rowspGetGastosRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public gastoRow FindBygas_id(int gas_id) {
-                return ((gastoRow)(this.Rows.Find(new object[] {
+            public spGetGastosRow FindBygas_id(int gas_id) {
+                return ((spGetGastosRow)(this.Rows.Find(new object[] {
                             gas_id})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                gastoDataTable cln = ((gastoDataTable)(base.Clone()));
+                spGetGastosDataTable cln = ((spGetGastosDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -419,7 +419,7 @@ namespace App {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new gastoDataTable();
+                return new spGetGastosDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -445,8 +445,6 @@ namespace App {
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columngas_id}, true));
                 this.columngas_id.AutoIncrement = true;
-                this.columngas_id.AutoIncrementSeed = -1;
-                this.columngas_id.AutoIncrementStep = -1;
                 this.columngas_id.AllowDBNull = false;
                 this.columngas_id.ReadOnly = true;
                 this.columngas_id.Unique = true;
@@ -458,28 +456,28 @@ namespace App {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public gastoRow NewgastoRow() {
-                return ((gastoRow)(this.NewRow()));
+            public spGetGastosRow NewspGetGastosRow() {
+                return ((spGetGastosRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new gastoRow(builder);
+                return new spGetGastosRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(gastoRow);
+                return typeof(spGetGastosRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.gastoRowChanged != null)) {
-                    this.gastoRowChanged(this, new gastoRowChangeEvent(((gastoRow)(e.Row)), e.Action));
+                if ((this.spGetGastosRowChanged != null)) {
+                    this.spGetGastosRowChanged(this, new spGetGastosRowChangeEvent(((spGetGastosRow)(e.Row)), e.Action));
                 }
             }
             
@@ -487,8 +485,8 @@ namespace App {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.gastoRowChanging != null)) {
-                    this.gastoRowChanging(this, new gastoRowChangeEvent(((gastoRow)(e.Row)), e.Action));
+                if ((this.spGetGastosRowChanging != null)) {
+                    this.spGetGastosRowChanging(this, new spGetGastosRowChangeEvent(((spGetGastosRow)(e.Row)), e.Action));
                 }
             }
             
@@ -496,8 +494,8 @@ namespace App {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.gastoRowDeleted != null)) {
-                    this.gastoRowDeleted(this, new gastoRowChangeEvent(((gastoRow)(e.Row)), e.Action));
+                if ((this.spGetGastosRowDeleted != null)) {
+                    this.spGetGastosRowDeleted(this, new spGetGastosRowChangeEvent(((spGetGastosRow)(e.Row)), e.Action));
                 }
             }
             
@@ -505,14 +503,14 @@ namespace App {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.gastoRowDeleting != null)) {
-                    this.gastoRowDeleting(this, new gastoRowChangeEvent(((gastoRow)(e.Row)), e.Action));
+                if ((this.spGetGastosRowDeleting != null)) {
+                    this.spGetGastosRowDeleting(this, new spGetGastosRowChangeEvent(((spGetGastosRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemovegastoRow(gastoRow row) {
+            public void RemovespGetGastosRow(spGetGastosRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -521,7 +519,7 @@ namespace App {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                GastoMensualDS ds = new GastoMensualDS();
+                GastoMensualDataSet ds = new GastoMensualDataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -539,7 +537,7 @@ namespace App {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "gastoDataTable";
+                attribute2.FixedValue = "spGetGastosDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -583,25 +581,25 @@ namespace App {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class gastoRow : global::System.Data.DataRow {
+        public partial class spGetGastosRow : global::System.Data.DataRow {
             
-            private gastoDataTable tablegasto;
+            private spGetGastosDataTable tablespGetGastos;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal gastoRow(global::System.Data.DataRowBuilder rb) : 
+            internal spGetGastosRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tablegasto = ((gastoDataTable)(this.Table));
+                this.tablespGetGastos = ((spGetGastosDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int gas_id {
                 get {
-                    return ((int)(this[this.tablegasto.gas_idColumn]));
+                    return ((int)(this[this.tablespGetGastos.gas_idColumn]));
                 }
                 set {
-                    this[this.tablegasto.gas_idColumn] = value;
+                    this[this.tablespGetGastos.gas_idColumn] = value;
                 }
             }
             
@@ -609,10 +607,10 @@ namespace App {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public System.DateTime gas_fecha {
                 get {
-                    return ((global::System.DateTime)(this[this.tablegasto.gas_fechaColumn]));
+                    return ((global::System.DateTime)(this[this.tablespGetGastos.gas_fechaColumn]));
                 }
                 set {
-                    this[this.tablegasto.gas_fechaColumn] = value;
+                    this[this.tablespGetGastos.gas_fechaColumn] = value;
                 }
             }
             
@@ -620,10 +618,10 @@ namespace App {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string gas_descripcion {
                 get {
-                    return ((string)(this[this.tablegasto.gas_descripcionColumn]));
+                    return ((string)(this[this.tablespGetGastos.gas_descripcionColumn]));
                 }
                 set {
-                    this[this.tablegasto.gas_descripcionColumn] = value;
+                    this[this.tablespGetGastos.gas_descripcionColumn] = value;
                 }
             }
             
@@ -631,10 +629,10 @@ namespace App {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public decimal gas_monto {
                 get {
-                    return ((decimal)(this[this.tablegasto.gas_montoColumn]));
+                    return ((decimal)(this[this.tablespGetGastos.gas_montoColumn]));
                 }
                 set {
-                    this[this.tablegasto.gas_montoColumn] = value;
+                    this[this.tablespGetGastos.gas_montoColumn] = value;
                 }
             }
         }
@@ -643,22 +641,22 @@ namespace App {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class gastoRowChangeEvent : global::System.EventArgs {
+        public class spGetGastosRowChangeEvent : global::System.EventArgs {
             
-            private gastoRow eventRow;
+            private spGetGastosRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public gastoRowChangeEvent(gastoRow row, global::System.Data.DataRowAction action) {
+            public spGetGastosRowChangeEvent(spGetGastosRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public gastoRow Row {
+            public spGetGastosRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -674,7 +672,7 @@ namespace App {
         }
     }
 }
-namespace App.GastoMensualDSTableAdapters {
+namespace App.Reportes.GastoMensualDataSetTableAdapters {
     
     
     /// <summary>
@@ -686,7 +684,7 @@ namespace App.GastoMensualDSTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class gastoTableAdapter : global::System.ComponentModel.Component {
+    public partial class spGetGastosTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -700,7 +698,7 @@ namespace App.GastoMensualDSTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public gastoTableAdapter() {
+        public spGetGastosTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -797,34 +795,12 @@ namespace App.GastoMensualDSTableAdapters {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "gasto";
+            tableMapping.DataSetTable = "spGetGastos";
             tableMapping.ColumnMappings.Add("gas_id", "gas_id");
             tableMapping.ColumnMappings.Add("gas_fecha", "gas_fecha");
             tableMapping.ColumnMappings.Add("gas_descripcion", "gas_descripcion");
             tableMapping.ColumnMappings.Add("gas_monto", "gas_monto");
             this._adapter.TableMappings.Add(tableMapping);
-            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[gasto] WHERE (([gas_id] = @Original_gas_id))";
-            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_gas_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "gas_id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[gasto] ([gas_fecha], [gas_descripcion], [gas_monto]) VALUES (@" +
-                "gas_fecha, @gas_descripcion, @gas_monto)";
-            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@gas_fecha", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "gas_fecha", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@gas_descripcion", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "gas_descripcion", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@gas_monto", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "gas_monto", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[gasto] SET [gas_fecha] = @gas_fecha, [gas_descripcion] = @gas_descr" +
-                "ipcion, [gas_monto] = @gas_monto WHERE (([gas_id] = @Original_gas_id))";
-            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@gas_fecha", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "gas_fecha", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@gas_descripcion", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "gas_descripcion", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@gas_monto", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "gas_monto", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_gas_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "gas_id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -840,16 +816,31 @@ namespace App.GastoMensualDSTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT gas_id, gas_fecha, gas_descripcion, gas_monto FROM dbo.gasto";
-            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[0].CommandText = "dbo.spGetGastos";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FechaDesde", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 23, 3, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FechaHasta", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 23, 3, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(GastoMensualDS.gastoDataTable dataTable) {
+        public virtual int Fill(GastoMensualDataSet.spGetGastosDataTable dataTable, global::System.Nullable<global::System.DateTime> FechaDesde, global::System.Nullable<global::System.DateTime> FechaHasta) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((FechaDesde.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(FechaDesde.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((FechaHasta.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((System.DateTime)(FechaHasta.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -861,121 +852,23 @@ namespace App.GastoMensualDSTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual GastoMensualDS.gastoDataTable GetData() {
+        public virtual GastoMensualDataSet.spGetGastosDataTable GetData(global::System.Nullable<global::System.DateTime> FechaDesde, global::System.Nullable<global::System.DateTime> FechaHasta) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            GastoMensualDS.gastoDataTable dataTable = new GastoMensualDS.gastoDataTable();
+            if ((FechaDesde.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(FechaDesde.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((FechaHasta.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((System.DateTime)(FechaHasta.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            GastoMensualDataSet.spGetGastosDataTable dataTable = new GastoMensualDataSet.spGetGastosDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(GastoMensualDS.gastoDataTable dataTable) {
-            return this.Adapter.Update(dataTable);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(GastoMensualDS dataSet) {
-            return this.Adapter.Update(dataSet, "gasto");
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow dataRow) {
-            return this.Adapter.Update(new global::System.Data.DataRow[] {
-                        dataRow});
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow[] dataRows) {
-            return this.Adapter.Update(dataRows);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_gas_id) {
-            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_gas_id));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
-            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.DeleteCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.DeleteCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(System.DateTime gas_fecha, string gas_descripcion, decimal gas_monto) {
-            this.Adapter.InsertCommand.Parameters[0].Value = ((System.DateTime)(gas_fecha));
-            if ((gas_descripcion == null)) {
-                throw new global::System.ArgumentNullException("gas_descripcion");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(gas_descripcion));
-            }
-            this.Adapter.InsertCommand.Parameters[2].Value = ((decimal)(gas_monto));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
-            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.InsertCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.InsertCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(System.DateTime gas_fecha, string gas_descripcion, decimal gas_monto, int Original_gas_id) {
-            this.Adapter.UpdateCommand.Parameters[0].Value = ((System.DateTime)(gas_fecha));
-            if ((gas_descripcion == null)) {
-                throw new global::System.ArgumentNullException("gas_descripcion");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(gas_descripcion));
-            }
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((decimal)(gas_monto));
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_gas_id));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
-            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.UpdateCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.UpdateCommand.Connection.Close();
-                }
-            }
         }
     }
     
@@ -991,8 +884,6 @@ namespace App.GastoMensualDSTableAdapters {
         
         private UpdateOrderOption _updateOrder;
         
-        private gastoTableAdapter _gastoTableAdapter;
-        
         private bool _backupDataSetBeforeUpdate;
         
         private global::System.Data.IDbConnection _connection;
@@ -1005,20 +896,6 @@ namespace App.GastoMensualDSTableAdapters {
             }
             set {
                 this._updateOrder = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
-            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
-            "a", "System.Drawing.Design.UITypeEditor")]
-        public gastoTableAdapter gastoTableAdapter {
-            get {
-                return this._gastoTableAdapter;
-            }
-            set {
-                this._gastoTableAdapter = value;
             }
         }
         
@@ -1041,10 +918,6 @@ namespace App.GastoMensualDSTableAdapters {
                 if ((this._connection != null)) {
                     return this._connection;
                 }
-                if (((this._gastoTableAdapter != null) 
-                            && (this._gastoTableAdapter.Connection != null))) {
-                    return this._gastoTableAdapter.Connection;
-                }
                 return null;
             }
             set {
@@ -1058,9 +931,6 @@ namespace App.GastoMensualDSTableAdapters {
         public int TableAdapterInstanceCount {
             get {
                 int count = 0;
-                if ((this._gastoTableAdapter != null)) {
-                    count = (count + 1);
-                }
                 return count;
             }
         }
@@ -1070,17 +940,8 @@ namespace App.GastoMensualDSTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateUpdatedRows(GastoMensualDS dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(GastoMensualDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._gastoTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.gasto.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._gastoTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             return result;
         }
         
@@ -1089,16 +950,8 @@ namespace App.GastoMensualDSTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateInsertedRows(GastoMensualDS dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(GastoMensualDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._gastoTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.gasto.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._gastoTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             return result;
         }
         
@@ -1107,16 +960,8 @@ namespace App.GastoMensualDSTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateDeletedRows(GastoMensualDS dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(GastoMensualDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._gastoTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.gasto.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._gastoTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             return result;
         }
         
@@ -1149,17 +994,12 @@ namespace App.GastoMensualDSTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public virtual int UpdateAll(GastoMensualDS dataSet) {
+        public virtual int UpdateAll(GastoMensualDataSet dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }
             if ((dataSet.HasChanges() == false)) {
                 return 0;
-            }
-            if (((this._gastoTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._gastoTableAdapter.Connection) == false))) {
-                throw new global::System.ArgumentException("Todos los TableAdapters administrados por un TableAdapterManager deben usar la mi" +
-                        "sma cadena de conexión.");
             }
             global::System.Data.IDbConnection workConnection = this.Connection;
             if ((workConnection == null)) {
@@ -1193,15 +1033,6 @@ namespace App.GastoMensualDSTableAdapters {
             try {
                 // ---- Prepare for update -----------
                 //
-                if ((this._gastoTableAdapter != null)) {
-                    revertConnections.Add(this._gastoTableAdapter, this._gastoTableAdapter.Connection);
-                    this._gastoTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
-                    this._gastoTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
-                    if (this._gastoTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._gastoTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._gastoTableAdapter.Adapter);
-                    }
-                }
                 // 
                 //---- Perform updates -----------
                 //
@@ -1259,10 +1090,6 @@ namespace App.GastoMensualDSTableAdapters {
             finally {
                 if (workConnOpened) {
                     workConnection.Close();
-                }
-                if ((this._gastoTableAdapter != null)) {
-                    this._gastoTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._gastoTableAdapter]));
-                    this._gastoTableAdapter.Transaction = null;
                 }
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
                     global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];

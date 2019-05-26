@@ -10,7 +10,7 @@ namespace App.Models
 {
     public static class Reporting
     {
-        public static byte[] GenerarInforme<T>(this List<T> lista, string sPath, string sNombreInforme, string sNombreDS, string sFormato)
+        public static byte[] GenerarInforme<T>(this List<T> lista, string sPath, string sNombreInforme, string sNombreDS, string sFormato, List<ReportParameter> loParametros)
         {
             string xsError = "";
             byte[] bytes = null;
@@ -34,7 +34,8 @@ namespace App.Models
                     _rv.LocalReport.LoadReportDefinition(stream);
 
                     _rv.LocalReport.DataSources.Clear();
-                    _rv.LocalReport.DataSources.Add(new ReportDataSource(sNombreDS, lista));
+                    if (loParametros.Count > 0) _rv.LocalReport.SetParameters(loParametros);
+                    _rv.LocalReport.DataSources.Add(new ReportDataSource(sNombreDS, lista));                
                     _rv.LocalReport.Refresh();
 
                     bytes = _rv.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
@@ -49,7 +50,7 @@ namespace App.Models
             return bytes;
         }
 
-        public static byte[] GenerarInforme<T>(this List<T> lista, string sPath, string sNombreInforme, List<string> sNombresDS, string sFormato)
+        public static byte[] GenerarInforme<T>(this List<T> lista, string sPath, string sNombreInforme, List<string> sNombresDS, string sFormato, List<ReportParameter> loParametros)
         {
             string xsError = "";
             byte[] bytes = null;
@@ -71,6 +72,7 @@ namespace App.Models
 
                     _rv.LocalReport.EnableExternalImages = true;
                     _rv.LocalReport.LoadReportDefinition(stream);
+                    if (loParametros.Count > 0) _rv.LocalReport.SetParameters(loParametros);
                     _rv.LocalReport.DataSources.Clear();
 
                     for (int i = 0; i < lista.Count; i++)
