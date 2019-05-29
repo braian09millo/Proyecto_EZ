@@ -1,11 +1,11 @@
 ﻿
 @{
-    ViewBag.Title = "FacturacionCliente";
+    ViewBag.Title = "RemitosRepartidores";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div style="padding-top: 50px;">
-    <h2 class="h2 text-center">FACTURACION MENSUAL</h2>
+    <h2 class="h2 text-center">REMITO REPARTIDORES</h2>
     <br />
     <div class="row">
         <div class="form-horizontal">
@@ -42,8 +42,8 @@
 </div>
 
 @section Scripts {
-    
-<script type="text/javascript">
+
+    <script type="text/javascript">
 
     $(document).ready(function () {
 
@@ -70,13 +70,13 @@
             var fechaDesde = anio + '-' + mes + '-' + dia;
             var fechaHasta = anio + '-' + mesSig + '-' + dia;
 
-            document.getElementById("txtFechaDesde").value = fechaDesde;
+            document.getElementById("txtFechaDesde").value = fechaHasta;
             document.getElementById("txtFechaHasta").value = fechaHasta;
         }
 
     });
 
-    function ValidarDatos(objError, desde, hasta)
+    function ValidarDatos(objError, desde, hasta, repartidor)
     {
         if (desde == "" || desde == null || desde == undefined)
         {
@@ -90,26 +90,31 @@
             objError.msj = "La fecha hasta no puede ser nula o vacía";
         }
 
+        if (repartidor == "" || repartidor == null || repartidor == undefined) {
+            objError.bPuede = false;
+            objError.msj = "Debe elegir un repartidor";
+        }
+
         return objError.bPuede;
     }
 
     $('#btnGenerar').click(function (e) {
-        GetInformeFacturacionMensual();
+        GetRemitoRepartidor();
     });
 
-    function GetInformeFacturacionMensual() {
+    function GetRemitoRepartidor() {
 
         var fechaDesde = $('#txtFechaDesde').val();
         var fechaHasta = $('#txtFechaHasta').val();
         var repartidor = $('#cmbUsuarios').val();
-        var objError = { bPuede: true, msj: "" };        
+        var objError = { bPuede: true, msj: "" };
 
-        if (ValidarDatos(objError, fechaDesde, fechaHasta))
+        if (ValidarDatos(objError, fechaDesde, fechaHasta, repartidor))
         {
             $.ajax({
 
                 method: 'POST',
-                url: '/Informe/PuedeFacturar?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xsRepartidor=' + repartidor,
+                url: '/Informe/PuedeObtenerRemito?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xsRepartidor=' + repartidor,
                 success: function (response) {
 
                     if (response.length > 0)
@@ -149,12 +154,11 @@
 
     function Reporte(fechaDesde, fechaHasta, repartidor)
     {
-        var url = '/Reporte/GetFacturacionMensual?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xsRepartidor=' + repartidor;
+        var url = '/Reporte/GetRemitoRepartidor?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xsRepartidor=' + repartidor;
         window.open(url);
     }
 
-</script>
+    </script>
 
 }
-
 

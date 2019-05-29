@@ -58,6 +58,7 @@
     <Compile Include="spGetRendicion.cs" />
     <Compile Include="spGetUsuarios.cs" />
     <Compile Include="spRptRemito.cs" />
+    <Compile Include="spRptRemitoRepartidor.cs" />
     <Compile Include="TamanioForm.cs" />
     <Compile Include="UsuarioForm.cs" />
   </ItemGroup>

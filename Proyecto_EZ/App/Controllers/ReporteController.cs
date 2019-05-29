@@ -60,5 +60,17 @@ namespace App.Controllers
             var bytes = Reporting.GenerarInforme(lista, _path, _nombre, _nombreDs, "PDF", listaParametros);
             return File(bytes, "application/pdf", "RendicionFacu_" + xdFechaDesde.ToString("ddMMyyyy") + "_" + xdFechaHasta.ToString("ddMMyyyy") + ".pdf");
         }
+
+        [HttpGet]
+        public FileResult GetRemitoRepartidor(DateTime xdFechaDesde, DateTime xdFechaHasta, string xsRepartidor)
+        {
+            var _nombre = "rptRemitoRepartidor.rdlc";
+            var _nombreDs = "RemitoRepartidorDS";
+            var _path = HttpContext.Server.MapPath("~/Reportes/" + _nombre);
+            var lista = xoCtrlPedido.ObtenerRemitoRepartidorRpt(xdFechaDesde, xdFechaHasta, xsRepartidor);      
+
+            var bytes = Reporting.GenerarInforme(lista, _path, _nombre, _nombreDs, "PDF", null);
+            return File(bytes, "application/pdf", "Remito"+ xsRepartidor + "_" + xdFechaDesde.ToString("ddMMyyyy") + "_" + xdFechaHasta.ToString("ddMMyyyy") + ".pdf");
+        }
     }
 }

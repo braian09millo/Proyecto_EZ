@@ -50,5 +50,26 @@ namespace App.Controllers
             var xoResultado = xoPedidoCtrl.ObtenerRendicionRpt(xdFechaDesde, xdFechaHasta);
             return Json(xoResultado);
         }
+
+        public ActionResult RemitosRepartidores()
+        {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Index", "Login");
+
+            string xsError = "";
+
+            //Cargamos el combo de usuarios
+            var xoUsuarios = xoUsuarioCtrl.ObtenerUsuarios(out xsError).Where(x => x.usu_delet != "S").OrderBy(x => x.usu_nombre).ToList();
+            var lstUsuarios = xoUsuarios.Select(x => new SelectListItem { Value = x.usu_usuario, Text = x.usu_nombre }).ToList();
+            ViewBag.Usuarios = lstUsuarios;
+
+            return View();
+        }
+
+        public JsonResult PuedeObtenerRemito(DateTime xdFechaDesde, DateTime xdFechaHasta, string xsRepartidor)
+        {
+            var xoResultado = xoPedidoCtrl.ObtenerRemitoRepartidorRpt(xdFechaDesde, xdFechaHasta, xsRepartidor);
+            return Json(xoResultado);
+        }
     }
 }
