@@ -24,12 +24,8 @@ SELECT usu_nombre Repartidor,
 	JOIN marca ON prod_marca = mar_id
 	JOIN modelo ON prod_modelo = mod_id
 	JOIN tamanio ON prod_tamanio = tam_id
-	JOIN tipo ON prod_tipo = tip_id
-	--JOIN precio_detalle ON prd_produ = prod_id
-	--JOIN precio ON pre_ident = prd_campre
 	WHERE usu_usuario = @repartidor 
 	AND ped_fecha between @FechaDesde and @FechaHasta   
-		--(ped_fecha between pre_fecha and pre_fechahasta or pre_fechaHasta IS NULL )
 		 
 
 	SET @@nRet = @@error
