@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace App {
+namespace App.Reportes {
     
     
     /// <summary>
@@ -795,7 +795,7 @@ namespace App {
         }
     }
 }
-namespace App.RemitoRepartidorDataSetTableAdapters {
+namespace App.Reportes.RemitoRepartidorDataSetTableAdapters {
     
     
     /// <summary>

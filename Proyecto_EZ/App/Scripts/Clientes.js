@@ -1,5 +1,8 @@
 ﻿$(document).ready(function () {
 
+    //Mostrar con efecto FADE al cargar
+    $("#tabla").show("fade", { percent: 0 }, 1500);
+
     //Obtenemos la lista de localidades para filtrarla
     var optLocalidades = $('#cmbLocalidades option');
 

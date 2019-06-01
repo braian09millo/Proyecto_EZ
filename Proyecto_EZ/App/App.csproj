@@ -154,7 +154,7 @@
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
-    <Compile Include="RemitoRepartidorDataSet.Designer.cs">
+    <Compile Include="Reportes\RemitoRepartidorDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RemitoRepartidorDataSet.xsd</DependentUpon>
@@ -260,15 +260,15 @@
     <Content Include="Reportes\FactResultadoDataSet.xsc">
       <DependentUpon>FactResultadoDataSet.xsd</DependentUpon>
     </Content>
-    <Content Include="RemitoRepartidorDataSet.xsc">
+    <Content Include="Reportes\RemitoRepartidorDataSet.xsc">
       <DependentUpon>RemitoRepartidorDataSet.xsd</DependentUpon>
     </Content>
-    <None Include="RemitoRepartidorDataSet.xsd">
+    <None Include="Reportes\RemitoRepartidorDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>RemitoRepartidorDataSet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <Content Include="RemitoRepartidorDataSet.xss">
+    <Content Include="Reportes\RemitoRepartidorDataSet.xss">
       <DependentUpon>RemitoRepartidorDataSet.xsd</DependentUpon>
     </Content>
     <None Include="Reportes\FactResultadoDataSet.xsd">
