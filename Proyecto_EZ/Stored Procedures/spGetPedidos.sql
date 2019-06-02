@@ -14,6 +14,16 @@ WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT
 
+	UPDATE pedido
+	SET ped_estado = 'E'
+	FROM pedido
+	WHERE ped_estado = 'C'
+	and ped_fecha < getdate()
+
+	SET @@nRet = @@error
+	IF @@nRet <> 0 
+		RETURN @@nRet
+
 	SELECT 
 		ped_id AS IdPedido,
 		cli_nombre AS Cliente,
