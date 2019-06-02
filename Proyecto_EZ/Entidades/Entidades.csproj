@@ -49,12 +49,15 @@
     <Compile Include="ProductoForm.cs" />
     <Compile Include="spGetClientes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="spGetClientesMorosos.cs" />
     <Compile Include="spGetFacturacionMensual.cs" />
     <Compile Include="spGetFacturacionResultado.cs" />
+    <Compile Include="spGetMayoresVentasClientes.cs" />
     <Compile Include="spGetPedidoDetalle.cs" />
     <Compile Include="spGetPedidos.cs" />
     <Compile Include="spGetProductos.cs" />
     <Compile Include="spGetProductosEdicion.cs" />
+    <Compile Include="spGetProductosMasVendidos.cs" />
     <Compile Include="spGetRendicion.cs" />
     <Compile Include="spGetUsuarios.cs" />
     <Compile Include="spRptRemito.cs" />

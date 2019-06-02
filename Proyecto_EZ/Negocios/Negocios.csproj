@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="BusinessControllers\ClienteCtrl.cs" />
     <Compile Include="BusinessControllers\GastosCtrl.cs" />
+    <Compile Include="BusinessControllers\HomeCtrl.cs" />
     <Compile Include="BusinessControllers\PedidoCtrl.cs" />
     <Compile Include="BusinessControllers\ProductoCtrl.cs" />
     <Compile Include="BusinessControllers\UsuarioCtrl.cs" />

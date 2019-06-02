@@ -1,4 +1,154 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="padding-top: 70px;">
+    <div class="text-center">
+        <h1 class="h1">BIENVENIDO AL SISTEMA</h1>
+    </div>
+    <br />
+    @*<div class="row">
+        <div class="col-sm-12">
+            <div style="width:700px; height: 500px;">
+                <canvas id="myChart" width="100"></canvas>
+            </div>
+        </div>
+    </div>*@
+    <br />
+    <div class="row">
+        <div class="col-sm-4" id="cuadro1" style="display: none;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title text-center"><i class="fas fa-chart-line"></i>&nbsp;&nbsp;CLIENTES CON MAYORES VENTAS</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="tablaClientesMayoresVentas" class="table">
+                            <tbody>
+                                @foreach (var item in ViewBag.ClientesMayoresVenta)
+                                {
+                                    <tr>
+                                        <td>@item.Cliente</td>
+                                        <td>$ @Math.Round(item.Monto, 0)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4" id="cuadro2" style="display: none;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title text-center"><i class="fas fa-chart-bar"></i>&nbsp;&nbsp;CLIENTES MOROSOS</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="tablaClientesMorosos" class="table">
+                            <tbody>
+                                @foreach (var item in ViewBag.ClientesMorosos)
+                                {
+                                    <tr>
+                                        <td>@item.Cliente</td>
+                                        <td>$ @Math.Round(item.Monto, 0)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4" id="cuadro3" style="display: none;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title text-center"><i class="fas fa-chart-line"></i>&nbsp;&nbsp;PRODUCTOS MAS VENDIDOS</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="tablaProductosMasVendidos" class="table">
+                            <tbody>
+                                @foreach (var item in ViewBag.ProductosMasVendidos)
+                                {
+                                    <tr>
+                                        <td>@item.Producto</td>
+                                        <td>@item.CantidadPacks</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+
+            //var ctx = document.getElementById('myChart').getContext('2d');
+            //var myChart = new Chart(ctx, {
+            //    type: 'line',
+            //    data: {
+            //        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            //        datasets: [{
+            //            label: '# of Votes',
+            //            data: [12, 19, 3, 5, 2, 3],
+            //            backgroundColor: [
+            //                'rgba(255, 99, 132, 0.2)',
+            //                'rgba(54, 162, 235, 0.2)',
+            //                'rgba(255, 206, 86, 0.2)',
+            //                'rgba(75, 192, 192, 0.2)',
+            //                'rgba(153, 102, 255, 0.2)',
+            //                'rgba(255, 159, 64, 0.2)'
+            //            ],
+            //            borderColor: [
+            //                'rgba(255, 99, 132, 1)',
+            //                'rgba(54, 162, 235, 1)',
+            //                'rgba(255, 206, 86, 1)',
+            //                'rgba(75, 192, 192, 1)',
+            //                'rgba(153, 102, 255, 1)',
+            //                'rgba(255, 159, 64, 1)'
+            //            ],
+            //            borderWidth: 1
+            //        }]
+            //    }
+            //});
+
+            //Mostrar con efecto FADE al cargar
+            $("#cuadro1").show("drop", { percent: 0 }, 1000);
+            $("#cuadro2").show("drop", { percent: 0 }, 1000);
+            $("#cuadro3").show("drop", { percent: 0 }, 1000);
+        });
+    </script>
+
+}
+
+@section Styles {
+
+    <style>
+        #tablaClientesMayoresVentas tbody tr, 
+        #tablaClientesMorosos tbody tr,
+        #tablaProductosMasVendidos tbody tr {
+            font-size: 15px;
+        }
+
+        #tablaClientesMayoresVentas tbody tr td:first-child + td,
+        #tablaClientesMorosos tbody tr td:first-child + td,
+        #tablaProductosMasVendidos tbody tr td:first-child + td {
+            text-align: center;
+        }
+
+        #tablaClientesMayoresVentas tbody tr:first-child,
+        #tablaClientesMorosos tbody tr:first-child,
+        #tablaProductosMasVendidos tbody tr:first-child {
+            font-weight: bold;
+        }
+
+    </style>
+
 }
