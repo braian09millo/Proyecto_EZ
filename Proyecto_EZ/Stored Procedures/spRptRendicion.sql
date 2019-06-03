@@ -7,6 +7,10 @@ WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT
 
+	UPDATE pedido
+	SET ped_rendido = 'S'
+	WHERE ped_fecha between @FechaDesde and @FechaHasta
+
 	SELECT  
 		sum(det_cantidad) Cantidad,
 		max(mod_nombre + ' - ' + tam_descripcion) Descripcion,

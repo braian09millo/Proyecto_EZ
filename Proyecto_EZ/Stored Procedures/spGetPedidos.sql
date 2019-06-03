@@ -20,6 +20,11 @@ WITH ENCRYPTION AS
 	WHERE ped_estado = 'C'
 	and ped_fecha < getdate()
 
+	UPDATE pedido
+	SET ped_estado = 'F'
+	WHERE ped_estado IN ('E','PP') AND 
+		  (ped_monto - ped_factu) = 0
+
 	SET @@nRet = @@error
 	IF @@nRet <> 0 
 		RETURN @@nRet

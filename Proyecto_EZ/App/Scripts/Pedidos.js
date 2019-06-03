@@ -277,7 +277,6 @@ $(document).ready(function () {
                                         icon: "success",
                                         button: "Aceptar"
                                     });
-
                                     $('#NuevoForm').modal('hide');
                                     Limpiar();
                                     CargarPedidos();
