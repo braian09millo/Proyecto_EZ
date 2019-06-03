@@ -238,7 +238,9 @@
                                         CargarDatos();
                                     }
                                     else {
-                                        swal(response, {
+                                        swal({
+                                            title: "Error",
+                                            text: response,
                                             icon: "error",
                                             buttons: "Aceptar"
                                         });
@@ -288,7 +290,7 @@
                                     else {
                                         swal({
                                             title: "Error",
-                                            test: response,
+                                            text: response,
                                             icon: "error",
                                             buttons: "Aceptar"
                                         });

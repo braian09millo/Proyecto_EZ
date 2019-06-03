@@ -411,8 +411,13 @@ namespace Negocios.BusinessControllers
 
                     if (xoMarca != null)
                     {
-                        xoMarca.mar_delet = "S";
-                        xoDB.SaveChanges();
+                        if (xoDB.producto.FirstOrDefault(x => x.prod_marca == xoMarca.mar_id && (x.prod_delet ?? "N") == "S") != null)
+                        {
+                            xoMarca.mar_delet = "S";
+                            xoDB.SaveChanges();
+                        }
+                        else
+                            xsError = "Debe eliminar el/los productos asociados antes de eliminar la marca";
                     }
                     else
                         xsError = "La marca seleccionada no existe";
@@ -503,8 +508,13 @@ namespace Negocios.BusinessControllers
 
                     if (xoModelo != null)
                     {
-                        xoModelo.mod_delet = "S";
-                        xoDB.SaveChanges();
+                        if (xoDB.producto.FirstOrDefault(x => x.prod_modelo == xoModelo.mod_id && (x.prod_delet ?? "N") == "S") != null)
+                        {
+                            xoModelo.mod_delet = "S";
+                            xoDB.SaveChanges();
+                        }
+                        else
+                            xsError = "Debe eliminar el/los producto asociado antes de eliminar el modelo";
                     }
                     else
                         xsError = "El modelo seleccionado no existe";
@@ -589,8 +599,15 @@ namespace Negocios.BusinessControllers
 
                     if (xoTamanio != null)
                     {
-                        xoTamanio.tam_delet = "S";
-                        xoDB.SaveChanges();
+                        if (xoDB.producto.FirstOrDefault(x => x.prod_tamanio == xoTamanio.tam_id && (x.prod_delet ?? "N") == "S") != null)
+                        {
+                            xoTamanio.tam_delet = "S";
+                            xoDB.SaveChanges();
+                        }
+                        else
+                        {
+                            xsError = "Elimine el/los productos asociados para poder eliminar el tamaño";
+                        }
                     }
                     else
                         xsError = "El tamaño seleccionado no existe";
