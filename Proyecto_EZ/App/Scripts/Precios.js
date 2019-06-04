@@ -1,6 +1,9 @@
 ﻿/// <reference path="jquery-3.3.1.min.js" />
 $(document).ready(function () {
 
+    //Mostrar con efecto FADE al cargar
+    $("#tabla").show("fade", { percent: 0 }, 1500);
+
     $('#EditorTable tbody tr').click(function () {
 
         ($(this).find("td:eq(2)").find("input[type='text']")).keyup(function () {

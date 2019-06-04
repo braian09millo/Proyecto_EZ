@@ -13,7 +13,7 @@
         </div>
     </div>
     <br />
-    <div class="row">
+    <div class="row" id="tabla" style="display: none;">
         <div class="col-sm-12 col-xs-12">
             <div class="panel panel-primary">
                 <div class="panel-body">
@@ -106,6 +106,9 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+
+            //Mostrar con efecto FADE al cargar
+            $("#tabla").show("fade", { percent: 0 }, 1500);
 
             var bCambiaPassword = false;
 

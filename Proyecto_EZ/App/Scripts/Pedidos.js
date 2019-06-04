@@ -5,6 +5,9 @@ $(document).ready(function () {
     CargarFechas();
     CargarPedidos();
 
+    //Mostrar con efecto FADE al cargar
+    $("#tabla").show("fade", { percent: 0 }, 1500);
+
     $('#btnBuscar').click(function (e) {
         e.preventDefault();
         Limpiar();

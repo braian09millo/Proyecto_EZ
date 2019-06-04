@@ -8,6 +8,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/datatables.min.js"></script>
     <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
@@ -47,9 +48,10 @@
                         <ul class="dropdown-menu">
                             <li><a href="@Url.Action("FacturacionMensual","Informe")"><i class="fas fa-dollar-sign"></i>&nbsp; Facturación Mensual</a></li>           
                             <li><a href="@Url.Action("Rendicion","Informe")"><i class="fas fa-file-invoice-dollar"></i>&nbsp; Rendición</a></li>           
+                            <li><a href="@Url.Action("RemitosRepartidores","Informe")"><i class="fas fa-receipt"></i>&nbsp; Remito Repartidor</a></li>           
                         </ul>
                     </li>
-                    <li><a href="@Url.Action("Index","Gasto")"><i class="fas fa-cash-register"></i>&nbsp; Gastos </a></li>
+                    <li><a href="@Url.Action("Index","Gasto")"><i class="fas fa-calculator"></i>&nbsp; Gastos </a></li>
                     <li><a href="@Url.Action("Index","Usuario")"><i class="fas fa-key"></i>&nbsp; Usuarios</a></li>
                 </ul>
 
@@ -79,7 +81,7 @@
             setTimeout(function(){
                 $('.loader').css('display','none');
                 $('body').css('opacity','1');
-            }, 2000);
+            }, 1500);
         });
     </script>
 </body>

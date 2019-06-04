@@ -1,6 +1,9 @@
 ﻿/// <reference path="jquery-3.3.1.min.js" />
 $(document).ready(function () {
 
+    //Mostrar con efecto FADE al cargar
+    $("#tabla").show("fade", { percent: 0 }, 1500);
+
     //Cargamos la grilla en el LOAD
     CargarDatos();
 

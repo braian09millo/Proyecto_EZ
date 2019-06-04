@@ -2,7 +2,7 @@ IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('spGetRemitos') and sys
 	DROP PROCEDURE spGetRemitos
 GO
 
-CREATE PROCEDURE spGetRemitos	(@repartidor varchar(10),@FechaDesde datetime,@FechaHasta datetime)														
+CREATE PROCEDURE spGetRemitos	(@FechaDesde datetime,@FechaHasta datetime,@repartidor varchar(10))														
 WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT

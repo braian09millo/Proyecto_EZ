@@ -154,6 +154,11 @@
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Reportes\RemitoRepartidorDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RemitoRepartidorDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\FactResultadoDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -254,6 +259,17 @@
     </Content>
     <Content Include="Reportes\FactResultadoDataSet.xsc">
       <DependentUpon>FactResultadoDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reportes\RemitoRepartidorDataSet.xsc">
+      <DependentUpon>RemitoRepartidorDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="Reportes\RemitoRepartidorDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RemitoRepartidorDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Reportes\RemitoRepartidorDataSet.xss">
+      <DependentUpon>RemitoRepartidorDataSet.xsd</DependentUpon>
     </Content>
     <None Include="Reportes\FactResultadoDataSet.xsd">
       <SubType>Designer</SubType>
@@ -363,6 +379,7 @@
     <Content Include="Views\Gasto\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Informe\Rendicion.cshtml" />
+    <Content Include="Views\Informe\RemitosRepartidores.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -398,6 +415,7 @@
     <EmbeddedResource Include="Reportes\rptRemito.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rptRemitoRepartidor.rdlc" />
     <EmbeddedResource Include="Reportes\rptRendicion.rdlc" />
   </ItemGroup>
   <PropertyGroup>

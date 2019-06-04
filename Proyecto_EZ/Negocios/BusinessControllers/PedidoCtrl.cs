@@ -168,7 +168,6 @@ namespace Negocios.BusinessControllers
         #endregion
 
         #region INFORMES
-
         public List<spRptRemito> ObtenerPedidosRpt(int xiPedido)
         {
             var xoResultado = new List<spRptRemito>();
@@ -188,7 +187,6 @@ namespace Negocios.BusinessControllers
 
             return xoResultado;
         }
-
 
         public List<spGetRendicion> ObtenerRendicionRpt(DateTime xdFechaDesde, DateTime xdFechaHasta)
         {
@@ -244,6 +242,29 @@ namespace Negocios.BusinessControllers
                 try
                 {
                     xoResultado = xoDB.Database.SqlQuery<spGetFacturacionResultado>("exec spFacturacionResultado @FechaDesde, @FechaHasta, @Repartidor",
+                                               new SqlParameter("@FechaDesde", xdFechaDesde),
+                                               new SqlParameter("@FechaHasta", xdFechaHasta),
+                                               new SqlParameter("@Repartidor", xsRepartidor == null ? SqlString.Null : xsRepartidor)).ToList();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return xoResultado;
+        }
+
+        public List<spRptRemitoRepartidor> ObtenerRemitoRepartidorRpt(DateTime xdFechaDesde, DateTime xdFechaHasta, string xsRepartidor)
+        {
+            var xoResultado = new List<spRptRemitoRepartidor>();
+            if (xsRepartidor == "") xsRepartidor = null;
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    xoResultado = xoDB.Database.SqlQuery<spRptRemitoRepartidor>("exec spGetRemitos @FechaDesde, @FechaHasta, @Repartidor",
                                                new SqlParameter("@FechaDesde", xdFechaDesde),
                                                new SqlParameter("@FechaHasta", xdFechaHasta),
                                                new SqlParameter("@Repartidor", xsRepartidor == null ? SqlString.Null : xsRepartidor)).ToList();
