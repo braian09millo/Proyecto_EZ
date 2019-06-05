@@ -107,7 +107,7 @@
 
                 $.ajax({
                     method: 'GET',
-                    url: '/Producto/GetTamanios',
+                    url: '@Url.Action("GetTamanios", "Producto")',
                     success: function (response) {
                         if (response.error == '') {
                             var tabla = $('#tableTamanios').DataTable({
@@ -190,7 +190,7 @@
                         if (bHabilita) {
                             $.ajax({
                                 method: 'POST',
-                                url: '/Producto/PostHabilitarTamanio',
+                                url: '@Url.Action("PostHabilitarTamanio","Producto")',
                                 data: JSON.stringify(dataToPost),
                                 contentType: 'application/json; charset=utf-8',
                                 success: function (response) {
@@ -238,7 +238,7 @@
                         if (bElimina) {
                             $.ajax({
                                 method: 'POST',
-                                url: '/Producto/PostEliminarTamanio',
+                                url: '@Url.Action("PostEliminarTamanio", "Producto")',
                                 data: JSON.stringify(dataToPost),
                                 contentType: 'application/json; charset=utf-8',
                                 success: function (response) {
@@ -290,7 +290,7 @@
                     $.ajax({
 
                         method: 'POST',
-                        url: '/Producto/PostGuardarTamanio',
+                        url: '@Url.Action("PostGuardarTamanio","Producto")',
                         data: JSON.stringify(dataToPost),
                         type: 'json',
                         contentType: 'application/json; charset=utf-8',

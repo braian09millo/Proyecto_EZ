@@ -109,7 +109,7 @@
             $.ajax({
 
                 method: 'POST',
-                url: '/Informe/PuedeFacturar?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xsRepartidor=' + repartidor,
+                url: '@Url.Action("PuedeFacturar","Informe")?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xsRepartidor=' + repartidor,
                 success: function (response) {
 
                     if (response.length > 0)
@@ -149,7 +149,7 @@
 
     function Reporte(fechaDesde, fechaHasta, repartidor)
     {
-        var url = '/Reporte/GetFacturacionMensual?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xsRepartidor=' + repartidor;
+        var url = '@Url.Action("GetFacturacionMensual","Reporte")?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xsRepartidor=' + repartidor;
         window.open(url);
     }
 

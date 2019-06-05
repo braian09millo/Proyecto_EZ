@@ -104,7 +104,7 @@
             $.ajax({
 
                 method: 'GET',
-                url: '/Home/GetDatosGrafico',
+                url: '@Url.Action("GetDatosGrafico","Home")',
                 success: function (response) {
 
                     if (response.error != "") {

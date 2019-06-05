@@ -32,7 +32,7 @@
 
         $.ajax({
             method: 'GET',
-            url: '/Cliente/GetClientes',
+            url: '@Url.Action("GetClientes","Cliente")',
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 var tabla = $('#tableClientes').DataTable({

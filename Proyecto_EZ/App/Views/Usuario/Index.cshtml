@@ -143,7 +143,7 @@
 
                 $.ajax({
                     method: 'GET',
-                    url: '/Usuario/GetUsuarios',
+                    url: '@Url.Action("GetUsuarios", "Usuario")',
                     success: function (response) {
                         if (response.error == '') {
                             var tabla = $('#tableUsuarios').DataTable({
@@ -256,7 +256,7 @@
                         if (bHabilita) {
                             $.ajax({
                                 method: 'POST',
-                                url: '/Usuario/PostHabilitarUsuario',
+                                url: '@Url.Action("PostHabilitarUsuario", "Usuario")',
                                 data: JSON.stringify(dataToPost),
                                 contentType: 'application/json; charset=utf-8',
                                 success: function (response) {
@@ -304,7 +304,7 @@
                         if (bElimina) {
                             $.ajax({
                                 method: 'POST',
-                                url: '/Usuario/PostEliminarUsuario',
+                                url: '@Url.Action("PostEliminarUsuario", "Usuario")',
                                 data: JSON.stringify(dataToPost),
                                 contentType: 'application/json; charset=utf-8',
                                 success: function (response) {
@@ -360,7 +360,7 @@
                     $.ajax({
 
                         method: 'POST',
-                        url: '/Usuario/PostGuardarUsuario',
+                        url: '@Url.Action("PostGuardarUsuario", "Usuario")',
                         data: JSON.stringify(dataToPost),
                         type: 'json',
                         contentType: 'application/json; charset=utf-8',
@@ -419,7 +419,7 @@
                     $.ajax({
 
                         method: 'POST',
-                        url: '/Usuario/PostCambiarPassword',
+                        url: '@Url.Action("PostCambiarPassword", "Usuario")',
                         data: JSON.stringify(dataToPost),
                         type: 'json',
                         contentType: 'application/json; charset=utf-8',

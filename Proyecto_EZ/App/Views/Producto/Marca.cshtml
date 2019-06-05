@@ -107,7 +107,7 @@
 
                 $.ajax({
                     method: 'GET',
-                    url: '/Producto/GetMarcas',
+                    url: '@Url.Action("GetMarcas","Producto")',
                     success: function (response) {
                         if (response.error == '') {
                             var tabla = $('#tableMarcas').DataTable({
@@ -190,7 +190,7 @@
                         if (bHabilita) {
                             $.ajax({
                                 method: 'POST',
-                                url: '/Producto/PostHabilitarMarca',
+                                url: '@Url.Action("PostHabilitarMarca", "Producto")',
                                 data: JSON.stringify(dataToPost),
                                 contentType: 'application/json; charset=utf-8',
                                 success: function (response) {
@@ -240,7 +240,7 @@
                         if (bElimina) {
                             $.ajax({
                                 method: 'POST',
-                                url: '/Producto/PostEliminarMarca',
+                                url: '@Url.Action("PostEliminarMarca","Producto")',
                                 data: JSON.stringify(dataToPost),
                                 contentType: 'application/json; charset=utf-8',
                                 success: function (response) {
@@ -292,7 +292,7 @@
                     $.ajax({
 
                         method: 'POST',
-                        url: '/Producto/PostGuardarMarca',
+                        url: '@Url.Action("PostGuardarMarca","Producto")',
                         data: JSON.stringify(dataToPost),
                         type: 'json',
                         contentType: 'application/json; charset=utf-8',

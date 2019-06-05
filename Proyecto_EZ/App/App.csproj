@@ -265,6 +265,7 @@
     <Content Include="Reportes\RemitoRepartidorDataSet.xsc">
       <DependentUpon>RemitoRepartidorDataSet.xsd</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\Admin.pubxml" />
     <None Include="Reportes\RemitoRepartidorDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>RemitoRepartidorDataSet.Designer.cs</LastGenOutput>

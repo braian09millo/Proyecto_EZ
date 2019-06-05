@@ -102,7 +102,7 @@
             $.ajax({
 
                 method: 'POST',
-                url: '/Informe/PuedeRendir?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta,
+                url: '@Url.Action("PuedeRendir","Informe")?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta,
                 success: function (response) {
 
                     if (response.length > 0)
@@ -141,7 +141,7 @@
 
     function Reporte(fechaDesde, fechaHasta)
     {
-        var url = '/Reporte/GetRendicion?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta;
+        var url = '@Url.Action("GetRendicion","Reporte")?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta;
         window.open(url);
     }
 

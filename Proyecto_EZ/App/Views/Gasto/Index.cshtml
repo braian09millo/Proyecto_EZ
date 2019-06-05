@@ -192,7 +192,7 @@
                 var fechaDesde = $('#txtDesde').val();
                 var fechaHasta = $('#txtHasta').val();
 
-                var url = '/Gasto/GetGastos?xsFechaDesde=' + fechaDesde + '&xsFechaHasta=' + fechaHasta;
+                var url = '@Url.Action("GetGastos","Gasto")?xsFechaDesde=' + fechaDesde + '&xsFechaHasta=' + fechaHasta;
 
                 var tabla = $('#tableGastos').DataTable({
                     select: true,
@@ -273,7 +273,7 @@
                         if (bElimina) {
                             $.ajax({
                                 method: 'POST',
-                                url: '/Gasto/PostEliminarGasto',
+                                url: '@Url.Action("PostEliminarGasto","Gasto")',
                                 data: JSON.stringify(dataToPost),
                                 contentType: 'application/json; charset=utf-8',
                                 success: function (response) {
@@ -347,7 +347,7 @@
                     $.ajax({
 
                         method: 'POST',
-                        url: '/Gasto/PostGuardarGasto',
+                        url: '@Url.Action("PostGuardarGasto","Gasto")',
                         data: JSON.stringify(dataToPost),
                         type: 'json',
                         contentType: 'application/json; charset=utf-8',

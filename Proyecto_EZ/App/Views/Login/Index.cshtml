@@ -127,7 +127,7 @@
                     $.ajax({
 
                         method: 'POST',
-                        url: '/Login/VerificarSesion',
+                        url: '@Url.Action("VerificarSesion","Login")',
                         data: { xoLogin: dataToPost },
                         success: function (response) {
                             if (response != '') {
@@ -136,7 +136,7 @@
                                 Limpiar();
                             }
                             else {
-                                window.open('/Home/Index', '_self');
+                                window.open('@Url.Action("Index","Home")', '_self');
                             }
                         },
                         error: function (error) {

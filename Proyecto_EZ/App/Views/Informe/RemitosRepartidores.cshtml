@@ -114,7 +114,7 @@
             $.ajax({
 
                 method: 'POST',
-                url: '/Informe/PuedeObtenerRemito?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xsRepartidor=' + repartidor,
+                url: '@Url.Action("PuedeObtenerRemito","Informe")?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xsRepartidor=' + repartidor,
                 success: function (response) {
 
                     if (response.length > 0)
@@ -154,7 +154,7 @@
 
     function Reporte(fechaDesde, fechaHasta, repartidor)
     {
-        var url = '/Reporte/GetRemitoRepartidor?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xsRepartidor=' + repartidor;
+        var url = '@Url.Action("GetRemitoRepartidor","Reporte")?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xsRepartidor=' + repartidor;
         window.open(url);
     }
 
