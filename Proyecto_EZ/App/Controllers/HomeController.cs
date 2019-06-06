@@ -42,5 +42,20 @@ namespace App.Controllers
 
             return Json(resultadoJS, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetDatosGananciaMensualGrafico()
+        {
+            string xsError = "";
+            var loGanancias = xoCtrlHome.ObtenerDatosGananciaMensualGrafico(out xsError);
+
+            var resultadoJS = new
+            {
+                dataMeses = loGanancias.Select(x => x.Mes).ToList(),
+                dataMontos = loGanancias.Select(x => Math.Round(x.GananciaTotal, 0)).ToList(),
+                error = xsError
+            };
+
+            return Json(resultadoJS, JsonRequestBehavior.AllowGet);
+        }
     }
 }

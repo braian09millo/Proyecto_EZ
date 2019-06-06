@@ -70,6 +70,26 @@ namespace Negocios.BusinessControllers
             return loResultado;
         }
 
+        public List<spGetDatosGrafico> ObtenerDatosGananciaMensualGrafico(out string xsError)
+        {
+            xsError = "";
+            List<spGetDatosGrafico> loResultado = null;
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    loResultado = xoDB.Database.SqlQuery<spGetDatosGrafico>("exec spDashboardGananciaNetaGrafico").ToList();
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+
+            return loResultado;
+        }
+
         public List<spGetClientesMorosos> ObtenerClientesMorosos()
         {
             List<spGetClientesMorosos> loResultado = null;

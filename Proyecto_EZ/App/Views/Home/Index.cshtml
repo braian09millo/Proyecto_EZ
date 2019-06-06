@@ -10,18 +10,26 @@
     <br />
     <div id="wrapper" style="display: none;">
         <div class="row">
-            <div class="col-sm-3"></div>
             <div class="col-sm-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title text-center">GRAFICO DE GANANCIA MENSUAL - @DateTime.Now.Year</h4>
+                        <h4 class="panel-title text-center"><b>TOTAL FACTURADO ($) - @DateTime.Now.Year</b></h4>
                     </div>
                     <div class="panel-body">
                         <canvas id="myChart"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title text-center"><b>FACTURACION MENSUAL ($) - @DateTime.Now.Year</b></h4>
+                    </div>
+                    <div class="panel-body">
+                        <canvas id="myChart2"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-4" id="cuadro1">
@@ -122,13 +130,72 @@
                             data: {
                                 labels: response.dataMeses,
                                 datasets: [{
-                                    label: 'Ganancia por Mes',
+                                    label: 'Total Facturado',
                                     data: response.dataMontos,
                                     backgroundColor: [
                                         'rgba(255, 99, 132, 0.2)'
                                     ],
                                     borderColor: [
                                         'rgba(255, 99, 132, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            }
+                        });
+                    }
+                }
+            });
+
+            $.ajax({
+
+                method: 'GET',
+                url: '@Url.Action("GetDatosGananciaMensualGrafico", "Home")',
+                success: function (response) {
+
+                    if (response.error != "") {
+                        swal({
+                            title: "Error",
+                            text: response.error,
+                            icon: "error",
+                            button: "Aceptar"
+                        })
+                    }
+                    else {
+                        var ctx = document.getElementById('myChart2').getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: response.dataMeses,
+                                datasets: [{
+                                    label: 'Facturación Mensual',
+                                    data: response.dataMontos,
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)',
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
                                     ],
                                     borderWidth: 1
                                 }]
