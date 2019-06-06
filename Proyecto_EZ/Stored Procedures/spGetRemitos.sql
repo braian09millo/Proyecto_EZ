@@ -7,15 +7,15 @@ WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT
 
-SELECT usu_nombre Repartidor,
+SELECT max(usu_nombre) Repartidor,
 		ped_fecha Fecha,
-		cli_nombre Cliente,
-		cli_direccion Direccion,
-		mar_nombre Marca,
-		mod_nombre Modelo,
-		tam_descripcion Tamanio,
-		det_cantidad Cantidad,
-		det_monto Monto
+		--cli_nombre Cliente,
+		--cli_direccion Direccion,
+		max(mar_nombre) Marca,
+		max(mod_nombre) Modelo,
+		max(tam_descripcion) Tamanio,
+		sum(det_cantidad) Cantidad
+--		det_monto Monto
 	FROM Pedido
 	JOIN pedido_detalle  on det_pedido = ped_id
 	JOIN usuario on usu_usuario = ped_repartidor
@@ -26,7 +26,7 @@ SELECT usu_nombre Repartidor,
 	JOIN tamanio ON prod_tamanio = tam_id
 	WHERE usu_usuario = @repartidor 
 	AND ped_fecha between @FechaDesde and @FechaHasta   
-		 
+	group by ped_fecha,prod_id	 
 
 	SET @@nRet = @@error
 	IF @@nRet <> 0 
