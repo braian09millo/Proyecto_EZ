@@ -23,7 +23,7 @@ WITH ENCRYPTION AS
 	FROM Pedido
 	JOIN pedido_detalle ON det_pedido = ped_id
 	JOIN producto ON prod_id = det_producto
-	JOIN precio ON ped_fecha between pre_fecha and pre_fechaHasta
+	JOIN precio ON ped_fecha > pre_fecha and (ped_fecha < pre_fechaHasta or pre_fechaHasta is null)
 	JOIN precio_detalle ON pre_ident = prd_campre and prd_produ = prod_id 
 	JOIN cliente ON cli_id = ped_cliente
 	LEFT JOIN usuario ON ped_repartidor = usu_usuario
