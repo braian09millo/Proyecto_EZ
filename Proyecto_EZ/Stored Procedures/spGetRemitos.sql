@@ -2,7 +2,7 @@ IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('spGetRemitos') and sys
 	DROP PROCEDURE spGetRemitos
 GO
 
-CREATE PROCEDURE spGetRemitos	(@FechaDesde datetime,@FechaHasta datetime,@repartidor varchar(10))														
+CREATE PROCEDURE spGetRemitos	(@Fecha datetime, @repartidor varchar(10))														
 WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT
@@ -25,7 +25,7 @@ SELECT max(usu_nombre) Repartidor,
 	JOIN modelo ON prod_modelo = mod_id
 	JOIN tamanio ON prod_tamanio = tam_id
 	WHERE usu_usuario = @repartidor 
-	AND ped_fecha between @FechaDesde and @FechaHasta   
+	AND ped_fecha = @Fecha 
 	group by ped_fecha,prod_id	 
 
 	SET @@nRet = @@error

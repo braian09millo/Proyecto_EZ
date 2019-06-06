@@ -66,9 +66,9 @@ namespace App.Controllers
             return View();
         }
 
-        public JsonResult PuedeObtenerRemito(DateTime xdFechaDesde, DateTime xdFechaHasta, string xsRepartidor)
+        public JsonResult PuedeObtenerRemito(DateTime xdFecha, string xsRepartidor)
         {
-            var xoResultado = xoPedidoCtrl.ObtenerRemitoRepartidorRpt(xdFechaDesde, xdFechaHasta, xsRepartidor);
+            var xoResultado = xoPedidoCtrl.ObtenerRemitoRepartidorRpt(xdFecha, xsRepartidor);
             return Json(xoResultado);
         }
     }

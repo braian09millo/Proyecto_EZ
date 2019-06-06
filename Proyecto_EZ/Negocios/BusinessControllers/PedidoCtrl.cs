@@ -255,7 +255,7 @@ namespace Negocios.BusinessControllers
             return xoResultado;
         }
 
-        public List<spRptRemitoRepartidor> ObtenerRemitoRepartidorRpt(DateTime xdFechaDesde, DateTime xdFechaHasta, string xsRepartidor)
+        public List<spRptRemitoRepartidor> ObtenerRemitoRepartidorRpt(DateTime xdFecha/*, DateTime xdFechaHasta*/, string xsRepartidor)
         {
             var xoResultado = new List<spRptRemitoRepartidor>();
             if (xsRepartidor == "") xsRepartidor = null;
@@ -264,9 +264,8 @@ namespace Negocios.BusinessControllers
             {
                 try
                 {
-                    xoResultado = xoDB.Database.SqlQuery<spRptRemitoRepartidor>("exec spGetRemitos @FechaDesde, @FechaHasta, @Repartidor",
-                                               new SqlParameter("@FechaDesde", xdFechaDesde),
-                                               new SqlParameter("@FechaHasta", xdFechaHasta),
+                    xoResultado = xoDB.Database.SqlQuery<spRptRemitoRepartidor>("exec spGetRemitos @Fecha, @Repartidor",
+                                               new SqlParameter("@Fecha", xdFecha),
                                                new SqlParameter("@Repartidor", xsRepartidor == null ? SqlString.Null : xsRepartidor)).ToList();
                 }
                 catch (Exception ex)
