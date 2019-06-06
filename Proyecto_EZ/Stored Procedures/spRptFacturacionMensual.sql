@@ -20,7 +20,7 @@ SELECT
 	FROM Pedido
 	JOIN pedido_detalle on det_pedido = ped_id
 	JOIN producto on prod_id = det_producto
-	JOIN precio on ped_fecha between pre_fecha and pre_fechaHasta
+	JOIN precio on ped_fecha > pre_fecha and (ped_fecha < pre_fechaHasta or pre_fechaHasta is null) 
 	JOIN precio_detalle on pre_ident = prd_campre and prd_produ = prod_id 
 	JOIN cliente on cli_id = ped_cliente
 	LEFT JOIN usuario on ped_repartidor = usu_usuario
