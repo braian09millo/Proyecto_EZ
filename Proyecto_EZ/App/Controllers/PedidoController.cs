@@ -108,5 +108,13 @@ namespace App.Controllers
 
             return Json(resuladoJS);
         }
+
+        [HttpPost]
+        public JsonResult PostEliminarPedido(int xiId)
+        {
+            string xsError = "";
+            xoPedidoCtrl.EliminarPedido(xiId, out xsError);
+            return Json(xsError);
+        }
     }
 }

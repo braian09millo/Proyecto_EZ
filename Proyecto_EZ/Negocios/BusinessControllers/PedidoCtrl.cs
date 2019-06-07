@@ -144,6 +144,31 @@ namespace Negocios.BusinessControllers
             return xoPedidos;
         }
 
+        public void EliminarPedido(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    //Primero eliminamos el detalle del pedido
+                    var loPedidoDetalle = xoDB.pedido_detalle.Where(x => x.det_pedido == xiId).ToList();
+                    xoDB.pedido_detalle.RemoveRange(loPedidoDetalle);
+                    xoDB.SaveChanges();
+
+                    //Ahora la cabecera del pedido
+                    var loPedidoCabecera = xoDB.pedido.Find(xiId);
+                    xoDB.pedido.Remove(loPedidoCabecera);
+                    xoDB.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
         public List<spGetPedidoDetalle> ObtenerDetallePedido(int xiPedido, out string xsError)
         {
             xsError = "";
