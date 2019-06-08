@@ -293,7 +293,7 @@ namespace Negocios.BusinessControllers
             return xoResultado;
         }
 
-        public List<spRptRemitoRepartidor> ObtenerRemitoRepartidorRpt(DateTime xdFecha/*, DateTime xdFechaHasta*/, string xsRepartidor)
+        public List<spRptRemitoRepartidor> ObtenerRemitoRepartidorRpt(DateTime xdFecha, string xsRepartidor)
         {
             var xoResultado = new List<spRptRemitoRepartidor>();
             if (xsRepartidor == "") xsRepartidor = null;

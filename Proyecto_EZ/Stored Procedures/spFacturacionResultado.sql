@@ -39,12 +39,12 @@ WITH ENCRYPTION AS
 
 	SELECT 
 		'Ganancia Mensual' AS Descripcion,
-		SUM(MontoRemito - Costo) AS Monto
+		ISNULL(SUM(MontoRemito - Costo),0) AS Monto
 	FROM #Aux
 	UNION ALL
 	SELECt 
 		'Gasto Mensual' AS Descripcion,
-		SUM(MontoGasto) AS Monto
+		ISNULL(SUM(MontoGasto),0) AS Monto
 	FROM #Aux2
 
 	SET @@nRet = @@error

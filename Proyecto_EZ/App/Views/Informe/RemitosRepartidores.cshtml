@@ -17,12 +17,6 @@
                         <input type="date" id="txtFecha" class="form-control" />
                     </div>
                 </div>
-                @*<div class="form-group">
-                    <label class="control-label col-sm-3">Hasta</label>
-                    <div class="col-sm-7">
-                        <input type="date" id="txtFechaHasta" class="form-control" />
-                    </div>
-                </div>*@
                 <div class="form-group">
                     <label class="control-label col-sm-3">Repartidores</label>
                     <div class="col-sm-7">
@@ -43,7 +37,7 @@
 
 @section Scripts {
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
     $(document).ready(function () {
 
@@ -103,7 +97,7 @@
                 method: 'POST',
                 url: '@Url.Action("PuedeObtenerRemito","Informe")?xdFecha=' + fecha + '&xsRepartidor=' + repartidor,
                 success: function (response) {
-
+                    console.log(response)
                     if (response.length > 0)
                         Reporte(fecha, repartidor);
                     else

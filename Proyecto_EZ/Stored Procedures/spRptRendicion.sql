@@ -9,7 +9,7 @@ WITH ENCRYPTION AS
 
 	UPDATE pedido
 	SET ped_rendido = 'S'
-	WHERE ped_fecha between @FechaDesde and @FechaHasta
+	WHERE ped_fecha between @FechaDesde and @FechaHasta AND ISNULL(ped_rendido,'N') <> 'S'
 
 	SELECT  
 		sum(det_cantidad) Cantidad,
@@ -22,7 +22,7 @@ WITH ENCRYPTION AS
 		JOIN marca on mar_id = prod_marca
 		JOIN modelo on mod_id = prod_modelo
 		JOIN tamanio on tam_id = prod_tamanio
-		JOIN precio on ped_fecha between pre_fecha and pre_fechaHasta
+		JOIN precio on ped_fecha > pre_fecha and (ped_fecha < pre_fechaHasta or pre_fechaHasta is null) 
 		JOIN precio_detalle on pre_ident = prd_campre and prd_produ = prod_id 
 	WHERE 
 		ped_fecha between @FechaDesde and @FechaHasta

@@ -7,15 +7,16 @@ WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT
 
-SELECT max(usu_nombre) Repartidor,
+	SELECT 
+		max(usu_nombre) Repartidor,
 		ped_fecha Fecha,
-		--cli_nombre Cliente,
-		--cli_direccion Direccion,
 		max(mar_nombre) Marca,
-		max(mod_nombre) Modelo,
+		CASE 
+			WHEN LOWER(max(mod_nombre)) = 'no aplica' THEN max(mar_nombre) 
+			ELSE max(mod_nombre) 
+		END AS Modelo,
 		max(tam_descripcion) Tamanio,
 		sum(det_cantidad) Cantidad
---		det_monto Monto
 	FROM Pedido
 	JOIN pedido_detalle  on det_pedido = ped_id
 	JOIN usuario on usu_usuario = ped_repartidor
