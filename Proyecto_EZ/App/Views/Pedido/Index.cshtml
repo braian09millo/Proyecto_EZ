@@ -126,6 +126,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label col-sm-3">Vuelta</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" id="cmbVueltas">
+                                            <option value="">Elija una vuelta</option>
+                                            <option value="1">Vuelta I</option>
+                                            <option value="2">Vuelta II</option>
+                                            <option value="3">Vuelta III</option>
+                                            <option value="4">Vuelta IV</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="control-label col-sm-3">Facturado</label>
                                     <div class="col-sm-9">
                                         <input type="text" style="text-align: right;" id="txtFacturado" class="form-control" value="0.00" />
@@ -243,8 +255,8 @@
 
                 var today = new Date();
                 var anio = today.getFullYear();
-                var mes = today.getMonth();
-                var mesSig = today.getMonth() + 1;
+                var mes = today.getMonth() - 2;
+                var mesSig = today.getMonth() + 2;
                 var dia = today.getDate();
 
                 if (mes < 10)
@@ -446,6 +458,7 @@
                 var Estado = $('#cmbEstadosPedido').val().trim();
                 var ClienteElegido = $('#cmbClientesPedido').val();
                 var Repartidor = $('#cmbUsuariosPedido').val();
+                var Vuelta = $('#cmbVueltas').val();
                 var FechaEntrega = $('#txtFechaEntrega').val();
                 var AplicaDesc = $('#chkDescuento').prop('checked') ? 'S' : 'N';
                 var Descuento = $('#chkDescuento').prop('checked') ? parseFloat($('#txtDescuento').val()) : 0;
@@ -489,7 +502,8 @@
                         xdFacturado: Facturado,
                         xoProductos: Productos,
                         xsAplicaDesc: AplicaDesc,
-                        xdDescuento: Descuento
+                        xdDescuento: Descuento,
+                        xiVuelta: Vuelta
                     }
 
                     swal({
@@ -766,6 +780,7 @@
                     $('#txtId').val(parseInt(data[0]));
                     $('#cmbClientesPedido').val(parseInt(data[8]));
                     $('#cmbUsuariosPedido').val(data[9]);
+                    $('#cmbVueltas').val(obj.Vuelta);
                     $('#txtFacturado').val(parseFloat(data[5]));
                     $('#cmbEstadosPedido').val(data[7].trim());
                     $('#chkDescuento').prop('checked', obj.AplicaDescuento == 'S');

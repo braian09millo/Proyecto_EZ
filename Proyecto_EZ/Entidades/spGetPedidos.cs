@@ -21,6 +21,7 @@ namespace Entidades
         public string IdRepartidor { get; set; }
         public string AplicaDescuento { get; set; }
         public decimal Descuento { get; set; }
+        public byte Vuelta { get; set; }
         public List<spGetPedidoDetalle> PedidoDetalle { get; set; }
     }
 }

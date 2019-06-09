@@ -87,11 +87,11 @@ namespace App.Controllers
             return Json(resultadoJS, JsonRequestBehavior.AllowGet);        
         }
 
-        public JsonResult GuardarPedido(int xiPedido, DateTime xdFechaEntrega, string xsEstado, int xiCliente, string xsUsuario, decimal xdTotal, decimal xdFacturado, List<Pedido> xoProductos, string xsAplicaDesc, decimal xdDescuento)
+        public JsonResult GuardarPedido(int xiPedido, DateTime xdFechaEntrega, string xsEstado, int xiCliente, string xsUsuario, decimal xdTotal, decimal xdFacturado, List<Pedido> xoProductos, string xsAplicaDesc, decimal xdDescuento, int? xiVuelta)
         {
             string xsError = "";
             if (xsUsuario == "") xsUsuario = null;
-            xoPedidoCtrl.GuardarPedido(xiPedido, xdFechaEntrega, xsEstado, xiCliente, xsUsuario, xdTotal, xdFacturado, xoProductos, xsAplicaDesc, xdDescuento, out xsError);
+            xoPedidoCtrl.GuardarPedido(xiPedido, xdFechaEntrega, xsEstado, xiCliente, xsUsuario, xdTotal, xdFacturado, xoProductos, xsAplicaDesc, xdDescuento, xiVuelta, out xsError);
             return Json(xsError);
         }
 

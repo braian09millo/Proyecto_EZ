@@ -49,7 +49,8 @@ WITH ENCRYPTION AS
 		cli_id AS IdCliente,	
 		usu_usuario AS IdRepartidor,
 		ISNULL(ped_apdes,'N') AS AplicaDescuento,
-		ISNULL(ped_descu,0) AS Descuento
+		ISNULL(ped_descu,0) AS Descuento,
+		ISNULL(ped_vuelta,'') AS Vuelta
 	FROM pedido
 	LEFT JOIN cliente ON cli_id = ped_cliente
 	LEFT JOIN usuario ON usu_usuario = ped_repartidor
@@ -58,6 +59,8 @@ WITH ENCRYPTION AS
 		(ped_cliente = @Cliente OR @Cliente IS NULL) AND
 		(ped_estado = @Estado OR @Estado IS NULL) AND
 		(ped_repartidor = @Usuario OR @Usuario IS NULL)
+	ORDER BY 
+		ped_fecha DESC
 	
 	SET @@nRet = @@error
 	IF @@nRet <> 0 

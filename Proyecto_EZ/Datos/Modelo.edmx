@@ -88,6 +88,7 @@
           <Property Name="ped_rendido" Type="char" MaxLength="1" />
           <Property Name="ped_apdes" Type="char" MaxLength="1" />
           <Property Name="ped_descu" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ped_vuelta" Type="tinyint" />
         </EntityType>
         <EntityType Name="pedido_detalle">
           <Key>
@@ -878,6 +879,7 @@
           <Property Name="ped_rendido" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="ped_apdes" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="ped_descu" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ped_vuelta" Type="Byte" />
         </EntityType>
         <Association Name="FK_Cliente_Pedido">
           <End Type="Modelo.cliente" Role="cliente" Multiplicity="1" />
@@ -1101,6 +1103,7 @@
           <EntitySetMapping Name="pedido">
             <EntityTypeMapping TypeName="Modelo.pedido">
               <MappingFragment StoreEntitySet="pedido">
+                <ScalarProperty Name="ped_vuelta" ColumnName="ped_vuelta" />
                 <ScalarProperty Name="ped_descu" ColumnName="ped_descu" />
                 <ScalarProperty Name="ped_apdes" ColumnName="ped_apdes" />
                 <ScalarProperty Name="ped_rendido" ColumnName="ped_rendido" />

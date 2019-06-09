@@ -29,7 +29,7 @@ namespace Negocios.BusinessControllers
 
         #region COMPORTAMIENTO
 
-        public void GuardarPedido(int xiPedido, DateTime xdFechaEntrega, string xsEstado, int xiCliente, string xsUsuario, decimal xdTotal, decimal xdFacturado, List<Pedido> xoProductos, string xsAplicaDesc, decimal xdDescuento, out string xsError)
+        public void GuardarPedido(int xiPedido, DateTime xdFechaEntrega, string xsEstado, int xiCliente, string xsUsuario, decimal xdTotal, decimal xdFacturado, List<Pedido> xoProductos, string xsAplicaDesc, decimal xdDescuento, int? xiVuelta, out string xsError)
         {
             xsError = "";
             int xiIdPedido = 0;
@@ -59,6 +59,7 @@ namespace Negocios.BusinessControllers
                             xoPedido.ped_fecha = xdFechaEntrega;
                             xoPedido.ped_apdes = xsAplicaDesc;
                             xoPedido.ped_descu = xdDescuento;
+                            xoPedido.ped_vuelta = (byte?)xiVuelta;
 
                             //Borramos todos los items del pedido
                             var items = xoDB.pedido_detalle.Where(x => x.det_pedido == xiPedido).ToList();
@@ -80,8 +81,9 @@ namespace Negocios.BusinessControllers
                             ped_estado = "C",
                             ped_repartidor = xsUsuario,
                             ped_apdes = xsAplicaDesc,
-                            ped_descu = xdDescuento
-                        };
+                            ped_descu = xdDescuento,
+                            ped_vuelta = (byte?)xiVuelta
+                    };
 
                         xoDB.pedido.Add(xoCabeceraPedido);
                         xoDB.SaveChanges();

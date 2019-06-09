@@ -110,7 +110,8 @@ CREATE TABLE pedido
 	ped_repartidor VARCHAR(10) NULL,
 	ped_rendido CHAR(1) NULL,
 	ped_apdes CHAR(1) NULL, /* Aplica descuento S/N */
-	ped_descu DECIMAL NULL  /* Descuento */
+	ped_descu DECIMAL NULL,  /* Descuento */
+	ped_vuelta TINYINT NULL /* Vuelta para cada tanda de pedidos por repartidor */
 	CONSTRAINT FK_Cliente_Pedido FOREIGN KEY (ped_cliente) REFERENCES CLIENTE(cli_id),
 	CONSTRAINT FK_Usuario_Pedido FOREIGN KEY (ped_repartidor) REFERENCES USUARIO(usu_usuario)
 )
