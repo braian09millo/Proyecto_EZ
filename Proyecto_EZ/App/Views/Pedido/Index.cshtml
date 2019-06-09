@@ -292,7 +292,7 @@
                      .end();
 
                 document.getElementById("txtFechaEntrega").valueAsDate = null;
-
+                $('#txtDescuento').prop('disabled', true);
                 LimpiarFormulario();
             });
 
@@ -374,7 +374,7 @@
                 if ($(this).prop('checked'))
                     $('#txtDescuento').prop('disabled', false);
                 else
-                    $('#txtDescuento').prop('disabled', true);
+                    $('#txtDescuento').prop('disabled', true).val('');
             })
 
             function ValidarDatos(array, objError) {
@@ -436,6 +436,7 @@
                     bHayError: false,
                     msj: ""
                 };
+
                 var Total = 0;
                 var IdPedido = $('#txtId').val();
                 var Facturado = parseFloat($('#txtFacturado').val());
@@ -446,6 +447,8 @@
                 var ClienteElegido = $('#cmbClientesPedido').val();
                 var Repartidor = $('#cmbUsuariosPedido').val();
                 var FechaEntrega = $('#txtFechaEntrega').val();
+                var AplicaDesc = $('#chkDescuento').prop('checked') ? 'S' : 'N';
+                var Descuento = $('#chkDescuento').prop('checked') ? parseFloat($('#txtDescuento').val()) : 0;
 
                 //Prevenimos que se realice un nuevo submit
                 e.preventDefault();
@@ -471,6 +474,9 @@
                     Productos.push(item);
                 });
 
+                if ($('#chkDescuento').prop('checked'))
+                    Total = Total - (Total * (Descuento / 100));
+
                 if (!ValidarDatos(Productos, objError)) {
 
                     var dataToPost = {
@@ -481,7 +487,9 @@
                         xsUsuario: Repartidor,
                         xdTotal: Total,
                         xdFacturado: Facturado,
-                        xoProductos: Productos
+                        xoProductos: Productos,
+                        xsAplicaDesc: AplicaDesc,
+                        xdDescuento: Descuento
                     }
 
                     swal({
@@ -751,6 +759,7 @@
 
                     var data = tabla.row($(this).parents('tr')).data();
                     var items = JSON.parse(data[10]);
+                    var obj = JSON.parse(data[11]);
                     var primerItem = items[0];
 
                     //Cargamos los datos especificos del pedido
@@ -759,6 +768,8 @@
                     $('#cmbUsuariosPedido').val(data[9]);
                     $('#txtFacturado').val(parseFloat(data[5]));
                     $('#cmbEstadosPedido').val(data[7].trim());
+                    $('#chkDescuento').prop('checked', obj.AplicaDescuento == 'S');
+                    $('#txtDescuento').val($('#chkDescuento').prop('checked') ? obj.Descuento : '').prop('disabled', !($('#chkDescuento').prop('checked')));
                     document.getElementById("txtFechaEntrega").value = toDate(data[2]);
 
                     //Cargamos el primer item

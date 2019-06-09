@@ -86,6 +86,8 @@
           <Property Name="ped_repartidor" Type="varchar" MaxLength="10" />
           <Property Name="ped_fechaCarga" Type="datetime" />
           <Property Name="ped_rendido" Type="char" MaxLength="1" />
+          <Property Name="ped_apdes" Type="char" MaxLength="1" />
+          <Property Name="ped_descu" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="pedido_detalle">
           <Key>
@@ -874,6 +876,8 @@
           <NavigationProperty Name="usuario" Relationship="Modelo.FK_Usuario_Pedido" FromRole="pedido" ToRole="usuario" />
           <Property Name="ped_fechaCarga" Type="DateTime" Precision="3" />
           <Property Name="ped_rendido" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ped_apdes" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ped_descu" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <Association Name="FK_Cliente_Pedido">
           <End Type="Modelo.cliente" Role="cliente" Multiplicity="1" />
@@ -1097,6 +1101,8 @@
           <EntitySetMapping Name="pedido">
             <EntityTypeMapping TypeName="Modelo.pedido">
               <MappingFragment StoreEntitySet="pedido">
+                <ScalarProperty Name="ped_descu" ColumnName="ped_descu" />
+                <ScalarProperty Name="ped_apdes" ColumnName="ped_apdes" />
                 <ScalarProperty Name="ped_rendido" ColumnName="ped_rendido" />
                 <ScalarProperty Name="ped_fechaCarga" ColumnName="ped_fechaCarga" />
                 <ScalarProperty Name="ped_repartidor" ColumnName="ped_repartidor" />

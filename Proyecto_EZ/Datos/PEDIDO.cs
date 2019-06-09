@@ -30,6 +30,8 @@ namespace Datos
         public string ped_repartidor { get; set; }
         public Nullable<System.DateTime> ped_fechaCarga { get; set; }
         public string ped_rendido { get; set; }
+        public string ped_apdes { get; set; }
+        public Nullable<decimal> ped_descu { get; set; }
     
         public virtual cliente cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

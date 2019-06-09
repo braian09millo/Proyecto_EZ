@@ -13,12 +13,14 @@ CREATE PROCEDURE spGetPedidos
 WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT
+	DECLARE @@fechaActual DATETIME = GETDATE()
+	DECLARE @@fechaLimite DATETIME = DATEADD(DAY,1,DATEFROMPARTS(YEAR(@@fechaActual),MONTH(@@fechaActual),DAY(@@fechaActual)))
 
 	UPDATE pedido
 	SET ped_estado = 'E'
 	FROM pedido
 	WHERE ped_estado = 'C'
-	and ped_fecha < getdate()
+	and ped_fecha < @@fechaLimite
 
 	UPDATE pedido
 	SET ped_estado = 'F'
@@ -44,8 +46,10 @@ WITH ENCRYPTION AS
 		ped_factu AS Facturado,
 		ISNULL(usu_nombre, '') AS Repartidor,
 		ped_estado AS Estado,
-		cli_id AS IdCliente,
-		usu_usuario AS IdRepartidor
+		cli_id AS IdCliente,	
+		usu_usuario AS IdRepartidor,
+		ISNULL(ped_apdes,'N') AS AplicaDescuento,
+		ISNULL(ped_descu,0) AS Descuento
 	FROM pedido
 	LEFT JOIN cliente ON cli_id = ped_cliente
 	LEFT JOIN usuario ON usu_usuario = ped_repartidor

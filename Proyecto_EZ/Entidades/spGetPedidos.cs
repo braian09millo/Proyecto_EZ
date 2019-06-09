@@ -19,6 +19,8 @@ namespace Entidades
         public string Estado { get; set; }
         public int IdCliente { get; set; }
         public string IdRepartidor { get; set; }
+        public string AplicaDescuento { get; set; }
+        public decimal Descuento { get; set; }
         public List<spGetPedidoDetalle> PedidoDetalle { get; set; }
     }
 }

@@ -109,6 +109,8 @@ CREATE TABLE pedido
 	ped_estado CHAR(2) NOT NULL, /* C: cargado, E: entregado, F: facturado, PP: pago parcial */
 	ped_repartidor VARCHAR(10) NULL,
 	ped_rendido CHAR(1) NULL,
+	ped_apdes CHAR(1) NULL, /* Aplica descuento S/N */
+	ped_descu DECIMAL NULL  /* Descuento */
 	CONSTRAINT FK_Cliente_Pedido FOREIGN KEY (ped_cliente) REFERENCES CLIENTE(cli_id),
 	CONSTRAINT FK_Usuario_Pedido FOREIGN KEY (ped_repartidor) REFERENCES USUARIO(usu_usuario)
 )
@@ -190,7 +192,6 @@ INSERT INTO TAMANIO (tam_descripcion) VALUES ('Lata X 354 cm3')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('Lata X 473 cm3')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 500 cm3')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 600 cm3')
---INSERT INTO TAMANIO (tam_descripcion) VALUES ('Sport X 750 cm3')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 1 lt')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 1,5 lts')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 1,75 lts')
@@ -203,14 +204,10 @@ INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 2,5 lts')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('Porrón X 330 cm3')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('Porrón X 710 cm3')
 
-
 INSERT INTO MARCA (mar_nombre) VALUES ('Línea Coca-Cola') -- 1
 INSERT INTO MARCA (mar_nombre) VALUES ('Línea Pepsi') -- 2
 INSERT INTO MARCA (mar_nombre) VALUES ('Levite') -- 3
 INSERT INTO MARCA (mar_nombre) VALUES ('Villavicencio')-- 4
---INSERT INTO MARCA (mar_nombre) VALUES ('Villavicencio c/gas') modelo
---INSERT INTO MARCA (mar_nombre) VALUES ('Villavicencio s/gas') modelo
---INSERT INTO MARCA (mar_nombre) VALUES ('Villavicencio sport') modelo
 INSERT INTO MARCA (mar_nombre) VALUES ('Baggio') -- 4
 INSERT INTO MARCA (mar_nombre) VALUES ('Quilmes') -- 5
 INSERT INTO MARCA (mar_nombre) VALUES ('Brahma') -- 6

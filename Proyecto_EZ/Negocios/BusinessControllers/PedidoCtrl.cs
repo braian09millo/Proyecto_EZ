@@ -29,7 +29,7 @@ namespace Negocios.BusinessControllers
 
         #region COMPORTAMIENTO
 
-        public void GuardarPedido(int xiPedido, DateTime xdFechaEntrega, string xsEstado, int xiCliente, string xsUsuario, decimal xdTotal, decimal xdFacturado, List<Pedido> xoProductos, out string xsError)
+        public void GuardarPedido(int xiPedido, DateTime xdFechaEntrega, string xsEstado, int xiCliente, string xsUsuario, decimal xdTotal, decimal xdFacturado, List<Pedido> xoProductos, string xsAplicaDesc, decimal xdDescuento, out string xsError)
         {
             xsError = "";
             int xiIdPedido = 0;
@@ -57,6 +57,8 @@ namespace Negocios.BusinessControllers
                             xoPedido.ped_estado = xsEstado;
                             xoPedido.ped_repartidor = xsUsuario;
                             xoPedido.ped_fecha = xdFechaEntrega;
+                            xoPedido.ped_apdes = xsAplicaDesc;
+                            xoPedido.ped_descu = xdDescuento;
 
                             //Borramos todos los items del pedido
                             var items = xoDB.pedido_detalle.Where(x => x.det_pedido == xiPedido).ToList();
@@ -76,7 +78,9 @@ namespace Negocios.BusinessControllers
                             ped_monto = Math.Round(xdTotal),
                             ped_factu = Math.Round(xdFacturado),
                             ped_estado = "C",
-                            ped_repartidor = xsUsuario
+                            ped_repartidor = xsUsuario,
+                            ped_apdes = xsAplicaDesc,
+                            ped_descu = xdDescuento
                         };
 
                         xoDB.pedido.Add(xoCabeceraPedido);
@@ -146,7 +150,8 @@ namespace Negocios.BusinessControllers
                         x.Estado,
                         x.IdCliente.ToString(),
                         x.IdRepartidor,
-                        JsonConvert.SerializeObject(x.PedidoDetalle)}).ToList();
+                        JsonConvert.SerializeObject(x.PedidoDetalle),
+                        JsonConvert.SerializeObject(x)}).ToList();
                 }
                 catch (Exception ex)
                 {
