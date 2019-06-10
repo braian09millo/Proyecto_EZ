@@ -24,6 +24,18 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="control-label col-sm-3">Vuelta</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" id="cmbVueltas">
+                            <option value="">Elija una vuelta</option>
+                            <option value="1">Vuelta I</option>
+                            <option value="2">Vuelta II</option>
+                            <option value="3">Vuelta III</option>
+                            <option value="4">Vuelta IV</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-7">
                         <button class="btn btn-block btn-warning" id="btnGenerar" style="color: #000000;">Generar</button>
@@ -64,7 +76,7 @@
 
     });
 
-    function ValidarDatos(objError, fecha, repartidor)
+    function ValidarDatos(objError, fecha, repartidor, vuelta)
     {
         if (fecha == "" || fecha == null || fecha == undefined)
         {
@@ -75,6 +87,11 @@
         if (repartidor == "" || repartidor == null || repartidor == undefined) {
             objError.bPuede = false;
             objError.msj = "Debe elegir un repartidor";
+        }
+
+        if (vuelta == "" || vuelta == null || vuelta == undefined) {
+            objError.bPuede = false;
+            objError.msj = "Debe elegir una vuelta";
         }
 
         return objError.bPuede;
@@ -88,18 +105,19 @@
 
         var fecha = $('#txtFecha').val();
         var repartidor = $('#cmbUsuarios').val();
+        var vuelta = $('#cmbVueltas').val();
         var objError = { bPuede: true, msj: "" };
 
-        if (ValidarDatos(objError, fecha, repartidor))
+        if (ValidarDatos(objError, fecha, repartidor, vuelta))
         {
             $.ajax({
 
                 method: 'POST',
-                url: '@Url.Action("PuedeObtenerRemito","Informe")?xdFecha=' + fecha + '&xsRepartidor=' + repartidor,
+                url: '@Url.Action("PuedeObtenerRemito","Informe")?xdFecha=' + fecha + '&xsRepartidor=' + repartidor + '&xiVuelta=' + vuelta,
                 success: function (response) {
                     console.log(response)
                     if (response.length > 0)
-                        Reporte(fecha, repartidor);
+                        Reporte(fecha, repartidor, vuelta);
                     else
                     {
                         swal({
@@ -133,9 +151,9 @@
         }
     }
 
-    function Reporte(fecha, repartidor)
+    function Reporte(fecha, repartidor, vuelta)
     {
-        var url = '@Url.Action("GetRemitoRepartidor","Reporte")?xdFecha=' + fecha + '&xsRepartidor=' + repartidor;
+        var url = '@Url.Action("GetRemitoRepartidor","Reporte")?xdFecha=' + fecha + '&xsRepartidor=' + repartidor + '&xiVuelta=' + vuelta;
         window.open(url);
     }
 

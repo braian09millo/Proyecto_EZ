@@ -2,13 +2,13 @@ IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('spGetRemitos') and sys
 	DROP PROCEDURE spGetRemitos
 GO
 
-CREATE PROCEDURE spGetRemitos	(@Fecha datetime, @repartidor varchar(10))														
+CREATE PROCEDURE spGetRemitos	(@Fecha datetime, @repartidor varchar(10), @Vuelta TINYINT)														
 WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT
 
 	SELECT 
-		max(usu_nombre) Repartidor,
+		max(usu_nombre + ' - Vuelta: ' + convert(char(1), ped_vuelta)) AS Repartidor,
 		ped_fecha Fecha,
 		max(mar_nombre) Marca,
 		CASE 
@@ -27,6 +27,7 @@ WITH ENCRYPTION AS
 	JOIN tamanio ON prod_tamanio = tam_id
 	WHERE usu_usuario = @repartidor 
 	AND ped_fecha = @Fecha 
+	AND ped_vuelta = @Vuelta
 	group by ped_fecha,prod_id	 
 
 	SET @@nRet = @@error

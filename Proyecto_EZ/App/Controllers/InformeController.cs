@@ -67,9 +67,9 @@ namespace App.Controllers
         }
 
         [HttpPost]
-        public JsonResult PuedeObtenerRemito(DateTime xdFecha, string xsRepartidor)
+        public JsonResult PuedeObtenerRemito(DateTime xdFecha, string xsRepartidor, int? xiVuelta)
         {
-            var xoResultado = xoPedidoCtrl.ObtenerRemitoRepartidorRpt(xdFecha, xsRepartidor);
+            var xoResultado = xoPedidoCtrl.ObtenerRemitoRepartidorRpt(xdFecha, xsRepartidor, xiVuelta);
             return Json(xoResultado);
         }
     }
