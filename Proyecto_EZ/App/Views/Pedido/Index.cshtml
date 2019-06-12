@@ -212,7 +212,7 @@
                                     <input type="text" id="txtMonto" style="text-align: right;" class="form-control" placeholder="Monto" readonly />
                                 </div>
                                 <div class="col-sm-1">
-                                    <button type="button" id="btnItem" class="btn btn-default btn-block"><i class="fas fa-plus"></i></button>
+                                    <button type="button" id="btnItem" class="btn btn-default"><i class="fas fa-plus"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -379,6 +379,21 @@
             $('#formPedidos').on('click', '.borrarItem', function (e) {
                 e.preventDefault();
                 $(this).parent().parent().parent().remove();
+            });
+
+            $('#formPedidos').on('click', '.itemNuevo', function (e) {
+                
+                var nuevoItem = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
+                '<select class="form-control"> <option value="">Elija un producto</option>@foreach (var item in ViewBag.Productos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")) { @(item.Marca + " - " + item.Tamanio) } else { @(item.Modelo + " - " + item.Tamanio) }</option>}</select></div>' +
+                '<div class="col-sm-2 cantidad">' +
+                '<input type="text" class="form-control" placeholder="Packs" />' +
+                '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly /></div>' +
+                '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly /></div>' +
+                '<div class="col-sm-3"><button type="button" class="btn btn-danger borrarItem"><i class="fas fa-minus"></i></button> <button type="button" class="btn btn-default itemNuevo"><i class="fas fa-plus"></i></button></div>' +                
+                '</div>';
+
+                $('#formPedidos').append(nuevoItem);
+
             });
 
             $('#chkDescuento').on('change', function () {
@@ -736,9 +751,9 @@
                                 '<input type="text" class="form-control" placeholder="Packs" />' +
                                 '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly /></div>' +
                                 '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly /></div>' +
-                                '<div class="col-sm-1"><button type="button" class="btn btn-danger btn-block borrarItem"><i class="fas fa-minus"></i></button></div>' +
+                                '<div class="col-sm-3"><button type="button" class="btn btn-danger borrarItem"><i class="fas fa-minus"></i></button> <button type="button" class="btn btn-default itemNuevo"><i class="fas fa-plus"></i></button></div>' +
                                 '</div>';
-
+                
                 $('#formPedidos').append(nuevoItem);
 
             });
@@ -802,7 +817,7 @@
                                             '<input type="text" class="form-control" placeholder="Packs" value="' + nuevoItem.Cantidad + '"/>' +
                                             '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly value="' + nuevoItem.Precio + '"/></div>' +
                                             '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly value="' + nuevoItem.Monto + '"/></div>' +
-                                            '<div class="col-sm-1"><button type="button" class="btn btn-danger btn-block borrarItem"><i class="fas fa-minus"></i></button></div>' +
+                                            '<div class="col-sm-3"><button type="button" class="btn btn-danger borrarItem"><i class="fas fa-minus"></i></button> <button type="button" class="btn btn-default itemNuevo"><i class="fas fa-plus"></i></button></div>' +
                                             '</div>';
 
                         $('#formPedidos').append(nuevoElemento);
