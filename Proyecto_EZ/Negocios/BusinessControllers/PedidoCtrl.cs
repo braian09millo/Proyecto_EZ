@@ -103,8 +103,8 @@ namespace Negocios.BusinessControllers
                                 det_pedido = xoPedido != null ? xiPedido : xiIdPedido,
                                 det_producto = item.IdProducto,
                                 det_cantidad = item.Cantidad,
-                                det_precio = item.Precio,
-                                det_monto = item.Monto
+                                det_precio = Math.Round(item.Precio, 0),
+                                det_monto = Math.Round(item.Monto, 0)
                             };
 
                             xoDB.pedido_detalle.Add(xoPedidoDetalle);
@@ -149,6 +149,7 @@ namespace Negocios.BusinessControllers
                         string.Format("{0:0.##}", x.Monto),
                         string.Format("{0:0.##}", x.Facturado),
                         x.Repartidor,
+                        x.Vuelta == 0 ? "" : x.Vuelta.ToString(),
                         x.Estado,
                         x.IdCliente.ToString(),
                         x.IdRepartidor,

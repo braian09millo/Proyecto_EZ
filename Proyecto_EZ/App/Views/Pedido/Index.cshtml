@@ -75,6 +75,7 @@
                                     <td>Monto</td>
                                     <td>Facturado</td>
                                     <td>Repartidor</td>
+                                    <td>Vuelta</td>
                                     <td>Acciones</td>
                                 </tr>
                             </thead>
@@ -357,8 +358,8 @@
                             $(txtPrecio).val('');
                             $(txtMonto).val('');
                         } else {
-                            $(txtPrecio).val(Math.round(precio));
-                            $(txtMonto).val(Math.round(precio * $(txtCantidad).val()));
+                            $(txtPrecio).val(Math.trunc(precio));
+                            $(txtMonto).val(Math.trunc(precio * $(txtCantidad).val()));
                         }
                     });
 
@@ -368,7 +369,7 @@
                         var txtPrecio = $(this).parent().parent().find('.precio').find('input[type="text"]');
                         var txtMonto = $(this).parent().parent().find('.col-sm-2.monto').find('input[type="text"]');
                         var total = $(this).val() * $(txtPrecio).val();
-                        $(txtMonto).val(Math.round(total));
+                        $(txtMonto).val(Math.trunc(total));
 
                     });
 
@@ -601,8 +602,9 @@
                         { targets: [4], "bSortable": true },
                         { targets: [5], "bSortable": true },
                         { targets: [6], "bSortable": true },
+                        { targets: [7], "bSortable": true },
                         {
-                            "targets": 7,
+                            "targets": 8,
                             "data": null,
                             "bSortable": false,
                             "width": "20%",
@@ -669,7 +671,7 @@
                     $('#BodyDetalle > tr').remove();
 
                     var data = tabla.row($(this).parents('tr')).data();
-                    var items = JSON.parse(data[10]);
+                    var items = JSON.parse(data[11]);
 
                     for (var i = 0; i < items.length; i++) {
 
@@ -787,17 +789,17 @@
                     e.preventDefault();
 
                     var data = tabla.row($(this).parents('tr')).data();
-                    var items = JSON.parse(data[10]);
-                    var obj = JSON.parse(data[11]);
+                    var items = JSON.parse(data[11]);
+                    var obj = JSON.parse(data[12]);
                     var primerItem = items[0];
 
                     //Cargamos los datos especificos del pedido
                     $('#txtId').val(parseInt(data[0]));
-                    $('#cmbClientesPedido').val(parseInt(data[8]));
-                    $('#cmbUsuariosPedido').val(data[9]);
+                    $('#cmbClientesPedido').val(parseInt(data[9]));
+                    $('#cmbUsuariosPedido').val(data[10]);
                     $('#cmbVueltas').val(obj.Vuelta);
                     $('#txtFacturado').val(parseFloat(data[5]));
-                    $('#cmbEstadosPedido').val(data[7].trim());
+                    $('#cmbEstadosPedido').val(data[8].trim());
                     $('#chkDescuento').prop('checked', obj.AplicaDescuento == 'S');
                     $('#txtDescuento').val($('#chkDescuento').prop('checked') ? obj.Descuento : '').prop('disabled', !($('#chkDescuento').prop('checked')));
                     document.getElementById("txtFechaEntrega").value = toDate(data[2]);
@@ -805,8 +807,8 @@
                     //Cargamos el primer item
                     $('#cmbProductos').val(primerItem.IdProducto);
                     $('#txtCantidad').val(primerItem.Cantidad);
-                    $('#txtPrecio').val(primerItem.Precio);
-                    $('#txtMonto').val(primerItem.Monto);
+                    $('#txtPrecio').val(Math.round(primerItem.Precio));
+                    $('#txtMonto').val(Math.round(primerItem.Monto));
 
                     //Cargamos el resto de los items
                     for (var i = 1; i < items.length; i++) {
@@ -815,8 +817,8 @@
                                             '<select id="item' + i + '" class="form-control"> <option value="">Elija un producto</option>@foreach (var item in ViewBag.Productos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@item.Modelo - @item.Tamanio</option>}</select></div>' +
                                             '<div class="col-sm-2 cantidad">' +
                                             '<input type="text" class="form-control" placeholder="Packs" value="' + nuevoItem.Cantidad + '"/>' +
-                                            '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly value="' + nuevoItem.Precio + '"/></div>' +
-                                            '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly value="' + nuevoItem.Monto + '"/></div>' +
+                                            '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly value="' + Math.round(nuevoItem.Precio) + '"/></div>' +
+                                            '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly value="' + Math.round(nuevoItem.Monto) + '"/></div>' +
                                             '<div class="col-sm-3"><button type="button" class="btn btn-danger borrarItem"><i class="fas fa-minus"></i></button> <button type="button" class="btn btn-default itemNuevo"><i class="fas fa-plus"></i></button></div>' +
                                             '</div>';
 
