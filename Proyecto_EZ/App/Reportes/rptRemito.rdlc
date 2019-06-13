@@ -1130,6 +1130,7 @@
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);'-'</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1141,28 +1142,8 @@
                       <rd:DefaultName>Cantidad</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Style>None</Style>
+                          <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1238,7 +1219,7 @@
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Format>f0</Format>
+                                <Format>0;(0);'-'</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1663,6 +1644,9 @@
                     </TablixMember>
                     <TablixMember>
                       <Group Name="Detalles" />
+                      <Visibility>
+                        <Hidden>=IIf(Fields!Monto.Value &lt;&gt; 0, false, true)</Hidden>
+                      </Visibility>
                     </TablixMember>
                   </TablixMembers>
                 </TablixMember>
@@ -2833,6 +2817,7 @@
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);'-'</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2844,28 +2829,8 @@
                       <rd:DefaultName>Cantidad</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Style>None</Style>
+                          <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2941,7 +2906,7 @@
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
                                 <FontSize>8pt</FontSize>
-                                <Format>f0</Format>
+                                <Format>0;(0);'-'</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3366,6 +3331,9 @@
                     </TablixMember>
                     <TablixMember>
                       <Group Name="Detalles2" />
+                      <Visibility>
+                        <Hidden>=IIf(Fields!Monto.Value &lt;&gt; 0, false, true)</Hidden>
+                      </Visibility>
                     </TablixMember>
                   </TablixMembers>
                 </TablixMember>

@@ -2,7 +2,7 @@ IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('spGetPedidoDetalle') a
 	DROP PROCEDURE spGetPedidoDetalle
 GO
 
-CREATE PROCEDURE spGetPedidoDetalle
+CREATE PROCEDURE spGetPedidoDetalle 2
 (
 	@Pedido INT = NULL
 )													
