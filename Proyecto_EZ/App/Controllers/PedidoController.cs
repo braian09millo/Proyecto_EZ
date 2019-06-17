@@ -36,7 +36,8 @@ namespace App.Controllers
             ViewBag.UsuariosPedido = xoUsuarios.OrderBy(x => x.usu_nombre).ToList();
 
             //Cargamos el combo de productos
-            ViewBag.Productos = xoProductoCtrl.ObtenerProductos(out xsError);           
+            ViewBag.Productos = xoProductoCtrl.ObtenerProductos(out xsError);
+            ViewBag.Tipos = xoProductoCtrl.ObtenerTipos(out xsError);          
 
             return View();
         }

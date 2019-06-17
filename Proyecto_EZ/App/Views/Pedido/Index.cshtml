@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var lstTipos = (List<Datos.tipo>)ViewBag.Tipos;
+    var lstProductos = (List<Entidades.spGetProductos>)ViewBag.Productos;
 }
 
 <div style="padding-top: 50px;">
@@ -171,7 +173,7 @@
                                             <span class="input-group-addon">
                                                 <input id="chkDescuento" type="checkbox" title="Aplica Descuento">
                                             </span>
-                                            <input type="text" class="form-control" id="txtDescuento" placeholder="Descuento" disabled/>
+                                            <input type="text" class="form-control" id="txtDescuento" placeholder="Descuento" disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -187,20 +189,26 @@
                                 <div class="col-sm-3">
                                     <select class="form-control" id="cmbProductos">
                                         <option value="">Elija un producto</option>
-                                        @foreach (var item in ViewBag.Productos)
+                                        @for (int i = 0; i < lstTipos.Count; i++)
                                         {
-                                            <option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">
-                                                @if (item.Modelo.Equals("No Aplica"))
+                                            var tipo = lstTipos[i];
+                                            <optgroup label="@tipo.tip_descr">
+                                                @foreach (var item in lstProductos.Where(x => x.IdTipo == tipo.tip_id).ToList())
                                                 {
-                                                    @(item.Marca + " - " + item.Tamanio)
+                                                    <option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">
+                                                        @if (item.Modelo.Equals("No Aplica"))
+                                                        {
+                                                            @(item.Marca + " - " + item.Tamanio)
+                                                        }
+                                                        else
+                                                        {
+                                                            @(item.Modelo + " - " + item.Tamanio)
+                                                        }
+                                                    </option>
                                                 }
-                                                else
-                                                {
-                                                    @(item.Modelo + " - " + item.Tamanio)
-
-                                                }
-                                            </option>
+                                            </optgroup>
                                         }
+
                                     </select>
                                 </div>
                                 <div class="col-sm-2 cantidad">
@@ -349,7 +357,7 @@
                     //Obtenemos el precio del producto y seteamos el input
                     $('#item > .col-sm-3 > select').on('change', function () {
 
-                        var precio = $(this).children("option:selected").data('precio');
+                        var precio = $(this).children("optgroup").children("option:selected").data('precio');
                         var txtPrecio = $(this).parent().parent().find('.precio').find('input[type="text"]');
                         var txtMonto = $(this).parent().parent().find('.monto').find('input[type="text"]');
                         var txtCantidad = $(this).parent().parent().find('.cantidad').find('input[type="text"]');
@@ -357,6 +365,7 @@
                         if ($(this).children("option:selected").val() === '') {
                             $(txtPrecio).val('');
                             $(txtMonto).val('');
+                            $(txtCantidad).val('')
                         } else {
                             $(txtPrecio).val(Math.trunc(precio));
                             $(txtMonto).val(Math.trunc(precio * $(txtCantidad).val()));
@@ -383,14 +392,14 @@
             });
 
             $('#formPedidos').on('click', '.itemNuevo', function (e) {
-                
+
                 var nuevoItem = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
-                '<select class="form-control"> <option value="">Elija un producto</option>@foreach (var item in ViewBag.Productos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")) { @(item.Marca + " - " + item.Tamanio) } else { @(item.Modelo + " - " + item.Tamanio) }</option>}</select></div>' +
+                '<select class="form-control" id="cmbProductos"><option value="">Elija un producto</option>@for (int i = 0; i < lstTipos.Count; i++){var tipo = lstTipos[i];<optgroup label="@tipo.tip_descr">@foreach (var item in lstProductos.Where(x => x.IdTipo == tipo.tip_id).ToList()){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")){@(item.Marca + " - " + item.Tamanio)}else{@(item.Modelo + " - " + item.Tamanio)}</option>}</optgroup>}</select></div>' +
                 '<div class="col-sm-2 cantidad">' +
                 '<input type="text" class="form-control" placeholder="Packs" />' +
                 '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly /></div>' +
                 '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly /></div>' +
-                '<div class="col-sm-3"><button type="button" class="btn btn-danger borrarItem"><i class="fas fa-minus"></i></button> <button type="button" class="btn btn-default itemNuevo"><i class="fas fa-plus"></i></button></div>' +                
+                '<div class="col-sm-3"><button type="button" class="btn btn-danger borrarItem"><i class="fas fa-minus"></i></button> <button type="button" class="btn btn-default itemNuevo"><i class="fas fa-plus"></i></button></div>' +
                 '</div>';
 
                 $('#formPedidos').append(nuevoItem);
@@ -748,14 +757,14 @@
             $('#btnItem').click(function () {
 
                 var nuevoItem = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
-                                '<select class="form-control"> <option value="">Elija un producto</option>@foreach (var item in ViewBag.Productos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")) { @(item.Marca + " - " + item.Tamanio) } else { @(item.Modelo + " - " + item.Tamanio) }</option>}</select></div>' +
+                                '<select class="form-control" id="cmbProductos"><option value="">Elija un producto</option>@for (int i = 0; i < lstTipos.Count; i++){var tipo = lstTipos[i];<optgroup label="@tipo.tip_descr">@foreach (var item in lstProductos.Where(x => x.IdTipo == tipo.tip_id).ToList()){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")){@(item.Marca + " - " + item.Tamanio)}else{@(item.Modelo + " - " + item.Tamanio)}</option>}</optgroup>}</select></div>' +
                                 '<div class="col-sm-2 cantidad">' +
                                 '<input type="text" class="form-control" placeholder="Packs" />' +
                                 '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly /></div>' +
                                 '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly /></div>' +
                                 '<div class="col-sm-3"><button type="button" class="btn btn-danger borrarItem"><i class="fas fa-minus"></i></button> <button type="button" class="btn btn-default itemNuevo"><i class="fas fa-plus"></i></button></div>' +
                                 '</div>';
-                
+
                 $('#formPedidos').append(nuevoItem);
 
             });
@@ -842,6 +851,10 @@
     <link href="~/Content/style.css" rel="stylesheet" />
 
 }
+
+
+
+
 
 
 
