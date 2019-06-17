@@ -499,7 +499,7 @@
                     Total = parseFloat(Total) + parseFloat(monto);
                     CantidadProductos = parseInt(CantidadProductos) + 1;
                     CantidadPacks = parseInt(CantidadPacks) + parseInt(packs);
-                    var id = $(this).find('.col-sm-3').find('select').children('option:selected').data("info");
+                    var id = $(this).find('.col-sm-3').find('select').children('optgroup').children('option:selected').data("info");
                     var precio = $(this).find('.col-sm-2.precio').find('input[type="text"]').val();
 
                     var item = {
