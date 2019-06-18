@@ -14,6 +14,7 @@ namespace App.Controllers
     public class ReporteController : Controller
     {
         PedidoCtrl xoCtrlPedido = new Factory().GetCtrlPedido();
+        ProductoCtrl xoCtrlProducto = new Factory().GetCtrlProducto();
         GastosCtrl xoCtrlGasto = new Factory().GetCtrlGasto();
 
         [HttpGet]
@@ -71,6 +72,19 @@ namespace App.Controllers
 
             var bytes = Reporting.GenerarInforme(lista, _path, _nombre, _nombreDs, "PDF", null);
             return File(bytes, "application/pdf", "Remito_"+ xsRepartidor + "_" + xdFecha.ToString("ddMMyyyy") + ".pdf");
+        }
+
+        [HttpGet]
+        public FileResult GetListaPrecios()
+        {
+            string xsError = "";
+            var _nombre = "rptListaPrecios.rdlc";
+            var _nombreDs = "PreciosDS";
+            var _path = HttpContext.Server.MapPath("~/Reportes/" + _nombre);
+            var lista = xoCtrlProducto.ObtenerListaPrecios(out xsError);
+
+            var bytes = Reporting.GenerarInforme(lista, _path, _nombre, _nombreDs, "PDF", null);
+            return File(bytes, "application/pdf", "ListaPrecios_" + DateTime.Today.ToString("ddMMyyyy") + ".pdf");
         }
     }
 }

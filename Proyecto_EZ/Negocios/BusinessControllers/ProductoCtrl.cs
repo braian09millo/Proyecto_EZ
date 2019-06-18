@@ -246,6 +246,26 @@ namespace Negocios.BusinessControllers
             }
         }
 
+        public List<spGetPreciosLista> ObtenerListaPrecios(out string xsError)
+        {
+            xsError = "";
+            List<spGetPreciosLista> loResultado = null;
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    loResultado = xoDB.Database.SqlQuery<spGetPreciosLista>("exec spGetListaPrecios").ToList();
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+
+            return loResultado;
+        }
+
         public void ActualizarPrecios(List<PrecioEdicion> xoPrecios, out string xsError)
         {
             xsError = "";

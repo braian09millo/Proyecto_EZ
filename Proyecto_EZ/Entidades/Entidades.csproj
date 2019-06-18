@@ -56,6 +56,7 @@
     <Compile Include="spGetMayoresVentasClientes.cs" />
     <Compile Include="spGetPedidoDetalle.cs" />
     <Compile Include="spGetPedidos.cs" />
+    <Compile Include="spGetPreciosLista.cs" />
     <Compile Include="spGetProductos.cs" />
     <Compile Include="spGetProductosEdicion.cs" />
     <Compile Include="spGetProductosMasVendidos.cs" />
