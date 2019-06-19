@@ -185,6 +185,17 @@
                     <hr />
                     <form class="form-horizontal" id="formPedidos">
                         <div class="row">
+                            <div class="form-group">
+                                <label class="control-label col-sm-4">Total</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" style="text-align:right;" id="txtTotal" />
+                                </div>
+                                <div class="col-sm-1">
+                                    <button type="button" class="btn btn-default" style="text-align:right;" id="btnCalcTotal"><i class="fas fa-calculator"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div id="item">
                                 <div class="col-sm-3">
                                     <select class="form-control" id="cmbProductos">
@@ -225,6 +236,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -299,6 +311,7 @@
 
                 $('#txtId').val(0);
                 $('#txtFacturado').val(0.00);
+                $('#txtTotal').val(0);
             }
 
             //Funcion para limpiar el modal al cerrarse
@@ -351,7 +364,8 @@
             }
 
             $('#formPedidos').each(function () {
-
+                
+                var Total = 0;
                 ($(this)).on('click', function () {
 
                     //Obtenemos el precio del producto y seteamos el input
@@ -379,7 +393,6 @@
                         var txtMonto = $(this).parent().parent().find('.col-sm-2.monto').find('input[type="text"]');
                         var total = $(this).val() * $(txtPrecio).val();
                         $(txtMonto).val(Math.trunc(total));
-
                     });
 
                 });
@@ -389,6 +402,19 @@
             $('#formPedidos').on('click', '.borrarItem', function (e) {
                 e.preventDefault();
                 $(this).parent().parent().parent().remove();
+            });
+
+            $('#btnCalcTotal').click(function (e) {
+                
+                var total = 0;
+
+                $('#formPedidos > .row > #item').each(function () {
+                    var monto = $(this).find('.col-sm-2.monto').find('input[type="text"]').val();
+                    total = parseFloat(total) + parseFloat(monto);
+                });
+
+                $('#txtTotal').val(total);
+
             });
 
             $('#formPedidos').on('click', '.itemNuevo', function (e) {
@@ -411,8 +437,19 @@
                 if ($(this).prop('checked'))
                     $('#txtDescuento').prop('disabled', false);
                 else
+                {
                     $('#txtDescuento').prop('disabled', true).val('');
-            })
+                    $('#btnCalcTotal').trigger('click');
+                }
+            });
+
+            $('#txtDescuento').on('keyup', function () {
+                $('#btnCalcTotal').trigger('click');
+                var total = $('#txtTotal').val();
+                var descuento = $('#txtDescuento').val();
+                var totalDescuento = total - (total * (descuento / 100));
+                $('#txtTotal').val(total - (total * (descuento / 100)));
+            });
 
             function ValidarDatos(array, objError) {
 
