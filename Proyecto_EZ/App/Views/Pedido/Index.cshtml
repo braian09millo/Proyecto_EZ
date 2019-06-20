@@ -188,10 +188,10 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Total</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" style="text-align:right;" id="txtTotal" />
+                                    <input type="text" class="form-control" style="text-align:right;" readonly id="txtTotal" />
                                 </div>
                                 <div class="col-sm-1">
-                                    <button type="button" class="btn btn-default" style="text-align:right;" id="btnCalcTotal"><i class="fas fa-calculator"></i></button>
+                                    <button type="button" data-toggle="tooltip" title="Calcular Total" class="btn btn-default" style="text-align:right;" id="btnCalcTotal"><i class="fas fa-calculator"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -261,6 +261,7 @@
             //Cargamos los pedidos en el LOAD
             CargarFechas();
             CargarPedidos();
+            $('[data-toggle="tooltip"]').tooltip();
 
             //Mostrar con efecto FADE al cargar
             $("#tabla").show("fade", { percent: 0 }, 1500);
@@ -412,8 +413,11 @@
                     var monto = $(this).find('.col-sm-2.monto').find('input[type="text"]').val();
                     total = parseFloat(total) + parseFloat(monto);
                 });
-
-                $('#txtTotal').val(total);
+                
+                if (isNaN(total))
+                    $('#txtTotal').val(0);
+                else
+                    $('#txtTotal').val(total);
 
             });
 
