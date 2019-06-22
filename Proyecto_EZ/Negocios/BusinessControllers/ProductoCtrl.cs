@@ -431,7 +431,7 @@ namespace Negocios.BusinessControllers
 
                     if (xoMarca != null)
                     {
-                        if (xoDB.producto.FirstOrDefault(x => x.prod_marca == xoMarca.mar_id && (x.prod_delet ?? "N") == "S") != null)
+                        if (xoDB.producto.FirstOrDefault(x => x.prod_marca == xoMarca.mar_id && (x.prod_delet ?? "N") == "S") == null)
                         {
                             xoMarca.mar_delet = "S";
                             xoDB.SaveChanges();
@@ -528,7 +528,7 @@ namespace Negocios.BusinessControllers
 
                     if (xoModelo != null)
                     {
-                        if (xoDB.producto.FirstOrDefault(x => x.prod_modelo == xoModelo.mod_id && (x.prod_delet ?? "N") == "S") != null)
+                        if (xoDB.producto.FirstOrDefault(x => x.prod_modelo == xoModelo.mod_id && (x.prod_delet ?? "N") == "S") == null)
                         {
                             xoModelo.mod_delet = "S";
                             xoDB.SaveChanges();
@@ -619,7 +619,7 @@ namespace Negocios.BusinessControllers
 
                     if (xoTamanio != null)
                     {
-                        if (xoDB.producto.FirstOrDefault(x => x.prod_tamanio == xoTamanio.tam_id && (x.prod_delet ?? "N") == "S") != null)
+                        if (xoDB.producto.FirstOrDefault(x => x.prod_tamanio == xoTamanio.tam_id && (x.prod_delet ?? "N") == "S") == null)
                         {
                             xoTamanio.tam_delet = "S";
                             xoDB.SaveChanges();
