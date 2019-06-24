@@ -83,13 +83,13 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <input type="text" id="txtCantPack" class="form-control" placeholder="Cantidad por pack" />
+                                        <input type="text" id="txtCantPack" class="form-control" placeholder="Cantidad por pack" pattern="[0-9]" title="Sólo se permiten números" required/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <div class="input-group">
-                                            <input type="text" id="txtPorcentaje" class="form-control" placeholder="Porcentaje por venta" style="text-align:right;" />
+                                            <input type="text" id="txtPorcentaje" class="form-control" placeholder="Porcentaje por venta" style="text-align:right;" pattern="[0-9]" title="Sólo se permiten números"/>
                                             <span class="input-group-addon">%</span>
                                         </div>
                                     </div>
@@ -98,7 +98,7 @@
                                     <div class="col-sm-12">
                                         <div class="input-group">
                                             <span class="input-group-addon">$</span>
-                                            <input type="text" id="txtCosto" class="form-control" placeholder="Costo" style="text-align:right;" />
+                                            <input type="text" id="txtCosto" class="form-control" placeholder="Costo" style="text-align:right;" pattern="[0-9]" title="Sólo se permiten números"/>
                                         </div>
                                     </div>
                                 </div>
@@ -192,6 +192,7 @@
             //Habilitamos el botón cuando los campos requeridos esten llenos
             function ValidarFormulario() {
 
+                var res = false;
                 var marca = $('#cmbMarca').val();
                 var modelo = $('#cmbModelo').val();
                 var tamanio = $('#cmbTamanio').val();
@@ -200,13 +201,13 @@
                 var cantPack = $('#txtCantPack').val();
                 var porc = $('#txtPorcentaje').val();
 
-                if (marca == "" || modelo == "" ||
+                if (!(marca == "" || modelo == "" ||
                     tamanio == "" || tipo == "" ||
                     costo == "" || cantPack == "" ||
-                    porc == "")
-                    return false;
-                else
-                    return true;
+                    porc == ""))
+                    res = true;
+
+                return res;
             }
 
             $('#btnNuevo').click(function () {

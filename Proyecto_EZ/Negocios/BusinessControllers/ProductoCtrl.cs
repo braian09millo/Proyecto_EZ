@@ -136,6 +136,9 @@ namespace Negocios.BusinessControllers
                     }
                     else
                     {
+                        if (xoProducto.Modelo == 0)
+                            xoProducto.Modelo = xoDB.modelo.FirstOrDefault(x => x.mod_marca == xoProducto.Marca).mod_id;
+
                         using (var xoTransaccion = xoDB.Database.BeginTransaction())
                         {
                             try

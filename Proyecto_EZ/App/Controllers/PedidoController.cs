@@ -63,6 +63,7 @@ namespace App.Controllers
 
             //Cargamos el combo de productos
             ViewBag.Productos = xoProductoCtrl.ObtenerProductos(out xsError);
+            ViewBag.Tipos = xoProductoCtrl.ObtenerTipos(out xsError);
 
             return View("Index");
         }
