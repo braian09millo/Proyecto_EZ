@@ -848,11 +848,12 @@
                     $('#cmbClientesPedido').val(parseInt(data[9]));
                     $('#cmbUsuariosPedido').val(data[10]);
                     $('#cmbVueltas').val(obj.Vuelta);
-                    $('#txtFacturado').val(parseFloat(data[5]));
+                    $('#txtFacturado').val(parseFloat(obj.Facturado));
                     $('#cmbEstadosPedido').val(data[8].trim());
                     $('#chkDescuento').prop('checked', obj.AplicaDescuento == 'S');
                     $('#txtDescuento').val($('#chkDescuento').prop('checked') ? obj.Descuento : '').prop('disabled', !($('#chkDescuento').prop('checked')));
                     document.getElementById("txtFechaEntrega").value = toDate(data[2]);
+                    $('#txtTotal').val(obj.Monto);
 
                     //Cargamos el primer item
                     $('#cmbProductos').val(primerItem.IdProducto);
