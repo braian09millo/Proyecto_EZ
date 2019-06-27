@@ -21,8 +21,7 @@ namespace App.Controllers
             var xoProvincias =  xoClienteCtrl.ObtenerProvincias(out xsError);
             var lstProvincias = xoProvincias.Select(x => new SelectListItem() { Value = x.pro_id.ToString(), Text = x.pro_descr }).ToList();
             ViewBag.ComboProvincias = lstProvincias;
-
-            ViewBag.Localidades = xoClienteCtrl.ObtenerLocalidades(out xsError);
+            ViewBag.Localidades = xoClienteCtrl.ObtenerLocalidades(out xsError).OrderBy(x => x.loc_descr);
 
             return View();
         }
