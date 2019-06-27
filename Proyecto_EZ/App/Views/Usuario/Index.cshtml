@@ -334,19 +334,63 @@
 
             }
 
-            function PuedeGuardar()
+            function PuedeGuardar(objError)
+            {
+                var grupo = $('#cmbGrupos').val();
+                var pass1 = $('#txtPass').val();
+                var pass2 = $('#txtPass2').val();
+
+                if (pass1 != pass2)
+                {
+                    objError.bPuede = false;
+                    objError.msj = 'Las contraseñas deben coincidir';
+                }
+
+                if (pass1 == null || pass1 == undefined || pass1 == "" ||
+                    pass2 == null || pass2 == undefined || pass2 == "")
+                {
+                    objError.bPuede = false;
+                    objError.msj = 'Ningún campo de contraseña debe quedar vacío';
+                }
+
+                if (grupo == null || grupo == undefined || grupo == "")
+                {
+                    objError.bPuede = false;
+                    objError.msj = 'Debe seleccionar un grupo';
+                }
+                    
+                return objError.bPuede;
+            }
+
+            function PuedeGuardarPassword(objError)
             {
                 var pass1 = $('#txtPass').val();
                 var pass2 = $('#txtPass2').val();
-                if (pass1 != pass2)
-                    return false;
-                else
-                    return true;
+                var passVieja = $('#txtPassVieja').val();
+
+                if (pass1 != pass2) {
+                    objError.bPuede = false;
+                    objError.msj = 'Las contraseñas deben coincidir';
+                }
+
+                if (pass1 == null || pass1 == undefined || pass1 == "" ||
+                    pass2 == null || pass2 == undefined || pass2 == "" ||
+                    passVieja == null || passVieja == undefined || passVieja == "") {
+                    objError.bPuede = false;
+                    objError.msj = 'Ningún campo de contraseña debe quedar vacío';
+                }
+
+                return objError.bPuede;
             }
 
             function guardarUsuario() {
 
-                if (PuedeGuardar())
+                var objError = {
+                    bPuede: true,
+                    msj: ''
+                }
+
+                if (PuedeGuardar(objError))
                 {
                     var dataToPost = {
 
@@ -399,7 +443,7 @@
                 {
                     swal({
                         title: 'Atención',
-                        text: 'Las contraseñas deben coincidir',
+                        text: objError.msj,
                         icon: 'warning',
                         button: 'Aceptar'
                     });
@@ -408,7 +452,12 @@
 
             function guardarPasswordNueva() {
                 
-                if (PuedeGuardar()) {
+                var objError = {
+                    bPuede: true,
+                    msj: ''
+                }
+
+                if (PuedeGuardarPassword(objError)) {
 
                     var dataToPost = {
                         xsUsuario: $('#txtUsuario').val(),
@@ -461,7 +510,7 @@
                 else {
                     swal({
                         title: 'Atención',
-                        text: 'Las contraseñas deben coincidir',
+                        text: objError.msj,
                         icon: 'warning',
                         button: 'Aceptar'
                     });

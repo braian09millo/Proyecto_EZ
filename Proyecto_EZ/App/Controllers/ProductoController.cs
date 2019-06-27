@@ -161,7 +161,7 @@ namespace App.Controllers
             string xsError = "";
 
             //Cargamos el combo de marcas
-            var xoMarcas = xoProductoCtrl.ObtenerMarcas(out xsError);
+            var xoMarcas = xoProductoCtrl.ObtenerMarcas(out xsError).OrderBy(x => x.mar_nombre);
             var lstMarcas = xoMarcas.Select(x => new SelectListItem() { Value = x.mar_id.ToString(), Text = x.mar_nombre }).ToList();
             ViewBag.ComboMarcas = lstMarcas;
 
