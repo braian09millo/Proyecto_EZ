@@ -472,7 +472,7 @@ namespace Negocios.BusinessControllers
                     }
                     else
                     {
-                        var _modelo = xoDB.modelo.FirstOrDefault(x => x.mod_nombre.ToLower().Equals(xoModelo.Nombre));
+                        var _modelo = xoDB.modelo.FirstOrDefault(x => x.mod_nombre.ToLower().Equals(xoModelo.Nombre) && x.mod_marca == xoModelo.IdMarca);
 
                         if (_modelo != null)
                             xsError = "Ya existe éste modelo";

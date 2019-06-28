@@ -319,7 +319,6 @@
                     method: 'GET',
                     url: '@Url.Action("GetProductos", "Producto")',
                     success: function (response) {
-                        console.log(response);
                         if (response.error == "") {
                             var tabla = $('#tableProductos').DataTable({
                                 data: response.data,
@@ -348,6 +347,7 @@
                                     if (data.prod_delet == "S") {
                                         $(row).css('background-color', '#B8DBD9');
                                         $(row).find("td:eq(9)").find('.btn-danger').prop('disabled', true);
+                                        $(row).find("td:eq(9)").find('.btn-info').prop('disabled', true);
                                         $(row).find("td:eq(9)").find('.btn-success').prop('disabled', false);
                                     }
                                 },

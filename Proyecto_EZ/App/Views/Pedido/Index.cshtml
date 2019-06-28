@@ -143,7 +143,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">Facturado</label>
                                     <div class="col-sm-9">
-                                        <input type="text" style="text-align: right;" id="txtFacturado" class="form-control" value="0.00" />
+                                        <input type="text" disabled style="text-align: right;" id="txtFacturado" class="form-control" value="0.00" />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -153,8 +153,8 @@
                                             <option value="">Elija un estado</option>
                                             <option value="C">Cargado</option>
                                             <option value="E">Entregado</option>
-                                            <option value="F">Pago total</option>
                                             <option value="PP">Pago parcial</option>
+                                            <option value="F">Pago total</option>
                                         </select>
                                     </div>
                                 </div>
@@ -173,7 +173,7 @@
                                             <span class="input-group-addon">
                                                 <input id="chkDescuento" type="checkbox" title="Aplica Descuento">
                                             </span>
-                                            <input type="text" class="form-control" id="txtDescuento" placeholder="Descuento" disabled />
+                                            <input type="text" class="form-control" id="txtDescuento" placeholder="%" disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -262,6 +262,7 @@
             CargarFechas();
             CargarPedidos();
             $('[data-toggle="tooltip"]').tooltip();
+            var facturado = 0;
 
             //Mostrar con efecto FADE al cargar
             $("#tabla").show("fade", { percent: 0 }, 1500);
@@ -311,7 +312,7 @@
                 }
 
                 $('#txtId').val(0);
-                $('#txtFacturado').val(0.00);
+                $('#txtFacturado').val(0.00).prop('disabled', true);
                 $('#txtTotal').val(0);
             }
 
@@ -698,6 +699,15 @@
 
             }
 
+            $('#cmbEstadosPedido').on('change', function () {
+
+                if ($(this).val() == 'F') 
+                    $('#txtFacturado').val($('#txtTotal').val());
+                else
+                    $('#txtFacturado').val(facturado);
+
+            });
+
             function imprimir(tbody, tabla) {
 
                 $(tbody).off('click', 'button.btn-warning.btn-xs');
@@ -837,11 +847,12 @@
                 $(tbody).on('click', 'button.btn-info.btn-xs', function (e) {
 
                     e.preventDefault();
-
+                    $('#txtFacturado').prop('disabled', false);
                     var data = tabla.row($(this).parents('tr')).data();
                     var items = JSON.parse(data[11]);
                     var obj = JSON.parse(data[12]);
                     var primerItem = items[0];
+                    facturado = obj.Facturado;
 
                     //Cargamos los datos especificos del pedido
                     $('#txtId').val(parseInt(data[0]));
