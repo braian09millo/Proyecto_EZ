@@ -13,7 +13,7 @@ WITH ENCRYPTION AS
 
 	SELECT  
 		sum(det_cantidad) Cantidad,
-		max(mod_nombre + ' - ' + tam_descripcion) Descripcion,
+		max(CASE WHEN mod_nombre = 'No aplica' THEN mar_nombre ELSE mod_nombre END + ' - ' + tam_descripcion) Descripcion,
 		max(prd_precioPV) Precio,
 		sum(prd_precioPV * det_cantidad) Total
 	FROM Pedido
@@ -28,6 +28,7 @@ WITH ENCRYPTION AS
 		ped_fecha between @FechaDesde and @FechaHasta
 	GROUP BY 
 		prod_id
+		ORDER BY max(mod_nombre + ' - ' + tam_descripcion)
 
 	SET @@nRet = @@error
 	IF @@nRet <> 0 
