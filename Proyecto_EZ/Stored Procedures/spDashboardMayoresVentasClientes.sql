@@ -7,13 +7,14 @@ WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT
 
-	SELECT TOP 5
+	SELECT TOP 10
 		cli_id AS IdCliente,
 		MAX(cli_nombre + ' - ' + cli_direccion) AS Cliente,
 		CEILING(SUM(ped_monto)) AS Monto
 	FROM pedido
 	JOIN cliente on cli_id = ped_cliente
 	GROUP BY cli_id
+	ORDER BY CEILING(SUM(ped_monto)) desc
 
 	SET @@nRet = @@error
 	IF @@nRet <> 0 
