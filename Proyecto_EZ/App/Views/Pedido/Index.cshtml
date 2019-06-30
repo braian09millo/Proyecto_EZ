@@ -254,7 +254,7 @@
 </div>
 
 @section Scripts {
-
+    <script src="~/Scripts/date-eu.js"></script>
     <script>
         $(document).ready(function () {
 
@@ -648,7 +648,7 @@
                     aoColumnDefs: [
                         { targets: [0], "bSortable": true, "bVisible": false },
                         { targets: [1], "bSortable": true },
-                        { targets: [2], "bSortable": true },
+                        { targets: [2], "bSortable": true, type: "date-eu" },
                         { targets: [3], "bSortable": true },
                         { targets: [4], "bSortable": true },
                         { targets: [5], "bSortable": true },

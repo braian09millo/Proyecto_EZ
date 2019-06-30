@@ -18,6 +18,12 @@
         <div class="col-sm-12 col-xs-12">
             <div class="panel panel-primary">
                 <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-4 pull-right">
+                            <input type="text" class="form-control" id="txtBusqueda" placeholder="Búsqueda por Marca ó Tamaño" />
+                        </div>
+                    </div>
+                    <br />
                     <div class="table-responsive">
                         <table id="EditorTable" class="table table-hover table-estilo">
                             <thead>
@@ -27,17 +33,23 @@
                                     <td>Porcentaje</td>
                                     <td>Costo</td>
                                     <td>Precio Venta</td>
+                                    <td>Acciones</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in ViewBag.Productos)
                                 {
                                     <tr>
-                                        <td data-info="@item.IdMarca">@item.Marca</td>
+                                        <td data-info="@item.IdMarca"><i name="icono" class="glyphicon glyphicon-asterisk"></i> &nbsp; @item.Marca</td>
                                         <td data-info="@item.IdTamanio">@item.Tamanio</td>
-                                        <td><input style="text-align: right;" type="text" name="porc" class="form-control input-sm" value="@Math.Round(item.Porcentaje, 2)" /></td>
-                                        <td><input style="text-align: right;" type="text" name="costo" class="form-control input-sm" value="@Math.Round(item.Costo, 2)" /></td>
+                                        <td><input style="text-align: right;" type="text" disabled name="porc" class="form-control input-sm" data-info="@Math.Round(item.Porcentaje, 2)" value="@Math.Round(item.Porcentaje, 2)" /></td>
+                                        <td><input style="text-align: right;" type="text" disabled name="costo" class="form-control input-sm" data-info="@Math.Round(item.Costo, 2)" value="@Math.Round(item.Costo, 2)" /></td>
                                         <td><input style="text-align: right;" type="text" name="pv" class="form-control input-sm" value="@Math.Round(item.PrecioVenta, 2)" readonly /></td>
+                                        <td>
+                                            <button class="btn btn-link modificar" title="Modificar Precio"><i class="glyphicon glyphicon-pencil"></i></button>
+                                            <button class="btn btn-link guardar" disabled title="Finalizar Modificación de éste precio"><i class="glyphicon glyphicon-ok"></i></button>
+                                            <button class="btn btn-link deshacer" title="Deshacer cambios"><i class="glyphicon glyphicon-remove"></i></button>
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
@@ -56,6 +68,56 @@
 
             //Mostrar con efecto FADE al cargar
             $("#tabla").show("fade", { percent: 0 }, 1500);
+
+            $('button.btn-link.modificar').click(function (e) {
+                $(this).parent().parent().find("input[name=porc]").prop('disabled', false);
+                $(this).parent().parent().find("input[name=costo]").prop('disabled', false);
+                $(this).prop('disabled', true);
+                $(this).parent().parent().find("button.btn-link.guardar").prop('disabled', false);
+            });
+
+            $('button.btn-link.guardar').click(function (e) {
+                $(this).parent().parent().find("input[name=porc]").prop('disabled', true);
+                $(this).parent().parent().find("input[name=costo]").prop('disabled', true);
+                $(this).prop('disabled', true);
+                $(this).parent().parent().find("button.btn-link.modificar").prop('disabled', false);                
+
+                var txtPorc = $(this).parent().parent().find("input[name=porc]");
+                var txtCosto = $(this).parent().parent().find("input[name=costo]");
+                var valorPorcOriginal = $(txtPorc).data("info");
+                var valorCostoOriginal = $(txtCosto).data("info");
+                var valorPorcActual = $(txtPorc).val();
+                var valorCostoActual = $(txtCosto).val();
+
+                if (valorPorcOriginal != valorPorcActual || valorCostoOriginal != valorCostoActual)
+                    $(this).parent().parent().find("i[name=icono]").removeClass('glyphicon-asterisk').addClass('glyphicon-ok');
+            });
+
+            $('button.btn-link.deshacer').click(function (e) {
+
+                var txtPorc = $(this).parent().parent().find("input[name=porc]");
+                var txtCosto = $(this).parent().parent().find("input[name=costo]");
+                var valorPorcOriginal = $(txtPorc).data("info");
+                var valorCostoOriginal = $(txtCosto).data("info");
+                var valorPorcActual = $(txtPorc).val();
+                var valorCostoActual = $(txtCosto).val();
+
+                if (valorPorcOriginal != valorPorcActual)
+                    $(txtPorc).val(valorPorcOriginal);
+
+                if (valorCostoOriginal != valorCostoActual)
+                    $(txtCosto).val(valorCostoOriginal);
+
+                $(this).parent().parent().find("i[name=icono]").removeClass('glyphicon-ok').addClass('glyphicon-asterisk');
+                
+            });
+
+            $("#txtBusqueda").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#EditorTable tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
 
             $('#EditorTable tbody tr').click(function () {
 
@@ -119,6 +181,10 @@
                                 text: "Precios actualizados correctamente",
                                 icon: "success",
                                 button: "Aceptar",
+                            });
+
+                            $('#EditorTable tbody tr').each(function () {
+                                $(this).find("i[name=icono]").removeClass('glyphicon-ok').addClass('glyphicon-asterisk');
                             });
                         }
                         else {
