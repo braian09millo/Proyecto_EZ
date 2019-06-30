@@ -72,7 +72,7 @@
                                 <tr>
                                     <td>ID Pedido</td>
                                     <td>Cliente</td>
-                                    <td>Fecha Entrega</td>
+                                    <td>Entrega</td>
                                     <td>Estado</td>
                                     <td>Monto</td>
                                     <td>Facturado</td>
@@ -651,16 +651,16 @@
                         { targets: [1], "bSortable": true },
                         { targets: [2], "bSortable": true, type: "date-eu" },
                         { targets: [3], "bSortable": true },
-                        { targets: [4], "bSortable": true },
-                        { targets: [5], "bSortable": true },
-                        { targets: [6], "bSortable": true },
+                        { targets: [4], "bSortable": false },
+                        { targets: [5], "bSortable": false },
+                        { targets: [6], "bSortable": false },
                         { targets: [7], "bSortable": true },
-                        { targets: [8], "bSortable": true },
+                        { targets: [8], "bSortable": false },
                         {
                             "targets": 9,
                             "data": null,
                             "bSortable": false,
-                            "width": "20%",
+                            "width": "10%",
                             "defaultContent": '<button class="btn btn-info btn-xs" title="Editar"><i class="glyphicon glyphicon-pencil"></i></button> <button class="btn btn-primary btn-xs" title="Ver detalle"><i class="fas fa-list-ul"></i></button> <button class="btn btn-warning btn-xs" title="Imprimir"><i class="glyphicon glyphicon-print"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>'
                         }
                     ],
@@ -733,7 +733,7 @@
                     $('#BodyDetalle > tr').remove();
 
                     var data = tabla.row($(this).parents('tr')).data();
-                    var items = JSON.parse(data[11]);
+                    var items = JSON.parse(data[12]);
 
                     for (var i = 0; i < items.length; i++) {
 
@@ -851,23 +851,22 @@
                     e.preventDefault();
                     $('#txtFacturado').prop('disabled', false);
                     var data = tabla.row($(this).parents('tr')).data();
-                    var items = JSON.parse(data[11]);
-                    var obj = JSON.parse(data[12]);
+                    var items = JSON.parse(data[12]);
+                    var obj = JSON.parse(data[13]);
                     var primerItem = items[0];
                     facturado = obj.Facturado;
 
                     //Cargamos los datos especificos del pedido
                     $('#txtId').val(parseInt(data[0]));
-                    $('#cmbClientesPedido').val(parseInt(data[9]));
-                    $('#cmbUsuariosPedido').val(data[10]);
+                    $('#cmbClientesPedido').val(parseInt(data[10]));
+                    $('#cmbUsuariosPedido').val(data[11]);
                     $('#cmbVueltas').val(obj.Vuelta);
                     $('#txtFacturado').val(parseFloat(obj.Facturado));
-                    $('#cmbEstadosPedido').val(data[8].trim());
+                    $('#cmbEstadosPedido').val(data[9].trim());
                     $('#chkDescuento').prop('checked', obj.AplicaDescuento == 'S');
                     $('#txtDescuento').val($('#chkDescuento').prop('checked') ? obj.Descuento : '').prop('disabled', !($('#chkDescuento').prop('checked')));
                     document.getElementById("txtFechaEntrega").value = toDate(data[2]);
                     $('#txtTotal').val(obj.Monto);
-                    //$('#txtDebe').val(obj.Debe);
 
                     //Cargamos el primer item
                     $('#cmbProductos').val(primerItem.IdProducto);
