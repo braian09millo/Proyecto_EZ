@@ -32,6 +32,7 @@ WITH ENCRYPTION AS
 	JOIN precio ON pre_ident = prd_campre
 	WHERE 
 		pre_fechaHasta IS NULL
+		ORDER by mar_nombre,mod_nombre,tam_descripcion
 
 	SET @@nRet = @@error
 	IF @@nRet <> 0 

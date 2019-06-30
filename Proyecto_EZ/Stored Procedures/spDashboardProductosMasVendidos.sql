@@ -7,7 +7,7 @@ WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT
 
-	SELECT TOP 5
+	SELECT TOP 10
 		prod_id AS IdProducto,
 		CASE MAX(mod_nombre)
 			WHEN 'No Aplica' THEN MAX(mar_nombre + ' - ' + tam_descripcion)
@@ -20,6 +20,7 @@ WITH ENCRYPTION AS
 		JOIN tamanio ON tam_id = prod_tamanio
 		join pedido_detalle ON det_producto = prod_id
 	GROUP BY prod_id
+	order by SUM(det_cantidad) desc
 
 	SET @@nRet = @@error
 	IF @@nRet <> 0 

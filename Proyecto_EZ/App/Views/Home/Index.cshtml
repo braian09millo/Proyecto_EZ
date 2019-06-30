@@ -23,7 +23,7 @@
             <div class="col-sm-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title text-center"><b>FACTURACION MENSUAL ($) - @DateTime.Now.Year</b></h4>
+                        <h4 class="panel-title text-center"><b>GANANCIA MENSUAL ($) - @DateTime.Now.Year</b></h4>
                     </div>
                     <div class="panel-body">
                         <canvas id="myChart2"></canvas>
@@ -45,7 +45,7 @@
                                     {
                                         <tr>
                                             <td>@item.Cliente</td>
-                                            <td>$ @Math.Round(item.Monto, 0)</td>
+                                            <td>$@Math.Round(item.Monto, 0)</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -67,7 +67,7 @@
                                     {
                                         <tr>
                                             <td>@item.Cliente</td>
-                                            <td>$ @Math.Round(item.Monto, 0)</td>
+                                            <td>$@Math.Round(item.Monto, 0)</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -79,7 +79,7 @@
             <div class="col-sm-4" id="cuadro3">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title text-center"><i class="fas fa-chart-line"></i>&nbsp;&nbsp;PRODUCTOS MAS VENDIDOS</h4>
+                        <h4 class="panel-title text-center"><i class="fas fa-chart-line"></i>&nbsp;&nbsp;PRODUCTOS MÁS VENDIDOS (x PACK)</h4>
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">

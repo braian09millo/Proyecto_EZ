@@ -38,8 +38,8 @@
                             <option value="">Elija un estado</option>
                             <option value="C">Cargado</option>
                             <option value="E">Entregado</option>
-                            <option value="F">Pago total</option>
                             <option value="PP">Pago parcial</option>
+                            <option value="F">Facturado</option>
                         </select>
                     </div>
                 </div>
@@ -76,6 +76,7 @@
                                     <td>Estado</td>
                                     <td>Monto</td>
                                     <td>Facturado</td>
+                                    <td>Debe</td>
                                     <td>Repartidor</td>
                                     <td>Vuelta</td>
                                     <td>Acciones</td>
@@ -226,10 +227,10 @@
                                     <input type="text" id="txtCantidad" class="form-control" placeholder="Packs" />
                                 </div>
                                 <div class="col-sm-2 precio">
-                                    <input type="text" id="txtPrecio" style="text-align: right;" class="form-control" placeholder="Precio" readonly />
+                                    <input type="text" id="txtPrecio" style="text-align: right;" class="form-control" placeholder="Precio x Pack" readonly />
                                 </div>
                                 <div class="col-sm-2 monto">
-                                    <input type="text" id="txtMonto" style="text-align: right;" class="form-control" placeholder="Monto" readonly />
+                                    <input type="text" id="txtMonto" style="text-align: right;" class="form-control" placeholder="Monto a Pagar" readonly />
                                 </div>
                                 <div class="col-sm-1">
                                     <button type="button" id="btnItem" class="btn btn-default"><i class="fas fa-plus"></i></button>
@@ -654,8 +655,9 @@
                         { targets: [5], "bSortable": true },
                         { targets: [6], "bSortable": true },
                         { targets: [7], "bSortable": true },
+                        { targets: [8], "bSortable": true },
                         {
-                            "targets": 8,
+                            "targets": 9,
                             "data": null,
                             "bSortable": false,
                             "width": "20%",
@@ -663,13 +665,13 @@
                         }
                     ],
                     "createdRow": function (row, data, dataIndex) {
-                        if (data[8].trim() === "C") {
+                        if (data[9].trim() === "C") {
                             $(row).find("td:eq(2)").css('background-color', 'slategrey').css('color', 'white').css('font-weight', 'bold');
-                        } else if (data[8].trim() === "E") {
+                        } else if (data[9].trim() === "E") {
                             $(row).find("td:eq(2)").css('background-color', '#337ab7').css('color', 'white').css('font-weight', 'bold');
-                        } else if (data[8].trim() === "F") {
+                        } else if (data[9].trim() === "F") {
                             $(row).find("td:eq(2)").css('background-color', '#4cae4c').css('color', 'white').css('font-weight', 'bold');
-                        } else if (data[8].trim() === "PP") {
+                        } else if (data[9].trim() === "PP") {
                             $(row).find("td:eq(2)").css('background-color', '#d43f3a').css('color', 'white').css('font-weight', 'bold');
                         }
                     },
@@ -865,6 +867,7 @@
                     $('#txtDescuento').val($('#chkDescuento').prop('checked') ? obj.Descuento : '').prop('disabled', !($('#chkDescuento').prop('checked')));
                     document.getElementById("txtFechaEntrega").value = toDate(data[2]);
                     $('#txtTotal').val(obj.Monto);
+                    //$('#txtDebe').val(obj.Debe);
 
                     //Cargamos el primer item
                     $('#cmbProductos').val(primerItem.IdProducto);

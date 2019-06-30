@@ -148,6 +148,8 @@ namespace Negocios.BusinessControllers
                         x.EstadoDescripcion,
                         "$ " + string.Format("{0:0.##}", x.Monto),
                         "$ " + string.Format("{0:0.##}", x.Facturado),
+                        "$ " + string.Format("{0:0.##}", x.Monto-x.Facturado),
+                        //"$ " + string.Format("{0:0.##}", x.Debe),
                         x.Repartidor,
                         x.Vuelta == 0 ? "" : x.Vuelta.ToString(),
                         x.Estado,

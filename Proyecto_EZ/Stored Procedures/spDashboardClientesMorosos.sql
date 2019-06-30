@@ -7,7 +7,7 @@ WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT
 
-	SELECT TOP 5
+	SELECT TOP 10
   		cli_id IdCliente,
 		MAX(cli_nombre + ' - ' + cli_direccion) AS Cliente,
 		SUM(ped_monto - ped_factu) Monto
