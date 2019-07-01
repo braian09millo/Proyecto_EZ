@@ -2,24 +2,22 @@ IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('spRptFacturacion') and
 	DROP PROCEDURE spRptFacturacion
 GO
 
-CREATE PROCEDURE spRptFacturacion		(@FechaDesde datetime, @FechaHasta datetime,@Repartidor int)												
+CREATE PROCEDURE spRptFacturacion											
 WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT
 
-SELECT max(cli_nombre) as Nombre,
-		count(*) as [Cantidad Pedidos],
-		SUM(ped_monto) [Monto Remitos],
-		SUM(ped_factu) [Debe],
+SELECT max(cli_nombre)+ ' - ' + max(cli_direccion)  as Cliente,
+		count(*) as CantidadPedidos,
+		SUM(ped_monto) MontoVentas,
+		SUM(ped_factu) Debe,
 		SUM(ped_monto)-SUM(ped_factu) Facturado,
-		max(usu_nombre) Repartidor
+		max(ped_fecha) as UltimoPedido
+
 	FROM Pedido
 	JOIN cliente on cli_id = ped_cliente
-	LEFT JOIN usuario on ped_repartidor = usu_usuario
-	WHERE ped_fecha between @FechaDesde and @FechaHasta
-	and (ped_repartidor = @Repartidor or @repartidor is null)
-	group by cli_id,usu_usuario
-
+	group by cli_id
+	order by sum(ped_monto) desc
 
 	SET @@nRet = @@error
 	IF @@nRet <> 0 
