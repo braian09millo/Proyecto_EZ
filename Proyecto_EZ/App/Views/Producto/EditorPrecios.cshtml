@@ -20,7 +20,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-4 pull-right">
-                            <input type="text" class="form-control" id="txtBusqueda" placeholder="Búsqueda por Marca ó Tamaño" />
+                            <input type="search" class="form-control" id="txtBusqueda" placeholder="Búsqueda por Marca ó Tamaño" />
                         </div>
                     </div>
                     <br />
@@ -44,7 +44,7 @@
                                         <td data-info="@item.IdTamanio">@item.Tamanio</td>
                                         <td><input style="text-align: right;" type="text" disabled name="porc" class="form-control input-sm" data-info="@Math.Round(item.Porcentaje, 2)" value="@Math.Round(item.Porcentaje, 2)" /></td>
                                         <td><input style="text-align: right;" type="text" disabled name="costo" class="form-control input-sm" data-info="@Math.Round(item.Costo, 2)" value="@Math.Round(item.Costo, 2)" /></td>
-                                        <td><input style="text-align: right;" type="text" name="pv" class="form-control input-sm" value="@Math.Round(item.PrecioVenta, 2)" readonly /></td>
+                                        <td><input style="text-align: right;" type="text" name="pv" class="form-control input-sm" data-info="@Math.Round(item.PrecioVenta, 2)" value="@Math.Round(item.PrecioVenta, 2)" readonly /></td>
                                         <td>
                                             <button class="btn btn-link modificar" title="Modificar Precio"><i class="glyphicon glyphicon-pencil"></i></button>
                                             <button class="btn btn-link guardar" disabled title="Finalizar Modificación de éste precio"><i class="glyphicon glyphicon-ok"></i></button>
@@ -97,16 +97,22 @@
 
                 var txtPorc = $(this).parent().parent().find("input[name=porc]");
                 var txtCosto = $(this).parent().parent().find("input[name=costo]");
+                var txtPv = $(this).parent().parent().find("input[name=pv]");
                 var valorPorcOriginal = $(txtPorc).data("info");
                 var valorCostoOriginal = $(txtCosto).data("info");
+                var valorPvOriginal = $(txtPv).data("info");
                 var valorPorcActual = $(txtPorc).val();
                 var valorCostoActual = $(txtCosto).val();
+                var valorPvActual = $(txtPv).val();
 
                 if (valorPorcOriginal != valorPorcActual)
                     $(txtPorc).val(valorPorcOriginal);
 
                 if (valorCostoOriginal != valorCostoActual)
                     $(txtCosto).val(valorCostoOriginal);
+
+                if (valorPvOriginal != valorPvActual)
+                    $(txtPv).val(valorPvOriginal);
 
                 $(this).parent().parent().find("i[name=icono]").removeClass('glyphicon-ok').addClass('glyphicon-asterisk');
                 
