@@ -49,7 +49,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Microsoft.VisualBasic.DateAndTime.MonthName(Microsoft.VisualBasic.DateAndTime.Month(Fields!Dia.Value))</Value>
+                              <Value>=UCase(Microsoft.VisualBasic.DateAndTime.MonthName(Microsoft.VisualBasic.DateAndTime.Month(Fields!Dia.Value)))
++ " - "
++ Str(Year(Fields!Dia.Value))</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
@@ -1891,7 +1893,6 @@
         </TablixRowHierarchy>
         <DataSetName>GastoMensualDS</DataSetName>
         <Top>4.53708cm</Top>
-        <Left>0cm</Left>
         <Height>2.4cm</Height>
         <Width>11.18659cm</Width>
         <ZIndex>1</ZIndex>
@@ -2361,7 +2362,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Parameters!Repartidor.Value</Value>
+                  <Value>=Iif(Parameters!Repartidor.Value="","Todos",Parameters!Repartidor.Value )</Value>
                   <Style>
                     <FontFamily>Trebuchet MS</FontFamily>
                   </Style>
