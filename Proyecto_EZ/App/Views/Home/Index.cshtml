@@ -35,7 +35,7 @@
             <div class="col-sm-4" id="cuadro1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title text-center"><i class="fas fa-chart-line"></i>&nbsp;&nbsp;CLIENTES CON MAYORES VENTAS ($)</h4>
+                        <h4 class="panel-title text-center"><i class="fas fa-chart-line"></i>&nbsp;&nbsp;CLIENTES CON MAYORES VENTAS ($) </h4>
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -52,6 +52,14 @@
                             </table>
                         </div>
                     </div>
+                    @if (ViewBag.ClientesMayoresVenta.Count > 0)
+                    {
+                        <div class="panel-footer">
+                            <div class="text-center">
+                                <a href="@Url.Action("GetClientesMayoresVentas", "Reporte")" id="btnCuadro1" class="btn btn-danger informe">VER TODOS &nbsp;<i></i></a>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
             <div class="col-sm-4" id="cuadro2">
@@ -72,6 +80,11 @@
                                     }
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="text-center">
+                            <button id="btnCuadro2" class="btn btn-danger informe">VER TODOS &nbsp;<i></i></button>
                         </div>
                     </div>
                 </div>
@@ -96,18 +109,34 @@
                             </table>
                         </div>
                     </div>
+                    <div class="panel-footer">
+                        <div class="text-center">
+                            <button id="btnCuadro3" class="btn btn-danger informe">VER TODOS &nbsp;<i></i></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>    
 </div>
+
 @section Scripts {
 
     <script>
 
         $(document).ready(function () {
 
-            $('#wrapper').show("fade", {percent: 0}, 1000);
+            $('#wrapper').show("fade", { percent: 0 }, 1000);
+
+            $('.btn.btn-danger.informe').hover(function () {
+                $(this).children().addClass('fas fa-angle-double-right');
+            }, function () {
+                $(this).children().removeClass('fas fa-angle-double-right');
+            });
+
+            $('#btnCuadro1').click(function (e) {
+
+            });
 
             $.ajax({
 
@@ -231,6 +260,12 @@
             font-weight: bold;
         }
 
+        .btn.btn-danger.informe {
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+        }
     </style>
 
 }

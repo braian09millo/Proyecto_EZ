@@ -16,6 +16,7 @@ namespace App.Controllers
         PedidoCtrl xoCtrlPedido = new Factory().GetCtrlPedido();
         ProductoCtrl xoCtrlProducto = new Factory().GetCtrlProducto();
         GastosCtrl xoCtrlGasto = new Factory().GetCtrlGasto();
+        ClienteCtrl xoCtrlCliente = new Factory().GetCtrlCliente();
 
         [HttpGet]
         public FileResult GetRemito(int xiPedido)
@@ -91,5 +92,19 @@ namespace App.Controllers
             var bytes = Reporting.GenerarInforme(lista, _path, _nombre, _nombreDs, "PDF", null);
             return File(bytes, "application/pdf", "ListaPrecios_" + DateTime.Today.ToString("ddMMyyyy") + ".pdf");
         }
+
+        [HttpGet]
+        public FileResult GetClientesMayoresVentas()
+        {
+            string xsError = "";
+            var _nombre = "rptClientesMayoresVentas.rdlc";
+            var _nombreDs = "ClientesDS";
+            var _path = HttpContext.Server.MapPath("~/Reportes/" + _nombre);
+            var lista = xoCtrlCliente.ObtenerClientesMayoresVentas(out xsError);
+
+            var bytes = Reporting.GenerarInforme(lista, _path, _nombre, _nombreDs, "PDF", null);
+            return File(bytes, "application/pdf", "ClientesConMasVentas_" + DateTime.Today.ToString("ddMMyyyy") + ".pdf");
+        }
+
     }
 }
