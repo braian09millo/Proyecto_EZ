@@ -50,6 +50,7 @@
     <Compile Include="RendicionForm.cs" />
     <Compile Include="spGetClientes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="spGetClientesConMasVentas.cs" />
     <Compile Include="spGetClientesMorosos.cs" />
     <Compile Include="spGetDatosGrafico.cs" />
     <Compile Include="spGetFacturacionMensual.cs" />

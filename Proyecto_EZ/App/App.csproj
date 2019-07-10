@@ -155,6 +155,11 @@
     <Compile Include="Controllers\RendicionController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Reportes\ClientesMaxVentasDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClientesMaxVentasDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\PreciosDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -275,6 +280,17 @@
     <None Include="Properties\PublishProfiles\Admin.pubxml" />
     <Content Include="Reportes\PreciosDataSet.xsc">
       <DependentUpon>PreciosDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reportes\ClientesMaxVentasDataSet.xsc">
+      <DependentUpon>ClientesMaxVentasDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="Reportes\ClientesMaxVentasDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ClientesMaxVentasDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reportes\ClientesMaxVentasDataSet.xss">
+      <DependentUpon>ClientesMaxVentasDataSet.xsd</DependentUpon>
     </Content>
     <None Include="Reportes\PreciosDataSet.xsd">
       <SubType>Designer</SubType>
@@ -432,6 +448,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reportes\rptClientesMayoresVentas.rdlc" />
     <EmbeddedResource Include="Reportes\rptFacturacionMensual.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>

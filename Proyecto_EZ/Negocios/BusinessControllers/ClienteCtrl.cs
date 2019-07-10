@@ -180,6 +180,26 @@ namespace Negocios.BusinessControllers
             return loResultado;
         }
 
+        public List<spGetClientesConMasVentas> ObtenerClientesMayoresVentas(out string xsError)
+        {
+            xsError = "";
+            List<spGetClientesConMasVentas> xoResultado = null;
+
+            try
+            {
+                using (BD_Entities xoDB = new BD_Entities())
+                {
+                    xoResultado = xoDB.Database.SqlQuery<spGetClientesConMasVentas>("exec spRptFacturacion").ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                xsError = ex.Message;
+            }
+
+            return xoResultado;
+        }
+
         #endregion
     }
 }
