@@ -5,7 +5,7 @@
 }
 
 <div style="padding-top: 50px;">
-    <h2 class="h2 text-center">GASTOS</h2>
+    <h2 class="h2 text-center">RENDICION</h2>
     <br />
     <div class="row">
         <form class="form-horizontal">
@@ -37,7 +37,7 @@
     <div class="row">
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
-            <button id="btnNuevo" class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-plus"></i>&nbsp;&nbsp;Nuevo Gasto</button>
+            <button id="btnNuevo" class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-plus"></i>&nbsp;&nbsp;Nueva Rendicion</button>
         </div>
         <div class="col-sm-3"></div>
     </div>
@@ -48,12 +48,13 @@
             <div class="panel panel-primary">
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table id="tableGastos" class="table table-hover table-condensed table-bordered table-estilo">
+                        <table id="tableRendicion" class="table table-hover table-condensed table-bordered table-estilo">
                             <thead>
                                 <tr>
-                                    <td>Fecha</td>
-                                    <td>Descripción</td>
-                                    <td>Monto</td>
+                                    <td>ID Rendicion</td>
+                                    <td>Desde</td>
+                                    <td>Hasta</td>
+                                    <td>Total</td>
                                     <td>Acciones</td>
                                 </tr>
                             </thead>
@@ -70,28 +71,23 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Agregar/Modificar Gastos</h4>
+                    <h4 class="modal-title" id="myModalLabel">Agregar/Modificar Rendicion</h4>
                 </div>
                 <div class="modal-body">
                     <br />
                     <div class="row">
                         <div class="col-sm-2"></div>
                         <div class="col-sm-8">
-                            <form id="GastoForm" class="form-horizontal">
+                            <form id="RendicionForm" class="form-horizontal">
                                 <input type="hidden" id="txtId" name="id" />
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <input type="date" class="form-control" id="txtFecha" name="fecha" placeholder="Fecha" />
+                                        <input type="date" class="form-control" id="txtFechaDesde" name="Desde" placeholder="Desde" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="txtDescr" name="descr" placeholder="Descripcion" maxlength="100"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="txtMonto" name="monto" placeholder="Monto" />
+                                        <input type="date" class="form-control" id="txtFechaHasta" name="Hasta" placeholder="Hasta" />
                                     </div>
                                 </div>
                             </form>
@@ -110,6 +106,7 @@
             </div>
         </div>
     </div>
+   @Html.Partial("modalVerDetalle")
 </div>
 
 
@@ -170,7 +167,7 @@
             }
 
             function Limpiar() {
-                $("#tableGastos").dataTable().fnDestroy();
+                $("#tableRendicion").dataTable().fnDestroy();
             }
 
             $('#NuevoForm').on('hidden.bs.modal', function (e) {
@@ -192,22 +189,23 @@
                 var fechaDesde = $('#txtDesde').val();
                 var fechaHasta = $('#txtHasta').val();
 
-                var url = '@Url.Action("GetGastos","Gasto")?xsFechaDesde=' + fechaDesde + '&xsFechaHasta=' + fechaHasta;
+                var url = '@Url.Action("GetRendicion","Rendicion")?xsFechaDesde=' + fechaDesde + '&xsFechaHasta=' + fechaHasta;
 
-                var tabla = $('#tableGastos').DataTable({
+                var tabla = $('#tableRendicion').DataTable({
                     select: true,
                     "ajax": url,
                     "info": false,
                     aoColumnDefs: [
-                        { targets: [0], "bSortable": true },
+                        { targets: [0], "bSortable": true, "bVisible": false },
                         { targets: [1], "bSortable": true },
                         { targets: [2], "bSortable": true },
+                        { targets: [3], "bSortable": true },
                         {
-                            "targets": 3,
+                            "targets": 4,
                             "data": null,
                             "bSortable": false,
                             "width": "20%",
-                            "defaultContent": '<button class="btn btn-info btn-xs" title="Editar"><i class="glyphicon glyphicon-pencil"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>'
+                            "defaultContent": '<button class="btn btn-primary btn-xs" title="Ver detalle"><i class="fas fa-list-ul"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>'
                         }
                     ],
                     "language": {
@@ -229,42 +227,67 @@
                     }
                 });
 
-                editarGasto('#tableGastos tbody', tabla);
-                eliminarGasto('#tableGastos tbody', tabla);
+                verDetalle('#tableRendicion tbody', tabla);
+                //editarRendicion('#tableRendicion tbody', tabla);
+                eliminarRendicion('#tableRendicion tbody', tabla);
             }
 
 
-            function editarGasto(tbody, tabla) {
+            //function editarRendicion(tbody, tabla) {
 
-                $(tbody).off('click', 'button.btn-info.btn-xs');
-                $(tbody).on('click', 'button.btn-info.btn-xs', function () {
+            //    $(tbody).off('click', 'button.btn-info.btn-xs');
+            //    $(tbody).on('click', 'button.btn-info.btn-xs', function () {
+
+            //        var data = tabla.row($(this).parents('tr')).data();
+            //        var Rendicion = JSON.parse(data[3]);
+
+            //        $('#txtId').val(rendicion.ren_id);
+            //        document.getElementById("txtDesde").value = toDate(data[0]);
+            //        document.getElementById("txtHasta").value = toDate(data[1]);
+            //        $('#txtTotal').val(rendicion.res_total);
+
+            //        $('#NuevoForm').modal('show');
+            //    });
+            //}
+            function verDetalle(tbody, tabla) {
+
+                $(tbody).off('click', 'button.btn-primary.btn-xs');
+                $(tbody).on('click', 'button.btn-primary.btn-xs', function (e) {
+
+                    $('#BodyDetalle > tr').remove();
 
                     var data = tabla.row($(this).parents('tr')).data();
-                    var gasto = JSON.parse(data[3]);
+                    var items = JSON.parse(data[4]);
 
-                    $('#txtId').val(gasto.gas_id);
-                    $('#txtDescr').val(gasto.gas_descripcion);
-                    document.getElementById("txtFecha").value = toDate(data[0]);
-                    $('#txtMonto').val(gasto.gas_monto);
+                    for (var i = 0; i < items.length; i++) {
 
-                    $('#NuevoForm').modal('show');
+                        var fila = '<tr style="text-align: center;">' +
+                                   '<td>' + items[i].Fecha + '</td>' +
+                                   '<td>' + items[i].Nombre + '</td>' +
+                                   '<td>' + '$' + items[i].Costo + '</td>' +
+                                   '</tr>';
+
+                        $('#BodyDetalle').append(fila);
+                    }
+
+                    $('#detalleModal').modal('show');
+
                 });
             }
-
-            function eliminarGasto(tbody, tabla) {
+            function eliminarRendicion(tbody, tabla) {
 
                 $(tbody).off('click', 'button.btn-danger.btn-xs');
                 $(tbody).on('click', 'button.btn-danger.btn-xs', function () {
 
                     var data = tabla.row($(this).parents('tr')).data();
-                    var gasto = JSON.parse(data[3]);
+                    var rendicion = JSON.parse(data[3]);
 
                     var dataToPost = {
-                        xiId: gasto.gas_id
+                        xiId: rendicion.res_id
                     }
 
                     swal({
-                        title: "¿Está seguro que desea eliminar el siguiente gasto?",
+                        title: "¿Está seguro que desea eliminar la siguiente Rendicion?",
                         text: "",
                         icon: "warning",
                         buttons: ['Cancelar', 'Confirmar'],
@@ -273,7 +296,7 @@
                         if (bElimina) {
                             $.ajax({
                                 method: 'POST',
-                                url: '@Url.Action("PostEliminarGasto","Gasto")',
+                                url: '@Url.Action("PostEliminarRendicion","Rendicion")',
                                 data: JSON.stringify(dataToPost),
                                 contentType: 'application/json; charset=utf-8',
                                 success: function (response) {
@@ -305,30 +328,23 @@
 
             function PuedeGuardar(objError) {
 
-                var fecha = $('#txtFecha').val();
-                var monto = $('#txtMonto').val();
-                var descr = $('#txtDescr').val();
+                var desde = $('#txtFechaDesde').val();
+                var hasta = $('#txtFechaDesde').val();
 
-                if (fecha == null || fecha == '' || fecha == undefined) {
+                if (desde == null || desde == '' || desde == undefined) {
                     objError.bPuede = false;
-                    objError.msj = "Debe ingresar la fecha del gasto";
+                    objError.msj = "Debe ingresar la fecha Desde de la Rendicion";
+                }
+                if (hasta == null || hasta == '' || hasta == undefined) {
+                    objError.bPuede = false;
+                    objError.msj = "Debe ingresar la fecha Hasta de la Rendicion";
                 }
 
-                if (monto == null || monto == '' || monto == undefined) {
-                    objError.bPuede = false;
-                    objError.msj = "Debe ingresar el monto del gasto";
-                }
-
-
-                if (descr == null || descr == '' || descr == undefined) {
-                    objError.bPuede = false;
-                    objError.msj = "Debe ingresar la descripción del gasto";
-                }
 
                 return objError.bPuede;
             }
 
-            function guardarGasto() {
+            function GuardarRendicion() {
 
                 var objError = {
                     bPuede: true,
@@ -338,24 +354,24 @@
                 if (PuedeGuardar(objError)) {
                     var dataToPost = {
 
-                        Id: $('#txtId').val(),
-                        Fecha: $('#txtFecha').val(),
-                        Monto: $('#txtMonto').val(),
-                        Descripcion: $('#txtDescr').val()
+                        //Id: $('#txtId').val(),
+                        Desde: $('#txtFechaDesde').val(),
+                        Hasta: $('#txtFechaHasta').val(),
+                        //Total: $('#txtTotal').val()
                     };
 
                     $.ajax({
 
                         method: 'POST',
-                        url: '@Url.Action("PostGuardarGasto","Gasto")',
+                        url: '@Url.Action("PostGuardarRendicion","Rendicion")',
                         data: JSON.stringify(dataToPost),
                         type: 'json',
                         contentType: 'application/json; charset=utf-8',
                         success: function (response) {
                             if (response == '') {
                                 swal({
-                                    title: 'Gastos',
-                                    text: 'Gasto guardado correctamente',
+                                    title: 'Rendicion',
+                                    text: 'Rendicion guardada correctamente',
                                     icon: 'success',
                                     button: 'Aceptar'
                                 });
@@ -365,7 +381,7 @@
                             }
                             else {
                                 swal({
-                                    title: 'Gastos',
+                                    title: 'Rendicion',
                                     text: response,
                                     icon: 'warning',
                                     button: 'Aceptar'
@@ -394,7 +410,7 @@
 
             $('#btnGuardar').click(function (e) {
                 e.preventDefault();
-                guardarGasto();
+                GuardarRendicion();
             });
 
             $('#btnBuscar').click(function (e) {

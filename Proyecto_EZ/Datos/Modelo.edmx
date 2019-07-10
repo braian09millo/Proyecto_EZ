@@ -147,6 +147,22 @@
           <Property Name="rem_cliente" Type="int" Nullable="false" />
           <Property Name="rem_pedido" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="rendicion">
+          <Key>
+            <PropertyRef Name="ren_id" />
+          </Key>
+          <Property Name="ren_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ren_desde" Type="datetime" Nullable="false" />
+          <Property Name="ren_hasta" Type="datetime" Nullable="false" />
+          <Property Name="ren_total" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="rendicion_detalle">
+          <Key>
+            <PropertyRef Name="red_rendi" />
+          </Key>
+          <Property Name="red_rendi" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="red_pedido" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="tamanio">
           <Key>
             <PropertyRef Name="tam_id" />
@@ -381,6 +397,8 @@
           <EntitySet Name="producto" EntityType="Self.producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="provincia" EntityType="Self.provincia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="remito" EntityType="Self.remito" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rendicion" EntityType="Self.rendicion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rendicion_detalle" EntityType="Self.rendicion_detalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tamanio" EntityType="Self.tamanio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tipo" EntityType="Self.tipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
@@ -535,6 +553,8 @@
             <End Role="usuario" EntitySet="usuario" />
             <End Role="pedido" EntitySet="pedido" />
           </AssociationSet>
+          <EntitySet Name="rendicion" EntityType="Modelo.rendicion" />
+          <EntitySet Name="rendicion_detalle" EntityType="Modelo.rendicion_detalle" />
           </EntityContainer>
         <EntityType Name="localidad">
           <Key>
@@ -929,6 +949,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="rendicion">
+          <Key>
+            <PropertyRef Name="ren_id" />
+          </Key>
+          <Property Name="ren_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ren_desde" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ren_hasta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ren_total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="rendicion_detalle">
+          <Key>
+            <PropertyRef Name="red_rendi" />
+          </Key>
+          <Property Name="red_rendi" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="red_pedido" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1115,6 +1151,24 @@
                 <ScalarProperty Name="ped_fecha" ColumnName="ped_fecha" />
                 <ScalarProperty Name="ped_cliente" ColumnName="ped_cliente" />
                 <ScalarProperty Name="ped_id" ColumnName="ped_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rendicion">
+            <EntityTypeMapping TypeName="Modelo.rendicion">
+              <MappingFragment StoreEntitySet="rendicion">
+                <ScalarProperty Name="ren_total" ColumnName="ren_total" />
+                <ScalarProperty Name="ren_hasta" ColumnName="ren_hasta" />
+                <ScalarProperty Name="ren_desde" ColumnName="ren_desde" />
+                <ScalarProperty Name="ren_id" ColumnName="ren_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rendicion_detalle">
+            <EntityTypeMapping TypeName="Modelo.rendicion_detalle">
+              <MappingFragment StoreEntitySet="rendicion_detalle">
+                <ScalarProperty Name="red_pedido" ColumnName="red_pedido" />
+                <ScalarProperty Name="red_rendi" ColumnName="red_rendi" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

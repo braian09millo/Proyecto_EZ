@@ -152,6 +152,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PedidoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\RendicionController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Reportes\PreciosDataSet.Designer.cs">
@@ -400,6 +401,8 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Informe\Rendicion.cshtml" />
     <Content Include="Views\Informe\RemitosRepartidores.cshtml" />
+    <Content Include="Views\Rendicion\Index.cshtml" />
+    <Content Include="Views\Rendicion\modalVerDetalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

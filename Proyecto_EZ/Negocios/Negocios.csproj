@@ -58,6 +58,7 @@
     <Compile Include="BusinessControllers\HomeCtrl.cs" />
     <Compile Include="BusinessControllers\PedidoCtrl.cs" />
     <Compile Include="BusinessControllers\ProductoCtrl.cs" />
+    <Compile Include="BusinessControllers\RendicionCrtl.cs" />
     <Compile Include="BusinessControllers\UsuarioCtrl.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Helpers\Encriptacion.cs" />

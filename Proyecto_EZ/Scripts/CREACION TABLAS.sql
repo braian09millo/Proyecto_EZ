@@ -178,7 +178,23 @@ CREATE TABLE gasto
 	gas_monto MONEY NOT NULL
 )
 
+CREATE TABLE rendicion
+(
+	ren_id INT IDENTITY PRIMARY KEY,
+	ren_desde DATETIME NOT NULL,
+	ren_hasta DATETIME NOT NULL,
+	ren_total MONEY NOT NULL
+)
+
+
+CREATE TABLE rendicion_detalle
+(
+	red_rendi INT PRIMARY KEY,
+	red_pedido DATETIME NOT NULL
+)
+
 GO
+
 
 --Inicializacion de tablas
 INSERT INTO TIPO (tip_descr) VALUES ('GASEOSA')

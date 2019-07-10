@@ -109,6 +109,12 @@
     <Compile Include="remito.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="rendicion.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="rendicion_detalle.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="tamanio.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

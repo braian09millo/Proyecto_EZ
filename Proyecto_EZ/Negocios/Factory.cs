@@ -33,6 +33,10 @@ namespace Negocios
         {
             return GastosCtrl.GetInstancia();
         }
+        public RendicionCtrl GetCtrlRendicion()
+        {
+            return RendicionCtrl.GetInstancia();
+        }
 
         public HomeCtrl GetCtrlHome()
         {
