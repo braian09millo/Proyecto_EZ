@@ -277,13 +277,12 @@
             function eliminarRendicion(tbody, tabla) {
 
                 $(tbody).off('click', 'button.btn-danger.btn-xs');
-                $(tbody).on('click', 'button.btn-danger.btn-xs', function () {
+                $(tbody).on('click', 'button.btn-danger.btn-xs', function (e) {
 
                     var data = tabla.row($(this).parents('tr')).data();
-                    var rendicion = JSON.parse(data[3]);
-
+                    var id = parseInt(data[0]);
                     var dataToPost = {
-                        xiId: rendicion.res_id
+                        xiId: id
                     }
 
                     swal({
@@ -317,6 +316,12 @@
                                     }
                                 },
                                 error: function (error) {
+                                    swal({
+                                        title: "Error",
+                                        text: error,
+                                        icon: "error",
+                                        buttons: "Aceptar"
+                                    });
                                     console.log(error);
                                 }
                             });

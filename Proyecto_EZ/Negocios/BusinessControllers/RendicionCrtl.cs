@@ -160,14 +160,16 @@ namespace Negocios.BusinessControllers
             {
                 try
                 {
-                    var loRendicion = xoDB.rendicion.Find(xiId);
+                    var retVal = new SqlParameter("@RetVal", SqlDbType.Int);
+                    retVal.Direction = ParameterDirection.ReturnValue;
 
-                    if (loRendicion != null)
-                        xoDB.rendicion.Remove(loRendicion);
-                    else
-                        xsError = "La Rendicion seleccionado no existe";
-
-                    xoDB.SaveChanges();
+                    xoDB.Database.ExecuteSqlCommand("exec spEliminarRendicion @Rendicion",
+                               new SqlParameter("@Rendicion", xiId),
+                               retVal);
+                    if ((int)retVal.Value != 0)
+                    {
+                        xsError = "Error al eliminar la rendición";
+                    }
                 }
                 catch (Exception ex)
                 {
