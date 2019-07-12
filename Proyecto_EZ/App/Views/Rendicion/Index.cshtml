@@ -334,7 +334,7 @@
             function PuedeGuardar(objError) {
 
                 var desde = $('#txtFechaDesde').val();
-                var hasta = $('#txtFechaDesde').val();
+                var hasta = $('#txtFechaHasta').val();
 
                 if (desde == null || desde == '' || desde == undefined) {
                     objError.bPuede = false;
@@ -343,6 +343,10 @@
                 if (hasta == null || hasta == '' || hasta == undefined) {
                     objError.bPuede = false;
                     objError.msj = "Debe ingresar la fecha Hasta de la Rendicion";
+                }
+                if (hasta < desde) {
+                    objError.bPuede = false;
+                    objError.msj = "La fecha Hasta no puede ser anterior a Desde";
                 }
 
 
