@@ -23,27 +23,38 @@ WITH ENCRYPTION AS
 	and (ped_rendido is null or ped_rendido = 'N')
 	GROUP BY ped_id
 
-	--Marcamos los pedidos como rendidos
-	UPDATE pedido SET ped_rendido = 'S'
-	FROM pedido
-	where ped_fecha between @desde and @hasta
+IF (select sum(costo) from #Pedidos) is not null
+	BEGIN
+		--Marcamos los pedidos como rendidos
+		UPDATE pedido SET ped_rendido = 'S'
+		FROM pedido
+		where ped_fecha between @desde and @hasta
 
-	SET @@nRet = @@error
-	IF @@nRet <> 0 
-		RETURN @@nRet
+			SET @@nRet = @@error
+			IF @@nRet <> 0 
+			RETURN @@nRet
 
-	INSERT INTO rendicion(ren_desde,ren_hasta,ren_total)
-	SELECT @desde,@hasta,sum(costo)
-	FROM #Pedidos 
+		INSERT INTO rendicion(ren_desde,ren_hasta,ren_total)
+		SELECT @desde,@hasta,sum(costo)
+		FROM #Pedidos 
+
+			SET @@nRet = @@error
+			IF @@nRet <> 0 
+			print @@nRet
 
 		--Insertamos Detalle de Rendicion
-	INSERT INTO rendicion_detalle (red_rendi,red_pedido)
-	SELECT (select max(ren_id) from rendicion),id
-	FROM #Pedidos
+		INSERT INTO rendicion_detalle (red_rendi,red_pedido)
+		SELECT (select max(ren_id) from rendicion),id
+		FROM #Pedidos
 
-	SET @@nRet = @@error
-	IF @@nRet <> 0 
-		RETURN @@nRet
-
-RETURN 0
+			SET @@nRet = @@error
+			IF @@nRet <> 0 
+			RETURN @@nRet
+	RETURN 0
+	END
+ELSE
+BEGIN
+	PRINT 'No hay pedidos a rendir'
+	RETURN -101
+END
 GO
