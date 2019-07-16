@@ -551,6 +551,123 @@ namespace Negocios.BusinessControllers
 
         #endregion
 
+        #region ENVASES
+
+        public void GuardarEnvase(EnvaseForm xoEnvase, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var loEnvase = xoDB.envase.Find(xoEnvase.Id);
+
+                    if (loEnvase != null)
+                    {
+                        loEnvase.env_descr = xoEnvase.Nombre;
+                    }
+                    else
+                    {
+                        var _envase = xoDB.envase.FirstOrDefault(x => x.env_descr.ToLower().Equals(xoEnvase.Nombre));
+
+                        if (_envase != null)
+                            xsError = "Ya existe éste envase";
+                        else
+                        {
+                            xoDB.envase.Add(new envase() { env_descr = xoEnvase.Nombre });
+                        }
+                    }
+
+                    if (xsError == "")
+                    {
+                        xoDB.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public void HabilitarEnvase(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoEnvase = xoDB.envase.Find(xiId);
+
+                    if (xoEnvase != null)
+                    {
+                        xoEnvase.env_delet = "N";
+                        xoDB.SaveChanges();
+                    }
+                    else
+                        xsError = "El envase seleccionado no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public void EliminarEnvase(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoEnvase = xoDB.envase.Find(xiId);
+
+                    if (xoEnvase != null)
+                    {
+                        if (xoDB.producto.FirstOrDefault(x => x.prod_envase == xoEnvase.env_id && (x.prod_delet ?? "N") == "S") == null)
+                        {
+                            xoEnvase.env_delet = "S";
+                            xoDB.SaveChanges();
+                        }
+                        else
+                            xsError = "Debe eliminar el/los productos asociados antes de eliminar el envase";
+                    }
+                    else
+                        xsError = "El envase seleccionado no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public List<envase> ObtenerEnvases(out string xsError)
+        {
+            xsError = "";
+            List<envase> loEnvases = null;
+
+            try
+            {
+                using (BD_Entities xoDB = new BD_Entities())
+                {
+                    loEnvases = xoDB.envase.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                xsError = ex.Message;
+            }
+
+            return loEnvases;
+        }
+
+        #endregion
+
         #region TAMAÑOS
 
         public void GuardarTamanio(TamanioForm xoTamanio, out string xsError)

@@ -271,5 +271,57 @@ namespace App.Controllers
         }
 
         #endregion
+
+        #region ENVASE
+
+        public ActionResult Envase()
+        {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Index", "Login");
+
+            return View();
+        }
+
+        public JsonResult GetEnvases()
+        {
+            string xsError = "";
+            var lstEnvases = xoProductoCtrl.ObtenerEnvases(out xsError)
+                                          .Select(x => new envase { env_id = x.env_id, env_descr = x.env_descr, env_delet = x.env_delet ?? "N" })
+                                          .ToList();
+
+            var resultadoJS = new
+            {
+                data = lstEnvases,
+                error = xsError
+            };
+
+            return Json(resultadoJS, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult PostEliminarEnvase(int xiId)
+        {
+            string xsError = "";
+            xoProductoCtrl.EliminarEnvase(xiId, out xsError);
+            return Json(xsError);
+        }
+
+        [HttpPost]
+        public JsonResult PostHabilitarEnvase(int xiId)
+        {
+            string xsError = "";
+            xoProductoCtrl.HabilitarEnvase(xiId, out xsError);
+            return Json(xsError);
+        }
+
+        [HttpPost]
+        public JsonResult PostGuardarEnvase(EnvaseForm xoEnvase)
+        {
+            string xsError = "";
+            xoProductoCtrl.GuardarEnvase(xoEnvase, out xsError);
+            return Json(xsError);
+        }
+
+        #endregion
     }
 }

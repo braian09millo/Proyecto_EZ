@@ -38,6 +38,9 @@
         <AssociationConnector Association="Modelo.FK_Pedido_DetallePedido" />
         <AssociationConnector Association="Modelo.FK_Pedido_Remito" />
         <AssociationConnector Association="Modelo.FK_Usuario_Pedido" />
+        <EntityTypeShape EntityType="Modelo.envase" Width="1.5" PointX="0.75" PointY="0.875" />
+        <AssociationConnector Association="Modelo.FK_Envase_Producto" />
+        <AssociationConnector Association="Modelo.FK_Envase_Tamanio" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

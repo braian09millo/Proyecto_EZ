@@ -12,21 +12,22 @@ namespace Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class tamanio
+    public partial class envase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tamanio()
+        public envase()
         {
             this.producto = new HashSet<producto>();
+            this.tamanio = new HashSet<tamanio>();
         }
     
-        public int tam_id { get; set; }
-        public string tam_descripcion { get; set; }
-        public string tam_delet { get; set; }
-        public Nullable<int> tam_envase { get; set; }
+        public int env_id { get; set; }
+        public string env_descr { get; set; }
+        public string env_delet { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<producto> producto { get; set; }
-        public virtual envase envase { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tamanio> tamanio { get; set; }
     }
 }

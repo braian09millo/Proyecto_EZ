@@ -32,6 +32,14 @@
           <Property Name="cli_mail" Type="varchar" MaxLength="50" />
           <Property Name="cli_delet" Type="char" MaxLength="1" />
         </EntityType>
+        <EntityType Name="envase">
+          <Key>
+            <PropertyRef Name="env_id" />
+          </Key>
+          <Property Name="env_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="env_descr" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="env_delet" Type="char" MaxLength="1" />
+        </EntityType>
         <EntityType Name="gasto">
           <Key>
             <PropertyRef Name="gas_id" />
@@ -131,6 +139,7 @@
           <Property Name="prod_tipo" Type="int" Nullable="false" />
           <Property Name="prod_pack" Type="int" />
           <Property Name="prod_delet" Type="char" MaxLength="1" />
+          <Property Name="prod_envase" Type="int" />
         </EntityType>
         <EntityType Name="provincia">
           <Key>
@@ -154,6 +163,7 @@
           <Property Name="tam_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="tam_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="tam_delet" Type="char" MaxLength="1" />
+          <Property Name="tam_envase" Type="int" />
         </EntityType>
         <EntityType Name="tipo">
           <Key>
@@ -195,6 +205,30 @@
             </Principal>
             <Dependent Role="remito">
               <PropertyRef Name="rem_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Envase_Producto">
+          <End Role="envase" Type="Self.envase" Multiplicity="0..1" />
+          <End Role="producto" Type="Self.producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="envase">
+              <PropertyRef Name="env_id" />
+            </Principal>
+            <Dependent Role="producto">
+              <PropertyRef Name="prod_envase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Envase_Tamanio">
+          <End Role="envase" Type="Self.envase" Multiplicity="0..1" />
+          <End Role="tamanio" Type="Self.tamanio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="envase">
+              <PropertyRef Name="env_id" />
+            </Principal>
+            <Dependent Role="tamanio">
+              <PropertyRef Name="tam_envase" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -369,6 +403,7 @@
         <EntityContainer Name="ModeloStoreContainer">
           <EntitySet Name="AuxPrecios" EntityType="Self.AuxPrecios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cliente" EntityType="Self.cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="envase" EntityType="Self.envase" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="gasto" EntityType="Self.gasto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="grupo" EntityType="Self.grupo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="localidad" EntityType="Self.localidad" Schema="dbo" store:Type="Tables" />
@@ -391,6 +426,14 @@
           <AssociationSet Name="FK_Cliente_Remito" Association="Self.FK_Cliente_Remito">
             <End Role="cliente" EntitySet="cliente" />
             <End Role="remito" EntitySet="remito" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Envase_Producto" Association="Self.FK_Envase_Producto">
+            <End Role="envase" EntitySet="envase" />
+            <End Role="producto" EntitySet="producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Envase_Tamanio" Association="Self.FK_Envase_Tamanio">
+            <End Role="envase" EntitySet="envase" />
+            <End Role="tamanio" EntitySet="tamanio" />
           </AssociationSet>
           <AssociationSet Name="FK_Grupo_Usuario" Association="Self.FK_Grupo_Usuario">
             <End Role="grupo" EntitySet="grupo" />
@@ -535,6 +578,15 @@
             <End Role="usuario" EntitySet="usuario" />
             <End Role="pedido" EntitySet="pedido" />
           </AssociationSet>
+          <EntitySet Name="envase" EntityType="Modelo.envase" />
+          <AssociationSet Name="FK_Envase_Producto" Association="Modelo.FK_Envase_Producto">
+            <End Role="envase" EntitySet="envase" />
+            <End Role="producto" EntitySet="producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Envase_Tamanio" Association="Modelo.FK_Envase_Tamanio">
+            <End Role="envase" EntitySet="envase" />
+            <End Role="tamanio" EntitySet="tamanio" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="localidad">
           <Key>
@@ -582,6 +634,8 @@
           <Property Name="tam_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="producto" Relationship="Modelo.FK_Tamanio_Producto" FromRole="tamanio" ToRole="producto" />
           <Property Name="tam_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="tam_envase" Type="Int32" />
+          <NavigationProperty Name="envase" Relationship="Modelo.FK_Envase_Tamanio" FromRole="tamanio" ToRole="envase" />
         </EntityType>
         <EntityType Name="tipo">
           <Key>
@@ -620,6 +674,8 @@
           <NavigationProperty Name="precio_detalle" Relationship="Modelo.FK_Producto_Precio_Detalle" FromRole="producto" ToRole="precio_detalle" />
           <Property Name="prod_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="pedido_detalle" Relationship="Modelo.FK_Producto_DetallePedido" FromRole="producto" ToRole="pedido_detalle" />
+          <Property Name="prod_envase" Type="Int32" />
+          <NavigationProperty Name="envase" Relationship="Modelo.FK_Envase_Producto" FromRole="producto" ToRole="envase" />
         </EntityType>
         <Association Name="FK_Marca_Producto">
           <End Type="Modelo.marca" Role="marca" Multiplicity="1" />
@@ -929,6 +985,40 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="envase">
+          <Key>
+            <PropertyRef Name="env_id" />
+          </Key>
+          <Property Name="env_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="env_descr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="env_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="producto" Relationship="Modelo.FK_Envase_Producto" FromRole="envase" ToRole="producto" />
+          <NavigationProperty Name="tamanio" Relationship="Modelo.FK_Envase_Tamanio" FromRole="envase" ToRole="tamanio" />
+        </EntityType>
+        <Association Name="FK_Envase_Producto">
+          <End Type="Modelo.envase" Role="envase" Multiplicity="0..1" />
+          <End Type="Modelo.producto" Role="producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="envase">
+              <PropertyRef Name="env_id" />
+            </Principal>
+            <Dependent Role="producto">
+              <PropertyRef Name="prod_envase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Envase_Tamanio">
+          <End Type="Modelo.envase" Role="envase" Multiplicity="0..1" />
+          <End Type="Modelo.tamanio" Role="tamanio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="envase">
+              <PropertyRef Name="env_id" />
+            </Principal>
+            <Dependent Role="tamanio">
+              <PropertyRef Name="tam_envase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -974,6 +1064,7 @@
           <EntitySetMapping Name="tamanio">
             <EntityTypeMapping TypeName="Modelo.tamanio">
               <MappingFragment StoreEntitySet="tamanio">
+                <ScalarProperty Name="tam_envase" ColumnName="tam_envase" />
                 <ScalarProperty Name="tam_delet" ColumnName="tam_delet" />
                 <ScalarProperty Name="tam_descripcion" ColumnName="tam_descripcion" />
                 <ScalarProperty Name="tam_id" ColumnName="tam_id" />
@@ -991,6 +1082,7 @@
           <EntitySetMapping Name="producto">
             <EntityTypeMapping TypeName="Modelo.producto">
               <MappingFragment StoreEntitySet="producto">
+                <ScalarProperty Name="prod_envase" ColumnName="prod_envase" />
                 <ScalarProperty Name="prod_delet" ColumnName="prod_delet" />
                 <ScalarProperty Name="prod_pack" ColumnName="prod_pack" />
                 <ScalarProperty Name="prod_tipo" ColumnName="prod_tipo" />
@@ -1115,6 +1207,15 @@
                 <ScalarProperty Name="ped_fecha" ColumnName="ped_fecha" />
                 <ScalarProperty Name="ped_cliente" ColumnName="ped_cliente" />
                 <ScalarProperty Name="ped_id" ColumnName="ped_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="envase">
+            <EntityTypeMapping TypeName="Modelo.envase">
+              <MappingFragment StoreEntitySet="envase">
+                <ScalarProperty Name="env_delet" ColumnName="env_delet" />
+                <ScalarProperty Name="env_descr" ColumnName="env_descr" />
+                <ScalarProperty Name="env_id" ColumnName="env_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

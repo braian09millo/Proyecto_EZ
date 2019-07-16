@@ -75,11 +75,20 @@ CREATE TABLE tipo
 	tip_descr VARCHAR(50) NOT NULL
 )
 
+CREATE TABLE envase
+(
+	env_id INT IDENTITY PRIMARY KEY,
+	env_descr VARCHAR(50) NOT NULL,
+	env_delet CHAR(1) NULL
+)
+
 CREATE TABLE tamanio 
 (
 	tam_id INT IDENTITY PRIMARY KEY, 
+	tam_envase INT NOT NULL,
 	tam_descripcion VARCHAR(50) NOT NULL,
-	tam_delet CHAR(1) NULL
+	tam_delet CHAR(1) NULL,
+	CONSTRAINT FK_Envase_Tamanio FOREIGN KEY (tam_envase) REFERENCES ENVASE(env_id)
 )
 
 CREATE TABLE producto
@@ -87,12 +96,14 @@ CREATE TABLE producto
 	prod_id INT IDENTITY,
 	prod_marca INT NOT NULL,
 	prod_modelo INT NOT NULL,
+	prod_envase INT NOT NULL,
 	prod_tamanio INT NOT NULL,
 	prod_tipo INT NOT NULL,
 	prod_pack INT NULL,
 	prod_delete CHAR(1) NULL,
 	CONSTRAINT FK_Marca_Producto FOREIGN KEY (prod_marca) REFERENCES MARCA(mar_id),
 	CONSTRAINT FK_Modelo_Producto FOREIGN KEY (prod_modelo) REFERENCES MODELO(mod_id),
+	CONSTRAINT FK_Envase_Producto FOREIGN KEY (prod_envase) REFERENCES ENVASE(env_id),
 	CONSTRAINT FK_Tamanio_Producto FOREIGN KEY (prod_tamanio) REFERENCES TAMANIO(tam_id),
 	CONSTRAINT FK_Tipo_Producto FOREIGN KEY (prod_tipo) REFERENCES TIPO(tip_id),
 	CONSTRAINT PK_Producto PRIMARY KEY (prod_id)
