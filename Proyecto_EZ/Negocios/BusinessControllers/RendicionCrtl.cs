@@ -73,9 +73,9 @@ namespace Negocios.BusinessControllers
                         try
                         {
                             var retVal = new SqlParameter("@RetVal", SqlDbType.Int);
-                            retVal.Direction = ParameterDirection.ReturnValue;
+                            retVal.Direction = ParameterDirection.Output;
 
-                            xoDB.Database.ExecuteSqlCommand("exec spAgregarRendicion @Desde, @Hasta",
+                            xoDB.Database.ExecuteSqlCommand("exec @RetVal = spAgregarRendicion @Desde, @Hasta",
                                        new SqlParameter("@Desde", xoRendicion.desde),
                                        new SqlParameter("@Hasta", xoRendicion.hasta),
                                        retVal);
