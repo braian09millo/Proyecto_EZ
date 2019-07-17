@@ -291,7 +291,7 @@
                               <Value>=Fields!Precio.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0;(0)</Format>
+                                <Format>'$'0;-'$'0;'-'</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -310,6 +310,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -326,7 +327,7 @@
                               <Value>=Fields!Total.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0;(0)</Format>
+                                <Format>'$'0;('$'0);'-'</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -345,6 +346,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -405,7 +407,7 @@
                               <Style>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>0;(0)</Format>
+                                <Format>'$'0</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -424,6 +426,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -756,7 +759,7 @@
                               <Value>=Fields!Precio.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0;(0)</Format>
+                                <Format>'$'0</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -775,6 +778,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -791,7 +795,7 @@
                               <Value>=Fields!Total.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0;(0)</Format>
+                                <Format>'$'0</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -810,6 +814,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -870,7 +875,7 @@
                               <Style>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>0;(0)</Format>
+                                <Format>'$'0</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -889,6 +894,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -984,14 +990,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox149">
+                    <Textbox Name="Desde">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>= "Del " + Parameters!FechaDesde.Value + " al " + Parameters!FechaHasta.Value</Value>
+                              <Value>=Fields!Desde.Value + " - " + Fields!Hasta.Value</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>
@@ -1002,7 +1008,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox149</rd:DefaultName>
+                      <rd:DefaultName>Desde</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -1031,8 +1037,9 @@
             <TablixMember />
           </TablixMembers>
         </TablixRowHierarchy>
-        <Top>1.2827cm</Top>
-        <Left>3.18092cm</Left>
+        <DataSetName>RendicionDS</DataSetName>
+        <Top>1.54136cm</Top>
+        <Left>3.23384cm</Left>
         <Height>0.6cm</Height>
         <Width>6.24354cm</Width>
         <ZIndex>2</ZIndex>
@@ -1093,14 +1100,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox150">
+                    <Textbox Name="Desde2">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>="Del " + Parameters!FechaDesde.Value + " al " + Parameters!FechaHasta.Value</Value>
+                              <Value>=Fields!Desde.Value + " - " + Fields!Hasta.Value</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>
@@ -1111,7 +1118,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox149</rd:DefaultName>
+                      <rd:DefaultName>Desde</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -1229,6 +1236,14 @@
           <DataField>Total</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="Desde">
+          <DataField>Desde</DataField>
+          <rd:TypeName>System.datetime</rd:TypeName>
+        </Field>
+        <Field Name="Hasta">
+          <DataField>Hasta</DataField>
+          <rd:TypeName>System.datetime</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>RendicionDataSet</rd:DataSetName>
@@ -1240,16 +1255,6 @@
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
-  <ReportParameters>
-    <ReportParameter Name="FechaDesde">
-      <DataType>String</DataType>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="FechaHasta">
-      <DataType>String</DataType>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-  </ReportParameters>
   <EmbeddedImages>
     <EmbeddedImage Name="logoEZ">
       <MIMEType>image/png</MIMEType>

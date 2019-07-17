@@ -45,11 +45,11 @@ namespace App.Controllers
             return View();
         }
 
-        public JsonResult PuedeRendir(DateTime xdFechaDesde, DateTime xdFechaHasta)
-        {
-            var xoResultado = xoPedidoCtrl.ObtenerRendicionRpt(xdFechaDesde, xdFechaHasta);
-            return Json(xoResultado);
-        }
+        //public JsonResult PuedeRendir(DateTime xdFechaDesde, DateTime xdFechaHasta)
+        //{
+        //    var xoResultado = xoRendicionCtrl.ObtenerRendicionRpt(xdFechaDesde, xdFechaHasta);
+        //    return Json(xoResultado);
+        //}
 
         public ActionResult RemitosRepartidores()
         {

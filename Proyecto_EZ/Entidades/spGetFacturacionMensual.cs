@@ -17,5 +17,6 @@ namespace Entidades
         public decimal Debe { get; set; }
         public decimal Facturado { get; set; }
         public string Repartidor { get; set; }
+        public decimal Rendido { get; set; }
     }
 }

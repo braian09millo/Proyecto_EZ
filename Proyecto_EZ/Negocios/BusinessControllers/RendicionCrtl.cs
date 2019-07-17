@@ -82,7 +82,7 @@ namespace Negocios.BusinessControllers
 
                             if ((int)retVal.Value != 0)
                             {
-                                xsError = "Error al agregar la rendición";
+                                xsError = "No hay pedidos pendientes de rendir en la fecha seleccionada";
                                 xoTransaccion.Rollback();
                             }
                             else
@@ -176,6 +176,25 @@ namespace Negocios.BusinessControllers
                     xsError = ex.Message;
                 }
             }
+        }
+        public List<spRptRendicion> ObtenerRendicionRpt(int idRendicion)
+        {
+            var xoResultado = new List<spRptRendicion>();
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    xoResultado = xoDB.Database.SqlQuery<spRptRendicion>("exec spRptRendicion @idRendicion",
+                                               new SqlParameter("@idRendicion", idRendicion)).ToList();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return xoResultado;
         }
     }
 }

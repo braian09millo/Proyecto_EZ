@@ -205,7 +205,7 @@
                             "data": null,
                             "bSortable": false,
                             "width": "20%",
-                            "defaultContent": '<button class="btn btn-primary btn-xs" title="Ver detalle"><i class="fas fa-list-ul"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>'
+                            "defaultContent": '<button class="btn btn-primary btn-xs" title="Ver detalle"><i class="fas fa-list-ul"></i></button> <button class="btn btn-warning btn-xs" title="Imprimir"><i class="glyphicon glyphicon-print"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>'
                         }
                     ],
                     "language": {
@@ -228,6 +228,7 @@
                 });
 
                 verDetalle('#tableRendicion tbody', tabla);
+                imprimir('#tableRendicion tbody', tabla);
                 //editarRendicion('#tableRendicion tbody', tabla);
                 eliminarRendicion('#tableRendicion tbody', tabla);
             }
@@ -428,6 +429,22 @@
                 CargarDatos();
             });
         });
+
+            function imprimir(tbody, tabla) {
+
+                $(tbody).off('click', 'button.btn-warning.btn-xs');
+                $(tbody).on('click', 'button.btn-warning.btn-xs', function (e) {
+
+                    var data = tabla.row($(this).parents('tr')).data();
+                    var id = parseInt(data[0]);
+
+                    var url = '@Url.Action("spRptRendicion", "Reporte")?xiRendicion=' + id;
+                    window.open(url);
+
+                });
+
+            }
+
     </script>
 
 }
