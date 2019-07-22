@@ -683,7 +683,10 @@ namespace Negocios.BusinessControllers
                     var loTamanio = xoDB.tamanio.Find(xoTamanio.Id);
 
                     if (loTamanio != null)
+                    {
                         loTamanio.tam_descripcion = xoTamanio.Descripcion;
+                        loTamanio.tam_envase = xoTamanio.IdEnvase;
+                    }                        
                     else
                     {
                         var _tamanio = xoDB.tamanio.FirstOrDefault(x => x.tam_descripcion.ToLower().Equals(xoTamanio.Descripcion));
@@ -691,7 +694,7 @@ namespace Negocios.BusinessControllers
                         if (_tamanio != null)
                             xsError = "Ya existe éste tamaño";
                         else
-                            xoDB.tamanio.Add(new tamanio() { tam_descripcion = xoTamanio.Descripcion });
+                            xoDB.tamanio.Add(new tamanio() { tam_descripcion = xoTamanio.Descripcion, tam_envase = xoTamanio.IdEnvase });
                     }
 
                     if (xsError == "")
@@ -727,6 +730,28 @@ namespace Negocios.BusinessControllers
                     xsError = ex.Message;
                 }
             }
+        }
+
+        public List<Tamanio> ObtenerTamaniosAbm(out string xsError)
+        {
+            xsError = "";
+            List<Tamanio> loTamanios = null;
+
+            try
+            {
+                using (BD_Entities xoDB = new BD_Entities())
+                {
+                    loTamanios = (from t in xoDB.tamanio
+                                  join e in xoDB.envase on t.tam_envase equals e.env_id
+                                  select new Tamanio { tam_id = t.tam_id, tam_descripcion = t.tam_descripcion, tam_envase = e.env_descr, tam_idEnvase = e.env_id }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                xsError = ex.Message;
+            }
+
+            return loTamanios;
         }
 
         public void EliminarTamanio(int xiId, out string xsError)

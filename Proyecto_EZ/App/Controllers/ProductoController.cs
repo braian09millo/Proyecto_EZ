@@ -230,6 +230,13 @@ namespace App.Controllers
             if (Session["Usuario"] == null)
                 return RedirectToAction("Index", "Login");
 
+            string xsError = "";
+
+            //Cargamos el combo de envases
+            var xoEnvases = xoProductoCtrl.ObtenerEnvases(out xsError).OrderBy(x => x.env_descr);
+            var lstEnvases = xoEnvases.Select(x => new SelectListItem() { Value = x.env_id.ToString(), Text = x.env_descr });
+            ViewBag.ComboEnvases = lstEnvases;
+
             return View();
         }
 
@@ -239,6 +246,20 @@ namespace App.Controllers
             var lstTamanios = xoProductoCtrl.ObtenerTamanios(out xsError)
                                           .Select(x => new tamanio { tam_id = x.tam_id, tam_descripcion = x.tam_descripcion, tam_delet = x.tam_delet ?? "N" })
                                           .ToList();
+
+            var resultadoJS = new
+            {
+                data = lstTamanios,
+                error = xsError
+            };
+
+            return Json(resultadoJS, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetTamaniosAbm()
+        {
+            string xsError = "";
+            var lstTamanios = xoProductoCtrl.ObtenerTamaniosAbm(out xsError);
 
             var resultadoJS = new
             {

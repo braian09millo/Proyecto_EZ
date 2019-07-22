@@ -24,6 +24,7 @@
                         <table id="tableTamanios" class="table table-hover table-condensed table-bordered table-estilo">
                             <thead>
                                 <tr>
+                                    <td>Envase</td>
                                     <td>Descripción</td>
                                     <td>Acciones</td>
                                 </tr>
@@ -50,6 +51,11 @@
                         <div class="col-sm-8">
                             <form id="TamanioForm" class="form-horizontal">
                                 <input type="hidden" id="txtId" name="id" />
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        @Html.Partial("comboEnvases")
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <input type="text" class="form-control" id="txtTamanio" name="tamanio" placeholder="Tamaño" maxlength="50"/>
@@ -107,7 +113,7 @@
 
                 $.ajax({
                     method: 'GET',
-                    url: '@Url.Action("GetTamanios", "Producto")',
+                    url: '@Url.Action("GetTamaniosAbm", "Producto")',
                     success: function (response) {
                         if (response.error == '') {
                             var tabla = $('#tableTamanios').DataTable({
@@ -115,6 +121,7 @@
                                 select: true,
                                 "info": false,
                                 columns: [
+                                    { 'data': 'tam_envase' },
                                     { 'data': 'tam_descripcion' },
                                     { 'defaultContent': '<button class="btn btn-success btn-xs" disabled title="Habilitar"><i class="fas fa-check"></i></button> <button class="btn btn-info btn-xs" title="Editar"><i class="fas fa-pencil-alt"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>' }
                                 ],
@@ -164,6 +171,7 @@
 
                     $('#txtId').val(data.tam_id);
                     $('#txtTamanio').val(data.tam_descripcion);
+                    $('#cmbEnvases').val(data.tam_idEnvase);
 
                     $('#NuevoForm').modal('show');
                 });
@@ -271,7 +279,9 @@
             function PuedeGuardar()
             {
                 var tamanio = $('#txtTamanio').val();
-                if (tamanio == '' || tamanio == null || tamanio == undefined)
+                var envase = $('#cmbEnvases').val();
+                if (tamanio == '' || tamanio == null || tamanio == undefined ||
+                    envase == '' || envase == null || envase == undefined)
                     return false;
                 else
                     return true;
@@ -284,7 +294,8 @@
                     var dataToPost = {
 
                         Id: $('#txtId').val(),
-                        Descripcion: $('#txtTamanio').val()
+                        Descripcion: $('#txtTamanio').val(),
+                        IdEnvase: $('#cmbEnvases').val()
                     };
 
                     $.ajax({
