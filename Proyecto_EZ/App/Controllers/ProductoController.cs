@@ -27,10 +27,13 @@ namespace App.Controllers
             var lstMarcas = xoMarcas.Select(x => new SelectListItem() { Value = x.mar_id.ToString(), Text = x.mar_nombre }).ToList();
             ViewBag.ComboMarcas = lstMarcas;
 
+            //Cargamos el combo de envases
+            var xoEnvases = xoProductoCtrl.ObtenerEnvases(out xsError).OrderBy(x => x.env_descr);
+            var lstEnvases = xoEnvases.Select(x => new SelectListItem() { Value = x.env_id.ToString(), Text = x.env_descr });
+            ViewBag.ComboEnvases = lstEnvases;
+
             //Cargamos el combo de tamanios
-            var xoTamanios = xoProductoCtrl.ObtenerTamanios(out xsError).OrderBy(x => x.tam_descripcion);
-            var lstTamanios = xoTamanios.Select(x => new SelectListItem() { Value = x.tam_id.ToString(), Text = x.tam_descripcion }).ToList();
-            ViewBag.ComboTamanios = lstTamanios;
+            ViewBag.ComboTamanios = xoProductoCtrl.ObtenerTamanios(out xsError).OrderBy(x => x.tam_descripcion);
 
             //Cargamos el combo de tipos
             var xoTipos = xoProductoCtrl.ObtenerTipos(out xsError).OrderBy(x => x.tip_descr);

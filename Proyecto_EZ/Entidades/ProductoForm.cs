@@ -11,6 +11,7 @@ namespace Entidades
         public int Id { get; set; }
         public int Marca { get; set; }
         public int Modelo { get; set; }
+        public int Envase { get; set; }
         public int Tamanio { get; set; }
         public int Tipo { get; set; }
         public int CantidadPack { get; set; }

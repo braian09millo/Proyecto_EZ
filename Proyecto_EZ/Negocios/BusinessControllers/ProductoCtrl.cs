@@ -120,6 +120,7 @@ namespace Negocios.BusinessControllers
                 {
                     producto.prod_marca = xoProducto.Marca;
                     producto.prod_modelo = xoProducto.Modelo;
+                    producto.prod_envase = xoProducto.Envase;
                     producto.prod_tamanio = xoProducto.Tamanio;
                     producto.prod_tipo = xoProducto.Tipo;
                     producto.prod_pack = xoProducto.CantidadPack;
@@ -128,7 +129,7 @@ namespace Negocios.BusinessControllers
                 }
                 else
                 {
-                    var prodExistente = xoDB.producto.SingleOrDefault(x => x.prod_marca == xoProducto.Marca && x.prod_modelo == xoProducto.Modelo && x.prod_tamanio == xoProducto.Tamanio);
+                    var prodExistente = xoDB.producto.SingleOrDefault(x => x.prod_marca == xoProducto.Marca && x.prod_modelo == xoProducto.Modelo && x.prod_envase == xoProducto.Envase && x.prod_tamanio == xoProducto.Tamanio);
 
                     if (prodExistente != null)
                     {
@@ -146,9 +147,10 @@ namespace Negocios.BusinessControllers
                                 var retVal = new SqlParameter("@RetVal", SqlDbType.Int);
                                 retVal.Direction = ParameterDirection.ReturnValue;
 
-                                xoDB.Database.ExecuteSqlCommand("exec spAgregarProducto @Marca, @Modelo, @Tamanio, @Tipo, @Cantidad, @Costo, @Porcentaje, @PrecioVenta",
+                                xoDB.Database.ExecuteSqlCommand("exec spAgregarProducto @Marca, @Modelo, @Envase, @Tamanio, @Tipo, @Cantidad, @Costo, @Porcentaje, @PrecioVenta",
                                            new SqlParameter("@Marca", xoProducto.Marca),
                                            new SqlParameter("@Modelo", xoProducto.Modelo),
+                                           new SqlParameter("@Envase", xoProducto.Envase),
                                            new SqlParameter("@Tamanio", xoProducto.Tamanio),
                                            new SqlParameter("@Tipo", xoProducto.Tipo),
                                            new SqlParameter("@Cantidad", xoProducto.CantidadPack),

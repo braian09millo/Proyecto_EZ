@@ -6,6 +6,7 @@ CREATE PROCEDURE spAgregarProducto
 (
 	@Marca INT = NULL,
 	@Modelo INT = NULL,
+	@Envase INT = NULL,
 	@Tamanio INT = NULL,
 	@Tipo INT = NULL,
 	@Cantidad INT = NULL,
@@ -27,8 +28,8 @@ WITH ENCRYPTION AS
 	END
 
 	--Insertamos el producto
-	INSERT INTO producto (prod_marca, prod_modelo, prod_tamanio, prod_tipo, prod_pack)
-	VALUES (@Marca, @Modelo, @Tamanio, @Tipo, @Cantidad)
+	INSERT INTO producto (prod_marca, prod_modelo, prod_envase, prod_tamanio, prod_tipo, prod_pack)
+	VALUES (@Marca, @Modelo, @Envase, @Tamanio, @Tipo, @Cantidad)
 
 	SET @@nRet = @@error
 	IF @@nRet <> 0 

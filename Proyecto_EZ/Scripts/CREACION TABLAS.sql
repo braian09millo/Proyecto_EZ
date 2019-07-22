@@ -198,23 +198,28 @@ INSERT INTO TIPO (tip_descr) VALUES ('CERVEZA')
 INSERT INTO TIPO (tip_descr) VALUES ('JUGO')
 INSERT INTO TIPO (tip_descr) VALUES ('VARIOS')
 
+INSERT INTO ENVASE(env_descr) VALUES('LATA')
+INSERT INTO ENVASE(env_descr) VALUES('PORRON')
+INSERT INTO ENVASE(env_descr) VALUES('BOTELLA')
+INSERT INTO ENVASE(env_descr) VALUES('RETORNABLE')
+INSERT INTO ENVASE(env_descr) VALUES('DESCARTABLE')
+INSERT INTO ENVASE(env_descr) VALUES('CARTON')
+
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 200 cm3')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 273 cm3')
-INSERT INTO TAMANIO (tam_descripcion) VALUES ('Lata X 354 cm3')
-INSERT INTO TAMANIO (tam_descripcion) VALUES ('Lata X 473 cm3')
+INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 330 cm3') /* PORRON */
+INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 354 cm3') /* LATA */
+INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 473 cm3') /* LATA */
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 500 cm3')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 600 cm3')
-INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 1 lt')
+INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 710 cm3') /* PORRON */
+INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 750 cm3')
+INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 1 lt') /* BOTELLA, DESCARTABLE, RETORNABLE */
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 1,5 lts')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 1,75 lts')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 2 lts')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 2,25 lts')
-INSERT INTO TAMANIO (tam_descripcion) VALUES ('Retornable X 1 lt')
-INSERT INTO TAMANIO (tam_descripcion) VALUES ('Descartable X 1 lt')
-INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 750 cm3')
 INSERT INTO TAMANIO (tam_descripcion) VALUES ('X 2,5 lts')
-INSERT INTO TAMANIO (tam_descripcion) VALUES ('Porrón X 330 cm3')
-INSERT INTO TAMANIO (tam_descripcion) VALUES ('Porrón X 710 cm3')
 
 INSERT INTO MARCA (mar_nombre) VALUES ('Línea Coca-Cola') -- 1
 INSERT INTO MARCA (mar_nombre) VALUES ('Línea Pepsi') -- 2

@@ -7,10 +7,6 @@ WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT
 
-	UPDATE pedido
-	SET ped_rendido = 'S'
-	WHERE ped_fecha between @FechaDesde and @FechaHasta AND ISNULL(ped_rendido,'N') <> 'S'
-
 	SELECT  
 		sum(det_cantidad) Cantidad,
 		max(CASE WHEN mod_nombre = 'No aplica' THEN mar_nombre ELSE mod_nombre END + ' - ' + tam_descripcion) Descripcion,
