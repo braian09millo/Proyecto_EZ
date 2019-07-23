@@ -175,6 +175,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FactResultadoDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\RendicionPedidosDataSet.cs">
+      <DependentUpon>RendicionPedidosDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\RendicionPedidosDataSet.Designer.cs">
+      <DependentUpon>RendicionPedidosDataSet.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Reportes\RendicionDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -315,6 +323,17 @@
     </None>
     <Content Include="Reportes\FactResultadoDataSet.xss">
       <DependentUpon>FactResultadoDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reportes\RendicionPedidosDataSet.xsc">
+      <DependentUpon>RendicionPedidosDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="Reportes\RendicionPedidosDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RendicionPedidosDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Reportes\RendicionPedidosDataSet.xss">
+      <DependentUpon>RendicionPedidosDataSet.xsd</DependentUpon>
     </Content>
     <None Include="Reportes\RendicionDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
@@ -457,6 +476,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\rptRemitoRepartidor.rdlc" />
+    <EmbeddedResource Include="Reportes\rptRendicionPedidos.rdlc" />
     <EmbeddedResource Include="Reportes\rptRendicion.rdlc" />
   </ItemGroup>
   <PropertyGroup>

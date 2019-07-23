@@ -14,6 +14,7 @@ namespace App.Controllers
         ClienteCtrl xoClienteCtrl = new Factory().GetCtrlCliente();
         ProductoCtrl xoProductoCtrl = new Factory().GetCtrlProducto();
         UsuarioCtrl xoUsuarioCtrl = new Factory().GetCtrlUsuario();
+        RendicionCtrl xoRendicionCtrl = new Factory().GetCtrlRendicion();
 
         public ActionResult FacturacionMensual()
         {
@@ -45,11 +46,11 @@ namespace App.Controllers
             return View();
         }
 
-        //public JsonResult PuedeRendir(DateTime xdFechaDesde, DateTime xdFechaHasta)
-        //{
-        //    var xoResultado = xoRendicionCtrl.ObtenerRendicionRpt(xdFechaDesde, xdFechaHasta);
-        //    return Json(xoResultado);
-        //}
+        public JsonResult PuedeObtenerRendicion(DateTime xdFechaDesde, DateTime xdFechaHasta, string xdRendido)
+        {
+            var xoResultado = xoRendicionCtrl.ObtenerRendicionPedidosRpt(xdFechaDesde, xdFechaHasta, xdRendido);
+            return Json(xoResultado);
+        }
 
         public ActionResult RemitosRepartidores()
         {

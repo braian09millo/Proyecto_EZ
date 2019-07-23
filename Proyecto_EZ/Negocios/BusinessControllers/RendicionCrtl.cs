@@ -196,5 +196,27 @@ namespace Negocios.BusinessControllers
 
             return xoResultado;
         }
+        public List<spRptRendicionPedidos> ObtenerRendicionPedidosRpt(DateTime xdFechaDesde, DateTime xdFechaHasta, string xdRendido)
+        {
+            var xoResultado = new List<spRptRendicionPedidos>();
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    xoResultado = xoDB.Database.SqlQuery<spRptRendicionPedidos>("exec spRptRendicionPedidos @FechaDesde, @FechaHasta,@Rendido",
+                                                   new SqlParameter("@FechaDesde", xdFechaDesde),
+                                                   new SqlParameter("@FechaHasta", xdFechaHasta),
+                                                   new SqlParameter("@Rendido", xdRendido)).ToList();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return xoResultado;
+        }
     }
+  
 }

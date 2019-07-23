@@ -54,22 +54,19 @@ namespace App.Controllers
         }
 
         [HttpGet]
-  //      public FileResult GetRendicion(int idRendicion)
-    //    {
-      //      var _nombre = "rptRendicion.rdlc";
-        //    var _nombreDs = "RendicionDS";
-          //  var _path = HttpContext.Server.MapPath("~/Reportes/" + _nombre);
-           // var lista = xoCtrlRendicion.ObtenerRendicionRpt(idRendicion);
+        public FileResult RptRendicionPedidos(DateTime xdFechaDesde, DateTime xdFechaHasta, string xdRendido)
+        {
+            
+            var _nombre = "rptRendicionPedidos.rdlc";
+            var _nombreDs = "RendicionPedidosDS";
+            var _path = HttpContext.Server.MapPath("~/Reportes/" + _nombre);
+            var lista = xoCtrlRendicion.ObtenerRendicionPedidosRpt(xdFechaDesde, xdFechaHasta, xdRendido);
 
-            //var parFechaDesde = new ReportParameter("FechaDesde", xdFechaDesde.ToString("dd-MM-yy"));
-            //var parFechaHasta = new ReportParameter("FechaHasta", xdFechaHasta.ToString("dd-MM-yy"));
-            //var listaParametros = new List<ReportParameter>() { parFechaDesde, parFechaHasta };
+            var bytes = Reporting.GenerarInforme(lista, _path, _nombre, _nombreDs, "PDF", null);
+            return File(bytes, "application/pdf", "RendicionDePedidos_" + xdFechaDesde.ToString("ddMMyyyy") + "_" + xdFechaHasta.ToString("ddMMyyyy") + ".pdf");
+        }
 
-            //var bytes = Reporting.GenerarInforme(lista, _path, _nombre, _nombreDs, "PDF", listaParametros);
-            //return File(bytes, "application/pdf", "RendicionFacu_" + xdFechaDesde.ToString("ddMMyyyy") + "_" + xdFechaHasta.ToString("ddMMyyyy") + ".pdf");
-        //}
-
-        //[HttpGet]
+        [HttpGet]
         public FileResult GetRemitoRepartidor(DateTime xdFecha, string xsRepartidor, int? xiVuelta)
         {
             var _nombre = "rptRemitoRepartidor.rdlc";
