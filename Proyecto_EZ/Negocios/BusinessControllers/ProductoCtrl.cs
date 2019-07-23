@@ -120,6 +120,7 @@ namespace Negocios.BusinessControllers
                 {
                     producto.prod_marca = xoProducto.Marca;
                     producto.prod_modelo = xoProducto.Modelo;
+                    producto.prod_envase = xoProducto.Envase;
                     producto.prod_tamanio = xoProducto.Tamanio;
                     producto.prod_tipo = xoProducto.Tipo;
                     producto.prod_pack = xoProducto.CantidadPack;
@@ -128,7 +129,7 @@ namespace Negocios.BusinessControllers
                 }
                 else
                 {
-                    var prodExistente = xoDB.producto.SingleOrDefault(x => x.prod_marca == xoProducto.Marca && x.prod_modelo == xoProducto.Modelo && x.prod_tamanio == xoProducto.Tamanio);
+                    var prodExistente = xoDB.producto.SingleOrDefault(x => x.prod_marca == xoProducto.Marca && x.prod_modelo == xoProducto.Modelo && x.prod_envase == xoProducto.Envase && x.prod_tamanio == xoProducto.Tamanio);
 
                     if (prodExistente != null)
                     {
@@ -146,9 +147,10 @@ namespace Negocios.BusinessControllers
                                 var retVal = new SqlParameter("@RetVal", SqlDbType.Int);
                                 retVal.Direction = ParameterDirection.ReturnValue;
 
-                                xoDB.Database.ExecuteSqlCommand("exec spAgregarProducto @Marca, @Modelo, @Tamanio, @Tipo, @Cantidad, @Costo, @Porcentaje, @PrecioVenta",
+                                xoDB.Database.ExecuteSqlCommand("exec spAgregarProducto @Marca, @Modelo, @Envase, @Tamanio, @Tipo, @Cantidad, @Costo, @Porcentaje, @PrecioVenta",
                                            new SqlParameter("@Marca", xoProducto.Marca),
                                            new SqlParameter("@Modelo", xoProducto.Modelo),
+                                           new SqlParameter("@Envase", xoProducto.Envase),
                                            new SqlParameter("@Tamanio", xoProducto.Tamanio),
                                            new SqlParameter("@Tipo", xoProducto.Tipo),
                                            new SqlParameter("@Cantidad", xoProducto.CantidadPack),
@@ -551,6 +553,123 @@ namespace Negocios.BusinessControllers
 
         #endregion
 
+        #region ENVASES
+
+        public void GuardarEnvase(EnvaseForm xoEnvase, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var loEnvase = xoDB.envase.Find(xoEnvase.Id);
+
+                    if (loEnvase != null)
+                    {
+                        loEnvase.env_descr = xoEnvase.Nombre;
+                    }
+                    else
+                    {
+                        var _envase = xoDB.envase.FirstOrDefault(x => x.env_descr.ToLower().Equals(xoEnvase.Nombre));
+
+                        if (_envase != null)
+                            xsError = "Ya existe éste envase";
+                        else
+                        {
+                            xoDB.envase.Add(new envase() { env_descr = xoEnvase.Nombre });
+                        }
+                    }
+
+                    if (xsError == "")
+                    {
+                        xoDB.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public void HabilitarEnvase(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoEnvase = xoDB.envase.Find(xiId);
+
+                    if (xoEnvase != null)
+                    {
+                        xoEnvase.env_delet = "N";
+                        xoDB.SaveChanges();
+                    }
+                    else
+                        xsError = "El envase seleccionado no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public void EliminarEnvase(int xiId, out string xsError)
+        {
+            xsError = "";
+
+            using (BD_Entities xoDB = new BD_Entities())
+            {
+                try
+                {
+                    var xoEnvase = xoDB.envase.Find(xiId);
+
+                    if (xoEnvase != null)
+                    {
+                        if (xoDB.producto.FirstOrDefault(x => x.prod_envase == xoEnvase.env_id && (x.prod_delet ?? "N") == "S") == null)
+                        {
+                            xoEnvase.env_delet = "S";
+                            xoDB.SaveChanges();
+                        }
+                        else
+                            xsError = "Debe eliminar el/los productos asociados antes de eliminar el envase";
+                    }
+                    else
+                        xsError = "El envase seleccionado no existe";
+                }
+                catch (Exception ex)
+                {
+                    xsError = ex.Message;
+                }
+            }
+        }
+
+        public List<envase> ObtenerEnvases(out string xsError)
+        {
+            xsError = "";
+            List<envase> loEnvases = null;
+
+            try
+            {
+                using (BD_Entities xoDB = new BD_Entities())
+                {
+                    loEnvases = xoDB.envase.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                xsError = ex.Message;
+            }
+
+            return loEnvases;
+        }
+
+        #endregion
+
         #region TAMAÑOS
 
         public void GuardarTamanio(TamanioForm xoTamanio, out string xsError)
@@ -564,7 +683,10 @@ namespace Negocios.BusinessControllers
                     var loTamanio = xoDB.tamanio.Find(xoTamanio.Id);
 
                     if (loTamanio != null)
+                    {
                         loTamanio.tam_descripcion = xoTamanio.Descripcion;
+                        loTamanio.tam_envase = xoTamanio.IdEnvase;
+                    }                        
                     else
                     {
                         var _tamanio = xoDB.tamanio.FirstOrDefault(x => x.tam_descripcion.ToLower().Equals(xoTamanio.Descripcion));
@@ -572,7 +694,7 @@ namespace Negocios.BusinessControllers
                         if (_tamanio != null)
                             xsError = "Ya existe éste tamaño";
                         else
-                            xoDB.tamanio.Add(new tamanio() { tam_descripcion = xoTamanio.Descripcion });
+                            xoDB.tamanio.Add(new tamanio() { tam_descripcion = xoTamanio.Descripcion, tam_envase = xoTamanio.IdEnvase });
                     }
 
                     if (xsError == "")
@@ -608,6 +730,28 @@ namespace Negocios.BusinessControllers
                     xsError = ex.Message;
                 }
             }
+        }
+
+        public List<Tamanio> ObtenerTamaniosAbm(out string xsError)
+        {
+            xsError = "";
+            List<Tamanio> loTamanios = null;
+
+            try
+            {
+                using (BD_Entities xoDB = new BD_Entities())
+                {
+                    loTamanios = (from t in xoDB.tamanio
+                                  join e in xoDB.envase on t.tam_envase equals e.env_id
+                                  select new Tamanio { tam_id = t.tam_id, tam_descripcion = t.tam_descripcion, tam_envase = e.env_descr, tam_idEnvase = e.env_id }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                xsError = ex.Message;
+            }
+
+            return loTamanios;
         }
 
         public void EliminarTamanio(int xiId, out string xsError)

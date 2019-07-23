@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnvaseForm.cs" />
     <Compile Include="GastoForm.cs" />
     <Compile Include="LoginModel.cs" />
     <Compile Include="MarcaForm.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="spRptRemitoRepartidor.cs" />
     <Compile Include="spRptRendicion.cs" />
     <Compile Include="spRptRendicionPedidos.cs" />
+    <Compile Include="Tamanio.cs" />
     <Compile Include="TamanioForm.cs" />
     <Compile Include="UsuarioForm.cs" />
   </ItemGroup>

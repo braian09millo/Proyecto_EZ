@@ -210,11 +210,11 @@
                                                     <option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">
                                                         @if (item.Modelo.Equals("No Aplica"))
                                                         {
-                                                            @(item.Marca + " - " + item.Tamanio)
+                                                            @(item.Marca + " - " + item.Envase + " " + item.Tamanio)
                                                         }
                                                         else
                                                         {
-                                                            @(item.Modelo + " - " + item.Tamanio)
+                                                            @(item.Modelo + " - " + item.Envase + " " + item.Tamanio)
                                                         }
                                                     </option>
                                                 }
@@ -426,7 +426,7 @@
             $('#formPedidos').on('click', '.itemNuevo', function (e) {
 
                 var nuevoItem = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
-                '<select class="form-control" id="cmbProductos"><option value="">Elija un producto</option>@for (int i = 0; i < lstTipos.Count; i++){var tipo = lstTipos[i];<optgroup label="@tipo.tip_descr">@foreach (var item in lstProductos.Where(x => x.IdTipo == tipo.tip_id).ToList()){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")){@(item.Marca + " - " + item.Tamanio)}else{@(item.Modelo + " - " + item.Tamanio)}</option>}</optgroup>}</select></div>' +
+                '<select class="form-control" id="cmbProductos"><option value="">Elija un producto</option>@for (int i = 0; i < lstTipos.Count; i++){var tipo = lstTipos[i];<optgroup label="@tipo.tip_descr">@foreach (var item in lstProductos.Where(x => x.IdTipo == tipo.tip_id).ToList()){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")){@(item.Marca + " - " + item.Envase + " " + item.Tamanio)}else{@(item.Modelo + " - " + item.Envase + " " + item.Tamanio)}</option>}</optgroup>}</select></div>' +
                 '<div class="col-sm-2 cantidad">' +
                 '<input type="text" class="form-control" placeholder="Packs" />' +
                 '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly /></div>' +
@@ -810,7 +810,7 @@
             $('#btnItem').click(function () {
 
                 var nuevoItem = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
-                                '<select class="form-control" id="cmbProductos"><option value="">Elija un producto</option>@for (int i = 0; i < lstTipos.Count; i++){var tipo = lstTipos[i];<optgroup label="@tipo.tip_descr">@foreach (var item in lstProductos.Where(x => x.IdTipo == tipo.tip_id).ToList()){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")){@(item.Marca + " - " + item.Tamanio)}else{@(item.Modelo + " - " + item.Tamanio)}</option>}</optgroup>}</select></div>' +
+                                '<select class="form-control" id="cmbProductos"><option value="">Elija un producto</option>@for (int i = 0; i < lstTipos.Count; i++){var tipo = lstTipos[i];<optgroup label="@tipo.tip_descr">@foreach (var item in lstProductos.Where(x => x.IdTipo == tipo.tip_id).ToList()){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")){@(item.Marca + " - " + item.Envase + " " + item.Tamanio)}else{@(item.Modelo + " - " + item.Envase + " " + item.Tamanio)}</option>}</optgroup>}</select></div>' +
                                 '<div class="col-sm-2 cantidad">' +
                                 '<input type="text" class="form-control" placeholder="Packs" />' +
                                 '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly /></div>' +

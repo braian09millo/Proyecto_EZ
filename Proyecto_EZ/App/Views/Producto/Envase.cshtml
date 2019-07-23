@@ -1,16 +1,16 @@
 ﻿
 @{
-    ViewBag.Title = "Tamanio";
+    ViewBag.Title = "Envase";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div style="padding-top: 50px;">
-    <h2 class="h2 text-center">TAMAÑOS</h2>
+    <h2 class="h2 text-center">ENVASE</h2>
     <br />
     <div class="row">
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
-            <button id="btnNuevo" class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-plus"></i>&nbsp;&nbsp;Nuevo Tamaño</button>
+            <button id="btnNuevo" class="btn btn-default" data-toggle="modal" data-target="#NuevoForm"><i class="fas fa-plus"></i>&nbsp;&nbsp;Nuevo Envase</button>
         </div>
         <div class="col-sm-3"></div>
     </div>
@@ -21,10 +21,9 @@
             <div class="panel panel-primary">
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table id="tableTamanios" class="table table-hover table-condensed table-bordered table-estilo">
+                        <table id="tableEnvases" class="table table-hover table-condensed table-bordered table-estilo">
                             <thead>
                                 <tr>
-                                    <td>Envase</td>
                                     <td>Descripción</td>
                                     <td>Acciones</td>
                                 </tr>
@@ -42,23 +41,18 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Agregar/Modificar Tamaños</h4>
+                    <h4 class="modal-title" id="myModalLabel">Agregar/Modificar Envases</h4>
                 </div>
                 <div class="modal-body">
                     <br />
                     <div class="row">
                         <div class="col-sm-2"></div>
                         <div class="col-sm-8">
-                            <form id="TamanioForm" class="form-horizontal">
+                            <form id="EnvaseForm" class="form-horizontal">
                                 <input type="hidden" id="txtId" name="id" />
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        @Html.Partial("comboEnvases")
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="txtTamanio" name="tamanio" placeholder="Tamaño" maxlength="50"/>
+                                        <input type="text" class="form-control" id="txtEnvase" name="envase" placeholder="Envase" maxlength="50" />
                                     </div>
                                 </div>
                             </form>
@@ -93,7 +87,7 @@
             CargarDatos();
 
             function Limpiar() {
-                $("#tableTamanios").dataTable().fnDestroy();
+                $("#tableEnvases").dataTable().fnDestroy();
             }
 
             $('#NuevoForm').on('hidden.bs.modal', function (e) {
@@ -113,23 +107,22 @@
 
                 $.ajax({
                     method: 'GET',
-                    url: '@Url.Action("GetTamaniosAbm", "Producto")',
+                    url: '@Url.Action("GetEnvases","Producto")',
                     success: function (response) {
                         if (response.error == '') {
-                            var tabla = $('#tableTamanios').DataTable({
+                            var tabla = $('#tableEnvases').DataTable({
                                 data: response.data,
                                 select: true,
                                 "info": false,
                                 columns: [
-                                    { 'data': 'tam_envase' },
-                                    { 'data': 'tam_descripcion' },
+                                    { 'data': 'env_descr' },
                                     { 'defaultContent': '<button class="btn btn-success btn-xs" disabled title="Habilitar"><i class="fas fa-check"></i></button> <button class="btn btn-info btn-xs" title="Editar"><i class="fas fa-pencil-alt"></i></button> <button class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash-alt"></i></button>' }
                                 ],
                                 aoColumnDefs: [
                                     { "aTargets": [1], "bSortable": false }
                                 ],
                                 "createdRow": function (row, data, dataIndex) {
-                                    if (data.tam_delet == "S") {
+                                    if (data.env_delet == "S") {
                                         $(row).css('background-color', '#B8DBD9');
                                         $(row).find("td:eq(1)").find('.btn-danger').prop('disabled', true);
                                         $(row).find("td:eq(1)").find('.btn-success').prop('disabled', false);
@@ -140,9 +133,9 @@
                                 }
                             });
 
-                            editarTamanio('#tableTamanios tbody', tabla);
-                            eliminarTamanio('#tableTamanios tbody', tabla);
-                            habilitarTamanio('#tableTamanios tbody', tabla);
+                            editarEnvase('#tableEnvases tbody', tabla);
+                            eliminarEnvase('#tableEnvases tbody', tabla);
+                            habilitarEnvase('#tableEnvases tbody', tabla);
 
                         }
                         else
@@ -162,22 +155,21 @@
                 });
             }
 
-            var editarTamanio = function (tbody, tabla) {
+            var editarEnvase = function (tbody, tabla) {
 
                 $(tbody).off('click', 'button.btn-info.btn-xs');
                 $(tbody).on('click', 'button.btn-info.btn-xs', function () {
 
                     var data = tabla.row($(this).parents('tr')).data();
 
-                    $('#txtId').val(data.tam_id);
-                    $('#txtTamanio').val(data.tam_descripcion);
-                    $('#cmbEnvases').val(data.tam_idEnvase);
+                    $('#txtId').val(data.env_id);
+                    $('#txtEnvase').val(data.env_descr);
 
                     $('#NuevoForm').modal('show');
                 });
             }
 
-            var habilitarTamanio = function (tbody, tabla) {
+            var habilitarEnvase = function (tbody, tabla) {
 
                 $(tbody).off('click', 'button.btn-success.btn-xs');
                 $(tbody).on('click', 'button.btn-success.btn-xs', function () {
@@ -185,11 +177,11 @@
                     var data = tabla.row($(this).parents('tr')).data();
 
                     var dataToPost = {
-                        xiId: data.tam_id
+                        xiId: data.env_id
                     }
 
                     swal({
-                        title: "¿Está seguro que desea habilitar el siguiente tamaño?",
+                        title: "¿Está seguro que desea habilitar el siguiente envase?",
                         text: "",
                         icon: "warning",
                         buttons: ['Cancelar', 'Confirmar'],
@@ -198,19 +190,21 @@
                         if (bHabilita) {
                             $.ajax({
                                 method: 'POST',
-                                url: '@Url.Action("PostHabilitarTamanio","Producto")',
+                                url: '@Url.Action("PostHabilitarEnvase", "Producto")',
                                 data: JSON.stringify(dataToPost),
                                 contentType: 'application/json; charset=utf-8',
                                 success: function (response) {
                                     if (response == '') {
-                                        swal("El tamaño se habilitó correctamente", {
+                                        swal("El envase se habilitó correctamente", {
                                             icon: "success",
                                         });
                                         Limpiar();
                                         CargarDatos();
                                     }
                                     else {
-                                        swal(response, {
+                                        swal({
+                                            title: "Error",
+                                            text: response,
                                             icon: "error",
                                             buttons: "Aceptar"
                                         });
@@ -226,18 +220,18 @@
 
             }
 
-            var eliminarTamanio = function (tbody, tabla) {
+            var eliminarEnvase = function (tbody, tabla) {
 
                 $(tbody).off('click', 'button.btn-danger.btn-xs');
                 $(tbody).on('click', 'button.btn-danger.btn-xs', function () {
 
                     var data = tabla.row($(this).parents('tr')).data();
                     var dataToPost = {
-                        xiId: data.tam_id
+                        xiId: data.env_id
                     }
 
                     swal({
-                        title: "¿Está seguro que desea deshabilitar el siguiente tamaño?",
+                        title: "¿Está seguro que desea deshabilitar el siguiente envase?",
                         text: "",
                         icon: "warning",
                         buttons: ['Cancelar', 'Confirmar'],
@@ -246,7 +240,7 @@
                         if (bElimina) {
                             $.ajax({
                                 method: 'POST',
-                                url: '@Url.Action("PostEliminarTamanio", "Producto")',
+                                url: '@Url.Action("PostEliminarEnvase","Producto")',
                                 data: JSON.stringify(dataToPost),
                                 contentType: 'application/json; charset=utf-8',
                                 success: function (response) {
@@ -278,38 +272,35 @@
 
             function PuedeGuardar()
             {
-                var tamanio = $('#txtTamanio').val();
-                var envase = $('#cmbEnvases').val();
-                if (tamanio == '' || tamanio == null || tamanio == undefined ||
-                    envase == '' || envase == null || envase == undefined)
+                var envase = $('#txtEnvase').val();
+                if (envase == '' || envase == null || envase == undefined)
                     return false;
                 else
                     return true;
             }
 
-            function guardarTamanio() {
+            function guardarEnvase() {
 
                 if (PuedeGuardar())
                 {
                     var dataToPost = {
 
                         Id: $('#txtId').val(),
-                        Descripcion: $('#txtTamanio').val(),
-                        IdEnvase: $('#cmbEnvases').val()
+                        Nombre: $('#txtEnvase').val()
                     };
 
                     $.ajax({
 
                         method: 'POST',
-                        url: '@Url.Action("PostGuardarTamanio","Producto")',
+                        url: '@Url.Action("PostGuardarEnvase","Producto")',
                         data: JSON.stringify(dataToPost),
                         type: 'json',
                         contentType: 'application/json; charset=utf-8',
                         success: function (response) {
                             if (response == '') {
                                 swal({
-                                    title: 'Tamaños',
-                                    text: 'Tamaño guardado correctamente',
+                                    title: 'Envases',
+                                    text: 'Envase guardado correctamente',
                                     icon: 'success',
                                     button: 'Aceptar'
                                 });
@@ -319,7 +310,7 @@
                             }
                             else {
                                 swal({
-                                    title: 'Tamaños',
+                                    title: 'Envases',
                                     text: response,
                                     icon: 'warning',
                                     button: 'Aceptar'
@@ -340,7 +331,7 @@
                 {
                     swal({
                         title: 'Atención',
-                        text: 'Debe ingresar un tamaño',
+                        text: 'Debe ingresar un envase',
                         icon: 'warning',
                         button: 'Aceptar'
                     });
@@ -349,7 +340,7 @@
 
             $('#btnGuardar').click(function (e) {
                 e.preventDefault();
-                guardarTamanio();
+                guardarEnvase();
             });
         });
     </script>

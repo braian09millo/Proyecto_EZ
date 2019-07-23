@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
-    public class TamanioForm
+    public class EnvaseForm
     {
         public int Id { get; set; }
-        public string Descripcion { get; set; }
-        public int IdEnvase { get; set; }
+        public string Nombre { get; set; }
     }
 }
