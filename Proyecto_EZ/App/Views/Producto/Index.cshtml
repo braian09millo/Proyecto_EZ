@@ -24,6 +24,7 @@
                                 <tr>
                                     <td>Marca</td>
                                     <td>Modelo</td>
+                                    <td>Envase</td>
                                     <td>Tamaño</td>
                                     <td>Tipo</td>
                                     <td>Cant. X Pack</td>
@@ -73,7 +74,18 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        @Html.Partial("comboTamanios")
+                                        @Html.Partial("comboEnvases")
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <select class="form-control" id="cmbTamanios" disabled>
+                                            <option value="">Elija un tamaño</option>
+                                            @foreach (var item in ViewBag.ComboTamanios)
+                                            {
+                                                <option data-info="@item.tam_envase" value="@item.tam_id">@item.tam_descripcion</option>
+                                            }
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -130,7 +142,7 @@
 
 @section Scripts {
 
-    <script src="~/Scripts/Productos.js">
+    <script>
         $(document).ready(function () {
 
             //Mostrar con efecto FADE al cargar
@@ -141,6 +153,7 @@
 
             //Obtenemos la lista de localidades para filtrarla
             var optModelos = $('#cmbModelos option');
+            var optTamanios = $('#cmbTamanios option')
 
             //Función para volver a crear la tabla
             function Limpiar() {
@@ -225,6 +238,7 @@
                     Id: $('#txtId').val(),
                     Marca: $('#cmbMarcas').val(),
                     Modelo: $('#cmbModelos').val(),
+                    Envase: $('#cmbEnvases').val(),
                     Tamanio: $('#cmbTamanios').val(),
                     Tipo: $('#cmbTipos').val(),
                     CantidadPack: $('#txtCantPack').val(),
@@ -314,11 +328,40 @@
                 }
             });
 
+            $("#cmbEnvases").change(function () {
+
+                var valor = $(this).val();
+                console.log(valor);
+                if (valor === null || valor === "" || valor === undefined)
+                    $("#cmbTamanios").prop('disabled', true).val('');
+                else {
+                    $("#cmbTamanios").empty().prop('disabled', false);
+                    $('#cmbTamanios').append("<option value=''>Elija un tamaño</option>");
+                    $(optTamanios).each(function () {
+                        if ($(this).data("info") == valor) {
+                            $("#cmbTamanios")
+                                .append($("<option></option>")
+                                .val($(this).val())
+                                .html($(this).html()));
+                        }
+                    });
+
+                    console.log($('#cmbTamanios').children('option').length);
+
+                    if ($('#cmbTamanios').children('option').length == 1) {
+                        $('#cmbTamanios').prop('disabled', true);
+                    } else {
+                        $('#cmbTamanios').prop('disabled', false);
+                    }
+                }
+            });
+
             function CargarDatos() {
                 $.ajax({
                     method: 'GET',
                     url: '@Url.Action("GetProductos", "Producto")',
                     success: function (response) {
+                        console.log(response.data);
                         if (response.error == "") {
                             var tabla = $('#tableProductos').DataTable({
                                 data: response.data,
@@ -326,6 +369,7 @@
                                 columns: [
                                     { 'data': 'Marca' },
                                     { 'data': 'Modelo' },
+                                    { 'data': 'Envase' },
                                     { 'data': 'Tamanio' },
                                     { 'data': 'Tipo' },
                                     { 'data': 'CantidadPack' },
@@ -440,6 +484,7 @@
                     $('#txtId').val(data.IdProducto);
                     $('#cmbMarcas').val(data.IdMarca);
                     $('#cmbModelos').val(data.IdModelo);
+                    $('#cmbEnvases').val(data.IdEnvase);
                     $('#cmbTamanios').val(data.IdTamanio);
                     $('#cmbTipos').val(data.IdTipo);
                     $('#txtCantPack').val(data.CantidadPack);

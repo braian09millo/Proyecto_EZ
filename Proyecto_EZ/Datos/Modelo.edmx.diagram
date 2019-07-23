@@ -40,6 +40,9 @@
         <AssociationConnector Association="Modelo.FK_Usuario_Pedido" />
         <EntityTypeShape EntityType="Modelo.rendicion" Width="1.5" PointX="10.375" PointY="9.75" />
         <EntityTypeShape EntityType="Modelo.rendicion_detalle" Width="1.5" PointX="5.375" PointY="7.75" />
+        <EntityTypeShape EntityType="Modelo.envase" Width="1.5" PointX="0.75" PointY="0.875" />
+        <AssociationConnector Association="Modelo.FK_Envase_Producto" />
+        <AssociationConnector Association="Modelo.FK_Envase_Tamanio" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

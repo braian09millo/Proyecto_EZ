@@ -28,6 +28,7 @@ namespace Datos
         public int prod_tipo { get; set; }
         public Nullable<int> prod_pack { get; set; }
         public string prod_delet { get; set; }
+        public Nullable<int> prod_envase { get; set; }
     
         public virtual marca marca { get; set; }
         public virtual modelo modelo { get; set; }
@@ -37,5 +38,6 @@ namespace Datos
         public virtual ICollection<precio_detalle> precio_detalle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<pedido_detalle> pedido_detalle { get; set; }
+        public virtual envase envase { get; set; }
     }
 }

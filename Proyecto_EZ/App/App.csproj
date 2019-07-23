@@ -419,6 +419,8 @@
     <Content Include="Views\Informe\RemitosRepartidores.cshtml" />
     <Content Include="Views\Rendicion\Index.cshtml" />
     <Content Include="Views\Rendicion\modalVerDetalle.cshtml" />
+    <Content Include="Views\Producto\Envase.cshtml" />
+    <Content Include="Views\Producto\comboEnvases.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

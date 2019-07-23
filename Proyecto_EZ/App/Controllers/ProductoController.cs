@@ -27,10 +27,13 @@ namespace App.Controllers
             var lstMarcas = xoMarcas.Select(x => new SelectListItem() { Value = x.mar_id.ToString(), Text = x.mar_nombre }).ToList();
             ViewBag.ComboMarcas = lstMarcas;
 
+            //Cargamos el combo de envases
+            var xoEnvases = xoProductoCtrl.ObtenerEnvases(out xsError).OrderBy(x => x.env_descr);
+            var lstEnvases = xoEnvases.Select(x => new SelectListItem() { Value = x.env_id.ToString(), Text = x.env_descr });
+            ViewBag.ComboEnvases = lstEnvases;
+
             //Cargamos el combo de tamanios
-            var xoTamanios = xoProductoCtrl.ObtenerTamanios(out xsError).OrderBy(x => x.tam_descripcion);
-            var lstTamanios = xoTamanios.Select(x => new SelectListItem() { Value = x.tam_id.ToString(), Text = x.tam_descripcion }).ToList();
-            ViewBag.ComboTamanios = lstTamanios;
+            ViewBag.ComboTamanios = xoProductoCtrl.ObtenerTamanios(out xsError).OrderBy(x => x.tam_descripcion);
 
             //Cargamos el combo de tipos
             var xoTipos = xoProductoCtrl.ObtenerTipos(out xsError).OrderBy(x => x.tip_descr);
@@ -227,6 +230,13 @@ namespace App.Controllers
             if (Session["Usuario"] == null)
                 return RedirectToAction("Index", "Login");
 
+            string xsError = "";
+
+            //Cargamos el combo de envases
+            var xoEnvases = xoProductoCtrl.ObtenerEnvases(out xsError).OrderBy(x => x.env_descr);
+            var lstEnvases = xoEnvases.Select(x => new SelectListItem() { Value = x.env_id.ToString(), Text = x.env_descr });
+            ViewBag.ComboEnvases = lstEnvases;
+
             return View();
         }
 
@@ -236,6 +246,20 @@ namespace App.Controllers
             var lstTamanios = xoProductoCtrl.ObtenerTamanios(out xsError)
                                           .Select(x => new tamanio { tam_id = x.tam_id, tam_descripcion = x.tam_descripcion, tam_delet = x.tam_delet ?? "N" })
                                           .ToList();
+
+            var resultadoJS = new
+            {
+                data = lstTamanios,
+                error = xsError
+            };
+
+            return Json(resultadoJS, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetTamaniosAbm()
+        {
+            string xsError = "";
+            var lstTamanios = xoProductoCtrl.ObtenerTamaniosAbm(out xsError);
 
             var resultadoJS = new
             {
@@ -267,6 +291,58 @@ namespace App.Controllers
         {
             string xsError = "";
             xoProductoCtrl.GuardarTamanio(xoTamanio, out xsError);
+            return Json(xsError);
+        }
+
+        #endregion
+
+        #region ENVASE
+
+        public ActionResult Envase()
+        {
+            if (Session["Usuario"] == null)
+                return RedirectToAction("Index", "Login");
+
+            return View();
+        }
+
+        public JsonResult GetEnvases()
+        {
+            string xsError = "";
+            var lstEnvases = xoProductoCtrl.ObtenerEnvases(out xsError)
+                                          .Select(x => new envase { env_id = x.env_id, env_descr = x.env_descr, env_delet = x.env_delet ?? "N" })
+                                          .ToList();
+
+            var resultadoJS = new
+            {
+                data = lstEnvases,
+                error = xsError
+            };
+
+            return Json(resultadoJS, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult PostEliminarEnvase(int xiId)
+        {
+            string xsError = "";
+            xoProductoCtrl.EliminarEnvase(xiId, out xsError);
+            return Json(xsError);
+        }
+
+        [HttpPost]
+        public JsonResult PostHabilitarEnvase(int xiId)
+        {
+            string xsError = "";
+            xoProductoCtrl.HabilitarEnvase(xiId, out xsError);
+            return Json(xsError);
+        }
+
+        [HttpPost]
+        public JsonResult PostGuardarEnvase(EnvaseForm xoEnvase)
+        {
+            string xsError = "";
+            xoProductoCtrl.GuardarEnvase(xoEnvase, out xsError);
             return Json(xsError);
         }
 
