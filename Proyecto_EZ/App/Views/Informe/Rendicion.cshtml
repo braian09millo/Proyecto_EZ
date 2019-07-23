@@ -100,7 +100,7 @@
 
         var fechaDesde = $('#txtFechaDesde').val();
         var fechaHasta = $('#txtFechaHasta').val();
-        var rendido = $('#chkRendido').prop('checked') ? 'S' : 'N';
+        var rendido = $('#chkRendido').prop('checked') ? 'N' : 'S';
         var objError = { bPuede: true, msj: "" };
 
         if (ValidarDatos(objError, fechaDesde, fechaHasta,rendido))

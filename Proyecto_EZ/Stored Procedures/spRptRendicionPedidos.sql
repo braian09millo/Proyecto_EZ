@@ -7,16 +7,18 @@ WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT
 
+
+
 	SELECT  
-		convert(char(8),max(ren_desde)) + ' - ' + convert(char(8),max(ren_hasta)) FechaRendicion,
+		ISNULL(CONVERT(varchar,max(ren_desde),103) + ' - ' + CONVERT(varchar,max(ren_hasta),103),'-') FechaRendicion,
 		max(cli_nombre) + ' - ' + max(cli_direccion) Cliente,
 		max(ped_fecha) FechaPedido,
 		sum(prd_precioPV * det_cantidad) Costo,
-		max(ped_rendido) Rendido
+		max(CASE WHEN ped_rendido='S' THEN 'SI' ELSE 'NO' END ) Rendido
 	FROM Pedido
 		JOIN pedido_detalle on det_pedido = ped_id
-		JOIN rendicion_detalle on ped_id = red_pedido
-		JOIN rendicion  on ren_id = red_rendi	
+		LEFT JOIN rendicion_detalle on ped_id = red_pedido
+		LEFT JOIN rendicion  on ren_id = red_rendi	
 		JOIN Cliente on cli_id = ped_cliente
 		JOIN producto on prod_id = det_producto
 		JOIN marca on mar_id = prod_marca
@@ -26,7 +28,7 @@ WITH ENCRYPTION AS
 		JOIN precio_detalle on pre_ident = prd_campre and prd_produ = prod_id 
 	WHERE 
 		ped_fecha between @FechaDesde and @FechaHasta
-		and (ped_rendido = @Rendido or isnull(@rendido,'N') = 'N')
+		and (ped_rendido = @Rendido or isnull(@rendido,'S') = 'S')
 		GROUP BY ped_id,ped_fecha
 		ORDER BY ped_fecha
 
