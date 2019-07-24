@@ -1,10 +1,10 @@
 ﻿
 @{
-    ViewBag.Title = "Rendicion";
+    ViewBag.Title = "Rendicion de Pedidos";
 }
 
 <div style="padding-top: 50px;">
-    <h2 class="h2 text-center">RENDICION</h2>
+    <h2 class="h2 text-center">RENDICION DE PEDIDOS</h2>
     <br />
     <div class="row">
         <div class="form-horizontal">
@@ -17,9 +17,16 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3">Hasta</label>
-                    <div class="col-sm-7">
-                        <input type="date" id="txtFechaHasta" class="form-control" />
+                        <label class="control-label col-sm-3">Hasta</label>
+                            <div class="col-sm-7">
+                             <input type="date" id="txtFechaHasta" class="form-control" />
+                            </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-15 text-center">
+                        <div class="checkbox">
+                            <label><input type="checkbox">Solo pedidos sin rendir</label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -87,26 +94,26 @@
     }
 
     $('#btnGenerar').click(function (e) {
-        GetInformeRendicion();
+        RptRendicionPedidos();
     });
 
-    function GetInformeRendicion() {
+    function RptRendicionPedidos() {
 
         var fechaDesde = $('#txtFechaDesde').val();
         var fechaHasta = $('#txtFechaHasta').val();
-        var repartidor = $('#cmbUsuarios').val();
+        var rendido = $('#chkRendido').prop('checked') ? 'N' : 'S';
         var objError = { bPuede: true, msj: "" };
 
-        if (ValidarDatos(objError, fechaDesde, fechaHasta))
+        if (ValidarDatos(objError, fechaDesde, fechaHasta,rendido))
         {
             $.ajax({
 
                 method: 'POST',
-                url: '@Url.Action("PuedeRendir","Informe")?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta,
+                url: '@Url.Action("PuedeObtenerRendicion", "Informe")?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xdRendido=' + rendido,
                 success: function (response) {
-
+                    console.log(response)
                     if (response.length > 0)
-                        Reporte(fechaDesde, fechaHasta);
+                        Reporte(fechaDesde, fechaHasta, rendido);
                     else {
                         swal({
                             title: "Atención",
@@ -139,9 +146,9 @@
         }
     }
 
-    function Reporte(fechaDesde, fechaHasta)
+    function Reporte(fechaDesde, fechaHasta, rendido)
     {
-        var url = '@Url.Action("GetRendicion","Reporte")?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta;
+        var url = '@Url.Action("RptRendicionPedidos","Reporte")?xdFechaDesde=' + fechaDesde + '&xdFechaHasta=' + fechaHasta + '&xdRendido=' + rendido;
         window.open(url);
     }
 

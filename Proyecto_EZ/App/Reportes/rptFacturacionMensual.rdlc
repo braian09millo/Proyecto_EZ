@@ -821,7 +821,6 @@
                         <rd:FormatSymbolCulture>en-US</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1677,7 +1676,7 @@
         <DataSetName>FactMensualDS</DataSetName>
         <Top>0.20278in</Top>
         <Height>1.5in</Height>
-        <Width>10.86277in</Width>
+        <Width>10.86278in</Width>
         <Style>
           <Border>
             <Style>None</Style>

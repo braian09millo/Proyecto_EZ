@@ -69,6 +69,7 @@
     <Compile Include="spRptRemito.cs" />
     <Compile Include="spRptRemitoRepartidor.cs" />
     <Compile Include="spRptRendicion.cs" />
+    <Compile Include="spRptRendicionPedidos.cs" />
     <Compile Include="Tamanio.cs" />
     <Compile Include="TamanioForm.cs" />
     <Compile Include="UsuarioForm.cs" />
