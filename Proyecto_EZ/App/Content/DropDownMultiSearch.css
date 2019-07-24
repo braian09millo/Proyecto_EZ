@@ -1,0 +1,50 @@
+﻿/* Estilo DropDownMulti */
+.multiselect-clear-filter {
+    background-color: #FFFFFF !important;
+    border-color: #e4e5e7 !important;
+}
+
+.multiselect-container {
+    width: 100%;
+}
+
+.btn-group {
+    width: 100%;
+}
+
+.glyphicon-remove-circle {
+    color: #555 !important;
+}
+
+.glyphicon-search {
+    color: #555 !important;
+}
+
+button.multiselect b.caret {
+    margin-top: 10px;
+    margin-left: 0 !important;
+    float: right !important;
+}
+
+@@-moz-document url-prefix() {
+    button.multiselect b.caret {
+        margin-top: -10px;
+    }
+}
+
+button.multiselect {
+    width: 100%;
+    background-color: #FFFFFF !important;
+    border-color: #e4e5e7 !important;
+    color: #6a6c6f !important;
+    text-align: left;
+}
+
+.open > .dropdown-menu {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.multiselect-container > li > a > label > input[type=checkbox] {
+    opacity: 1;
+}
