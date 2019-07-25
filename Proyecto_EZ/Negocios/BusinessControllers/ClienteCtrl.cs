@@ -199,6 +199,25 @@ namespace Negocios.BusinessControllers
 
             return xoResultado;
         }
+        public List<spGetClientesMorosos> ObtenerClientesMorosos(out string xsError)
+        {
+            xsError = "";
+            List<spGetClientesMorosos> xoResultado = null;
+
+            try
+            {
+                using (BD_Entities xoDB = new BD_Entities())
+                {
+                    xoResultado = xoDB.Database.SqlQuery<spGetClientesMorosos>("exec spRptClientesMorosos").ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                xsError = ex.Message;
+            }
+
+            return xoResultado;
+        }
 
         #endregion
     }

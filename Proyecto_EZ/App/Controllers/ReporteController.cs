@@ -114,6 +114,29 @@ namespace App.Controllers
 
             return File(bytes, "application/pdf", "Rendicion_N°" + xiRendicion.ToString() + ".pdf");
         }
+        public FileResult GetClientesMorosos()
+        {
+            string xsError = "";
+            var _nombre = "rptClientesMorosos.rdlc";
+            var _nombreDs = "ClientesMorososDS";
+            var _path = HttpContext.Server.MapPath("~/Reportes/" + _nombre);
+            var lista = xoCtrlCliente.ObtenerClientesMorosos(out xsError);
+
+            var bytes = Reporting.GenerarInforme(lista, _path, _nombre, _nombreDs, "PDF", null);
+            return File(bytes, "application/pdf", "ClientesMorosos_" + DateTime.Today.ToString("ddMMyyyy") + ".pdf");
+        }
+
+        public FileResult GetProductosMayoresVentas()
+        {
+            string xsError = "";
+            var _nombre = "rptProductosMayoresVentas.rdlc";
+            var _nombreDs = "ProductosMayoresVentasDS";
+            var _path = HttpContext.Server.MapPath("~/Reportes/" + _nombre);
+            var lista = xoCtrlProducto.ObtenerProductosMayoresVentas(out xsError);
+
+            var bytes = Reporting.GenerarInforme(lista, _path, _nombre, _nombreDs, "PDF", null);
+            return File(bytes, "application/pdf", "ProductosConMasVentas_" + DateTime.Today.ToString("ddMMyyyy") + ".pdf");
+        }
 
     }
 }
