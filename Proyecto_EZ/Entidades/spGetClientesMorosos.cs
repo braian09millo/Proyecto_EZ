@@ -11,5 +11,8 @@ namespace Entidades
         public int IdCliente { get; set; }
         public string Cliente { get; set; }
         public decimal Monto { get; set; }
+        public DateTime UltimoPedido { get; set; }
+        public long Ranking { get; set; }
+        public string Telefono { get; set; }
     }
 }

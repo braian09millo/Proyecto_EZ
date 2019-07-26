@@ -82,11 +82,14 @@
                             </table>
                         </div>
                     </div>
-                    <div class="panel-footer">
-                        <div class="text-center">
-                            <button id="btnCuadro2" class="btn btn-danger informe">VER TODOS &nbsp;<i></i></button>
+                    @if (ViewBag.ClientesMayoresVenta.Count > 0)
+                    {
+                        <div class="panel-footer">
+                            <div class="text-center">
+                                <a href="@Url.Action("GetClientesMorosos", "Reporte")" id="btnCuadro2" class="btn btn-danger informe">VER TODOS &nbsp;<i></i></a>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
             <div class="col-sm-4" id="cuadro3">
@@ -109,15 +112,18 @@
                             </table>
                         </div>
                     </div>
-                    <div class="panel-footer">
-                        <div class="text-center">
-                            <button id="btnCuadro3" class="btn btn-danger informe">VER TODOS &nbsp;<i></i></button>
+                    @if (ViewBag.ClientesMayoresVenta.Count > 0)
+                    {
+                        <div class="panel-footer">
+                            <div class="text-center">
+                                <a href="@Url.Action("GetProductosMayoresVentas", "Reporte")" id="btnCuadro3" class="btn btn-danger informe">VER TODOS &nbsp;<i></i></a>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
 
 @section Scripts {

@@ -471,6 +471,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reportes\rptClientesMorosos.rdlc" />
+    <EmbeddedResource Include="Reportes\rptProductosMayoresVentas.rdlc" />
     <EmbeddedResource Include="Reportes\rptClientesMayoresVentas.rdlc" />
     <EmbeddedResource Include="Reportes\rptFacturacionMensual.rdlc">
       <SubType>Designer</SubType>

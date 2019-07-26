@@ -787,5 +787,27 @@ namespace Negocios.BusinessControllers
         }
 
         #endregion
+        #region REPORTES
+        public List<spGetProductosMasVendidos> ObtenerProductosMayoresVentas(out string xsError)
+        {
+            xsError = "";
+            List<spGetProductosMasVendidos> xoResultado = null;
+
+            try
+            {
+                using (BD_Entities xoDB = new BD_Entities())
+                {
+                    xoResultado = xoDB.Database.SqlQuery<spGetProductosMasVendidos>("exec spRptProductosMasVendidos").ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                xsError = ex.Message;
+            }
+
+            return xoResultado;
+        }
+        #endregion
+
     }
 }
