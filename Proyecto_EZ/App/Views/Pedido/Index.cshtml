@@ -199,28 +199,21 @@
                         <div class="row">
                             <div id="item">
                                 <div class="col-sm-3">
-                                    <select class="form-control" id="cmbProductos">
+                                    <select class="form-control selectpicker" data-live-search="true">
                                         <option value="">Elija un producto</option>
-                                        @for (int i = 0; i < lstTipos.Count; i++)
+                                        @foreach (var item in lstProductos)
                                         {
-                                            var tipo = lstTipos[i];
-                                            <optgroup label="@tipo.tip_descr">
-                                                @foreach (var item in lstProductos.Where(x => x.IdTipo == tipo.tip_id).ToList())
+                                            <option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">
+                                                @if (item.Modelo.Equals("No Aplica"))
                                                 {
-                                                    <option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">
-                                                        @if (item.Modelo.Equals("No Aplica"))
-                                                        {
-                                                            @(item.Marca + " - " + item.Envase + " " + item.Tamanio)
-                                                        }
-                                                        else
-                                                        {
-                                                            @(item.Modelo + " - " + item.Envase + " " + item.Tamanio)
-                                                        }
-                                                    </option>
+                                                    @(item.Marca + " - " + item.Envase + " " + item.Tamanio)
                                                 }
-                                            </optgroup>
+                                                else
+                                                {
+                                                    @(item.Modelo + " - " + item.Envase + " " + item.Tamanio)
+                                                }
+                                            </option>
                                         }
-
                                     </select>
                                 </div>
                                 <div class="col-sm-2 cantidad">
@@ -256,7 +249,10 @@
 
 @section Scripts {
     <script src="~/Scripts/date-eu.js"></script>
+    <script src="~/Scripts/bootstrap-select.min.js"></script>
     <script>
+
+
         $(document).ready(function () {
 
             //Cargamos los pedidos en el LOAD
@@ -264,6 +260,7 @@
             CargarPedidos();
             $('[data-toggle="tooltip"]').tooltip();
             var facturado = 0;
+            $('.selectpicker').selectpicker();
 
             //Mostrar con efecto FADE al cargar
             $("#tabla").show("fade", { percent: 0 }, 1500);
@@ -367,15 +364,16 @@
             }
 
             $('#formPedidos').each(function () {
-                
+
                 var Total = 0;
                 ($(this)).on('click', function () {
 
                     //Obtenemos el precio del producto y seteamos el input
-                    $('#item > .col-sm-3 > select').on('change', function () {
+                    $('#item > .col-sm-3 > .bootstrap-select > select.selectpicker').on('change', function () {
 
-                        var precio = $(this).children("optgroup").children("option:selected").data('precio');
-                        var txtPrecio = $(this).parent().parent().find('.precio').find('input[type="text"]');
+                        console.log($(this).children("option:selected").data('precio'));
+                        var precio = $(this).children("option:selected").data('precio');
+                        var txtPrecio = $(this).parent().parent().parent().find('.precio').find('input[type="text"]');
                         var txtMonto = $(this).parent().parent().find('.monto').find('input[type="text"]');
                         var txtCantidad = $(this).parent().parent().find('.cantidad').find('input[type="text"]');
 
@@ -408,14 +406,14 @@
             });
 
             $('#btnCalcTotal').click(function (e) {
-                
+
                 var total = 0;
 
                 $('#formPedidos > .row > #item').each(function () {
                     var monto = $(this).find('.col-sm-2.monto').find('input[type="text"]').val();
                     total = parseFloat(total) + parseFloat(monto);
                 });
-                
+
                 if (isNaN(total))
                     $('#txtTotal').val(0);
                 else
@@ -425,8 +423,10 @@
 
             $('#formPedidos').on('click', '.itemNuevo', function (e) {
 
+                $('.selectpicker').selectpicker();
+
                 var nuevoItem = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
-                '<select class="form-control" id="cmbProductos"><option value="">Elija un producto</option>@for (int i = 0; i < lstTipos.Count; i++){var tipo = lstTipos[i];<optgroup label="@tipo.tip_descr">@foreach (var item in lstProductos.Where(x => x.IdTipo == tipo.tip_id).ToList()){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")){@(item.Marca + " - " + item.Envase + " " + item.Tamanio)}else{@(item.Modelo + " - " + item.Envase + " " + item.Tamanio)}</option>}</optgroup>}</select></div>' +
+                '<select class="form-control selectpicker" data-live-search="true"><option value="">Elija un producto</option>@foreach (var item in lstProductos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")){@(item.Marca + " - " + item.Envase + " " + item.Tamanio)}else{@(item.Modelo + " - " + item.Envase + " " + item.Tamanio)}</option>}</select></div>' +
                 '<div class="col-sm-2 cantidad">' +
                 '<input type="text" class="form-control" placeholder="Packs" />' +
                 '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly /></div>' +
@@ -442,8 +442,7 @@
 
                 if ($(this).prop('checked'))
                     $('#txtDescuento').prop('disabled', false);
-                else
-                {
+                else {
                     $('#txtDescuento').prop('disabled', true).val('');
                     $('#btnCalcTotal').trigger('click');
                 }
@@ -542,7 +541,7 @@
                     Total = parseFloat(Total) + parseFloat(monto);
                     CantidadProductos = parseInt(CantidadProductos) + 1;
                     CantidadPacks = parseInt(CantidadPacks) + parseInt(packs);
-                    var id = $(this).find('.col-sm-3').find('select').children('optgroup').children('option:selected').data("info");
+                    var id = $(this).find('.col-sm-3').find('.bootstrap-select').find('select').children('option:selected').data("info");
                     var precio = $(this).find('.col-sm-2.precio').find('input[type="text"]').val();
 
                     var item = {
@@ -703,7 +702,7 @@
 
             $('#cmbEstadosPedido').on('change', function () {
 
-                if ($(this).val() == 'F') 
+                if ($(this).val() == 'F')
                     $('#txtFacturado').val($('#txtTotal').val());
                 else
                     $('#txtFacturado').val(facturado);
@@ -809,8 +808,10 @@
 
             $('#btnItem').click(function () {
 
+                $('.selectpicker').selectpicker();
+
                 var nuevoItem = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
-                                '<select class="form-control" id="cmbProductos"><option value="">Elija un producto</option>@for (int i = 0; i < lstTipos.Count; i++){var tipo = lstTipos[i];<optgroup label="@tipo.tip_descr">@foreach (var item in lstProductos.Where(x => x.IdTipo == tipo.tip_id).ToList()){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")){@(item.Marca + " - " + item.Envase + " " + item.Tamanio)}else{@(item.Modelo + " - " + item.Envase + " " + item.Tamanio)}</option>}</optgroup>}</select></div>' +
+                                '<select class="form-control selectpicker" data-live-search="true"><option value="">Elija un producto</option>@foreach (var item in lstProductos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")){@(item.Marca + " - " + item.Envase + " " + item.Tamanio)}else{@(item.Modelo + " - " + item.Envase + " " + item.Tamanio)}</option>}</select></div>' +
                                 '<div class="col-sm-2 cantidad">' +
                                 '<input type="text" class="form-control" placeholder="Packs" />' +
                                 '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly /></div>' +
@@ -904,7 +905,7 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/style.css" rel="stylesheet" />
-
+    <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
 }
 
 
