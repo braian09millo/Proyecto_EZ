@@ -16,10 +16,15 @@ WITH ENCRYPTION AS
 		det_cantidad AS Cantidad,
 		det_precio AS Precio,
 		det_monto AS Monto,
-		mod_nombre + ' - ' + tam_descripcion AS ProductoDescripcion
+		CASE 
+			WHEN mod_nombre = 'No Aplica' THEN mar_nombre + ' - ' + env_descr + ' ' + tam_descripcion 
+			ELSE mod_nombre + ' - ' + env_descr + ' ' + tam_descripcion 
+		END AS ProductoDescripcion
 	FROM pedido_detalle
 	JOIN producto ON det_producto = prod_id
+	join marca ON prod_marca = mar_id
 	JOIN modelo ON prod_modelo = mod_id
+	JOIN envase ON prod_envase = env_id
 	JOIN tamanio ON prod_tamanio = tam_id
 	WHERE 
 		(det_pedido = @Pedido)

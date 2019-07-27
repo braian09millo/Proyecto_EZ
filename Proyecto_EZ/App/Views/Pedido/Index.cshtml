@@ -199,7 +199,7 @@
                         <div class="row">
                             <div id="item">
                                 <div class="col-sm-3">
-                                    <select class="form-control selectpicker" data-live-search="true">
+                                    <select class="form-control selectpicker" data-live-search="true" id="cmbProductos">
                                         <option value="">Elija un producto</option>
                                         @foreach (var item in lstProductos)
                                         {
@@ -253,14 +253,19 @@
     <script>
 
 
+
         $(document).ready(function () {
+
+            var cargarSelect = function () {
+                $('.selectpicker').selectpicker('refresh');
+            }
 
             //Cargamos los pedidos en el LOAD
             CargarFechas();
             CargarPedidos();
             $('[data-toggle="tooltip"]').tooltip();
             var facturado = 0;
-            $('.selectpicker').selectpicker();
+            $('select.selectpicker').selectpicker();
 
             //Mostrar con efecto FADE al cargar
             $("#tabla").show("fade", { percent: 0 }, 1500);
@@ -324,7 +329,8 @@
                   .find("input[type=checkbox], input[type=radio]")
                      .prop("checked", "")
                      .end();
-
+                $('.filter-option').html('Elija un producto');
+                $('#cmbProductos').val('');
                 document.getElementById("txtFechaEntrega").valueAsDate = null;
                 $('#txtDescuento').prop('disabled', true);
                 LimpiarFormulario();
@@ -423,19 +429,19 @@
 
             $('#formPedidos').on('click', '.itemNuevo', function (e) {
 
-                $('.selectpicker').selectpicker();
-
                 var nuevoItem = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
-                '<select class="form-control selectpicker" data-live-search="true"><option value="">Elija un producto</option>@foreach (var item in lstProductos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")){@(item.Marca + " - " + item.Envase + " " + item.Tamanio)}else{@(item.Modelo + " - " + item.Envase + " " + item.Tamanio)}</option>}</select></div>' +
+                '<select class="form-control selectpicker" onload="cargarSelect()" data-live-search="true"><option value="">Elija un producto</option>@foreach (var item in lstProductos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")){@(item.Marca + " - " + item.Envase + " " + item.Tamanio)}else{@(item.Modelo + " - " + item.Envase + " " + item.Tamanio)}</option>}</select></div>' +
                 '<div class="col-sm-2 cantidad">' +
                 '<input type="text" class="form-control" placeholder="Packs" />' +
-                '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly /></div>' +
-                '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly /></div>' +
+                '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio x Pack" readonly /></div>' +
+                '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto a Pagar" readonly /></div>' +
                 '<div class="col-sm-3"><button type="button" class="btn btn-danger borrarItem"><i class="fas fa-minus"></i></button> <button type="button" class="btn btn-default itemNuevo"><i class="fas fa-plus"></i></button></div>' +
                 '</div>';
 
                 $('#formPedidos').append(nuevoItem);
 
+                $('.selectpicker').selectpicker();
+                $('.selectpicker').selectpicker('refresh');
             });
 
             $('#chkDescuento').on('change', function () {
@@ -808,18 +814,20 @@
 
             $('#btnItem').click(function () {
 
-                $('.selectpicker').selectpicker();
 
                 var nuevoItem = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
                                 '<select class="form-control selectpicker" data-live-search="true"><option value="">Elija un producto</option>@foreach (var item in lstProductos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")){@(item.Marca + " - " + item.Envase + " " + item.Tamanio)}else{@(item.Modelo + " - " + item.Envase + " " + item.Tamanio)}</option>}</select></div>' +
                                 '<div class="col-sm-2 cantidad">' +
                                 '<input type="text" class="form-control" placeholder="Packs" />' +
-                                '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly /></div>' +
-                                '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto" readonly /></div>' +
+                                '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio x Pack" readonly /></div>' +
+                                '<div class="col-sm-2 monto"><input type="text" style="text-align: right;" class="form-control" placeholder="Monto a Pagar" readonly /></div>' +
                                 '<div class="col-sm-3"><button type="button" class="btn btn-danger borrarItem"><i class="fas fa-minus"></i></button> <button type="button" class="btn btn-default itemNuevo"><i class="fas fa-plus"></i></button></div>' +
                                 '</div>';
 
                 $('#formPedidos').append(nuevoItem);
+
+                $('.selectpicker').selectpicker();
+                $('.selectpicker').selectpicker('refresh');
 
             });
 
@@ -879,7 +887,7 @@
                     for (var i = 1; i < items.length; i++) {
                         var nuevoItem = items[i];
                         var nuevoElemento = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
-                                            '<select id="item' + i + '" class="form-control"> <option value="">Elija un producto</option>@foreach (var item in ViewBag.Productos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@item.Modelo - @item.Tamanio</option>}</select></div>' +
+                                            '<select id="item'+ i +'" class="form-control selectpicker" data-live-search="true"><option value="">Elija un producto</option>@foreach (var item in lstProductos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")){@(item.Marca + " - " + item.Envase + " " + item.Tamanio)}else{@(item.Modelo + " - " + item.Envase + " " + item.Tamanio)}</option>}</select></div>' +
                                             '<div class="col-sm-2 cantidad">' +
                                             '<input type="text" class="form-control" placeholder="Packs" value="' + nuevoItem.Cantidad + '"/>' +
                                             '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly value="' + Math.round(nuevoItem.Precio) + '"/></div>' +
@@ -889,6 +897,10 @@
 
                         $('#formPedidos').append(nuevoElemento);
                         $('#item' + i).val(nuevoItem.IdProducto);
+
+                        $('.selectpicker').selectpicker();
+                        $('.selectpicker').selectpicker('refresh');
+
                     }
 
                     $('#NuevoForm').modal('show');
