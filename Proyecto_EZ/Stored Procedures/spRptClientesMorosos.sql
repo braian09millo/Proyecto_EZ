@@ -12,7 +12,8 @@ WITH ENCRYPTION AS
 		MAX(cli_nombre + ' - ' + cli_direccion) AS Cliente,
 		SUM(ped_monto - ped_factu) Monto,
 		MAX(ped_fecha) UltimoPedido,
-		ROW_NUMBER() OVER(ORDER BY SUM(ped_monto - ped_factu) DESC) AS Ranking
+		ROW_NUMBER() OVER(ORDER BY SUM(ped_monto - ped_factu) DESC) AS Ranking,
+		max(isnull(cli_celular,cli_telefono)) Telefono
 	FROM pedido
 	JOIN cliente ON cli_id = ped_cliente
 	WHERE ped_monto - ped_factu > 0

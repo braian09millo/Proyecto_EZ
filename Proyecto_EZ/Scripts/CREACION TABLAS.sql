@@ -200,7 +200,7 @@ CREATE TABLE rendicion
 
 CREATE TABLE rendicion_detalle
 (
-	red_rendi INT PRIMARY KEY,
+	red_rendi INT,
 	red_pedido DATETIME NOT NULL
 )
 
