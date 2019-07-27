@@ -6,28 +6,87 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>3.61284in</Width>
+              <Width>0.64583in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.90451in</Width>
+              <Width>3.46906in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.35243in</Width>
+              <Width>0.88844in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.14962in</Width>
+              <Width>1.08246in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.03993in</Width>
+              <Width>0.83712in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.11284in</Width>
+              <Width>0.78786in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.00867in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
               <Height>0.25in</Height>
               <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox1">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Ranking</Value>
+                              <Style>
+                                <FontFamily>Calibri</FontFamily>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox1</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </TopBorder>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </BottomBorder>
+                        <LeftBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </LeftBorder>
+                        <RightBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </RightBorder>
+                        <BackgroundColor>Gray</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox2">
@@ -371,6 +430,59 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="Ranking">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Ranking.Value</Value>
+                              <Style>
+                                <FontFamily>Calibri</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Ranking</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </TopBorder>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </BottomBorder>
+                        <LeftBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </LeftBorder>
+                        <RightBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </RightBorder>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="Cliente">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -487,7 +599,7 @@
                               <Value>=Fields!MontoVentas.Value</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
-                                <Format>c</Format>
+                                <Format>'$'0;'$'-0</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -501,30 +613,11 @@
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -541,7 +634,7 @@
                               <Value>=Fields!Facturado.Value</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
-                                <Format>c</Format>
+                                <Format>'$'0;'$'-0</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -555,30 +648,11 @@
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -595,7 +669,7 @@
                               <Value>=Fields!Debe.Value</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
-                                <Format>c</Format>
+                                <Format>'$'0;'$'-0</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -609,30 +683,11 @@
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -703,6 +758,7 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -717,9 +773,9 @@
         </TablixRowHierarchy>
         <DataSetName>ClientesDS</DataSetName>
         <Top>0.43958in</Top>
-        <Left>0.375in</Left>
+        <Left>0.25in</Left>
         <Height>0.5in</Height>
-        <Width>9.17217in</Width>
+        <Width>8.71945in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -727,13 +783,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.16667in</Height>
+    <Height>3.83647cm</Height>
     <Style />
   </Body>
-  <Width>10.11139in</Width>
+  <Width>23.27522cm</Width>
   <Page>
     <PageHeader>
-      <Height>1.36125in</Height>
+      <Height>3.45758cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -742,7 +798,7 @@
           <Value>pepsi1</Value>
           <Sizing>Fit</Sizing>
           <Top>0.53481cm</Top>
-          <Left>0.71437cm</Left>
+          <Left>1.34937cm</Left>
           <Height>2.28776cm</Height>
           <Width>2.39958cm</Width>
           <Style>
@@ -756,7 +812,7 @@
           <Value>villavicencio1</Value>
           <Sizing>Fit</Sizing>
           <Top>0.53481cm</Top>
-          <Left>4.6302cm</Left>
+          <Left>4.3127cm</Left>
           <Height>2.28776cm</Height>
           <Width>2.61125cm</Width>
           <ZIndex>1</ZIndex>
@@ -771,7 +827,7 @@
           <Value>logoEZ1</Value>
           <Sizing>Fit</Sizing>
           <Top>0.15875cm</Top>
-          <Left>10.46764cm</Left>
+          <Left>9.51514cm</Left>
           <Height>2.1671cm</Height>
           <Width>4.78083cm</Width>
           <ZIndex>2</ZIndex>
@@ -788,7 +844,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Ventas por Cliente</Value>
+                  <Value>Clientes con más Ventas</Value>
                   <Style>
                     <FontFamily>Calibri</FontFamily>
                     <FontSize>14pt</FontSize>
@@ -802,10 +858,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox23</rd:DefaultName>
-          <Top>2.50224cm</Top>
-          <Left>8.76738cm</Left>
+          <Top>2.5489cm</Top>
+          <Left>1.66687cm</Left>
           <Height>0.73229cm</Height>
-          <Width>8.24169cm</Width>
+          <Width>20.51914cm</Width>
           <ZIndex>3</ZIndex>
           <Style>
             <Border>
@@ -822,7 +878,7 @@
           <Value>fbranca1</Value>
           <Sizing>Fit</Sizing>
           <Top>0.53481cm</Top>
-          <Left>17.72709cm</Left>
+          <Left>16.53205cm</Left>
           <Height>2.28776cm</Height>
           <Width>2.41832cm</Width>
           <ZIndex>4</ZIndex>
@@ -837,7 +893,7 @@
           <Value>heinekenlogo1</Value>
           <Sizing>Fit</Sizing>
           <Top>0.53481cm</Top>
-          <Left>21.88105cm</Left>
+          <Left>19.41601cm</Left>
           <Height>2.28776cm</Height>
           <Width>2.42604cm</Width>
           <ZIndex>5</ZIndex>
@@ -855,12 +911,13 @@
         </Border>
       </Style>
     </PageHeader>
-    <PageHeight>8.27in</PageHeight>
-    <PageWidth>11.69in</PageWidth>
-    <LeftMargin>1in</LeftMargin>
-    <RightMargin>1in</RightMargin>
-    <TopMargin>1in</TopMargin>
-    <BottomMargin>1in</BottomMargin>
+    <PageHeight>21cm</PageHeight>
+    <PageWidth>29.7cm</PageWidth>
+    <LeftMargin>2.54cm</LeftMargin>
+    <RightMargin>2.54cm</RightMargin>
+    <TopMargin>2.54cm</TopMargin>
+    <BottomMargin>2.54cm</BottomMargin>
+    <ColumnSpacing>1.27cm</ColumnSpacing>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
@@ -903,6 +960,10 @@
         <Field Name="UltimoPedido">
           <DataField>UltimoPedido</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Ranking">
+          <DataField>Ranking</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
@@ -1705,6 +1766,6 @@ w6dCe8DTcB5hsPc0/iNlHFlqhnzszGqO9JjayC4QmafyFcvKpphGQAY5cU95dJbSiGoxrQv0kTGR3m6A
 JsuK8osJNMMDN8hCHWTU1PT+tqE6UzeLKWncP598AmOYsrUlsV+aLDJblTcaA5fmnGJ9xU8uFVXn63Uw6u9sU7Ca68+KjTZp5Unq7VpO7e6ng2uq07TDmDTUa7EBHJtlvn2+jFgnJSu1OQSNF8JTll52DcfQfQx+rFzh/qXkrEINCzRPN1kxnX1/bWc6dxKzzLGznRjIdyIQ6f5Wx+Lr+nd1DUudPa+kf2ujbnYgJ7Ry63A/Lz5KLOnyrmUqCBVo4H2+EpSgP5w2/euQfXYFLNPpfTiUy78/91uWq+eNhF3a46DlnX6X/fL7usVK9n9eenZ3Yc9f7EfGlXCbjKm+bnhCTN/8oHl+sfL/C1TnIlNg9kWclV4Y69G/7nuHA7fxUwrMVDivPTZq77r9mfr2aikej7cuc553EesR7gIdlQO3kXee3GXrx36WVrcXMyP3cfURrV9P7sxtBr3Nwo/1XxVmjhrF8VpS//fX9R1Jzv0S6UK2bAAAAABJRU5ErkJggg==</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>f8932764-ba24-42e3-8f9f-0a46876ed1b7</rd:ReportID>
 </Report>
