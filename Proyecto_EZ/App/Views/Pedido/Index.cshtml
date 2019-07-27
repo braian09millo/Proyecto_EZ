@@ -165,19 +165,6 @@
                                         <input type="date" class="form-control" id="txtFechaEntrega" />
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-sm-3">
-                                        <label class="control-label col-sm-3">Descuento</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <input id="chkDescuento" type="checkbox" title="Aplica Descuento">
-                                            </span>
-                                            <input type="text" class="form-control" id="txtDescuento" placeholder="%" disabled />
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <div class="col-sm-3"></div>
                         </div>
@@ -185,17 +172,6 @@
                     <h4>Listado de Productos</h4>
                     <hr />
                     <form class="form-horizontal" id="formPedidos">
-                        <div class="row">
-                            <div class="form-group">
-                                <label class="control-label col-sm-4">Total</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" style="text-align:right;" readonly id="txtTotal" />
-                                </div>
-                                <div class="col-sm-1">
-                                    <button type="button" data-toggle="tooltip" title="Calcular Total" class="btn btn-default" style="text-align:right;" id="btnCalcTotal"><i class="fas fa-calculator"></i></button>
-                                </div>
-                            </div>
-                        </div>
                         <div class="row">
                             <div id="item">
                                 <div class="col-sm-3">
@@ -230,8 +206,32 @@
                                 </div>
                             </div>
                         </div>
-
                     </form>
+                    <br />
+                    <div class="row">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-sm-4">Total</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" style="text-align:right;" readonly id="txtTotal" />
+                                </div>
+                                <div class="col-sm-1">
+                                    <button type="button" data-toggle="tooltip" title="Calcular Total" class="btn btn-default" style="text-align:right;" id="btnCalcTotal"><i class="fas fa-calculator"></i></button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-4">Descuento</label>
+                                <div class="col-sm-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <input id="chkDescuento" type="checkbox" title="Aplica Descuento">
+                                        </span>
+                                        <input type="text" class="form-control" id="txtDescuento" placeholder="%" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <div class="row">
@@ -310,7 +310,7 @@
             function LimpiarFormulario() {
 
                 var items = $('#formPedidos').children();
-                for (var i = 2; i < items.length; i++) {
+                for (var i = 1; i < items.length; i++) {
                     items[i].remove();
                 }
 
@@ -887,7 +887,7 @@
                     for (var i = 1; i < items.length; i++) {
                         var nuevoItem = items[i];
                         var nuevoElemento = '<div class="row" style="margin-top: 5px;"><div id="item"><div class="col-sm-3">' +
-                                            '<select id="item'+ i +'" class="form-control selectpicker" data-live-search="true"><option value="">Elija un producto</option>@foreach (var item in lstProductos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")){@(item.Marca + " - " + item.Envase + " " + item.Tamanio)}else{@(item.Modelo + " - " + item.Envase + " " + item.Tamanio)}</option>}</select></div>' +
+                                            '<select id="item' + i + '" class="form-control selectpicker" data-live-search="true"><option value="">Elija un producto</option>@foreach (var item in lstProductos){<option data-info="@item.IdProducto" data-precio="@item.PrecioVenta" value="@item.IdProducto">@if (item.Modelo.Equals("No Aplica")){@(item.Marca + " - " + item.Envase + " " + item.Tamanio)}else{@(item.Modelo + " - " + item.Envase + " " + item.Tamanio)}</option>}</select></div>' +
                                             '<div class="col-sm-2 cantidad">' +
                                             '<input type="text" class="form-control" placeholder="Packs" value="' + nuevoItem.Cantidad + '"/>' +
                                             '</div><div class="col-sm-2 precio"><input type="text" style="text-align: right;" class="form-control" placeholder="Precio" readonly value="' + Math.round(nuevoItem.Precio) + '"/></div>' +
