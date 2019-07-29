@@ -12,7 +12,8 @@ SELECT max(cli_nombre)+ ' - ' + max(cli_direccion)  as Cliente,
 		SUM(ped_monto) MontoVentas,
 		SUM(ped_factu) Debe,
 		SUM(ped_monto)-SUM(ped_factu) Facturado,
-		max(ped_fecha) as UltimoPedido
+		max(ped_fecha) as UltimoPedido,
+		ROW_NUMBER() OVER(ORDER BY SUM(ped_monto) DESC) AS Ranking
 
 	FROM Pedido
 	JOIN cliente on cli_id = ped_cliente

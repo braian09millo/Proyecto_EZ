@@ -6,22 +6,22 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>3.61284in</Width>
+              <Width>0.69617in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.90451in</Width>
+              <Width>3.66724in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.35243in</Width>
+              <Width>1.3018in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.14962in</Width>
+              <Width>1.18576in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.03993in</Width>
+              <Width>1.09375in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.11284in</Width>
+              <Width>1.09375in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -37,7 +37,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Cliente</Value>
+                              <Value>Ranking</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -93,7 +93,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Cant. Pedidos</Value>
+                              <Value>Producto</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -142,62 +142,6 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox6">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Monto Ventas</Value>
-                              <Style>
-                                <FontFamily>Calibri</FontFamily>
-                                <FontWeight>Bold</FontWeight>
-                                <Color>White</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox6</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <TopBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </RightBorder>
-                        <BackgroundColor>Gray</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
                     <Textbox Name="Textbox10">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -205,7 +149,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Facturado</Value>
+                              <Value>Packs Vendidos</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -223,26 +167,6 @@
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </RightBorder>
                         <BackgroundColor>Gray</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -261,7 +185,22 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Debe</Value>
+                              <Value>Total x unidad</Value>
+                              <Style>
+                                <FontFamily>Calibri</FontFamily>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -310,14 +249,29 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox12">
+                    <Textbox Name="Textbox1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Ultimo Pedido</Value>
+                              <Value>% Ganancia</Value>
+                              <Style>
+                                <FontFamily>Calibri</FontFamily>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -330,7 +284,63 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox12</rd:DefaultName>
+                      <rd:DefaultName>Textbox1</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </TopBorder>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </BottomBorder>
+                        <LeftBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </LeftBorder>
+                        <RightBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </RightBorder>
+                        <BackgroundColor>Gray</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox3">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Total Facturado</Value>
+                              <Style>
+                                <FontFamily>Calibri</FontFamily>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox3</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -371,14 +381,14 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Cliente">
+                    <Textbox Name="Ranking">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Cliente.Value</Value>
+                              <Value>=Fields!Ranking.Value</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
                               </Style>
@@ -389,7 +399,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Cliente</rd:DefaultName>
+                      <rd:DefaultName>Ranking</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -424,14 +434,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="CantidadPedidos">
+                    <Textbox Name="Producto">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!CantidadPedidos.Value</Value>
+                              <Value>=Fields!Producto.Value</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
                               </Style>
@@ -442,31 +452,11 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>CantidadPedidos</rd:DefaultName>
+                      <rd:DefaultName>Producto</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -477,17 +467,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="MontoVentas">
+                    <Textbox Name="CantidadPacks1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!MontoVentas.Value</Value>
+                              <Value>=Fields!CantidadPacks.Value</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
-                                <Format>c</Format>
+                                <Format>0;(0)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -496,31 +486,11 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>MontoVentas</rd:DefaultName>
+                      <rd:DefaultName>CantidadPacks1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -531,17 +501,16 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Facturado">
+                    <Textbox Name="VentasUnitarias">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Facturado.Value</Value>
+                              <Value>=Fields!VentasUnitarias.Value</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
-                                <Format>c</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -550,31 +519,11 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Facturado</rd:DefaultName>
+                      <rd:DefaultName>VentasUnitarias</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -585,17 +534,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Debe">
+                    <Textbox Name="Porcentaje">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Debe.Value</Value>
+                              <Value>=Fields!Porcentaje.Value</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
-                                <Format>c</Format>
+                                <Format>0.00</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -604,31 +553,11 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Debe</rd:DefaultName>
+                      <rd:DefaultName>Porcentaje</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -639,17 +568,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="UltimoPedido">
+                    <Textbox Name="TotalFacturado">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!UltimoPedido.Value</Value>
+                              <Value>=Fields!TotalFacturado.Value</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
-                                <Format>d</Format>
+                                <Format>'$'0;'$'-0</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -658,35 +587,16 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>UltimoPedido</rd:DefaultName>
+                      <rd:DefaultName>TotalFacturado</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -715,11 +625,11 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>ClientesDS</DataSetName>
+        <DataSetName>ProductosMayoresVentasDS</DataSetName>
         <Top>0.43958in</Top>
-        <Left>0.375in</Left>
+        <Left>0.125in</Left>
         <Height>0.5in</Height>
-        <Width>9.17217in</Width>
+        <Width>9.03847in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -727,10 +637,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.16667in</Height>
+    <Height>1.77084in</Height>
     <Style />
   </Body>
-  <Width>10.11139in</Width>
+  <Width>9.28837in</Width>
   <Page>
     <PageHeader>
       <Height>1.36125in</Height>
@@ -742,7 +652,7 @@
           <Value>pepsi1</Value>
           <Sizing>Fit</Sizing>
           <Top>0.53481cm</Top>
-          <Left>0.71437cm</Left>
+          <Left>1.34937cm</Left>
           <Height>2.28776cm</Height>
           <Width>2.39958cm</Width>
           <Style>
@@ -756,7 +666,7 @@
           <Value>villavicencio1</Value>
           <Sizing>Fit</Sizing>
           <Top>0.53481cm</Top>
-          <Left>4.6302cm</Left>
+          <Left>4.3127cm</Left>
           <Height>2.28776cm</Height>
           <Width>2.61125cm</Width>
           <ZIndex>1</ZIndex>
@@ -771,7 +681,7 @@
           <Value>logoEZ1</Value>
           <Sizing>Fit</Sizing>
           <Top>0.15875cm</Top>
-          <Left>10.46764cm</Left>
+          <Left>9.19764cm</Left>
           <Height>2.1671cm</Height>
           <Width>4.78083cm</Width>
           <ZIndex>2</ZIndex>
@@ -788,7 +698,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Ventas por Cliente</Value>
+                  <Value>Productos más Vendidos (por packs)</Value>
                   <Style>
                     <FontFamily>Calibri</FontFamily>
                     <FontSize>14pt</FontSize>
@@ -803,7 +713,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox23</rd:DefaultName>
           <Top>2.50224cm</Top>
-          <Left>8.76738cm</Left>
+          <Left>7.49738cm</Left>
           <Height>0.73229cm</Height>
           <Width>8.24169cm</Width>
           <ZIndex>3</ZIndex>
@@ -822,7 +732,7 @@
           <Value>fbranca1</Value>
           <Sizing>Fit</Sizing>
           <Top>0.53481cm</Top>
-          <Left>17.72709cm</Left>
+          <Left>16.73974cm</Left>
           <Height>2.28776cm</Height>
           <Width>2.41832cm</Width>
           <ZIndex>4</ZIndex>
@@ -837,7 +747,7 @@
           <Value>heinekenlogo1</Value>
           <Sizing>Fit</Sizing>
           <Top>0.53481cm</Top>
-          <Left>21.88105cm</Left>
+          <Left>19.97605cm</Left>
           <Height>2.28776cm</Height>
           <Width>2.42604cm</Width>
           <ZIndex>5</ZIndex>
@@ -865,7 +775,7 @@
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="ClientesMaxVentasDataSet">
+    <DataSource Name="ProductosMaxVentasDataSet">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
@@ -874,35 +784,35 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="ClientesDS">
+    <DataSet Name="ProductosMayoresVentasDS">
       <Query>
-        <DataSourceName>ClientesMaxVentasDataSet</DataSourceName>
+        <DataSourceName>ProductosMaxVentasDataSet</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="Cliente">
-          <DataField>Cliente</DataField>
+        <Field Name="Producto">
+          <DataField>Producto</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="CantidadPedidos">
-          <DataField>CantidadPedidos</DataField>
+        <Field Name="CantidadPacks">
+          <DataField>CantidadPacks</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="MontoVentas">
-          <DataField>MontoVentas</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
+        <Field Name="Ranking">
+          <DataField>Ranking</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="Debe">
-          <DataField>Debe</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
+        <Field Name="Porcentaje">
+          <DataField>Porcentaje</DataField>
+          <rd:TypeName>System.decimal</rd:TypeName>
         </Field>
-        <Field Name="Facturado">
-          <DataField>Facturado</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
+        <Field Name="VentasUnitarias">
+          <DataField>VentasUnitarias</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="UltimoPedido">
-          <DataField>UltimoPedido</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
+        <Field Name="TotalFacturado">
+          <DataField>TotalFacturado</DataField>
+          <rd:TypeName>System.decimal</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>

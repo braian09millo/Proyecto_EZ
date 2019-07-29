@@ -6,19 +6,19 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.62083in</Width>
+              <Width>0.96458in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.87981in</Width>
+              <Width>4.42148in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.92466in</Width>
+              <Width>1.26841in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.98367in</Width>
+              <Width>1.32742in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.54792in</Width>
+              <Width>0.89167in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -583,9 +583,9 @@
         </TablixRowHierarchy>
         <DataSetName>ClientesMorososDS</DataSetName>
         <Top>0.43958in</Top>
-        <Left>0.125in</Left>
+        <Left>0.30641in</Left>
         <Height>0.5in</Height>
-        <Width>5.9569in</Width>
+        <Width>8.87357in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -593,30 +593,16 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.16667in</Height>
+    <Height>4.55084cm</Height>
     <Style />
   </Body>
-  <Width>6.17565in</Width>
+  <Width>23.84631cm</Width>
   <Page>
     <PageHeader>
-      <Height>1.36125in</Height>
+      <Height>3.45758cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
-        <Image Name="Image1">
-          <Source>Embedded</Source>
-          <Value>logoEZ1</Value>
-          <Sizing>Fit</Sizing>
-          <Top>0.15875cm</Top>
-          <Left>5.38764cm</Left>
-          <Height>2.1671cm</Height>
-          <Width>4.78083cm</Width>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-          </Style>
-        </Image>
         <Textbox Name="Textbox23">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
@@ -639,10 +625,9 @@
           </Paragraphs>
           <rd:DefaultName>Textbox23</rd:DefaultName>
           <Top>2.50224cm</Top>
-          <Left>0.3175cm</Left>
+          <Left>1.41552cm</Left>
           <Height>0.73229cm</Height>
-          <Width>15.13053cm</Width>
-          <ZIndex>1</ZIndex>
+          <Width>20.73522cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -653,6 +638,81 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
+        <Image Name="Image2">
+          <Source>Embedded</Source>
+          <Value>pepsi1</Value>
+          <Sizing>Fit</Sizing>
+          <Top>0.56696cm</Top>
+          <Left>1.41552cm</Left>
+          <Height>2.28776cm</Height>
+          <Width>2.39958cm</Width>
+          <ZIndex>1</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Image>
+        <Image Name="Image3">
+          <Source>Embedded</Source>
+          <Value>villavicencio1</Value>
+          <Sizing>Fit</Sizing>
+          <Top>0.56696cm</Top>
+          <Left>4.69635cm</Left>
+          <Height>2.28776cm</Height>
+          <Width>2.61125cm</Width>
+          <ZIndex>2</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Image>
+        <Image Name="Image1">
+          <Source>Embedded</Source>
+          <Value>logoEZ1</Value>
+          <Sizing>Fit</Sizing>
+          <Top>0.1909cm</Top>
+          <Left>9.26379cm</Left>
+          <Height>2.1671cm</Height>
+          <Width>4.78083cm</Width>
+          <ZIndex>3</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Image>
+        <Image Name="Image4">
+          <Source>Embedded</Source>
+          <Value>fbranca1</Value>
+          <Sizing>Fit</Sizing>
+          <Top>0.56696cm</Top>
+          <Left>16.52324cm</Left>
+          <Height>2.28776cm</Height>
+          <Width>2.41832cm</Width>
+          <ZIndex>4</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Image>
+        <Image Name="Image5">
+          <Source>Embedded</Source>
+          <Value>heinekenlogo1</Value>
+          <Sizing>Fit</Sizing>
+          <Top>0.56696cm</Top>
+          <Left>19.7247cm</Left>
+          <Height>2.28776cm</Height>
+          <Width>2.42604cm</Width>
+          <ZIndex>5</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Image>
       </ReportItems>
       <Style>
         <Border>
@@ -661,12 +721,13 @@
         </Border>
       </Style>
     </PageHeader>
-    <PageHeight>11.69in</PageHeight>
-    <PageWidth>8.27in</PageWidth>
-    <LeftMargin>1in</LeftMargin>
-    <RightMargin>1in</RightMargin>
-    <TopMargin>1in</TopMargin>
-    <BottomMargin>1in</BottomMargin>
+    <PageHeight>21cm</PageHeight>
+    <PageWidth>29.7cm</PageWidth>
+    <LeftMargin>2.54cm</LeftMargin>
+    <RightMargin>2.54cm</RightMargin>
+    <TopMargin>2.54cm</TopMargin>
+    <BottomMargin>2.54cm</BottomMargin>
+    <ColumnSpacing>1.27cm</ColumnSpacing>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
@@ -1507,6 +1568,6 @@ w6dCe8DTcB5hsPc0/iNlHFlqhnzszGqO9JjayC4QmafyFcvKpphGQAY5cU95dJbSiGoxrQv0kTGR3m6A
 JsuK8osJNMMDN8hCHWTU1PT+tqE6UzeLKWncP598AmOYsrUlsV+aLDJblTcaA5fmnGJ9xU8uFVXn63Uw6u9sU7Ca68+KjTZp5Unq7VpO7e6ng2uq07TDmDTUa7EBHJtlvn2+jFgnJSu1OQSNF8JTll52DcfQfQx+rFzh/qXkrEINCzRPN1kxnX1/bWc6dxKzzLGznRjIdyIQ6f5Wx+Lr+nd1DUudPa+kf2ujbnYgJ7Ry63A/Lz5KLOnyrmUqCBVo4H2+EpSgP5w2/euQfXYFLNPpfTiUy78/91uWq+eNhF3a46DlnX6X/fL7usVK9n9eenZ3Yc9f7EfGlXCbjKm+bnhCTN/8oHl+sfL/C1TnIlNg9kWclV4Y69G/7nuHA7fxUwrMVDivPTZq77r9mfr2aikej7cuc553EesR7gIdlQO3kXee3GXrx36WVrcXMyP3cfURrV9P7sxtBr3Nwo/1XxVmjhrF8VpS//fX9R1Jzv0S6UK2bAAAAABJRU5ErkJggg==</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>f8932764-ba24-42e3-8f9f-0a46876ed1b7</rd:ReportID>
 </Report>

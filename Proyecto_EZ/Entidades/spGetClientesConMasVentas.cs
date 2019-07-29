@@ -13,6 +13,7 @@ namespace Entidades
         public decimal MontoVentas { get; set; }
         public decimal Debe { get; set; }
         public decimal Facturado { get; set; }
-        public DateTime UltimoPedido { get; set; }
+        public DateTime UltimoPedido { get; set; }  
+        public long Ranking { get; set; }
     }
 }
