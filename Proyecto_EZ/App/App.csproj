@@ -248,6 +248,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Imagenes\fondo.jpg" />
+    <Content Include="Imagenes\fondo_ez.mp4" />
     <Content Include="Imagenes\Logos\coca.png" />
     <Content Include="Imagenes\Logos\fbranca.png" />
     <Content Include="Imagenes\Logos\heineken-logo.png" />

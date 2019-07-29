@@ -18,6 +18,14 @@ body {
     background: #eee;
 }
 
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+}
+
 #main-cnt {
     margin-top: 100px;
 }
