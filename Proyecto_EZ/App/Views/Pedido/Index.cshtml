@@ -327,7 +327,7 @@
                   .find("input[type=checkbox], input[type=radio]")
                      .prop("checked", "")
                      .end();
-                $('.filter-option').html('Elija un producto');
+                //$('.filter-option').html('Elija un producto');
                 document.getElementById("txtFechaEntrega").valueAsDate = null;
                 $('#txtDescuento').prop('disabled', true);
                 LimpiarFormulario();
@@ -508,7 +508,7 @@
                     objError.msj = "Debe elegir una fecha de entrega";
                 }
 
-                if ($('#chkDescuento').prop('checked', true) && $('#txtDescuento').val() == '' ) {
+                if ($('#chkDescuento').prop('checked') && $('#txtDescuento').val() == '' ) {
                     objError.bHayError = true;
                     objError.msj = "Debe indicar el descuento";
                 }
