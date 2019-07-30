@@ -314,6 +314,7 @@
                 $('#txtId').val(0);
                 $('#txtFacturado').val(0.00).prop('disabled', true);
                 $('#txtTotal').val(0);
+                facturado = 0;
             }
 
             //Funcion para limpiar el modal al cerrarse
@@ -327,7 +328,6 @@
                      .prop("checked", "")
                      .end();
                 $('.filter-option').html('Elija un producto');
-                $('#cmbProductos').val('');
                 document.getElementById("txtFechaEntrega").valueAsDate = null;
                 $('#txtDescuento').prop('disabled', true);
                 LimpiarFormulario();
@@ -377,8 +377,8 @@
                         console.log($(this).children("option:selected").data('precio'));
                         var precio = $(this).children("option:selected").data('precio');
                         var txtPrecio = $(this).parent().parent().parent().find('.precio').find('input[type="text"]');
-                        var txtMonto = $(this).parent().parent().find('.monto').find('input[type="text"]');
-                        var txtCantidad = $(this).parent().parent().find('.cantidad').find('input[type="text"]');
+                        var txtMonto = $(this).parent().parent().parent().find('.monto').find('input[type="text"]');
+                        var txtCantidad = $(this).parent().parent().parent().find('.cantidad').find('input[type="text"]');
 
                         if ($(this).children("option:selected").val() === '') {
                             $(txtPrecio).val('');
@@ -506,6 +506,11 @@
                 if ($('#txtFechaEntrega').val() == '' || $('#txtFechaEntrega').val() == undefined || $('#txtFechaEntrega').val() == null) {
                     objError.bHayError = true;
                     objError.msj = "Debe elegir una fecha de entrega";
+                }
+
+                if ($('#chkDescuento').prop('checked', true) && $('#txtDescuento').val() == '' ) {
+                    objError.bHayError = true;
+                    objError.msj = "Debe indicar el descuento";
                 }
 
                 return objError.bHayError;
