@@ -115,7 +115,7 @@
 
 
 @section Scripts {
-
+<script src="~/Scripts/date-eu.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -199,7 +199,7 @@
                     "ajax": url,
                     "info": false,
                     aoColumnDefs: [
-                        { targets: [0], "bSortable": true },
+                        { targets: [0], "bSortable": true, type: "date-eu" },
                         { targets: [1], "bSortable": true },
                         { targets: [2], "bSortable": true },
                         {

@@ -12,7 +12,7 @@
               <Width>0.61078in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.44478in</Width>
+              <Width>3.13476in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.13125in</Width>
@@ -1676,7 +1676,7 @@
         <DataSetName>FactMensualDS</DataSetName>
         <Top>0.20278in</Top>
         <Height>1.5in</Height>
-        <Width>10.86278in</Width>
+        <Width>10.55276in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2355,7 +2355,7 @@
       </Border>
     </Style>
   </Body>
-  <Width>30.11933cm</Width>
+  <Width>27.07662cm</Width>
   <Page>
     <PageHeader>
       <Height>3.8512cm</Height>

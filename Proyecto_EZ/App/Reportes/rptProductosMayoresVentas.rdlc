@@ -511,6 +511,7 @@
                               <Value>=Fields!VentasUnitarias.Value</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
+                                <Format>0;(0)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -530,6 +531,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -640,7 +642,7 @@
     <Height>1.77084in</Height>
     <Style />
   </Body>
-  <Width>9.28837in</Width>
+  <Width>9.22587in</Width>
   <Page>
     <PageHeader>
       <Height>1.36125in</Height>
