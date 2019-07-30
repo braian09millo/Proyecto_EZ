@@ -170,6 +170,8 @@
                   .find("input[type=checkbox], input[type=radio]")
                      .prop("checked", "")
                      .end();
+
+                $('#cmbTamanios').prop('disabled', true);
             });
 
             //Funcion para modificar el valor PV
@@ -390,9 +392,9 @@
                                 "createdRow": function (row, data, dataIndex) {
                                     if (data.prod_delet == "S") {
                                         $(row).css('background-color', '#B8DBD9');
-                                        $(row).find("td:eq(9)").find('.btn-danger').prop('disabled', true);
-                                        $(row).find("td:eq(9)").find('.btn-info').prop('disabled', true);
-                                        $(row).find("td:eq(9)").find('.btn-success').prop('disabled', false);
+                                        $(row).find("td:eq(10)").find('.btn-danger').prop('disabled', true);
+                                        $(row).find("td:eq(10)").find('.btn-info').prop('disabled', true);
+                                        $(row).find("td:eq(10)").find('.btn-success').prop('disabled', false);
                                     }
                                 },
                                 "language": {
