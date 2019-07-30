@@ -630,7 +630,7 @@ namespace Negocios.BusinessControllers
 
                     if (xoEnvase != null)
                     {
-                        if (xoDB.producto.FirstOrDefault(x => x.prod_envase == xoEnvase.env_id && (x.prod_delet ?? "N") == "S") == null)
+                        if (xoDB.producto.FirstOrDefault(x => x.prod_envase == xoEnvase.env_id) == null)
                         {
                             xoEnvase.env_delet = "S";
                             xoDB.SaveChanges();
@@ -787,6 +787,7 @@ namespace Negocios.BusinessControllers
         }
 
         #endregion
+
         #region REPORTES
         public List<spGetProductosMasVendidos> ObtenerProductosMayoresVentas(out string xsError)
         {
