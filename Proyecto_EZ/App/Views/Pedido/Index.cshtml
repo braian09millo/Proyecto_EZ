@@ -275,27 +275,14 @@
 
             //Cargarmos los datepickers
             function CargarFechas() {
+                var diaDesde = new Date();
+                diaDesde = new Date(diaDesde.getFullYear(), diaDesde.getMonth(), 1).toISOString().substr(0, 10);
 
-                var today = new Date();
-                var anio = today.getFullYear();
-                var mes = today.getMonth() - 2;
-                var mesSig = today.getMonth() + 2;
-                var dia = today.getDate();
+                var diaHasta = new Date();
+                diaHasta = new Date(diaHasta.setDate(diaHasta.getDate() + 1)).toISOString().substr(0, 10);
 
-                if (mes < 10)
-                    mes = '0' + mes;
-
-                if (mesSig < 10)
-                    mesSig = '0' + mesSig;
-
-                if (dia < 10)
-                    dia = '0' + dia;
-
-                var fechaDesde = anio + '-' + mes + '-' + dia;
-                var fechaHasta = anio + '-' + mesSig + '-' + dia;
-
-                document.getElementById("txtFechaDesde").value = fechaDesde;
-                document.getElementById("txtFechaHasta").value = fechaHasta;
+                document.getElementById("txtFechaDesde").value = diaDesde;
+                document.getElementById("txtFechaHasta").value = diaHasta;
             }
 
 
