@@ -22,9 +22,9 @@ body {
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
 }
 
-.input-group {
+/*.input-group {
     margin-bottom: 10px;
-}
+}*/
 
 .form-group > .col-sm-8 > .input-group {
     margin-bottom: 0;
