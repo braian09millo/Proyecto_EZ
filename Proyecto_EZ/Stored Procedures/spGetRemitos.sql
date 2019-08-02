@@ -15,7 +15,7 @@ WITH ENCRYPTION AS
 			WHEN LOWER(max(mod_nombre)) = 'no aplica' THEN max(mar_nombre) 
 			ELSE max(mod_nombre) 
 		END AS Modelo,
-		max(tam_descripcion) Tamanio,
+		max(env_descr) + ' '  +max(tam_descripcion) Tamanio,
 		sum(det_cantidad) Cantidad
 	FROM Pedido
 	JOIN pedido_detalle  on det_pedido = ped_id
@@ -25,6 +25,7 @@ WITH ENCRYPTION AS
 	JOIN marca ON prod_marca = mar_id
 	JOIN modelo ON prod_modelo = mod_id
 	JOIN tamanio ON prod_tamanio = tam_id
+	JOIN envase on prod_envase = env_id
 	WHERE usu_usuario = @repartidor 
 	AND ped_fecha = @Fecha 
 	AND ped_vuelta = @Vuelta

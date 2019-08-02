@@ -304,6 +304,7 @@ INSERT INTO MODELO (mod_marca, mod_nombre) VALUES (4, 'Villavicencio Sport')
 
 INSERT INTO modelo (mod_marca, mod_nombre)
 SELECT mar_id, 'No Aplica' 
+--select *
 FROM marca
 LEFT JOIN modelo ON mar_id = mod_marca
 WHERE mod_id IS NULL
