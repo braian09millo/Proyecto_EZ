@@ -275,6 +275,7 @@
 
             //Cargarmos los datepickers
             function CargarFechas() {
+
                 var diaDesde = new Date();
                 diaDesde = new Date(diaDesde.getFullYear(), diaDesde.getMonth(), 1).toISOString().substr(0, 10);
 
@@ -315,6 +316,7 @@
                      .prop("checked", "")
                      .end();
                 //$('.filter-option').html('Elija un producto');
+                $('#cmbProductos.selectpicker').selectpicker('refresh');
                 document.getElementById("txtFechaEntrega").valueAsDate = null;
                 $('#txtDescuento').prop('disabled', true);
                 LimpiarFormulario();
@@ -871,6 +873,9 @@
                     $('#txtCantidad').val(primerItem.Cantidad);
                     $('#txtPrecio').val(Math.round(primerItem.Precio));
                     $('#txtMonto').val(Math.round(primerItem.Monto));
+
+                    $('.selectpicker').selectpicker();
+                    $('.selectpicker').selectpicker('refresh');
 
                     //Cargamos el resto de los items
                     for (var i = 1; i < items.length; i++) {
