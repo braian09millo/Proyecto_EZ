@@ -28,7 +28,7 @@ WITH ENCRYPTION AS
 		JOIN precio_detalle on pre_ident = prd_campre and prd_produ = prod_id 
 	WHERE 
 		ped_fecha between @FechaDesde and @FechaHasta
-		and (ped_rendido = @Rendido or isnull(@rendido,'S') = 'S')
+		and isnull(ped_rendido,'N') = @Rendido
 		GROUP BY ped_id,ped_fecha
 		ORDER BY ped_fecha
 
