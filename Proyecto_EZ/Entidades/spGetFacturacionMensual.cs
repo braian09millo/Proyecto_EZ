@@ -18,5 +18,6 @@ namespace Entidades
         public decimal Facturado { get; set; }
         public string Repartidor { get; set; }
         public decimal Rendido { get; set; }
+        public string RendidoSiNo { get; set; }
     }
 }

@@ -36,7 +36,7 @@
               <Width>0.71342in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.92916in</Width>
+              <Width>0.7157in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -825,17 +825,16 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Rendido">
+                    <Textbox Name="RendidoSiNo">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Rendido.Value</Value>
+                              <Value>=Fields!RendidoSiNo.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>'$'0</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -844,7 +843,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Rendido</rd:DefaultName>
+                      <rd:DefaultName>RendidoSiNo</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -854,7 +853,6 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
-                        <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -1676,7 +1674,7 @@
         <DataSetName>FactMensualDS</DataSetName>
         <Top>0.20278in</Top>
         <Height>1.5in</Height>
-        <Width>10.55276in</Width>
+        <Width>10.3393in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2355,7 +2353,7 @@
       </Border>
     </Style>
   </Body>
-  <Width>27.07662cm</Width>
+  <Width>26.49995cm</Width>
   <Page>
     <PageHeader>
       <Height>3.8512cm</Height>
@@ -2657,7 +2655,7 @@
           <Value>heinekenlogo1</Value>
           <Sizing>Fit</Sizing>
           <Top>0.76235cm</Top>
-          <Left>24.10037cm</Left>
+          <Left>23.46537cm</Left>
           <Height>2.28776cm</Height>
           <Width>2.42604cm</Width>
           <ZIndex>11</ZIndex>
@@ -2753,6 +2751,10 @@
         </Field>
         <Field Name="Rendido">
           <DataField>Rendido</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="RendidoSiNo">
+          <DataField>RendidoSiNo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

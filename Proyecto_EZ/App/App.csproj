@@ -443,6 +443,7 @@
     <Content Include="Views\Rendicion\modalVerDetalle.cshtml" />
     <Content Include="Views\Producto\Envase.cshtml" />
     <Content Include="Views\Producto\comboEnvases.cshtml" />
+    <Content Include="Views\Informe\comboUsuariosTodos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
