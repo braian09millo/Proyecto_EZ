@@ -58,20 +58,10 @@
         //Cargarmos los datepickers
         function CargarFechas() {
 
-            var today = new Date();
-            var anio = today.getFullYear();
-            var mes = today.getMonth() + 1;
-            var dia = today.getDate();
+            var dia = new Date();
+            dia = new Date(dia.getFullYear(), dia.getMonth(), 1).toISOString().substr(0, 10);
 
-            if (mes < 10)
-                mes = '0' + mes;
-
-            if (dia < 10)
-                dia = '0' + dia;
-
-            var fecha = anio + '-' + mes + '-' + dia;
-
-            document.getElementById("txtFecha").value = fecha;
+            document.getElementById("txtFecha").value = dia;
         }
 
     });
