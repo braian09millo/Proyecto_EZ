@@ -17,7 +17,8 @@ SELECT
 		max(ped_monto)-isnull(max(ped_factu),0) Debe,
 		max(ped_factu) Facturado,
 		isnull(max(usu_nombre),'-') Repartidor,
-		CASE WHEN MAX(ISNULL(ped_rendido,'N')) = 'N' THEN 0 ELSE sum(prd_precioC*det_cantidad) END  Rendido
+		CASE WHEN MAX(ISNULL(ped_rendido,'N')) = 'N' THEN 0 ELSE sum(prd_precioC*det_cantidad) END  Rendido,
+		CASE WHEN MAX(ISNULL(ped_rendido,'N')) = 'N' THEN 'NO' ELSE 'SI' END  RendidoSiNo
 	FROM Pedido
 	JOIN pedido_detalle on det_pedido = ped_id
 	JOIN producto on prod_id = det_producto
