@@ -48,8 +48,8 @@ WITH ENCRYPTION AS
 		ped_fecha AS Fecha,
 		CASE mod_nombre 
 			WHEN 'No Aplica' 
-			THEN mar_nombre + ' - ' + tam_descripcion 
-			ELSE mod_nombre + ' - ' + tam_descripcion 
+			THEN mar_nombre + ' - ' + env_descr + ' ' + tam_descripcion 
+			ELSE mod_nombre + ' - ' + env_descr + ' ' + tam_descripcion 
 		END AS ProductoDescripcion,
 		det_cantidad AS Cantidad,
 		det_precio AS Precio,
@@ -59,6 +59,7 @@ WITH ENCRYPTION AS
 	JOIN producto ON det_producto = prod_id
 	JOIN marca ON mar_id = prod_marca
 	JOIN modelo ON prod_modelo = mod_id
+	JOIN envase ON prod_envase = env_id
 	JOIN tamanio ON prod_tamanio = tam_id
 	JOIN cliente ON cli_id = ped_cliente
 	WHERE 
