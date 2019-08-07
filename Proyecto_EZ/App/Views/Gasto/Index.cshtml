@@ -134,8 +134,8 @@
                 var diaHasta = new Date();
                 diaHasta = new Date(diaHasta.setDate(diaHasta.getDate() + 1)).toISOString().substr(0, 10);
 
-                document.getElementById("txtFechaDesde").value = diaDesde;
-                document.getElementById("txtFechaHasta").value = diaHasta;
+                document.getElementById("txtDesde").value = diaDesde;
+                document.getElementById("txtHasta").value = diaHasta;
             }
 
             function toDate(fecha) {

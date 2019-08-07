@@ -308,7 +308,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Marca.Value + " - " + Fields!Tamanio.Value</Value>
+                              <Value>=Fields!Marca.Value + " - " + Fields!Envase.Value + " - " + Fields!Tamanio.Value</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
                               </Style>
@@ -329,6 +329,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -524,6 +525,14 @@
         <Field Name="PrecioUnitario">
           <DataField>PrecioUnitario</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="IdEnvase">
+          <DataField>IdEnvase</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Envase">
+          <DataField>Envase</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>

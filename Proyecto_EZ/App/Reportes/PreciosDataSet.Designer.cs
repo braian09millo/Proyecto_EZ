@@ -299,6 +299,10 @@ namespace App.Reportes {
             
             private global::System.Data.DataColumn columnPrecioUnitario;
             
+            private global::System.Data.DataColumn columnIdEnvase;
+            
+            private global::System.Data.DataColumn columnEnvase;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public spGetListaPreciosDataTable() {
@@ -414,6 +418,22 @@ namespace App.Reportes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn IdEnvaseColumn {
+                get {
+                    return this.columnIdEnvase;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn EnvaseColumn {
+                get {
+                    return this.columnEnvase;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -449,7 +469,7 @@ namespace App.Reportes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public spGetListaPreciosRow AddspGetListaPreciosRow(string Marca, string Tamanio, string Tipo, decimal Costo, decimal PrecioVenta, decimal Porcentaje, decimal PrecioUnitario) {
+            public spGetListaPreciosRow AddspGetListaPreciosRow(string Marca, string Tamanio, string Tipo, decimal Costo, decimal PrecioVenta, decimal Porcentaje, decimal PrecioUnitario, string Envase) {
                 spGetListaPreciosRow rowspGetListaPreciosRow = ((spGetListaPreciosRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -461,7 +481,9 @@ namespace App.Reportes {
                         Costo,
                         PrecioVenta,
                         Porcentaje,
-                        PrecioUnitario};
+                        PrecioUnitario,
+                        null,
+                        Envase};
                 rowspGetListaPreciosRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowspGetListaPreciosRow);
                 return rowspGetListaPreciosRow;
@@ -503,6 +525,8 @@ namespace App.Reportes {
                 this.columnPrecioVenta = base.Columns["PrecioVenta"];
                 this.columnPorcentaje = base.Columns["Porcentaje"];
                 this.columnPrecioUnitario = base.Columns["PrecioUnitario"];
+                this.columnIdEnvase = base.Columns["IdEnvase"];
+                this.columnEnvase = base.Columns["Envase"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -528,6 +552,10 @@ namespace App.Reportes {
                 base.Columns.Add(this.columnPorcentaje);
                 this.columnPrecioUnitario = new global::System.Data.DataColumn("PrecioUnitario", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPrecioUnitario);
+                this.columnIdEnvase = new global::System.Data.DataColumn("IdEnvase", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIdEnvase);
+                this.columnEnvase = new global::System.Data.DataColumn("Envase", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEnvase);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnIdMarca,
                                 this.columnIdTamanio,
@@ -551,11 +579,17 @@ namespace App.Reportes {
                 this.columnIdTipo.AutoIncrementStep = -1;
                 this.columnIdTipo.AllowDBNull = false;
                 this.columnIdTipo.ReadOnly = true;
-                this.columnTipo.AllowDBNull = false;
                 this.columnTipo.MaxLength = 50;
                 this.columnCosto.AllowDBNull = false;
                 this.columnPrecioVenta.AllowDBNull = false;
                 this.columnPrecioUnitario.ReadOnly = true;
+                this.columnIdEnvase.AutoIncrement = true;
+                this.columnIdEnvase.AutoIncrementSeed = -1;
+                this.columnIdEnvase.AutoIncrementStep = -1;
+                this.columnIdEnvase.AllowDBNull = false;
+                this.columnIdEnvase.ReadOnly = true;
+                this.columnEnvase.AllowDBNull = false;
+                this.columnEnvase.MaxLength = 50;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -755,7 +789,12 @@ namespace App.Reportes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Tipo {
                 get {
-                    return ((string)(this[this.tablespGetListaPrecios.TipoColumn]));
+                    try {
+                        return ((string)(this[this.tablespGetListaPrecios.TipoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Tipo\' de la tabla \'spGetListaPrecios\' es DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tablespGetListaPrecios.TipoColumn] = value;
@@ -815,6 +854,40 @@ namespace App.Reportes {
                 set {
                     this[this.tablespGetListaPrecios.PrecioUnitarioColumn] = value;
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int IdEnvase {
+                get {
+                    return ((int)(this[this.tablespGetListaPrecios.IdEnvaseColumn]));
+                }
+                set {
+                    this[this.tablespGetListaPrecios.IdEnvaseColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Envase {
+                get {
+                    return ((string)(this[this.tablespGetListaPrecios.EnvaseColumn]));
+                }
+                set {
+                    this[this.tablespGetListaPrecios.EnvaseColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsTipoNull() {
+                return this.IsNull(this.tablespGetListaPrecios.TipoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetTipoNull() {
+                this[this.tablespGetListaPrecios.TipoColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1011,6 +1084,8 @@ namespace App.Reportes.PreciosDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("PrecioVenta", "PrecioVenta");
             tableMapping.ColumnMappings.Add("Porcentaje", "Porcentaje");
             tableMapping.ColumnMappings.Add("PrecioUnitario", "PrecioUnitario");
+            tableMapping.ColumnMappings.Add("IdEnvase", "IdEnvase");
+            tableMapping.ColumnMappings.Add("Envase", "Envase");
             this._adapter.TableMappings.Add(tableMapping);
         }
         

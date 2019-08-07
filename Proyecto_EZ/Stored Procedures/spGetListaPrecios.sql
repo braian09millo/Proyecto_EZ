@@ -10,6 +10,8 @@ WITH ENCRYPTION AS
 	SELECT DISTINCT
 		mar_id AS IdMarca,
 		mar_nombre AS Marca,
+		env_id AS IdEnvase,
+		env_descr AS Envase,
 		tam_id AS IdTamanio,
 		tam_descripcion AS Tamanio,
 		tip_id AS IdTipo,
@@ -27,6 +29,7 @@ WITH ENCRYPTION AS
 	FROM producto
 	JOIN marca ON prod_marca = mar_id
 	JOIN modelo ON prod_modelo = mod_id
+	JOIN envase ON prod_envase = env_id
 	JOIN tamanio ON prod_tamanio = tam_id
 	JOIN tipo ON prod_tipo = tip_id
 	JOIN precio_detalle ON prd_produ = prod_id

@@ -482,12 +482,12 @@
                 $(tbody).on('click', 'button.btn-info.btn-xs', function () {
 
                     var data = tabla.row($(this).parents('tr')).data();
-
+                    console.log(data);
                     $('#txtId').val(data.IdProducto);
                     $('#cmbMarcas').val(data.IdMarca);
-                    $('#cmbModelos').val(data.IdModelo);
+                    $('#cmbModelos').val(data.IdModelo).prop('disabled',false);
                     $('#cmbEnvases').val(data.IdEnvase);
-                    $('#cmbTamanios').val(data.IdTamanio);
+                    $('#cmbTamanios').val(data.IdTamanio).prop('disabled', false);
                     $('#cmbTipos').val(data.IdTipo);
                     $('#txtCantPack').val(data.CantidadPack);
                     $('#txtPorcentaje').val(data.Porcentaje).prop('readonly', true);

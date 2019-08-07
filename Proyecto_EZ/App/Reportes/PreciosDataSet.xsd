@@ -31,6 +31,8 @@
               <Mapping SourceColumn="PrecioVenta" DataSetColumn="PrecioVenta" />
               <Mapping SourceColumn="Porcentaje" DataSetColumn="Porcentaje" />
               <Mapping SourceColumn="PrecioUnitario" DataSetColumn="PrecioUnitario" />
+              <Mapping SourceColumn="IdEnvase" DataSetColumn="IdEnvase" />
+              <Mapping SourceColumn="Envase" DataSetColumn="Envase" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -42,7 +44,7 @@
   <xs:element name="PreciosDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="PreciosDataSet" msprop:Generator_UserDSName="PreciosDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="spGetListaPrecios" msprop:Generator_TableClassName="spGetListaPreciosDataTable" msprop:Generator_TableVarName="tablespGetListaPrecios" msprop:Generator_TablePropName="spGetListaPrecios" msprop:Generator_RowDeletingName="spGetListaPreciosRowDeleting" msprop:Generator_RowChangingName="spGetListaPreciosRowChanging" msprop:Generator_RowEvHandlerName="spGetListaPreciosRowChangeEventHandler" msprop:Generator_RowDeletedName="spGetListaPreciosRowDeleted" msprop:Generator_UserTableName="spGetListaPrecios" msprop:Generator_RowChangedName="spGetListaPreciosRowChanged" msprop:Generator_RowEvArgName="spGetListaPreciosRowChangeEvent" msprop:Generator_RowClassName="spGetListaPreciosRow">
+        <xs:element name="spGetListaPrecios" msprop:Generator_TableClassName="spGetListaPreciosDataTable" msprop:Generator_TableVarName="tablespGetListaPrecios" msprop:Generator_RowChangedName="spGetListaPreciosRowChanged" msprop:Generator_TablePropName="spGetListaPrecios" msprop:Generator_RowDeletingName="spGetListaPreciosRowDeleting" msprop:Generator_RowChangingName="spGetListaPreciosRowChanging" msprop:Generator_RowEvHandlerName="spGetListaPreciosRowChangeEventHandler" msprop:Generator_RowDeletedName="spGetListaPreciosRowDeleted" msprop:Generator_RowClassName="spGetListaPreciosRow" msprop:Generator_UserTableName="spGetListaPrecios" msprop:Generator_RowEvArgName="spGetListaPreciosRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="IdMarca" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnIdMarca" msprop:Generator_ColumnPropNameInRow="IdMarca" msprop:Generator_ColumnPropNameInTable="IdMarcaColumn" msprop:Generator_UserColumnName="IdMarca" type="xs:int" />
@@ -62,7 +64,7 @@
                 </xs:simpleType>
               </xs:element>
               <xs:element name="IdTipo" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnIdTipo" msprop:Generator_ColumnPropNameInRow="IdTipo" msprop:Generator_ColumnPropNameInTable="IdTipoColumn" msprop:Generator_UserColumnName="IdTipo" type="xs:int" />
-              <xs:element name="Tipo" msprop:Generator_ColumnVarNameInTable="columnTipo" msprop:Generator_ColumnPropNameInRow="Tipo" msprop:Generator_ColumnPropNameInTable="TipoColumn" msprop:Generator_UserColumnName="Tipo">
+              <xs:element name="Tipo" msprop:Generator_ColumnVarNameInTable="columnTipo" msprop:Generator_ColumnPropNameInRow="Tipo" msprop:Generator_ColumnPropNameInTable="TipoColumn" msprop:Generator_UserColumnName="Tipo" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
@@ -73,6 +75,14 @@
               <xs:element name="PrecioVenta" msprop:Generator_ColumnVarNameInTable="columnPrecioVenta" msprop:Generator_ColumnPropNameInRow="PrecioVenta" msprop:Generator_ColumnPropNameInTable="PrecioVentaColumn" msprop:Generator_UserColumnName="PrecioVenta" type="xs:decimal" />
               <xs:element name="Porcentaje" msprop:Generator_ColumnVarNameInTable="columnPorcentaje" msprop:Generator_ColumnPropNameInRow="Porcentaje" msprop:Generator_ColumnPropNameInTable="PorcentajeColumn" msprop:Generator_UserColumnName="Porcentaje" type="xs:decimal" minOccurs="0" />
               <xs:element name="PrecioUnitario" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnPrecioUnitario" msprop:Generator_ColumnPropNameInRow="PrecioUnitario" msprop:Generator_ColumnPropNameInTable="PrecioUnitarioColumn" msprop:Generator_UserColumnName="PrecioUnitario" type="xs:decimal" minOccurs="0" />
+              <xs:element name="IdEnvase" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnIdEnvase" msprop:Generator_ColumnPropNameInRow="IdEnvase" msprop:Generator_ColumnPropNameInTable="IdEnvaseColumn" msprop:Generator_UserColumnName="IdEnvase" type="xs:int" />
+              <xs:element name="Envase" msprop:Generator_ColumnVarNameInTable="columnEnvase" msprop:Generator_ColumnPropNameInRow="Envase" msprop:Generator_ColumnPropNameInTable="EnvaseColumn" msprop:Generator_UserColumnName="Envase">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
