@@ -9,9 +9,10 @@ WITH ENCRYPTION AS
 
 	SELECT  
 		sum(det_cantidad) Cantidad,
-		max(CASE WHEN mod_nombre = 'No aplica' THEN mar_nombre ELSE mod_nombre END + ' - ' + tam_descripcion) Descripcion,
-		max(prd_precioPV) Precio,
-		sum(prd_precioPV * det_cantidad) Total,
+		--max(CASE WHEN mod_nombre = 'No aplica' THEN mar_nombre ELSE mod_nombre END + ' - ' + tam_descripcion) Descripcion,
+		max(mar_nombre) Descripcion,
+		max(prd_precioC) Precio,
+		sum(prd_precioC * det_cantidad) Total,
 		max(ren_desde) Desde,
 		max(ren_hasta) Hasta
 	FROM rendicion
@@ -27,7 +28,7 @@ WITH ENCRYPTION AS
 	WHERE 
 		ren_id = @IdRendcion
 	GROUP BY 
-		prod_id
+		mar_id
 		ORDER BY max(mod_nombre + ' - ' + tam_descripcion)
 
 	SET @@nRet = @@error

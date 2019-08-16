@@ -10,36 +10,36 @@ WITH ENCRYPTION AS
 
 	DECLARE @@nRet INT
 
-	SELECT 
-		ped_id AS IdPedido,
-		cli_nombre AS Cliente,
-		cli_direccion AS Direccion,
-		ped_fecha AS Fecha,
-		'Descuento' AS ProductoDescripcion,
-		0 AS Cantidad,
-		0 AS Precio,
-		(
-			SELECT ROUND(SUM(det_cantidad * det_precio) * (ISNULL(ped_descu,0) / 100), 0) * -1
-			FROM pedido 
-			JOIN pedido_detalle ON det_pedido = ped_id
-			WHERE ped_id = @Pedido
-			GROUP BY
-				ped_descu
+	--SELECT 
+	--	ped_id AS IdPedido,
+	--	cli_nombre AS Cliente,
+	--	cli_direccion AS Direccion,
+	--	ped_fecha AS Fecha,
+	--	'Descuento' AS ProductoDescripcion,
+	--	0 AS Cantidad,
+	--	0 AS Precio,
+	--	(
+	--		SELECT ROUND(SUM(det_cantidad * det_precio) * (ISNULL(ped_descu,0) / 100), 0) * -1
+	--		FROM pedido 
+	--		JOIN pedido_detalle ON det_pedido = ped_id
+	--		WHERE ped_id = @Pedido
+	--		GROUP BY
+	--			ped_descu
 				
-		) AS Monto
-	FROM pedido
-	JOIN pedido_detalle ON det_pedido = ped_id
-	JOIN producto ON det_producto = prod_id
-	JOIN marca ON mar_id = prod_marca
-	JOIN modelo ON prod_modelo = mod_id
-	JOIN tamanio ON prod_tamanio = tam_id
-	JOIN cliente ON cli_id = ped_cliente
-	WHERE 
-		(det_pedido = @Pedido)
-	GROUP BY 
-		ped_id, ped_descu, cli_nombre, cli_direccion, ped_fecha
+	--	) AS Monto
+	--FROM pedido
+	--JOIN pedido_detalle ON det_pedido = ped_id
+	--JOIN producto ON det_producto = prod_id
+	--JOIN marca ON mar_id = prod_marca
+	--JOIN modelo ON prod_modelo = mod_id
+	--JOIN tamanio ON prod_tamanio = tam_id
+	--JOIN cliente ON cli_id = ped_cliente
+	--WHERE 
+	--	(det_pedido = @Pedido)
+	--GROUP BY 
+	--	ped_id, ped_descu, cli_nombre, cli_direccion, ped_fecha
 	
-	UNION
+	--UNION
 	
 	SELECT 
 		ped_id AS IdPedido,
@@ -53,7 +53,16 @@ WITH ENCRYPTION AS
 		END AS ProductoDescripcion,
 		det_cantidad AS Cantidad,
 		det_precio AS Precio,
-		det_monto AS Monto
+		det_monto AS Monto,
+				(
+			SELECT ROUND(SUM(det_cantidad * det_precio) * (ISNULL(ped_descu,0) / 100), 0) * -1
+			FROM pedido 
+			JOIN pedido_detalle ON det_pedido = ped_id
+			WHERE ped_id = @Pedido
+			GROUP BY
+				ped_descu
+				
+		) AS Descuento
 	FROM pedido
 	JOIN pedido_detalle ON det_pedido = ped_id
 	JOIN producto ON det_producto = prod_id

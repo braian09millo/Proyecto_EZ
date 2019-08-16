@@ -16,5 +16,6 @@ namespace Entidades
         public int Cantidad { get; set; }
         public decimal Precio { get; set; }
         public decimal Monto { get; set; }
+        public decimal Descuento { get; set; }
     }
 }

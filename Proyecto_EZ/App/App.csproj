@@ -295,6 +295,7 @@
     <Content Include="Reportes\ClientesMaxVentasDataSet.xsc">
       <DependentUpon>ClientesMaxVentasDataSet.xsd</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\Da.pubxml" />
     <None Include="Reportes\ClientesMaxVentasDataSet.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
