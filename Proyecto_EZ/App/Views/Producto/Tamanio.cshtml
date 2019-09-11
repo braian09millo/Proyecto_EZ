@@ -99,7 +99,7 @@
             $('#NuevoForm').on('hidden.bs.modal', function (e) {
 
                 $(this)
-                  .find("input[type=text],textarea,select")
+                  .find("input[type=text],input[type=hidden],textarea,select")
                      .val('')
                      .end()
                   .find("input[type=checkbox], input[type=radio]")

@@ -689,7 +689,7 @@ namespace Negocios.BusinessControllers
                     }                        
                     else
                     {
-                        var _tamanio = xoDB.tamanio.FirstOrDefault(x => x.tam_descripcion.ToLower().Equals(xoTamanio.Descripcion));
+                        var _tamanio = xoDB.tamanio.FirstOrDefault(x => x.tam_descripcion.ToLower().Equals(xoTamanio.Descripcion) && x.tam_envase == xoTamanio.IdEnvase);
 
                         if (_tamanio != null)
                             xsError = "Ya existe éste tamaño";

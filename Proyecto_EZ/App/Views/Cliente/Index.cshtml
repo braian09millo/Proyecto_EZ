@@ -136,13 +136,13 @@
             $('#NuevoForm').on('hidden.bs.modal', function (e) {
 
                 $(this)
-                  .find("input[type=text],input[type=email],textarea,select")
+                  .find("input[type=text],input[type=email],input[type=hidden],textarea,select")
                      .val('')
                      .end()
                   .find("input[type=checkbox], input[type=radio]")
                      .prop("checked", "")
                      .end();
-
+                
                 $('#cmbLocalidades').val(0).prop('disabled', true);
 
 
