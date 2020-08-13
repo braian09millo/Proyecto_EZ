@@ -290,7 +290,8 @@ namespace Negocios.BusinessControllers
                                 Tamanio = item.IdTamanio,
                                 Costo = item.Costo,
                                 Porcentaje = item.Porcentaje,
-                                PrecioVenta = item.PrecioVenta
+                                PrecioVenta = item.PrecioVenta,
+                                Modelo = item.IdModelo
                             };
 
                             xoDB.AuxPrecios.Add(xoNuevo);

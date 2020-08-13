@@ -15,6 +15,7 @@
           <Property Name="Costo" Type="smallmoney" Nullable="false" />
           <Property Name="Porcentaje" Type="smallmoney" Nullable="false" />
           <Property Name="PrecioVenta" Type="smallmoney" Nullable="false" />
+          <Property Name="Modelo" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="cliente">
           <Key>
@@ -169,7 +170,7 @@
           <Key>
             <PropertyRef Name="red_rendi" />
           </Key>
-          <Property Name="red_rendi" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="red_rendi" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="red_pedido" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tamanio">
@@ -552,7 +553,6 @@
             <End Role="precio" EntitySet="precio" />
             <End Role="precio_detalle" EntitySet="precio_detalle" />
           </AssociationSet>
-          <EntitySet Name="AuxPrecios" EntityType="Modelo.AuxPrecios" />
           <EntitySet Name="cliente" EntityType="Modelo.cliente" />
           <EntitySet Name="grupo" EntityType="Modelo.grupo" />
           <EntitySet Name="usuario" EntityType="Modelo.usuario" />
@@ -607,6 +607,7 @@
             <End Role="envase" EntitySet="envase" />
             <End Role="tamanio" EntitySet="tamanio" />
           </AssociationSet>
+          <EntitySet Name="AuxPrecios" EntityType="Modelo.AuxPrecios" />
           </EntityContainer>
         <EntityType Name="localidad">
           <Key>
@@ -791,17 +792,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="AuxPrecios">
-          <Key>
-            <PropertyRef Name="Marca" />
-            <PropertyRef Name="Tamanio" />
-          </Key>
-          <Property Name="Marca" Type="Int32" Nullable="false" />
-          <Property Name="Tamanio" Type="Int32" Nullable="false" />
-          <Property Name="Costo" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
-          <Property Name="Porcentaje" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
-          <Property Name="PrecioVenta" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
-        </EntityType>
         <EntityType Name="cliente">
           <Key>
             <PropertyRef Name="cli_id" />
@@ -1055,6 +1045,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AuxPrecios">
+          <Key>
+            <PropertyRef Name="Marca" />
+            <PropertyRef Name="Tamanio" />
+          </Key>
+          <Property Name="Marca" Type="Int32" Nullable="false" />
+          <Property Name="Tamanio" Type="Int32" Nullable="false" />
+          <Property Name="Costo" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="Porcentaje" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="PrecioVenta" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="Modelo" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1146,17 +1148,6 @@
                 <ScalarProperty Name="pre_fechaHasta" ColumnName="pre_fechaHasta" />
                 <ScalarProperty Name="pre_fecha" ColumnName="pre_fecha" />
                 <ScalarProperty Name="pre_ident" ColumnName="pre_ident" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AuxPrecios">
-            <EntityTypeMapping TypeName="Modelo.AuxPrecios">
-              <MappingFragment StoreEntitySet="AuxPrecios">
-                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
-                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
-                <ScalarProperty Name="Costo" ColumnName="Costo" />
-                <ScalarProperty Name="Tamanio" ColumnName="Tamanio" />
-                <ScalarProperty Name="Marca" ColumnName="Marca" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1270,6 +1261,18 @@
                 <ScalarProperty Name="env_delet" ColumnName="env_delet" />
                 <ScalarProperty Name="env_descr" ColumnName="env_descr" />
                 <ScalarProperty Name="env_id" ColumnName="env_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuxPrecios">
+            <EntityTypeMapping TypeName="Modelo.AuxPrecios">
+              <MappingFragment StoreEntitySet="AuxPrecios">
+                <ScalarProperty Name="Modelo" ColumnName="Modelo" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+                <ScalarProperty Name="Tamanio" ColumnName="Tamanio" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

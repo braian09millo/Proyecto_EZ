@@ -10,6 +10,8 @@ WITH ENCRYPTION AS
 	SELECT DISTINCT
 		mar_id AS IdMarca,
 		mar_nombre AS Marca,
+		mod_id AS IdModelo,
+		mod_nombre AS Modelo,
 		env_id AS IdEnvase,
 		env_descr AS Envase,
 		tam_id AS IdTamanio,

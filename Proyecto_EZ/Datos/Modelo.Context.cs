@@ -34,7 +34,6 @@ namespace Datos
         public virtual DbSet<producto> producto { get; set; }
         public virtual DbSet<precio_detalle> precio_detalle { get; set; }
         public virtual DbSet<precio> precio { get; set; }
-        public virtual DbSet<AuxPrecios> AuxPrecios { get; set; }
         public virtual DbSet<cliente> cliente { get; set; }
         public virtual DbSet<grupo> grupo { get; set; }
         public virtual DbSet<usuario> usuario { get; set; }
@@ -45,5 +44,6 @@ namespace Datos
         public virtual DbSet<rendicion> rendicion { get; set; }
         public virtual DbSet<rendicion_detalle> rendicion_detalle { get; set; }
         public virtual DbSet<envase> envase { get; set; }
+        public virtual DbSet<AuxPrecios> AuxPrecios { get; set; }
     }
 }

@@ -308,7 +308,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Marca.Value + " - " + Fields!Envase.Value + " - " + Fields!Tamanio.Value</Value>
+                              <Value>=Fields!Marca.Value + " - " + Fields!Modelo.Value + " - " + Fields!Envase.Value + " - " + Fields!Tamanio.Value</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
                               </Style>
@@ -492,6 +492,14 @@
         </Field>
         <Field Name="Marca">
           <DataField>Marca</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="IdModelo">
+          <DataField>IdModelo</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Modelo">
+          <DataField>Modelo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="IdTamanio">

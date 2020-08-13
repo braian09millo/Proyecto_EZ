@@ -21,7 +21,6 @@
         <AssociationConnector Association="Modelo.FK_Producto_Precio_Detalle" />
         <EntityTypeShape EntityType="Modelo.precio" Width="1.5" PointX="0.75" PointY="12.875" />
         <AssociationConnector Association="Modelo.FK_Precio_Precio_Detalle" />
-        <EntityTypeShape EntityType="Modelo.AuxPrecios" Width="1.5" PointX="3.375" PointY="9.75" />
         <EntityTypeShape EntityType="Modelo.cliente" Width="1.5" PointX="12" PointY="3.5" />
         <EntityTypeShape EntityType="Modelo.grupo" Width="1.5" PointX="5.375" PointY="10.375" />
         <EntityTypeShape EntityType="Modelo.usuario" Width="1.5" PointX="7.625" PointY="10" />
@@ -43,6 +42,7 @@
         <EntityTypeShape EntityType="Modelo.envase" Width="1.5" PointX="0.75" PointY="0.875" />
         <AssociationConnector Association="Modelo.FK_Envase_Producto" />
         <AssociationConnector Association="Modelo.FK_Envase_Tamanio" />
+        <EntityTypeShape EntityType="Modelo.AuxPrecios" Width="1.5" PointX="12.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
