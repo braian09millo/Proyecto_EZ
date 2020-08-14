@@ -363,8 +363,7 @@
                     //Obtenemos el precio del producto y seteamos el input
                     $('#item > .col-sm-3 > .bootstrap-select > select.selectpicker').on('change', function () {
 
-                        console.log($(this).children("option:selected").data('precio'));
-                        var precio = $(this).children("option:selected").data('precio');
+                        var precio = $(this).children("option:selected").data('precio').replace(',','.');
                         var txtPrecio = $(this).parent().parent().parent().find('.precio').find('input[type="text"]');
                         var txtMonto = $(this).parent().parent().parent().find('.monto').find('input[type="text"]');
                         var txtCantidad = $(this).parent().parent().parent().find('.cantidad').find('input[type="text"]');
@@ -374,18 +373,18 @@
                             $(txtMonto).val('');
                             $(txtCantidad).val('')
                         } else {
-                            $(txtPrecio).val(Math.trunc(precio));
-                            $(txtMonto).val(Math.trunc(precio * $(txtCantidad).val()));
+                            $(txtPrecio).val(Math.round((precio * 100) / 100));
+                            $(txtMonto).val(Math.round(((precio * $(txtCantidad).val()) * 100) / 100));
                         }
                     });
 
                     //Cuando modificamos la cantidad, calculamos el monto total por item
                     $('#item > .col-sm-2.cantidad > input[type="text"]').keyup(function () {
-
+                        
                         var txtPrecio = $(this).parent().parent().find('.precio').find('input[type="text"]');
                         var txtMonto = $(this).parent().parent().find('.col-sm-2.monto').find('input[type="text"]');
                         var total = $(this).val() * $(txtPrecio).val();
-                        $(txtMonto).val(Math.trunc(total));
+                        $(txtMonto).val(Math.round((total + Number.EPSILON) * 100) / 100);
                     });
 
                 });
@@ -445,7 +444,7 @@
                 var total = $('#txtTotal').val();
                 var descuento = $('#txtDescuento').val();
                 var totalDescuento = total - (total * (descuento / 100));
-                $('#txtTotal').val(total - (total * (descuento / 100)));
+                $('#txtTotal').val(totalDescuento);
             });
 
             function ValidarDatos(array, objError) {
