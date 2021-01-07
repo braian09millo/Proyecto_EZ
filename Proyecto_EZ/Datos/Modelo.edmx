@@ -9,6 +9,7 @@
           <Key>
             <PropertyRef Name="Marca" />
             <PropertyRef Name="Tamanio" />
+            <PropertyRef Name="Modelo" />
           </Key>
           <Property Name="Marca" Type="int" Nullable="false" />
           <Property Name="Tamanio" Type="int" Nullable="false" />
@@ -89,11 +90,11 @@
           <Property Name="ped_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ped_cliente" Type="int" Nullable="false" />
           <Property Name="ped_fecha" Type="datetime" Nullable="false" />
+          <Property Name="ped_fechaCarga" Type="datetime" Nullable="false" />
           <Property Name="ped_monto" Type="money" Nullable="false" />
           <Property Name="ped_factu" Type="money" Nullable="false" />
           <Property Name="ped_estado" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="ped_repartidor" Type="varchar" MaxLength="10" />
-          <Property Name="ped_fechaCarga" Type="datetime" />
           <Property Name="ped_rendido" Type="char" MaxLength="1" />
           <Property Name="ped_apdes" Type="char" MaxLength="1" />
           <Property Name="ped_descu" Type="decimal" Precision="18" Scale="0" />
@@ -126,7 +127,7 @@
           <Property Name="prd_campre" Type="int" Nullable="false" />
           <Property Name="prd_produ" Type="int" Nullable="false" />
           <Property Name="prd_precioC" Type="smallmoney" Nullable="false" />
-          <Property Name="prd_porcen" Type="smallmoney" />
+          <Property Name="prd_porcen" Type="smallmoney" Nullable="false" />
           <Property Name="prd_precioPV" Type="smallmoney" Nullable="false" />
         </EntityType>
         <EntityType Name="producto">
@@ -136,11 +137,11 @@
           <Property Name="prod_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="prod_marca" Type="int" Nullable="false" />
           <Property Name="prod_modelo" Type="int" Nullable="false" />
+          <Property Name="prod_envase" Type="int" Nullable="false" />
           <Property Name="prod_tamanio" Type="int" Nullable="false" />
           <Property Name="prod_tipo" Type="int" Nullable="false" />
           <Property Name="prod_pack" Type="int" />
           <Property Name="prod_delet" Type="char" MaxLength="1" />
-          <Property Name="prod_envase" Type="int" />
         </EntityType>
         <EntityType Name="provincia">
           <Key>
@@ -166,11 +167,13 @@
           <Property Name="ren_hasta" Type="datetime" Nullable="false" />
           <Property Name="ren_total" Type="money" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BD_EZ_T1.dbo.rendicion_detalle' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="rendicion_detalle">
           <Key>
-            <PropertyRef Name="red_rendi" />
+            <PropertyRef Name="red_pedido" />
           </Key>
-          <Property Name="red_rendi" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="red_rendi" Type="int" />
           <Property Name="red_pedido" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tamanio">
@@ -180,7 +183,7 @@
           <Property Name="tam_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="tam_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="tam_delet" Type="char" MaxLength="1" />
-          <Property Name="tam_envase" Type="int" />
+          <Property Name="tam_envase" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tipo">
           <Key>
@@ -226,7 +229,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Envase_Producto">
-          <End Role="envase" Type="Self.envase" Multiplicity="0..1" />
+          <End Role="envase" Type="Self.envase" Multiplicity="1" />
           <End Role="producto" Type="Self.producto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="envase">
@@ -238,7 +241,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Envase_Tamanio">
-          <End Role="envase" Type="Self.envase" Multiplicity="0..1" />
+          <End Role="envase" Type="Self.envase" Multiplicity="1" />
           <End Role="tamanio" Type="Self.tamanio" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="envase">
@@ -434,10 +437,15 @@
           <EntitySet Name="provincia" EntityType="Self.provincia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="remito" EntityType="Self.remito" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rendicion" EntityType="Self.rendicion" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="rendicion_detalle" EntityType="Self.rendicion_detalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tamanio" EntityType="Self.tamanio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tipo" EntityType="Self.tipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rendicion_detalle" EntityType="Self.rendicion_detalle" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [rendicion_detalle].[red_rendi] AS [red_rendi], 
+    [rendicion_detalle].[red_pedido] AS [red_pedido]
+    FROM [dbo].[rendicion_detalle] AS [rendicion_detalle]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Cliente_Pedido" Association="Self.FK_Cliente_Pedido">
             <End Role="cliente" EntitySet="cliente" />
             <End Role="pedido" EntitySet="pedido" />
@@ -516,46 +524,34 @@
     <edmx:ConceptualModels>
       <Schema Namespace="Modelo" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="BD_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AuxPrecios" EntityType="Modelo.AuxPrecios" />
+          <EntitySet Name="cliente" EntityType="Modelo.cliente" />
+          <EntitySet Name="envase" EntityType="Modelo.envase" />
+          <EntitySet Name="gasto" EntityType="Modelo.gasto" />
+          <EntitySet Name="grupo" EntityType="Modelo.grupo" />
           <EntitySet Name="localidad" EntityType="Modelo.localidad" />
           <EntitySet Name="marca" EntityType="Modelo.marca" />
           <EntitySet Name="modelo" EntityType="Modelo.modelo" />
+          <EntitySet Name="pedido" EntityType="Modelo.pedido" />
+          <EntitySet Name="pedido_detalle" EntityType="Modelo.pedido_detalle" />
+          <EntitySet Name="precio" EntityType="Modelo.precio" />
+          <EntitySet Name="precio_detalle" EntityType="Modelo.precio_detalle" />
+          <EntitySet Name="producto" EntityType="Modelo.producto" />
           <EntitySet Name="provincia" EntityType="Modelo.provincia" />
+          <EntitySet Name="remito" EntityType="Modelo.remito" />
+          <EntitySet Name="rendicion" EntityType="Modelo.rendicion" />
           <EntitySet Name="tamanio" EntityType="Modelo.tamanio" />
           <EntitySet Name="tipo" EntityType="Modelo.tipo" />
-          <AssociationSet Name="FK_Marca_Modelo" Association="Modelo.FK_Marca_Modelo">
-            <End Role="marca" EntitySet="marca" />
-            <End Role="modelo" EntitySet="modelo" />
-          </AssociationSet>
-          <EntitySet Name="producto" EntityType="Modelo.producto" />
-          <AssociationSet Name="FK_Marca_Producto" Association="Modelo.FK_Marca_Producto">
-            <End Role="marca" EntitySet="marca" />
-            <End Role="producto" EntitySet="producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Modelo_Producto" Association="Modelo.FK_Modelo_Producto">
-            <End Role="modelo" EntitySet="modelo" />
-            <End Role="producto" EntitySet="producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tamanio_Producto" Association="Modelo.FK_Tamanio_Producto">
-            <End Role="tamanio" EntitySet="tamanio" />
-            <End Role="producto" EntitySet="producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tipo_Producto" Association="Modelo.FK_Tipo_Producto">
-            <End Role="tipo" EntitySet="tipo" />
-            <End Role="producto" EntitySet="producto" />
-          </AssociationSet>
-          <EntitySet Name="precio_detalle" EntityType="Modelo.precio_detalle" />
-          <AssociationSet Name="FK_Producto_Precio_Detalle" Association="Modelo.FK_Producto_Precio_Detalle">
-            <End Role="producto" EntitySet="producto" />
-            <End Role="precio_detalle" EntitySet="precio_detalle" />
-          </AssociationSet>
-          <EntitySet Name="precio" EntityType="Modelo.precio" />
-          <AssociationSet Name="FK_Precio_Precio_Detalle" Association="Modelo.FK_Precio_Precio_Detalle">
-            <End Role="precio" EntitySet="precio" />
-            <End Role="precio_detalle" EntitySet="precio_detalle" />
-          </AssociationSet>
-          <EntitySet Name="cliente" EntityType="Modelo.cliente" />
-          <EntitySet Name="grupo" EntityType="Modelo.grupo" />
           <EntitySet Name="usuario" EntityType="Modelo.usuario" />
+          <EntitySet Name="rendicion_detalle" EntityType="Modelo.rendicion_detalle" />
+          <AssociationSet Name="FK_Cliente_Pedido" Association="Modelo.FK_Cliente_Pedido">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_Remito" Association="Modelo.FK_Cliente_Remito">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="remito" EntitySet="remito" />
+          </AssociationSet>
           <AssociationSet Name="FK_Localidad_Cliente" Association="Modelo.FK_Localidad_Cliente">
             <End Role="localidad" EntitySet="localidad" />
             <End Role="cliente" EntitySet="cliente" />
@@ -564,25 +560,29 @@
             <End Role="provincia" EntitySet="provincia" />
             <End Role="cliente" EntitySet="cliente" />
           </AssociationSet>
+          <AssociationSet Name="FK_Envase_Producto" Association="Modelo.FK_Envase_Producto">
+            <End Role="envase" EntitySet="envase" />
+            <End Role="producto" EntitySet="producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Envase_Tamanio" Association="Modelo.FK_Envase_Tamanio">
+            <End Role="envase" EntitySet="envase" />
+            <End Role="tamanio" EntitySet="tamanio" />
+          </AssociationSet>
           <AssociationSet Name="FK_Grupo_Usuario" Association="Modelo.FK_Grupo_Usuario">
             <End Role="grupo" EntitySet="grupo" />
             <End Role="usuario" EntitySet="usuario" />
           </AssociationSet>
-          <EntitySet Name="remito" EntityType="Modelo.remito" />
-          <AssociationSet Name="FK_Cliente_Remito" Association="Modelo.FK_Cliente_Remito">
-            <End Role="cliente" EntitySet="cliente" />
-            <End Role="remito" EntitySet="remito" />
+          <AssociationSet Name="FK_Marca_Modelo" Association="Modelo.FK_Marca_Modelo">
+            <End Role="marca" EntitySet="marca" />
+            <End Role="modelo" EntitySet="modelo" />
           </AssociationSet>
-          <EntitySet Name="pedido_detalle" EntityType="Modelo.pedido_detalle" />
-          <AssociationSet Name="FK_Producto_DetallePedido" Association="Modelo.FK_Producto_DetallePedido">
+          <AssociationSet Name="FK_Marca_Producto" Association="Modelo.FK_Marca_Producto">
+            <End Role="marca" EntitySet="marca" />
             <End Role="producto" EntitySet="producto" />
-            <End Role="pedido_detalle" EntitySet="pedido_detalle" />
           </AssociationSet>
-          <EntitySet Name="gasto" EntityType="Modelo.gasto" />
-          <EntitySet Name="pedido" EntityType="Modelo.pedido" />
-          <AssociationSet Name="FK_Cliente_Pedido" Association="Modelo.FK_Cliente_Pedido">
-            <End Role="cliente" EntitySet="cliente" />
-            <End Role="pedido" EntitySet="pedido" />
+          <AssociationSet Name="FK_Modelo_Producto" Association="Modelo.FK_Modelo_Producto">
+            <End Role="modelo" EntitySet="modelo" />
+            <End Role="producto" EntitySet="producto" />
           </AssociationSet>
           <AssociationSet Name="FK_Pedido_DetallePedido" Association="Modelo.FK_Pedido_DetallePedido">
             <End Role="pedido" EntitySet="pedido" />
@@ -596,202 +596,40 @@
             <End Role="usuario" EntitySet="usuario" />
             <End Role="pedido" EntitySet="pedido" />
           </AssociationSet>
-          <EntitySet Name="rendicion" EntityType="Modelo.rendicion" />
-          <EntitySet Name="rendicion_detalle" EntityType="Modelo.rendicion_detalle" />
-          <EntitySet Name="envase" EntityType="Modelo.envase" />
-          <AssociationSet Name="FK_Envase_Producto" Association="Modelo.FK_Envase_Producto">
-            <End Role="envase" EntitySet="envase" />
+          <AssociationSet Name="FK_Producto_DetallePedido" Association="Modelo.FK_Producto_DetallePedido">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="pedido_detalle" EntitySet="pedido_detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Precio_Precio_Detalle" Association="Modelo.FK_Precio_Precio_Detalle">
+            <End Role="precio" EntitySet="precio" />
+            <End Role="precio_detalle" EntitySet="precio_detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Precio_Detalle" Association="Modelo.FK_Producto_Precio_Detalle">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="precio_detalle" EntitySet="precio_detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tamanio_Producto" Association="Modelo.FK_Tamanio_Producto">
+            <End Role="tamanio" EntitySet="tamanio" />
             <End Role="producto" EntitySet="producto" />
           </AssociationSet>
-          <AssociationSet Name="FK_Envase_Tamanio" Association="Modelo.FK_Envase_Tamanio">
-            <End Role="envase" EntitySet="envase" />
-            <End Role="tamanio" EntitySet="tamanio" />
+          <AssociationSet Name="FK_Tipo_Producto" Association="Modelo.FK_Tipo_Producto">
+            <End Role="tipo" EntitySet="tipo" />
+            <End Role="producto" EntitySet="producto" />
           </AssociationSet>
-          <EntitySet Name="AuxPrecios" EntityType="Modelo.AuxPrecios" />
-          </EntityContainer>
-        <EntityType Name="localidad">
+        </EntityContainer>
+        <EntityType Name="AuxPrecios">
           <Key>
-            <PropertyRef Name="loc_id" />
+            <PropertyRef Name="Marca" />
+            <PropertyRef Name="Tamanio" />
+            <PropertyRef Name="Modelo" />
           </Key>
-          <Property Name="loc_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="loc_provincia" Type="Int32" Nullable="false" />
-          <Property Name="loc_descr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="cliente" Relationship="Modelo.FK_Localidad_Cliente" FromRole="localidad" ToRole="cliente" />
+          <Property Name="Marca" Type="Int32" Nullable="false" />
+          <Property Name="Tamanio" Type="Int32" Nullable="false" />
+          <Property Name="Costo" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="Porcentaje" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="PrecioVenta" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="Modelo" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="marca">
-          <Key>
-            <PropertyRef Name="mar_id" />
-          </Key>
-          <Property Name="mar_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="mar_nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="modelo" Relationship="Modelo.FK_Marca_Modelo" FromRole="marca" ToRole="modelo" />
-          <NavigationProperty Name="producto" Relationship="Modelo.FK_Marca_Producto" FromRole="marca" ToRole="producto" />
-          <Property Name="mar_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
-        <EntityType Name="modelo">
-          <Key>
-            <PropertyRef Name="mod_id" />
-          </Key>
-          <Property Name="mod_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="mod_marca" Type="Int32" Nullable="false" />
-          <Property Name="mod_nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="marca" Relationship="Modelo.FK_Marca_Modelo" FromRole="modelo" ToRole="marca" />
-          <NavigationProperty Name="producto" Relationship="Modelo.FK_Modelo_Producto" FromRole="modelo" ToRole="producto" />
-          <Property Name="mod_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
-        <EntityType Name="provincia">
-          <Key>
-            <PropertyRef Name="pro_id" />
-          </Key>
-          <Property Name="pro_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="pro_descr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="cliente" Relationship="Modelo.FK_Provincia_Cliente" FromRole="provincia" ToRole="cliente" />
-        </EntityType>
-        <EntityType Name="tamanio">
-          <Key>
-            <PropertyRef Name="tam_id" />
-          </Key>
-          <Property Name="tam_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="tam_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="producto" Relationship="Modelo.FK_Tamanio_Producto" FromRole="tamanio" ToRole="producto" />
-          <Property Name="tam_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="tam_envase" Type="Int32" />
-          <NavigationProperty Name="envase" Relationship="Modelo.FK_Envase_Tamanio" FromRole="tamanio" ToRole="envase" />
-        </EntityType>
-        <EntityType Name="tipo">
-          <Key>
-            <PropertyRef Name="tip_id" />
-          </Key>
-          <Property Name="tip_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="tip_descr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="producto" Relationship="Modelo.FK_Tipo_Producto" FromRole="tipo" ToRole="producto" />
-        </EntityType>
-        <Association Name="FK_Marca_Modelo">
-          <End Type="Modelo.marca" Role="marca" Multiplicity="1" />
-          <End Type="Modelo.modelo" Role="modelo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="marca">
-              <PropertyRef Name="mar_id" />
-            </Principal>
-            <Dependent Role="modelo">
-              <PropertyRef Name="mod_marca" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="producto">
-          <Key>
-            <PropertyRef Name="prod_id" />
-          </Key>
-          <Property Name="prod_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="prod_marca" Type="Int32" Nullable="false" />
-          <Property Name="prod_modelo" Type="Int32" Nullable="false" />
-          <Property Name="prod_tamanio" Type="Int32" Nullable="false" />
-          <Property Name="prod_tipo" Type="Int32" Nullable="false" />
-          <Property Name="prod_pack" Type="Int32" />
-          <NavigationProperty Name="marca" Relationship="Modelo.FK_Marca_Producto" FromRole="producto" ToRole="marca" />
-          <NavigationProperty Name="modelo" Relationship="Modelo.FK_Modelo_Producto" FromRole="producto" ToRole="modelo" />
-          <NavigationProperty Name="tamanio" Relationship="Modelo.FK_Tamanio_Producto" FromRole="producto" ToRole="tamanio" />
-          <NavigationProperty Name="tipo" Relationship="Modelo.FK_Tipo_Producto" FromRole="producto" ToRole="tipo" />
-          <NavigationProperty Name="precio_detalle" Relationship="Modelo.FK_Producto_Precio_Detalle" FromRole="producto" ToRole="precio_detalle" />
-          <Property Name="prod_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="pedido_detalle" Relationship="Modelo.FK_Producto_DetallePedido" FromRole="producto" ToRole="pedido_detalle" />
-          <Property Name="prod_envase" Type="Int32" />
-          <NavigationProperty Name="envase" Relationship="Modelo.FK_Envase_Producto" FromRole="producto" ToRole="envase" />
-        </EntityType>
-        <Association Name="FK_Marca_Producto">
-          <End Type="Modelo.marca" Role="marca" Multiplicity="1" />
-          <End Type="Modelo.producto" Role="producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="marca">
-              <PropertyRef Name="mar_id" />
-            </Principal>
-            <Dependent Role="producto">
-              <PropertyRef Name="prod_marca" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Modelo_Producto">
-          <End Type="Modelo.modelo" Role="modelo" Multiplicity="1" />
-          <End Type="Modelo.producto" Role="producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="modelo">
-              <PropertyRef Name="mod_id" />
-            </Principal>
-            <Dependent Role="producto">
-              <PropertyRef Name="prod_modelo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tamanio_Producto">
-          <End Type="Modelo.tamanio" Role="tamanio" Multiplicity="1" />
-          <End Type="Modelo.producto" Role="producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tamanio">
-              <PropertyRef Name="tam_id" />
-            </Principal>
-            <Dependent Role="producto">
-              <PropertyRef Name="prod_tamanio" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tipo_Producto">
-          <End Type="Modelo.tipo" Role="tipo" Multiplicity="1" />
-          <End Type="Modelo.producto" Role="producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tipo">
-              <PropertyRef Name="tip_id" />
-            </Principal>
-            <Dependent Role="producto">
-              <PropertyRef Name="prod_tipo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="precio_detalle">
-          <Key>
-            <PropertyRef Name="prd_campre" />
-            <PropertyRef Name="prd_produ" />
-          </Key>
-          <Property Name="prd_campre" Type="Int32" Nullable="false" />
-          <Property Name="prd_produ" Type="Int32" Nullable="false" />
-          <Property Name="prd_precioC" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
-          <Property Name="prd_porcen" Type="Decimal" Precision="10" Scale="4" />
-          <Property Name="prd_precioPV" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
-          <NavigationProperty Name="producto" Relationship="Modelo.FK_Producto_Precio_Detalle" FromRole="precio_detalle" ToRole="producto" />
-          <NavigationProperty Name="precio" Relationship="Modelo.FK_Precio_Precio_Detalle" FromRole="precio_detalle" ToRole="precio" />
-        </EntityType>
-        <Association Name="FK_Producto_Precio_Detalle">
-          <End Type="Modelo.producto" Role="producto" Multiplicity="1" />
-          <End Type="Modelo.precio_detalle" Role="precio_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="producto">
-              <PropertyRef Name="prod_id" />
-            </Principal>
-            <Dependent Role="precio_detalle">
-              <PropertyRef Name="prd_produ" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="precio">
-          <Key>
-            <PropertyRef Name="pre_ident" />
-          </Key>
-          <Property Name="pre_ident" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="pre_fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="pre_fechaHasta" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="precio_detalle" Relationship="Modelo.FK_Precio_Precio_Detalle" FromRole="precio" ToRole="precio_detalle" />
-        </EntityType>
-        <Association Name="FK_Precio_Precio_Detalle">
-          <End Type="Modelo.precio" Role="precio" Multiplicity="1" />
-          <End Type="Modelo.precio_detalle" Role="precio_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="precio">
-              <PropertyRef Name="pre_ident" />
-            </Principal>
-            <Dependent Role="precio_detalle">
-              <PropertyRef Name="prd_campre" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="cliente">
           <Key>
             <PropertyRef Name="cli_id" />
@@ -807,10 +645,29 @@
           <Property Name="cli_coordenadas" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="cli_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="cli_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="pedido" Relationship="Modelo.FK_Cliente_Pedido" FromRole="cliente" ToRole="pedido" />
+          <NavigationProperty Name="remito" Relationship="Modelo.FK_Cliente_Remito" FromRole="cliente" ToRole="remito" />
           <NavigationProperty Name="localidad" Relationship="Modelo.FK_Localidad_Cliente" FromRole="cliente" ToRole="localidad" />
           <NavigationProperty Name="provincia" Relationship="Modelo.FK_Provincia_Cliente" FromRole="cliente" ToRole="provincia" />
-          <NavigationProperty Name="remito" Relationship="Modelo.FK_Cliente_Remito" FromRole="cliente" ToRole="remito" />
-          <NavigationProperty Name="pedido" Relationship="Modelo.FK_Cliente_Pedido" FromRole="cliente" ToRole="pedido" />
+        </EntityType>
+        <EntityType Name="envase">
+          <Key>
+            <PropertyRef Name="env_id" />
+          </Key>
+          <Property Name="env_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="env_descr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="env_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="producto" Relationship="Modelo.FK_Envase_Producto" FromRole="envase" ToRole="producto" />
+          <NavigationProperty Name="tamanio" Relationship="Modelo.FK_Envase_Tamanio" FromRole="envase" ToRole="tamanio" />
+        </EntityType>
+        <EntityType Name="gasto">
+          <Key>
+            <PropertyRef Name="gas_id" />
+          </Key>
+          <Property Name="gas_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="gas_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="gas_descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="gas_monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="grupo">
           <Key>
@@ -819,6 +676,158 @@
           <Property Name="gru_id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="gru_descr" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="usuario" Relationship="Modelo.FK_Grupo_Usuario" FromRole="grupo" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="localidad">
+          <Key>
+            <PropertyRef Name="loc_id" />
+          </Key>
+          <Property Name="loc_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="loc_provincia" Type="Int32" Nullable="false" />
+          <Property Name="loc_descr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cliente" Relationship="Modelo.FK_Localidad_Cliente" FromRole="localidad" ToRole="cliente" />
+        </EntityType>
+        <EntityType Name="marca">
+          <Key>
+            <PropertyRef Name="mar_id" />
+          </Key>
+          <Property Name="mar_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mar_nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="mar_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="modelo" Relationship="Modelo.FK_Marca_Modelo" FromRole="marca" ToRole="modelo" />
+          <NavigationProperty Name="producto" Relationship="Modelo.FK_Marca_Producto" FromRole="marca" ToRole="producto" />
+        </EntityType>
+        <EntityType Name="modelo">
+          <Key>
+            <PropertyRef Name="mod_id" />
+          </Key>
+          <Property Name="mod_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mod_marca" Type="Int32" Nullable="false" />
+          <Property Name="mod_nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="mod_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="marca" Relationship="Modelo.FK_Marca_Modelo" FromRole="modelo" ToRole="marca" />
+          <NavigationProperty Name="producto" Relationship="Modelo.FK_Modelo_Producto" FromRole="modelo" ToRole="producto" />
+        </EntityType>
+        <EntityType Name="pedido">
+          <Key>
+            <PropertyRef Name="ped_id" />
+          </Key>
+          <Property Name="ped_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ped_cliente" Type="Int32" Nullable="false" />
+          <Property Name="ped_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ped_fechaCarga" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ped_monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ped_factu" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ped_estado" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ped_repartidor" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ped_rendido" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ped_apdes" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ped_descu" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ped_vuelta" Type="Byte" />
+          <NavigationProperty Name="cliente" Relationship="Modelo.FK_Cliente_Pedido" FromRole="pedido" ToRole="cliente" />
+          <NavigationProperty Name="pedido_detalle" Relationship="Modelo.FK_Pedido_DetallePedido" FromRole="pedido" ToRole="pedido_detalle" />
+          <NavigationProperty Name="remito" Relationship="Modelo.FK_Pedido_Remito" FromRole="pedido" ToRole="remito" />
+          <NavigationProperty Name="usuario" Relationship="Modelo.FK_Usuario_Pedido" FromRole="pedido" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="pedido_detalle">
+          <Key>
+            <PropertyRef Name="det_pedido" />
+            <PropertyRef Name="det_producto" />
+          </Key>
+          <Property Name="det_pedido" Type="Int32" Nullable="false" />
+          <Property Name="det_producto" Type="Int32" Nullable="false" />
+          <Property Name="det_cantidad" Type="Int32" Nullable="false" />
+          <Property Name="det_precio" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="det_monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="pedido" Relationship="Modelo.FK_Pedido_DetallePedido" FromRole="pedido_detalle" ToRole="pedido" />
+          <NavigationProperty Name="producto" Relationship="Modelo.FK_Producto_DetallePedido" FromRole="pedido_detalle" ToRole="producto" />
+        </EntityType>
+        <EntityType Name="precio">
+          <Key>
+            <PropertyRef Name="pre_ident" />
+          </Key>
+          <Property Name="pre_ident" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pre_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="pre_fechaHasta" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="precio_detalle" Relationship="Modelo.FK_Precio_Precio_Detalle" FromRole="precio" ToRole="precio_detalle" />
+        </EntityType>
+        <EntityType Name="precio_detalle">
+          <Key>
+            <PropertyRef Name="prd_campre" />
+            <PropertyRef Name="prd_produ" />
+          </Key>
+          <Property Name="prd_campre" Type="Int32" Nullable="false" />
+          <Property Name="prd_produ" Type="Int32" Nullable="false" />
+          <Property Name="prd_precioC" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="prd_porcen" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="prd_precioPV" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <NavigationProperty Name="precio" Relationship="Modelo.FK_Precio_Precio_Detalle" FromRole="precio_detalle" ToRole="precio" />
+          <NavigationProperty Name="producto" Relationship="Modelo.FK_Producto_Precio_Detalle" FromRole="precio_detalle" ToRole="producto" />
+        </EntityType>
+        <EntityType Name="producto">
+          <Key>
+            <PropertyRef Name="prod_id" />
+          </Key>
+          <Property Name="prod_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prod_marca" Type="Int32" Nullable="false" />
+          <Property Name="prod_modelo" Type="Int32" Nullable="false" />
+          <Property Name="prod_envase" Type="Int32" Nullable="false" />
+          <Property Name="prod_tamanio" Type="Int32" Nullable="false" />
+          <Property Name="prod_tipo" Type="Int32" Nullable="false" />
+          <Property Name="prod_pack" Type="Int32" />
+          <Property Name="prod_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="envase" Relationship="Modelo.FK_Envase_Producto" FromRole="producto" ToRole="envase" />
+          <NavigationProperty Name="marca" Relationship="Modelo.FK_Marca_Producto" FromRole="producto" ToRole="marca" />
+          <NavigationProperty Name="modelo" Relationship="Modelo.FK_Modelo_Producto" FromRole="producto" ToRole="modelo" />
+          <NavigationProperty Name="pedido_detalle" Relationship="Modelo.FK_Producto_DetallePedido" FromRole="producto" ToRole="pedido_detalle" />
+          <NavigationProperty Name="precio_detalle" Relationship="Modelo.FK_Producto_Precio_Detalle" FromRole="producto" ToRole="precio_detalle" />
+          <NavigationProperty Name="tamanio" Relationship="Modelo.FK_Tamanio_Producto" FromRole="producto" ToRole="tamanio" />
+          <NavigationProperty Name="tipo" Relationship="Modelo.FK_Tipo_Producto" FromRole="producto" ToRole="tipo" />
+        </EntityType>
+        <EntityType Name="provincia">
+          <Key>
+            <PropertyRef Name="pro_id" />
+          </Key>
+          <Property Name="pro_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pro_descr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cliente" Relationship="Modelo.FK_Provincia_Cliente" FromRole="provincia" ToRole="cliente" />
+        </EntityType>
+        <EntityType Name="remito">
+          <Key>
+            <PropertyRef Name="rem_numero" />
+          </Key>
+          <Property Name="rem_numero" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rem_cliente" Type="Int32" Nullable="false" />
+          <Property Name="rem_pedido" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cliente" Relationship="Modelo.FK_Cliente_Remito" FromRole="remito" ToRole="cliente" />
+          <NavigationProperty Name="pedido" Relationship="Modelo.FK_Pedido_Remito" FromRole="remito" ToRole="pedido" />
+        </EntityType>
+        <EntityType Name="rendicion">
+          <Key>
+            <PropertyRef Name="ren_id" />
+          </Key>
+          <Property Name="ren_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ren_desde" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ren_hasta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ren_total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="tamanio">
+          <Key>
+            <PropertyRef Name="tam_id" />
+          </Key>
+          <Property Name="tam_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tam_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tam_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="tam_envase" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="envase" Relationship="Modelo.FK_Envase_Tamanio" FromRole="tamanio" ToRole="envase" />
+          <NavigationProperty Name="producto" Relationship="Modelo.FK_Tamanio_Producto" FromRole="tamanio" ToRole="producto" />
+        </EntityType>
+        <EntityType Name="tipo">
+          <Key>
+            <PropertyRef Name="tip_id" />
+          </Key>
+          <Property Name="tip_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tip_descr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="producto" Relationship="Modelo.FK_Tipo_Producto" FromRole="tipo" ToRole="producto" />
         </EntityType>
         <EntityType Name="usuario">
           <Key>
@@ -830,10 +839,41 @@
           <Property Name="usu_nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="usu_apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="usu_fecha_acceso" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="grupo" Relationship="Modelo.FK_Grupo_Usuario" FromRole="usuario" ToRole="grupo" />
           <Property Name="usu_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="grupo" Relationship="Modelo.FK_Grupo_Usuario" FromRole="usuario" ToRole="grupo" />
           <NavigationProperty Name="pedido" Relationship="Modelo.FK_Usuario_Pedido" FromRole="usuario" ToRole="pedido" />
         </EntityType>
+        <EntityType Name="rendicion_detalle">
+          <Key>
+            <PropertyRef Name="red_pedido" />
+          </Key>
+          <Property Name="red_rendi" Type="Int32" />
+          <Property Name="red_pedido" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK_Cliente_Pedido">
+          <End Type="Modelo.cliente" Role="cliente" Multiplicity="1" />
+          <End Type="Modelo.pedido" Role="pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="cli_id" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="ped_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_Remito">
+          <End Type="Modelo.cliente" Role="cliente" Multiplicity="1" />
+          <End Type="Modelo.remito" Role="remito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="cli_id" />
+            </Principal>
+            <Dependent Role="remito">
+              <PropertyRef Name="rem_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Localidad_Cliente">
           <End Type="Modelo.localidad" Role="localidad" Multiplicity="1" />
           <End Type="Modelo.cliente" Role="cliente" Multiplicity="*" />
@@ -858,6 +898,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Envase_Producto">
+          <End Type="Modelo.envase" Role="envase" Multiplicity="1" />
+          <End Type="Modelo.producto" Role="producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="envase">
+              <PropertyRef Name="env_id" />
+            </Principal>
+            <Dependent Role="producto">
+              <PropertyRef Name="prod_envase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Envase_Tamanio">
+          <End Type="Modelo.envase" Role="envase" Multiplicity="1" />
+          <End Type="Modelo.tamanio" Role="tamanio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="envase">
+              <PropertyRef Name="env_id" />
+            </Principal>
+            <Dependent Role="tamanio">
+              <PropertyRef Name="tam_envase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Grupo_Usuario">
           <End Type="Modelo.grupo" Role="grupo" Multiplicity="1" />
           <End Type="Modelo.usuario" Role="usuario" Multiplicity="*" />
@@ -870,92 +934,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="remito">
-          <Key>
-            <PropertyRef Name="rem_numero" />
-          </Key>
-          <Property Name="rem_numero" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="rem_cliente" Type="Int32" Nullable="false" />
-          <Property Name="rem_pedido" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="cliente" Relationship="Modelo.FK_Cliente_Remito" FromRole="remito" ToRole="cliente" />
-          <NavigationProperty Name="pedido" Relationship="Modelo.FK_Pedido_Remito" FromRole="remito" ToRole="pedido" />
-        </EntityType>
-        <Association Name="FK_Cliente_Remito">
-          <End Type="Modelo.cliente" Role="cliente" Multiplicity="1" />
-          <End Type="Modelo.remito" Role="remito" Multiplicity="*" />
+        <Association Name="FK_Marca_Modelo">
+          <End Type="Modelo.marca" Role="marca" Multiplicity="1" />
+          <End Type="Modelo.modelo" Role="modelo" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="cliente">
-              <PropertyRef Name="cli_id" />
+            <Principal Role="marca">
+              <PropertyRef Name="mar_id" />
             </Principal>
-            <Dependent Role="remito">
-              <PropertyRef Name="rem_cliente" />
+            <Dependent Role="modelo">
+              <PropertyRef Name="mod_marca" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="pedido_detalle">
-          <Key>
-            <PropertyRef Name="det_pedido" />
-            <PropertyRef Name="det_producto" />
-          </Key>
-          <Property Name="det_pedido" Type="Int32" Nullable="false" />
-          <Property Name="det_producto" Type="Int32" Nullable="false" />
-          <Property Name="det_cantidad" Type="Int32" Nullable="false" />
-          <Property Name="det_precio" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="det_monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="producto" Relationship="Modelo.FK_Producto_DetallePedido" FromRole="pedido_detalle" ToRole="producto" />
-          <NavigationProperty Name="pedido" Relationship="Modelo.FK_Pedido_DetallePedido" FromRole="pedido_detalle" ToRole="pedido" />
-        </EntityType>
-        <Association Name="FK_Producto_DetallePedido">
-          <End Type="Modelo.producto" Role="producto" Multiplicity="1" />
-          <End Type="Modelo.pedido_detalle" Role="pedido_detalle" Multiplicity="*" />
+        <Association Name="FK_Marca_Producto">
+          <End Type="Modelo.marca" Role="marca" Multiplicity="1" />
+          <End Type="Modelo.producto" Role="producto" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="producto">
-              <PropertyRef Name="prod_id" />
+            <Principal Role="marca">
+              <PropertyRef Name="mar_id" />
             </Principal>
-            <Dependent Role="pedido_detalle">
-              <PropertyRef Name="det_producto" />
+            <Dependent Role="producto">
+              <PropertyRef Name="prod_marca" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="gasto">
-          <Key>
-            <PropertyRef Name="gas_id" />
-          </Key>
-          <Property Name="gas_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="gas_fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="gas_descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="gas_monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-        </EntityType>
-        <EntityType Name="pedido">
-          <Key>
-            <PropertyRef Name="ped_id" />
-          </Key>
-          <Property Name="ped_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ped_cliente" Type="Int32" Nullable="false" />
-          <Property Name="ped_fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ped_monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="ped_factu" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="ped_estado" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="ped_repartidor" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="cliente" Relationship="Modelo.FK_Cliente_Pedido" FromRole="pedido" ToRole="cliente" />
-          <NavigationProperty Name="pedido_detalle" Relationship="Modelo.FK_Pedido_DetallePedido" FromRole="pedido" ToRole="pedido_detalle" />
-          <NavigationProperty Name="remito" Relationship="Modelo.FK_Pedido_Remito" FromRole="pedido" ToRole="remito" />
-          <NavigationProperty Name="usuario" Relationship="Modelo.FK_Usuario_Pedido" FromRole="pedido" ToRole="usuario" />
-          <Property Name="ped_fechaCarga" Type="DateTime" Precision="3" />
-          <Property Name="ped_rendido" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="ped_apdes" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="ped_descu" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ped_vuelta" Type="Byte" />
-        </EntityType>
-        <Association Name="FK_Cliente_Pedido">
-          <End Type="Modelo.cliente" Role="cliente" Multiplicity="1" />
-          <End Type="Modelo.pedido" Role="pedido" Multiplicity="*" />
+        <Association Name="FK_Modelo_Producto">
+          <End Type="Modelo.modelo" Role="modelo" Multiplicity="1" />
+          <End Type="Modelo.producto" Role="producto" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="cliente">
-              <PropertyRef Name="cli_id" />
+            <Principal Role="modelo">
+              <PropertyRef Name="mod_id" />
             </Principal>
-            <Dependent Role="pedido">
-              <PropertyRef Name="ped_cliente" />
+            <Dependent Role="producto">
+              <PropertyRef Name="prod_modelo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -995,74 +1006,128 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="rendicion">
-          <Key>
-            <PropertyRef Name="ren_id" />
-          </Key>
-          <Property Name="ren_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ren_desde" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ren_hasta" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ren_total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-        </EntityType>
-        <EntityType Name="rendicion_detalle">
-          <Key>
-            <PropertyRef Name="red_rendi" />
-          </Key>
-          <Property Name="red_rendi" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="red_pedido" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="envase">
-          <Key>
-            <PropertyRef Name="env_id" />
-          </Key>
-          <Property Name="env_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="env_descr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="env_delet" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="producto" Relationship="Modelo.FK_Envase_Producto" FromRole="envase" ToRole="producto" />
-          <NavigationProperty Name="tamanio" Relationship="Modelo.FK_Envase_Tamanio" FromRole="envase" ToRole="tamanio" />
-        </EntityType>
-        <Association Name="FK_Envase_Producto">
-          <End Type="Modelo.envase" Role="envase" Multiplicity="0..1" />
+        <Association Name="FK_Producto_DetallePedido">
+          <End Type="Modelo.producto" Role="producto" Multiplicity="1" />
+          <End Type="Modelo.pedido_detalle" Role="pedido_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="prod_id" />
+            </Principal>
+            <Dependent Role="pedido_detalle">
+              <PropertyRef Name="det_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Precio_Precio_Detalle">
+          <End Type="Modelo.precio" Role="precio" Multiplicity="1" />
+          <End Type="Modelo.precio_detalle" Role="precio_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="precio">
+              <PropertyRef Name="pre_ident" />
+            </Principal>
+            <Dependent Role="precio_detalle">
+              <PropertyRef Name="prd_campre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Precio_Detalle">
+          <End Type="Modelo.producto" Role="producto" Multiplicity="1" />
+          <End Type="Modelo.precio_detalle" Role="precio_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="prod_id" />
+            </Principal>
+            <Dependent Role="precio_detalle">
+              <PropertyRef Name="prd_produ" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tamanio_Producto">
+          <End Type="Modelo.tamanio" Role="tamanio" Multiplicity="1" />
           <End Type="Modelo.producto" Role="producto" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="envase">
-              <PropertyRef Name="env_id" />
+            <Principal Role="tamanio">
+              <PropertyRef Name="tam_id" />
             </Principal>
             <Dependent Role="producto">
-              <PropertyRef Name="prod_envase" />
+              <PropertyRef Name="prod_tamanio" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Envase_Tamanio">
-          <End Type="Modelo.envase" Role="envase" Multiplicity="0..1" />
-          <End Type="Modelo.tamanio" Role="tamanio" Multiplicity="*" />
+        <Association Name="FK_Tipo_Producto">
+          <End Type="Modelo.tipo" Role="tipo" Multiplicity="1" />
+          <End Type="Modelo.producto" Role="producto" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="envase">
-              <PropertyRef Name="env_id" />
+            <Principal Role="tipo">
+              <PropertyRef Name="tip_id" />
             </Principal>
-            <Dependent Role="tamanio">
-              <PropertyRef Name="tam_envase" />
+            <Dependent Role="producto">
+              <PropertyRef Name="prod_tipo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="AuxPrecios">
-          <Key>
-            <PropertyRef Name="Marca" />
-            <PropertyRef Name="Tamanio" />
-          </Key>
-          <Property Name="Marca" Type="Int32" Nullable="false" />
-          <Property Name="Tamanio" Type="Int32" Nullable="false" />
-          <Property Name="Costo" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
-          <Property Name="Porcentaje" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
-          <Property Name="PrecioVenta" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
-          <Property Name="Modelo" Type="Int32" Nullable="false" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ModeloStoreContainer" CdmEntityContainer="BD_Entities">
+          <EntitySetMapping Name="AuxPrecios">
+            <EntityTypeMapping TypeName="Modelo.AuxPrecios">
+              <MappingFragment StoreEntitySet="AuxPrecios">
+                <ScalarProperty Name="Modelo" ColumnName="Modelo" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+                <ScalarProperty Name="Tamanio" ColumnName="Tamanio" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cliente">
+            <EntityTypeMapping TypeName="Modelo.cliente">
+              <MappingFragment StoreEntitySet="cliente">
+                <ScalarProperty Name="cli_delet" ColumnName="cli_delet" />
+                <ScalarProperty Name="cli_mail" ColumnName="cli_mail" />
+                <ScalarProperty Name="cli_coordenadas" ColumnName="cli_coordenadas" />
+                <ScalarProperty Name="cli_celular2" ColumnName="cli_celular2" />
+                <ScalarProperty Name="cli_celular" ColumnName="cli_celular" />
+                <ScalarProperty Name="cli_telefono" ColumnName="cli_telefono" />
+                <ScalarProperty Name="cli_direccion" ColumnName="cli_direccion" />
+                <ScalarProperty Name="cli_localidad" ColumnName="cli_localidad" />
+                <ScalarProperty Name="cli_provincia" ColumnName="cli_provincia" />
+                <ScalarProperty Name="cli_nombre" ColumnName="cli_nombre" />
+                <ScalarProperty Name="cli_id" ColumnName="cli_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="envase">
+            <EntityTypeMapping TypeName="Modelo.envase">
+              <MappingFragment StoreEntitySet="envase">
+                <ScalarProperty Name="env_delet" ColumnName="env_delet" />
+                <ScalarProperty Name="env_descr" ColumnName="env_descr" />
+                <ScalarProperty Name="env_id" ColumnName="env_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="gasto">
+            <EntityTypeMapping TypeName="Modelo.gasto">
+              <MappingFragment StoreEntitySet="gasto">
+                <ScalarProperty Name="gas_monto" ColumnName="gas_monto" />
+                <ScalarProperty Name="gas_descripcion" ColumnName="gas_descripcion" />
+                <ScalarProperty Name="gas_fecha" ColumnName="gas_fecha" />
+                <ScalarProperty Name="gas_id" ColumnName="gas_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="grupo">
+            <EntityTypeMapping TypeName="Modelo.grupo">
+              <MappingFragment StoreEntitySet="grupo">
+                <ScalarProperty Name="gru_descr" ColumnName="gru_descr" />
+                <ScalarProperty Name="gru_id" ColumnName="gru_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="localidad">
             <EntityTypeMapping TypeName="Modelo.localidad">
               <MappingFragment StoreEntitySet="localidad">
@@ -1091,11 +1156,93 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="pedido">
+            <EntityTypeMapping TypeName="Modelo.pedido">
+              <MappingFragment StoreEntitySet="pedido">
+                <ScalarProperty Name="ped_vuelta" ColumnName="ped_vuelta" />
+                <ScalarProperty Name="ped_descu" ColumnName="ped_descu" />
+                <ScalarProperty Name="ped_apdes" ColumnName="ped_apdes" />
+                <ScalarProperty Name="ped_rendido" ColumnName="ped_rendido" />
+                <ScalarProperty Name="ped_repartidor" ColumnName="ped_repartidor" />
+                <ScalarProperty Name="ped_estado" ColumnName="ped_estado" />
+                <ScalarProperty Name="ped_factu" ColumnName="ped_factu" />
+                <ScalarProperty Name="ped_monto" ColumnName="ped_monto" />
+                <ScalarProperty Name="ped_fechaCarga" ColumnName="ped_fechaCarga" />
+                <ScalarProperty Name="ped_fecha" ColumnName="ped_fecha" />
+                <ScalarProperty Name="ped_cliente" ColumnName="ped_cliente" />
+                <ScalarProperty Name="ped_id" ColumnName="ped_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pedido_detalle">
+            <EntityTypeMapping TypeName="Modelo.pedido_detalle">
+              <MappingFragment StoreEntitySet="pedido_detalle">
+                <ScalarProperty Name="det_monto" ColumnName="det_monto" />
+                <ScalarProperty Name="det_precio" ColumnName="det_precio" />
+                <ScalarProperty Name="det_cantidad" ColumnName="det_cantidad" />
+                <ScalarProperty Name="det_producto" ColumnName="det_producto" />
+                <ScalarProperty Name="det_pedido" ColumnName="det_pedido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="precio">
+            <EntityTypeMapping TypeName="Modelo.precio">
+              <MappingFragment StoreEntitySet="precio">
+                <ScalarProperty Name="pre_fechaHasta" ColumnName="pre_fechaHasta" />
+                <ScalarProperty Name="pre_fecha" ColumnName="pre_fecha" />
+                <ScalarProperty Name="pre_ident" ColumnName="pre_ident" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="precio_detalle">
+            <EntityTypeMapping TypeName="Modelo.precio_detalle">
+              <MappingFragment StoreEntitySet="precio_detalle">
+                <ScalarProperty Name="prd_precioPV" ColumnName="prd_precioPV" />
+                <ScalarProperty Name="prd_porcen" ColumnName="prd_porcen" />
+                <ScalarProperty Name="prd_precioC" ColumnName="prd_precioC" />
+                <ScalarProperty Name="prd_produ" ColumnName="prd_produ" />
+                <ScalarProperty Name="prd_campre" ColumnName="prd_campre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="producto">
+            <EntityTypeMapping TypeName="Modelo.producto">
+              <MappingFragment StoreEntitySet="producto">
+                <ScalarProperty Name="prod_delet" ColumnName="prod_delet" />
+                <ScalarProperty Name="prod_pack" ColumnName="prod_pack" />
+                <ScalarProperty Name="prod_tipo" ColumnName="prod_tipo" />
+                <ScalarProperty Name="prod_tamanio" ColumnName="prod_tamanio" />
+                <ScalarProperty Name="prod_envase" ColumnName="prod_envase" />
+                <ScalarProperty Name="prod_modelo" ColumnName="prod_modelo" />
+                <ScalarProperty Name="prod_marca" ColumnName="prod_marca" />
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="provincia">
             <EntityTypeMapping TypeName="Modelo.provincia">
               <MappingFragment StoreEntitySet="provincia">
                 <ScalarProperty Name="pro_descr" ColumnName="pro_descr" />
                 <ScalarProperty Name="pro_id" ColumnName="pro_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="remito">
+            <EntityTypeMapping TypeName="Modelo.remito">
+              <MappingFragment StoreEntitySet="remito">
+                <ScalarProperty Name="rem_pedido" ColumnName="rem_pedido" />
+                <ScalarProperty Name="rem_cliente" ColumnName="rem_cliente" />
+                <ScalarProperty Name="rem_numero" ColumnName="rem_numero" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rendicion">
+            <EntityTypeMapping TypeName="Modelo.rendicion">
+              <MappingFragment StoreEntitySet="rendicion">
+                <ScalarProperty Name="ren_total" ColumnName="ren_total" />
+                <ScalarProperty Name="ren_hasta" ColumnName="ren_hasta" />
+                <ScalarProperty Name="ren_desde" ColumnName="ren_desde" />
+                <ScalarProperty Name="ren_id" ColumnName="ren_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1117,65 +1264,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="producto">
-            <EntityTypeMapping TypeName="Modelo.producto">
-              <MappingFragment StoreEntitySet="producto">
-                <ScalarProperty Name="prod_envase" ColumnName="prod_envase" />
-                <ScalarProperty Name="prod_delet" ColumnName="prod_delet" />
-                <ScalarProperty Name="prod_pack" ColumnName="prod_pack" />
-                <ScalarProperty Name="prod_tipo" ColumnName="prod_tipo" />
-                <ScalarProperty Name="prod_tamanio" ColumnName="prod_tamanio" />
-                <ScalarProperty Name="prod_modelo" ColumnName="prod_modelo" />
-                <ScalarProperty Name="prod_marca" ColumnName="prod_marca" />
-                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="precio_detalle">
-            <EntityTypeMapping TypeName="Modelo.precio_detalle">
-              <MappingFragment StoreEntitySet="precio_detalle">
-                <ScalarProperty Name="prd_precioPV" ColumnName="prd_precioPV" />
-                <ScalarProperty Name="prd_porcen" ColumnName="prd_porcen" />
-                <ScalarProperty Name="prd_precioC" ColumnName="prd_precioC" />
-                <ScalarProperty Name="prd_produ" ColumnName="prd_produ" />
-                <ScalarProperty Name="prd_campre" ColumnName="prd_campre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="precio">
-            <EntityTypeMapping TypeName="Modelo.precio">
-              <MappingFragment StoreEntitySet="precio">
-                <ScalarProperty Name="pre_fechaHasta" ColumnName="pre_fechaHasta" />
-                <ScalarProperty Name="pre_fecha" ColumnName="pre_fecha" />
-                <ScalarProperty Name="pre_ident" ColumnName="pre_ident" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="cliente">
-            <EntityTypeMapping TypeName="Modelo.cliente">
-              <MappingFragment StoreEntitySet="cliente">
-                <ScalarProperty Name="cli_delet" ColumnName="cli_delet" />
-                <ScalarProperty Name="cli_mail" ColumnName="cli_mail" />
-                <ScalarProperty Name="cli_coordenadas" ColumnName="cli_coordenadas" />
-                <ScalarProperty Name="cli_celular2" ColumnName="cli_celular2" />
-                <ScalarProperty Name="cli_celular" ColumnName="cli_celular" />
-                <ScalarProperty Name="cli_telefono" ColumnName="cli_telefono" />
-                <ScalarProperty Name="cli_direccion" ColumnName="cli_direccion" />
-                <ScalarProperty Name="cli_localidad" ColumnName="cli_localidad" />
-                <ScalarProperty Name="cli_provincia" ColumnName="cli_provincia" />
-                <ScalarProperty Name="cli_nombre" ColumnName="cli_nombre" />
-                <ScalarProperty Name="cli_id" ColumnName="cli_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="grupo">
-            <EntityTypeMapping TypeName="Modelo.grupo">
-              <MappingFragment StoreEntitySet="grupo">
-                <ScalarProperty Name="gru_descr" ColumnName="gru_descr" />
-                <ScalarProperty Name="gru_id" ColumnName="gru_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="usuario">
             <EntityTypeMapping TypeName="Modelo.usuario">
               <MappingFragment StoreEntitySet="usuario">
@@ -1189,90 +1277,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="remito">
-            <EntityTypeMapping TypeName="Modelo.remito">
-              <MappingFragment StoreEntitySet="remito">
-                <ScalarProperty Name="rem_pedido" ColumnName="rem_pedido" />
-                <ScalarProperty Name="rem_cliente" ColumnName="rem_cliente" />
-                <ScalarProperty Name="rem_numero" ColumnName="rem_numero" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="pedido_detalle">
-            <EntityTypeMapping TypeName="Modelo.pedido_detalle">
-              <MappingFragment StoreEntitySet="pedido_detalle">
-                <ScalarProperty Name="det_monto" ColumnName="det_monto" />
-                <ScalarProperty Name="det_precio" ColumnName="det_precio" />
-                <ScalarProperty Name="det_cantidad" ColumnName="det_cantidad" />
-                <ScalarProperty Name="det_producto" ColumnName="det_producto" />
-                <ScalarProperty Name="det_pedido" ColumnName="det_pedido" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="gasto">
-            <EntityTypeMapping TypeName="Modelo.gasto">
-              <MappingFragment StoreEntitySet="gasto">
-                <ScalarProperty Name="gas_monto" ColumnName="gas_monto" />
-                <ScalarProperty Name="gas_descripcion" ColumnName="gas_descripcion" />
-                <ScalarProperty Name="gas_fecha" ColumnName="gas_fecha" />
-                <ScalarProperty Name="gas_id" ColumnName="gas_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="pedido">
-            <EntityTypeMapping TypeName="Modelo.pedido">
-              <MappingFragment StoreEntitySet="pedido">
-                <ScalarProperty Name="ped_vuelta" ColumnName="ped_vuelta" />
-                <ScalarProperty Name="ped_descu" ColumnName="ped_descu" />
-                <ScalarProperty Name="ped_apdes" ColumnName="ped_apdes" />
-                <ScalarProperty Name="ped_rendido" ColumnName="ped_rendido" />
-                <ScalarProperty Name="ped_fechaCarga" ColumnName="ped_fechaCarga" />
-                <ScalarProperty Name="ped_repartidor" ColumnName="ped_repartidor" />
-                <ScalarProperty Name="ped_estado" ColumnName="ped_estado" />
-                <ScalarProperty Name="ped_factu" ColumnName="ped_factu" />
-                <ScalarProperty Name="ped_monto" ColumnName="ped_monto" />
-                <ScalarProperty Name="ped_fecha" ColumnName="ped_fecha" />
-                <ScalarProperty Name="ped_cliente" ColumnName="ped_cliente" />
-                <ScalarProperty Name="ped_id" ColumnName="ped_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="rendicion">
-            <EntityTypeMapping TypeName="Modelo.rendicion">
-              <MappingFragment StoreEntitySet="rendicion">
-                <ScalarProperty Name="ren_total" ColumnName="ren_total" />
-                <ScalarProperty Name="ren_hasta" ColumnName="ren_hasta" />
-                <ScalarProperty Name="ren_desde" ColumnName="ren_desde" />
-                <ScalarProperty Name="ren_id" ColumnName="ren_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="rendicion_detalle">
             <EntityTypeMapping TypeName="Modelo.rendicion_detalle">
               <MappingFragment StoreEntitySet="rendicion_detalle">
                 <ScalarProperty Name="red_pedido" ColumnName="red_pedido" />
                 <ScalarProperty Name="red_rendi" ColumnName="red_rendi" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="envase">
-            <EntityTypeMapping TypeName="Modelo.envase">
-              <MappingFragment StoreEntitySet="envase">
-                <ScalarProperty Name="env_delet" ColumnName="env_delet" />
-                <ScalarProperty Name="env_descr" ColumnName="env_descr" />
-                <ScalarProperty Name="env_id" ColumnName="env_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AuxPrecios">
-            <EntityTypeMapping TypeName="Modelo.AuxPrecios">
-              <MappingFragment StoreEntitySet="AuxPrecios">
-                <ScalarProperty Name="Modelo" ColumnName="Modelo" />
-                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
-                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
-                <ScalarProperty Name="Costo" ColumnName="Costo" />
-                <ScalarProperty Name="Tamanio" ColumnName="Tamanio" />
-                <ScalarProperty Name="Marca" ColumnName="Marca" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

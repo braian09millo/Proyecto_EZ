@@ -27,7 +27,7 @@ WITH ENCRYPTION AS
 		PrecioVenta AS PrecioVenta
 	INTO #AuxPreciosNuevos
 	FROM producto
-	JOIN AuxPrecios ON prod_marca = Marca and prod_tamanio = Tamanio
+	JOIN AuxPrecios ON prod_marca = Marca and prod_modelo = Modelo and prod_tamanio = Tamanio
 	JOIN precio_detalle ON prd_produ = prod_id
 	WHERE ISNULL(prod_delet, 'N') <> 'S'	
 

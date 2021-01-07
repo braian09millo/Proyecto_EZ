@@ -174,11 +174,12 @@ CREATE TABLE AuxPrecios
 (
 	Marca INT NOT NULL,
 	Tamanio INT NOT NULL,
+	Modelo INT NOT NULL,
 	Costo SMALLMONEY NOT NULL,
 	Porcentaje SMALLMONEY NOT NULL,
 	PrecioVenta SMALLMONEY NOT NULL,
 
-	CONSTRAINT PK_AuxPrecios PRIMARY KEY (Marca,Tamanio)
+	CONSTRAINT PK_AuxPrecios PRIMARY KEY (Marca,Modelo,Tamanio)
 )
 
 CREATE TABLE gasto
