@@ -125,45 +125,10 @@
             //Cargarmos los datepickers
             function CargarFechas() {
 
-                var today = new Date();
-                var anio = today.getFullYear();
-                var mes = today.getMonth();
-                var mesSig = today.getMonth() + 1;
-                var dia = today.getDate();
+                var fechaActual = new Date();
 
-                if (mes < 10)
-                    mes = '0' + mes;
-
-                if (mesSig < 10)
-                    mesSig = '0' + mesSig;
-
-                if (dia < 10)
-                    dia = '0' + dia;
-
-                var fechaDesde = anio + '-' + mes + '-' + dia;
-                var fechaHasta = anio + '-' + mesSig + '-' + dia;
-
-                document.getElementById("txtDesde").value = fechaDesde;
-                document.getElementById("txtHasta").value = fechaHasta;
-            }
-
-            function toDate(fecha) {
-
-                var parts = fecha.split('-');
-                var f = new Date(parts[2], parts[1], parts[0]);
-                var anio = f.getFullYear();
-                var mes = f.getMonth();
-                var dia = f.getDate();
-
-                if (mes < 10)
-                    mes = '0' + mes;
-
-                if (dia < 10)
-                    dia = '0' + dia;
-
-                var fechaEntrega = anio + '-' + mes + '-' + dia;
-
-                return fechaEntrega;
+                $('#txtDesde').val(moment(fechaActual).subtract(1,'months').format('YYYY-MM-DD'));
+                $('#txtHasta').val(moment(fechaActual).format('YYYY-MM-DD'));
             }
 
             function Limpiar() {
