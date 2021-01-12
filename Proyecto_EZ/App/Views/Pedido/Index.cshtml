@@ -641,6 +641,7 @@
                 var tabla = $('#tablePedidos').DataTable({
                     "info": false,
                     "ajax": url,
+                    "bDestroy": true,
                     aoColumnDefs: [
                         { targets: [0], "bSortable": true, "bVisible": false },
                         { targets: [1], "bSortable": true },
