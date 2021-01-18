@@ -530,7 +530,7 @@
                     var monto = $(this).find('.col-sm-2.monto').find('input[type="text"]').val();
                     var packs = $(this).find('.col-sm-2.cantidad').find('input[type="text"]').val();
                     var montoTotal = $('#total').val();
-                    Total = parseFloat(Total) + parseFloat(monto);
+                    Total = parseInt(Total) + parseInt(monto);
                     CantidadProductos = parseInt(CantidadProductos) + 1;
                     CantidadPacks = parseInt(CantidadPacks) + parseInt(packs);
                     var id = $(this).find('.col-sm-3').find('.bootstrap-select').find('select').children('option:selected').data("info");
@@ -548,6 +548,7 @@
 
                 if ($('#chkDescuento').prop('checked'))
                     Total = Total - (Total * (Descuento / 100));
+                     Total = Math.round(Total);
 
                 if (!ValidarDatos(Productos, objError)) {
 
