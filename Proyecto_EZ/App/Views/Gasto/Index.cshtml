@@ -128,14 +128,10 @@
             //Cargarmos los datepickers
             function CargarFechas() {
 
-                var diaDesde = new Date();
-                diaDesde = new Date(diaDesde.getFullYear(), diaDesde.getMonth(), 1).toISOString().substr(0, 10);
+                var fechaActual = new Date();
 
-                var diaHasta = new Date();
-                diaHasta = new Date(diaHasta.setDate(diaHasta.getDate() + 1)).toISOString().substr(0, 10);
-
-                document.getElementById("txtDesde").value = diaDesde;
-                document.getElementById("txtHasta").value = diaHasta;
+                $('#txtDesde').val(moment(fechaActual).subtract(1, 'months').format('YYYY-MM-DD'));
+                $('#txtHasta').val(moment(fechaActual).format('YYYY-MM-DD'));
             }
 
             function toDate(fecha) {

@@ -58,10 +58,9 @@
         //Cargarmos los datepickers
         function CargarFechas() {
 
-            var dia = new Date();
-            dia = new Date(dia.getFullYear(), dia.getMonth(), 1).toISOString().substr(0, 10);
+            var fechaActual = new Date();
 
-            document.getElementById("txtFecha").value = dia;
+            $('#txtFecha').val(moment(fechaActual).format('YYYY-MM-DD'));
         }
 
     });
