@@ -408,8 +408,17 @@
 
                 if (isNaN(total))
                     $('#txtTotal').val(0);
-                else
-                    $('#txtTotal').val(total);
+                else {
+
+                    if ($('#chkDescuento').prop('checked')) {
+
+                        var descuento = $('#txtDescuento').val();
+                        var totalDescuento = total - (total * (descuento / 100));
+                        $('#txtTotal').val(totalDescuento);
+                    }
+                    else
+                        $('#txtTotal').val(total);
+                }
 
             });
 
