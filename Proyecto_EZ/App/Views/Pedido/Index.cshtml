@@ -416,6 +416,7 @@
 
                         var descuento = $('#txtDescuento').val();
                         var totalDescuento = total - (total * (descuento / 100));
+                        totalDescuento = Math.round((totalDescuento * 100) / 100);
                         $('#txtTotal').val(totalDescuento);
                     }
                     else
