@@ -279,7 +279,7 @@
                 var fechaActual = new Date();
 
                 $('#txtFechaDesde').val(moment(fechaActual).subtract(1, 'months').format('YYYY-MM-DD'));
-                $('#txtFechaHasta').val(moment(fechaActual).format('YYYY-MM-DD'));
+                $('#txtFechaHasta').val(moment(fechaActual).add(5,'days').format('YYYY-MM-DD'));
             }
 
 
