@@ -329,6 +329,11 @@
                 else
                     $('#cmbClientesPedido').val('');
 
+                var fechaActual = new Date();
+                $('#txtFechaEntrega').val(moment(fechaActual).add(1, 'days').format('YYYY-MM-DD'));
+
+                $('#cmbEstadosPedido').val('C');
+
             });
 
             //Habilitamos el botón cuando los campos requeridos esten llenos
