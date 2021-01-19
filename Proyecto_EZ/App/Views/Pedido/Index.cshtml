@@ -441,11 +441,11 @@
             });
 
             $('#txtDescuento').on('keyup', function () {
-                $('#btnCalcTotal').trigger('click');
                 var total = $('#txtTotal').val();
                 var descuento = $('#txtDescuento').val();
                 var totalDescuento = total - (total * (descuento / 100));
                 $('#txtTotal').val(totalDescuento);
+                $('#btnCalcTotal').trigger('click');
             });
 
             function ValidarDatos(array, objError) {
