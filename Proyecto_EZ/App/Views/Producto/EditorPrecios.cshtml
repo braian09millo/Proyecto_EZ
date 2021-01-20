@@ -9,7 +9,7 @@
     <h2 class="h2 text-center">EDITAR PRECIOS</h2>
     <div class="row">
         <div class="col-sm-12">
-            <a href="@Url.Action("Index", "Producto")" class="btn btn-default"><i class="fas fa-arrow-left"></i>&nbsp;&nbsp;Volver a Productos</a>
+            <button class="btn btn-default" onclick="volverProductos()"><i class="fas fa-arrow-left"></i>&nbsp;&nbsp;Volver a Productos</button>
             <button id="btnGuardar" class="btn btn-default"><i class="fas fa-save"></i>&nbsp;&nbsp; Guardar Cambios</button>
         </div>
     </div>
@@ -66,6 +66,37 @@
 @section Scripts {
 
     <script>
+
+        function volverProductos() {
+
+            var modificoPrecios = false;
+            var filas = $('#EditorTable > tbody > tr');
+
+            $.each(filas, function (i, fila) {
+
+                var icono = $(fila).find('td').eq(0).find('i');
+                if (icono.hasClass('glyphicon-ok')) {
+                    modificoPrecios = true;
+                }
+            });
+
+            if (modificoPrecios) {
+                    swal({
+                        title: "Advertencia",
+                        text: "¿Desea volver sin guardar los cambios?",
+                        icon: "warning",
+                        buttons: ['Cancelar', 'Confirmar'],
+                        dangerMode: false,
+                    }).then(function (bConfirma) {
+                        if (bConfirma) {
+                            location.href = "@Url.Action("Index", "Producto")";
+                        }
+                    });
+                }
+                else
+                    location.href = "@Url.Action("Index", "Producto")";
+        }
+
         $(document).ready(function () {
 
             //Mostrar con efecto FADE al cargar
@@ -82,7 +113,7 @@
                 $(this).parent().parent().find("input[name=porc]").prop('disabled', true);
                 $(this).parent().parent().find("input[name=costo]").prop('disabled', true);
                 $(this).prop('disabled', true);
-                $(this).parent().parent().find("button.btn-link.modificar").prop('disabled', false);                
+                $(this).parent().parent().find("button.btn-link.modificar").prop('disabled', false);
 
                 var txtPorc = $(this).parent().parent().find("input[name=porc]");
                 var txtCosto = $(this).parent().parent().find("input[name=costo]");
@@ -117,7 +148,7 @@
                     $(txtPv).val(valorPvOriginal);
 
                 $(this).parent().parent().find("i[name=icono]").removeClass('glyphicon-ok').addClass('glyphicon-asterisk');
-                
+
             });
 
             $("#txtBusqueda").on("keyup", function () {
@@ -216,6 +247,24 @@
                     }
                 });
             });
+
+
+            //$('#btnVolver').on('click', function (e) {
+
+                //var modificoPrecios = false;
+                //var filas = $('#EditorTable > tbdoy > tr');
+
+                //$.each(filas, function (i,fila) {
+
+                //    var icono = $(fila).find('td').eq(0).find('i');
+                //    console.log(icono);
+                //    if (icono.hasClass('glyphicon-ok')) {
+                //        modificoPrecios = true;
+                //    }
+                //});
+
+                @**@
+            //})
 
         });
     </script>
